@@ -1,0 +1,862 @@
+\documentclass[UTF8,12pt,oneside]{ctexrep}
+
+\usepackage[a4paper,top=2.3cm,bottom=2.3cm,left=2.4cm,right=2.4cm,headheight=15pt]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{siunitx}
+\usepackage{booktabs,longtable,tabularx,array,multirow}
+\usepackage[table,dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,calc}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{float}
+\usepackage{pdflscape}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage[backend=biber,style=ieee,sorting=none,maxbibnames=99]{biblatex}
+\addbibresource{references.bib}
+
+\definecolor{AtomBlue}{HTML}{16324F}
+\definecolor{AtomTeal}{HTML}{2B7A78}
+\definecolor{AtomGold}{HTML}{C58B2A}
+\definecolor{LightBlue}{HTML}{EAF1F7}
+\definecolor{LightTeal}{HTML}{E9F5F3}
+\definecolor{LightGold}{HTML}{FBF4E7}
+\definecolor{LightGray}{HTML}{F4F5F6}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=AtomBlue,
+  citecolor=AtomTeal,
+  urlcolor=AtomBlue,
+  pdftitle={Project ATOM 技术路线、文献综述与实施计划},
+  pdfauthor={Project ATOM Capstone Team}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small Project ATOM 技术路线与实施计划}
+\fancyhead[R]{\small \leftmark}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\setlist[itemize]{leftmargin=2em,itemsep=0.25em,topsep=0.3em}
+\setlist[enumerate]{leftmargin=2.2em,itemsep=0.25em,topsep=0.3em}
+\renewcommand{\arraystretch}{1.25}
+\setlength{\tabcolsep}{5pt}
+\setlength{\parindent}{2em}
+\setlength{\parskip}{0.25em}
+\emergencystretch=3em
+\sisetup{detect-all=true}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+
+\newcommand{\decisionbox}[2]{%
+  \begin{center}
+  \fcolorbox{AtomTeal}{LightTeal}{%
+    \begin{minipage}{0.92\textwidth}
+    \textbf{#1}\par\smallskip #2
+    \end{minipage}}
+  \end{center}}
+
+\newcommand{\warningbox}[2]{%
+  \begin{center}
+  \fcolorbox{AtomGold}{LightGold}{%
+    \begin{minipage}{0.92\textwidth}
+    \textbf{#1}\par\smallskip #2
+    \end{minipage}}
+  \end{center}}
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{LightGray},
+  frame=single,
+  rulecolor=\color{gray!40},
+  breaklines=true,
+  columns=fullflexible,
+  showstringspaces=false
+}
+
+\begin{document}
+
+\begin{titlepage}
+  \centering
+  \vspace*{1.4cm}
+  {\Huge\bfseries\color{AtomBlue} Project ATOM\par}
+  \vspace{0.5cm}
+  {\Large Autonomous Transport \& Object Manipulation\par
+  for the Autonomous Chemical Laboratory\par}
+  \vspace{1.5cm}
+  {\LARGE\bfseries 技术路线、文献综述与实施计划\par}
+  \vspace{0.4cm}
+  {\Large 前置研究报告（Version 0.1）\par}
+  \vspace{1.5cm}
+  \begin{tikzpicture}[node distance=8mm, every node/.style={font=\small}]
+    \node[draw=AtomBlue,fill=LightBlue,rounded corners,minimum width=3.0cm,minimum height=1cm] (sim) {仿真与数字模型};
+    \node[draw=AtomTeal,fill=LightTeal,rounded corners,minimum width=3.0cm,minimum height=1cm,right=of sim] (manip) {感知与操作};
+    \node[draw=AtomGold,fill=LightGold,rounded corners,minimum width=3.0cm,minimum height=1cm,right=of manip] (mobile) {移动与系统集成};
+    \draw[-{Latex[length=3mm]},thick,AtomBlue] (sim) -- (manip);
+    \draw[-{Latex[length=3mm]},thick,AtomTeal] (manip) -- (mobile);
+  \end{tikzpicture}
+  \vfill
+  {\large University of Melbourne Mechatronics Capstone\par}
+  {\large 2026 Semester 2 -- 2027 Semester 1\par}
+  \vspace{0.5cm}
+  {\large 编制日期：2026-08-09\par}
+  \vspace{1cm}
+\end{titlepage}
+
+\pagenumbering{roman}
+
+\chapter*{执行摘要}
+\addcontentsline{toc}{chapter}{执行摘要}
+\begingroup
+\small
+
+Project ATOM 的目标不是复现一个固定路点夹取演示，而是建立一套可从 Gazebo 迁移到真实硬件、可从固定机械臂扩展到移动操作机器人的模块化实验室操作系统。上一组工作已经证明双指夹爪在 UR3e 和两个模拟托盘之间可以完成 49/50 次固定路点循环，但没有验证真实 Opentrons Flex 到 DynaPro NanoStar 的插入任务、感知引导重规划、移动底盘误差补偿或系统级硬件安全。因此，本报告将上一组成果定义为“夹爪子系统原型”，而不是完整自主实验室系统。
+
+本报告给出的基线技术路线如下：
+
+\begin{enumerate}
+  \item 使用 ROS 2 作为模块通信、坐标变换和生命周期管理中间件；在厂商支持允许时采用 Ubuntu 24.04、ROS 2 Jazzy 与 Gazebo Harmonic 的官方组合\cite{macenski2022ros2,gazebo2026rosinstall}。
+  \item 将夹爪简化为一个基座、两个对称移动手指和一个 TCP；通过顶层 Xacro 将厂商机械臂、定制夹爪和未来移动底盘组合，而不生成单体 URDF。
+  \item 使用 \texttt{gz\_ros2\_control}、\texttt{joint\_trajectory\_controller} 和平行夹爪控制器建立仿真控制接口\cite{gzros2control2026}。
+  \item 机械臂自由空间运动以 MoveIt 2 + OMPL + RRT-Connect 为可复现基线；接近、插入和撤离阶段使用受约束的笛卡尔直线运动（Pilz LIN），任务分解使用 MoveIt Task Constructor\cite{kuffner2000rrtconnect,sucan2012ompl,moveitpilz2026,moveitmtc2026}。
+  \item 工作台和比色皿定位优先使用 AprilTag 3 形成确定性基线；完成相机内参、手眼或眼到手标定以及完整误差预算后，再考虑无标记目标姿态估计\cite{krogius2019apriltag3,tsai1989handeye}。
+  \item 移动导航算法由底盘运动学决定：Ackermann 底盘优先评估 Hybrid A*；非圆差速或全向底盘优先评估 State Lattice；可原地旋转的近圆差速底盘可采用 2D A*。Hybrid A* 不是在底盘未知时即可固定的结论\cite{dolgov2008hybridastar,pivtoraiko2009lattice,nav2smac2026}。
+  \item 工作站采用“全局导航到预停靠点 + 视觉闭环精停靠 + 操作前重新定位”的两级定位策略，避免要求移动底盘本身达到机械臂插入所需精度\cite{oba2021mobilemanipulator,petr2023docking}。
+  \item 系统验证采用逐级对照实验：固定路点、目标位姿扰动、精密放置/插入、移动停靠误差补偿。每次试验保存随机种子、轨迹、TF、规划时间、误差、接触力和失败类型。
+\end{enumerate}
+
+\decisionbox{核心工程原则}{先建立可重复、可测量的模型驱动基线，再在明确的误差瓶颈上引入视觉伺服、阻抗控制或学习方法。任何“先进算法”都必须对应一个已经测出的失败模式。}
+\endgroup
+
+\tableofcontents
+\clearpage
+\pagenumbering{arabic}
+
+\chapter{任务定义、范围与研究问题}
+
+\section{项目愿景}
+
+自主实验室的核心价值不在于单台仪器自动化，而在于让机器人在既有、以人为中心的实验室内跨工作站操作。Burger 等人的移动机器人化学家展示了移动机器人连续运行八天并执行 688 次实验的可行性，说明“自动化实验人员而非重造全部仪器”是一条成立的系统路线\cite{burger2020mobile}。Project ATOM 采用相似的模块化愿景，但当前研究对象更聚焦：安全、可靠地搬运比色皿或相近实验器皿，并把操作子系统扩展到移动平台。
+
+\section{当前证据与边界}
+
+\begin{table}[H]
+\centering
+\caption{当前已知事实与不可直接继承的结论}
+\begin{tabularx}{\textwidth}{L{3.2cm}YY}
+\toprule
+类别 & 已知事实 & 不能据此宣称的能力 \\
+\midrule
+上一组实验 & UR3e、人工设定路点、两个模拟托盘，49/50 个完整循环 & 真实仪器插入精度、目标变化适应能力或移动操作能力 \\
+夹爪 & STS3215、STM32 Nucleo、齿条齿轮、硅胶垫与磁阈值反馈 & 已校准的夹持力、空抓检测、长期可靠性 \\
+CAD & 已收到 Fusion 360 F3Z 分布式装配 & 正确的关节限制、惯量、材料、TCP 和法兰变换 \\
+机械臂 & 上一组报告讨论 xArm 850，实验用 UR3e & 当前实际采购型号及 ROS 2 支持版本 \\
+安全 & 报告描述软件过载停机 & 独立的硬件急停或完整安全功能 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{分阶段范围}
+
+\subsection{阶段 A：Gazebo 最小可行系统}
+
+当前优先交付是机械臂与夹爪在 Gazebo 中的完整对接：组合模型、关节控制、MoveIt 规划、基本抓放任务和自动化测试。该阶段不要求复现 STM32 串口、磁传感器或真实伺服动态。
+
+\subsection{阶段 B：2026 S2 固定平台操作系统}
+
+在确认真实机械臂后，完成硬件驱动、夹爪状态机、TCP/相机标定、基线抓放和感知引导重规划。阶段终点应证明目标位姿在规定范围内改变时，系统仍可自动完成操作。
+
+\subsection{阶段 C：2027 S1 移动操作集成}
+
+加入底盘、导航、停靠、供电、网络和完整 TF 树；测量底盘停靠误差，并证明工作站重新定位能够补偿该误差。
+
+\section{研究问题与可证伪假设}
+
+\begin{longtable}{L{1.2cm}L{5.4cm}L{7.8cm}}
+\caption{建议研究问题与假设}\label{tab:rq}\\
+\toprule
+编号 & 研究问题 & 可检验假设 \\
+\midrule
+\endfirsthead
+\toprule
+编号 & 研究问题 & 可检验假设 \\
+\midrule
+\endhead
+RQ1 & 感知引导重规划是否优于固定路点？ & 在给定平移和转角扰动范围内，AprilTag 定位 + MoveIt 重规划的完整任务成功率显著高于固定路点。 \\
+RQ2 & 哪种机械臂规划组合适合本任务？ & RRT-Connect 具有较高首次可行解率；对最后直线接近使用 LIN 可降低横向偏差和碰撞风险。 \\
+RQ3 & 移动底盘误差能否由工作站重新定位补偿？ & 操作前重新估计工作站坐标后，抓取成功率与停靠误差的相关性显著降低。 \\
+RQ4 & 夹爪状态机能否检测空抓、超时和释放失败？ & 引入最大行程、超时和对象存在判据后，未检测故障率相对原始阈值逻辑下降。 \\
+RQ5 & 精密插入是否需要柔顺控制？ & 当开环位姿误差接近插入间隙时，视觉修正或阻抗/导纳策略比纯位置控制获得更高插入成功率和更低峰值接触力。 \\
+\bottomrule
+\end{longtable}
+
+\chapter{证据方法与方案选择规则}
+
+\section{证据层级}
+
+本报告采用以下证据优先级：物理测量与原始试验数据；原始 CAD/固件/代码；同行评审原始论文；官方框架文档与标准；综述和二手资料。算法的历史论文说明原理和已展示能力，官方文档说明当前可落地接口，两者缺一不可。
+
+\section{统一评价维度}
+
+每个候选方案按照下列维度评分，而不是只比较“先进程度”：
+
+\begin{itemize}
+  \item 任务适配性：是否匹配底盘运动学、机械臂自由度、插入约束和实验室空间；
+  \item 确定性与可解释性：失败能否定位，参数能否量化；
+  \item ROS 2 集成成熟度：是否有受维护的插件、消息接口和测试；
+  \item 仿真到实机迁移成本：上层接口能否保持不变；
+  \item 计算开销：在目标计算机上能否达到规定周期；
+  \item 安全与故障处理：是否能施加速度、力、超时和空间限制；
+  \item 实验可比性：是否能固定随机种子、记录中间量并重复试验。
+\end{itemize}
+
+\section{决策状态}
+
+所有技术选择分为三种状态：\textbf{Accepted}（已有足够证据）、\textbf{Conditional}（依赖未确认硬件或实验结果）、\textbf{Deferred}（高级方案，只有基线失败时启动）。报告中的 Hybrid A*、MPPI 和柔顺插入均属于 Conditional，而 ROS 2 模块化描述、Gazebo 基线和 RRT-Connect 初始对照属于 Accepted。
+
+\chapter{总体系统架构与软件产出}
+
+\section{ROS 2 的系统角色}
+
+ROS 2 提供节点通信、QoS、生命周期、参数、动作、TF 坐标变换和工具生态，而 Gazebo 提供物理仿真，MoveIt 2 提供机械臂运动规划，\texttt{ros2\_control} 提供控制器与硬件抽象。ROS 2 的模块化和可扩展架构已经在多类真实机器人系统中得到应用\cite{macenski2022ros2}；Gazebo 的价值是以可控环境快速测试机器人模型与算法\cite{koenig2004gazebo}。
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=7mm and 10mm,
+  box/.style={draw,rounded corners,minimum width=3.4cm,minimum height=0.9cm,align=center,font=\small},
+  arrow/.style={-{Latex[length=2.5mm]},thick}
+]
+\node[box,fill=LightGold] (task) {任务执行器\\Behavior Tree / MTC};
+\node[box,fill=LightTeal,below left=of task] (nav) {Nav2\\导航与停靠};
+\node[box,fill=LightTeal,below=of task] (per) {感知与标定\\AprilTag / TF};
+\node[box,fill=LightTeal,below right=of task] (moveit) {MoveIt 2\\操作规划};
+\node[box,fill=LightBlue,below=15mm of per] (control) {ros2\_control\\统一控制接口};
+\node[box,fill=LightBlue,below left=of control] (gazebo) {Gazebo\\仿真后端};
+\node[box,fill=LightBlue,below right=of control] (real) {厂商驱动 + STM32\\真实后端};
+\draw[arrow] (task) -- (nav);
+\draw[arrow] (task) -- (per);
+\draw[arrow] (task) -- (moveit);
+\draw[arrow] (nav) -- (control);
+\draw[arrow] (moveit) -- (control);
+\draw[arrow] (per) -- (moveit);
+\draw[arrow] (control) -- (gazebo);
+\draw[arrow] (control) -- (real);
+\end{tikzpicture}
+\caption{建议的软件分层：上层任务接口不随仿真/实机后端切换而改变}
+\end{figure}
+
+\section{ROS 2 包结构}
+
+\begin{lstlisting}
+ros2_ws/src/
+|-- atom_gripper_description/
+|-- atom_robot_description/
+|-- atom_simulation/
+|-- atom_moveit_config/
+|-- atom_gripper_driver/       # real hardware phase
+|-- atom_perception/
+|-- atom_task_control/
+|-- atom_bringup/
+|-- atom_tests/
+`-- atom_interfaces/
+\end{lstlisting}
+
+\section{核心接口}
+
+\begin{table}[H]
+\centering
+\caption{需要尽早冻结的接口}
+\begin{tabularx}{\textwidth}{L{3cm}L{4cm}Y}
+\toprule
+接口 & 建议 ROS 2 形式 & 最小字段/行为 \\
+\midrule
+机械臂轨迹 & FollowJoint\-Trajectory action & 关节名、位置、速度、时间戳、执行结果 \\
+夹爪命令 & ParallelGripper\-Command 或 Gripper\-Command action & 目标开度、最大力/速度、结果状态 \\
+目标定位 & PoseWithCovariance\-Stamped & 坐标系、时间、位姿、协方差、检测状态 \\
+任务执行 & 自定义 action 或 MTC solution & 阶段、反馈、取消、失败码、恢复策略 \\
+安全状态 & 只读 topic + 硬件链路 & 急停、保护停、通信故障、速度限制 \\
+移动停靠 & Dock\-Robot action 或项目接口 & 预停靠点、最终误差、失败原因 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{TF 树与数据所有权}
+
+建议完整树为：
+
+\begin{lstlisting}
+map -> odom -> base_link -> arm_mount -> arm_base -> ... -> tool0
+    -> gripper_mount -> gripper_base -> gripper_tcp -> cuvette
+
+camera_link -> camera_optical_frame
+map -> source_workstation
+map -> destination_workstation
+\end{lstlisting}
+
+\texttt{map->odom} 由全局定位维护，\texttt{odom->base\_link} 由底盘里程计维护，机械安装变换由测量或 CAD 给出，目标/工作站变换由感知节点发布。禁止多个节点同时发布同一 TF。
+
+\chapter{数字模型与 Gazebo 最小可行系统}
+
+\section{CAD 到 URDF/Xacro 的转换}
+
+F3Z 是机械来源，不应直接成为机器人描述。工作步骤是：
+
+\begin{enumerate}
+  \item 在 Fusion 360 中确认单位、装配层级、关节轴、手指行程、法兰基准和材料；
+  \item 导出高细节视觉网格和低面数凸碰撞网格；
+  \item 以 SI 单位检查网格缩放，并通过已知尺寸做自动化断言；
+  \item 将夹爪抽象为 \texttt{gripper\_base\_link}、左右手指和两个 prismatic joints；
+  \item 只控制一个主手指关节时，另一个用 mimic 反向等距运动；
+  \item 根据 CAD 和实测质量计算惯量；无可靠数据时使用保守几何近似并标记为待测；
+  \item 定义 \texttt{gripper\_mount} 和 \texttt{gripper\_tcp}，二者不得混用。
+\end{enumerate}
+
+\section{模型验证门槛}
+
+\begin{longtable}{L{3cm}L{5.5cm}L{6cm}}
+\caption{机器人描述验收项}\\
+\toprule
+项目 & 验证方法 & 通过条件 \\
+\midrule
+\endfirsthead
+\toprule
+项目 & 验证方法 & 通过条件 \\
+\midrule
+\endhead
+Xacro 解析 & \texttt{xacro} + URDF 检查 & 无错误、无重复 link/joint、参数可覆盖 \\
+TF 连通性 & RViz / TF tree & 根到 TCP 单链路连通，无循环、无多发布者 \\
+网格尺度 & 与 CAD 尺寸和标准比色皿对照 & 关键尺寸误差低于设定阈值 \\
+关节方向 & 正负命令可视化 & 左右手指对称，无反向穿模 \\
+惯量 & Gazebo 启动和静置 & 无 NaN、爆炸、持续抖动或异常下落 \\
+碰撞模型 & 自碰撞与外部碰撞检查 & 不漏掉手指/外壳主要接触面，不过度保守 \\
+TCP & 已知姿态和测量治具 & TCP 定义可复现，安装变换单独记录 \\
+\bottomrule
+\end{longtable}
+
+\section{Gazebo 控制架构}
+
+Gazebo 与 ROS 2 通过 \texttt{gz\_ros2\_control} 连接。官方实现支持关节状态、轨迹控制和平行夹爪 mimic-joint 示例\cite{gzros2control2026}。最小配置为：
+
+\begin{itemize}
+  \item \texttt{joint\_state\_broadcaster} 发布全部关节状态；
+  \item \texttt{joint\_trajectory\_controller} 接收机械臂轨迹；
+  \item 平行夹爪控制器接收目标开度；
+  \item 控制器 YAML、URDF 控制接口和 MoveIt 控制器名称保持一致；
+  \item 使用位置接口完成第一版，只有研究驱动响应或接触力时才增加 effort 接口和自定义动态。
+\end{itemize}
+
+\section{抓取物体的仿真策略}
+
+仅依赖摩擦接触可能造成高频抖动或物体滑落，使任务逻辑验证被接触参数掩盖。因此分两级：
+
+\begin{enumerate}
+  \item \textbf{逻辑抓取基线：}当手指闭合、物体位于抓取区且相对速度满足阈值时建立可解除固定连接；用于验证任务、MoveIt 和故障恢复。
+  \item \textbf{物理抓取实验：}取消固定连接，使用接触、摩擦、软接触和真实质量；用于研究夹持稳定性，不作为最早期任务链路的阻塞项。
+\end{enumerate}
+
+两级仿真必须在报告中明确区分，避免把“附着插件成功”当成真实抓取性能。
+
+\chapter{机械臂运动规划、轨迹与操作任务}
+
+\section{规划问题分解}
+
+实验室抓放不应使用一种规划器覆盖全部动作。建议分为：
+
+\begin{itemize}
+  \item 自由空间移动：从安全位到预抓取位、从撤离位到目标预放置位；
+  \item 约束接近：沿工具轴低速靠近比色皿；
+  \item 抓取与验证：闭合夹爪并确认对象存在；
+  \item 约束撤离：沿工具轴直线退出；
+  \item 放置/插入：保持方向约束，必要时进行视觉或力修正。
+\end{itemize}
+
+\section{候选机械臂规划器}
+
+\begin{table}[H]
+\centering
+\caption{机械臂规划器比较与建议}
+\begin{tabularx}{\textwidth}{L{2.4cm}L{3.2cm}YY}
+\toprule
+方法 & 文献依据 & 优势 & 局限与本项目定位 \\
+\midrule
+RRT-Connect & 双向随机树，面向单次高维查询\cite{kuffner2000rrtconnect} & 快速获得可行路径、MoveIt/OMPL 集成成熟 & 路径不保证最优；作为自由空间基线 \\
+RRT* / PRM* & OMPL 采样规划库\cite{sucan2012ompl} & 渐近最优或适合多次查询 & 规划预算更高；只在基线质量不足时比较 \\
+CHOMP & 梯度优化轨迹\cite{ratliff2009chomp} & 可直接优化平滑度和障碍代价 & 依赖初值、可能陷入局部极小；作为后处理候选 \\
+STOMP & 随机轨迹优化\cite{kalakrishnan2011stomp} & 不要求代价梯度，可跳出部分局部极小 & 参数和计算量较高；Deferred \\
+Pilz LIN/PTP & MoveIt 工业运动管线\cite{moveitpilz2026} & 直线接近、同步点到点运动，行为清晰 & 复杂障碍自由空间能力有限；用于接近/插入/撤离 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\decisionbox{推荐组合}{自由空间使用 RRT-Connect；最后接近、撤离和插入使用 Pilz LIN 或受约束 CartesianPath；任务级组合使用 MoveIt Task Constructor。该组合把“寻找可行无碰路径”和“保证末端几何运动形态”分开。}
+
+\section{为什么 RRT-Connect 适合基线}
+
+Kuffner 与 LaValle 的 RRT-Connect 从起点和终点同时扩展树，并用贪心连接提高单次查询效率；论文展示了 7 自由度手臂、6 自由度 PUMA 和三维刚体规划\cite{kuffner2000rrtconnect}。本项目每次抓放的起终状态明确、机械臂配置空间维度较高，符合其问题结构。RRT-Connect 的价值是快速得到第一条可行路径，而不是宣称路径最短。因此必须用固定场景、固定随机种子和同一规划时间预算，与 RRT*、PRM* 或优化型规划器比较。
+
+\section{为什么最后接近不应只依赖随机规划}
+
+抓取和插入要求工具方向、接近轴和工作站几何受约束。Task Space Regions 研究表明，可用末端位姿区域表达操作约束和位姿不确定性\cite{berenson2011tsr}。工程上，Pilz LIN 可以生成末端直线轨迹\cite{moveitpilz2026}，更适合“沿比色皿轴线接近”这一可解释要求。若 LIN 因奇异点或关节限制失败，应返回明确失败码，而不是自动使用形状不可控的自由空间路径替代。
+
+\section{规划器实验}
+
+至少构造三类场景：开放空间、狭窄通道、目标附近障碍。每个规划器每个场景执行不少于 100 个固定种子试验，记录：首次可行解率、规划时间中位数及 95 分位数、关节路径长度、末端路径长度、最小碰撞距离、轨迹平滑度和执行成功率。OMPL 的可扩展基准框架正是为跨规划器重复比较而设计\cite{moll2015benchmarking}。
+
+\chapter{感知、坐标变换与标定}
+
+\section{感知任务的真实需求}
+
+当前任务不需要通用视觉理解，而需要可靠地估计：源工作站坐标、目标工作站坐标、比色皿抓取位姿和插入位姿。第一版应将问题结构化，通过标记和治具降低不确定性。
+
+\section{AprilTag、ArUco 与学习式姿态估计}
+
+\begin{table}[H]
+\centering
+\caption{工作站定位候选方案}
+\begin{tabularx}{\textwidth}{L{2.5cm}YYY}
+\toprule
+方案 & 证据与能力 & 优势 & 局限/使用条件 \\
+\midrule
+AprilTag 3 & 检测器相对 AprilTag 2 和 ArUco 报告了更高召回和速度，同时保持精度\cite{krogius2019apriltag3} & ROS 生态成熟、标识唯一、易测量 & 需要允许布置标记；对尺寸、视角、反光敏感 \\
+ArUco & 高汉明距离字典并考虑遮挡可靠性\cite{garrido2014aruco} & OpenCV 直接支持、生成方便 & 应通过本项目相机/光照实测再决定 \\
+无标记 6D 姿态 & 可适应不允许贴标或目标变化 & 扩展性强 & 数据、模型和误差解释成本高；不作为第一版 \\
+固定治具坐标 & 最简单、重复性高 & 适合硬件调试和基准试验 & 无法补偿移动底盘或工作站变化 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\decisionbox{感知基线}{工作站使用 AprilTag 3；比色皿若在结构化槽位中，则由“工作站标记到槽位”的标定变换得到目标位姿。只有槽内目标变化或遮挡使该方案无法满足误差预算时，再加入直接对象姿态估计。}
+
+\section{相机布置选择}
+
+\begin{itemize}
+  \item \textbf{固定相机（eye-to-hand）：}视野稳定、线缆简单，适合同时观察工作站；机械臂可能遮挡目标。
+  \item \textbf{腕部相机（eye-in-hand）：}最终接近时分辨率高，可用于视觉伺服；增加末端质量、线缆和手眼标定要求。
+  \item \textbf{建议：}第一版固定相机完成工作站定位；若插入误差预算不够，再增加腕部相机执行最后几厘米闭环修正。
+\end{itemize}
+
+\section{标定链路}
+
+Tsai--Lenz 方法是经典手眼标定基线，解决相机与机械臂末端之间的刚体变换\cite{tsai1989handeye}。项目需要分别管理：相机内参、畸变、相机到机器人基座、法兰到夹爪、夹爪到 TCP、标记到工作站槽位。任何一个变换都必须有日期、工具、样本数、残差和硬件版本。
+
+\section{误差预算}
+
+设抓取目标在机器人基座中的估计为
+\begin{equation}
+{}^{B}\hat{T}_{O} = {}^{B}T_{C}\,{}^{C}\hat{T}_{M}\,{}^{M}T_{O},
+\end{equation}
+其中 $B$ 为机械臂基座、$C$ 为相机、$M$ 为标记、$O$ 为目标。总误差至少包含相机内参误差、标记姿态误差、手眼标定误差、安装变形、机械臂重复性和 TCP 误差。不能只报告检测器像素误差；必须报告最终操作坐标中的平移和旋转误差。
+
+\section{视觉伺服升级条件}
+
+视觉伺服把图像或视觉估计放入控制闭环，经典分类包括基于图像和基于位置的方法\cite{chaumette2006visualservo}。只有当静态估计的 95 分位误差不能满足抓取/插入容差，且相机帧率、延迟和可见性足够时才升级。建议先在仿真中注入标定和测量噪声，确定闭环收益，再上实机。
+
+\chapter{夹爪模型、控制与验证}
+
+\section{仿真与真实夹爪的分界}
+
+仿真第一版只模拟手指开度、速度限制、碰撞和抓取状态，不模拟 STS3215 固件、串口延迟、磁场或硅胶精细变形。真实阶段再以相同 ROS action 接入 STM32 驱动，使上层任务逻辑不变。
+
+\section{建议状态机}
+
+\begin{lstlisting}
+UNCALIBRATED -> CALIBRATING -> OPEN -> CLOSING
+                                  |        |
+                                  |        +-> GRASPED -> HOLDING
+                                  |        +-> EMPTY_GRASP
+                                  |        +-> TIMEOUT / OVERLOAD
+                                  +<- RELEASING <- HOLDING
+\end{lstlisting}
+
+每个动作必须有最大持续时间、最大行程、取消行为和故障码。对象存在不能只由“磁阈值达到”判断，因为空抓时两侧硅胶相互压缩也可能达到阈值。
+
+\section{夹爪基准测试}
+
+NIST/IEEE 的末端执行器基准协议强调抓持强度、循环时间、手指强度和重复性\cite{falco2020gripperbench}。本项目建议测试：
+
+\begin{itemize}
+  \item 开度重复性：开、闭和中间位置各 30 次；
+  \item 空抓检测：不同起始开度和速度下至少 50 次；
+  \item 抓取检测：空、正确放置、偏移放置和倾斜放置分层试验；
+  \item 释放可靠性：不同硅胶表面、停留时间和湿度条件；
+  \item 夹持力标定：磁读数与独立力传感器对照，给出回归误差和滞回；
+  \item 快拆重复性：重复安装后测 TCP 平移和转角变化。
+\end{itemize}
+
+\section{精密插入与柔顺策略}
+
+若真实 DynaPro 插入间隙接近系统位姿误差，纯位置控制会产生卡滞和接触峰值。Whitney 的装配分析说明了柔顺和 Remote Center Compliance 对刚性零件装配的作用\cite{whitney1982assembly}；Hogan 的阻抗控制把自由运动和接触交互统一到期望机械阻抗\cite{hogan1985impedance}。建议按以下成本递增顺序评估：
+
+\begin{enumerate}
+  \item 降速直线插入 + 倒角/被动治具；
+  \item 视觉修正后开环插入；
+  \item 小范围搜索或螺旋搜索；
+  \item 力/力矩传感 + 导纳/阻抗控制；
+  \item 学习残差，仅在重复系统性误差无法由标定解决时使用。
+\end{enumerate}
+
+\chapter{移动导航、全局规划与工作站停靠}
+
+\section{导航栈}
+
+Navigation2 使用行为树组织导航任务，并面向 ROS 2 生命周期与动态环境\cite{macenski2020nav2}。建议组成：2D LiDAR、轮速里程计、IMU、robot\_localization、SLAM Toolbox、AMCL/SLAM 定位、分层 costmap、全局规划器、局部控制器和 Docking Server。SLAM Toolbox 提供同步/异步建图、多会话和定位模式，是 ROS 2 中成熟的 2D SLAM 选择\cite{macenski2021slamtoolbox}；Cartographer 的分支定界 scan-to-submap 方法可作为性能比较对象\cite{hess2016cartographer}。
+
+\section{Hybrid A*：作用、理由与限制}
+
+传统 2D A* 在 $(x,y)$ 网格搜索，可能产生车辆无法执行的急转路径。Hybrid A* 在包含朝向的连续/离散混合状态空间搜索，并用车辆运动原语扩展节点。Dolgov 等人的工作面向有非完整约束的自动驾驶车辆，并在 2007 DARPA Urban Challenge 场景中验证了该路线\cite{dolgov2008hybridastar}。
+
+选择 Hybrid A* 的理由是：
+
+\begin{itemize}
+  \item 将最小转弯半径和前进/倒车运动模型直接放入搜索；
+  \item 输出路径在运动学上可执行，而不是先得到折线再依赖平滑器修补；
+  \item 可使用完整 SE(2) footprint 做碰撞检查；
+  \item Nav2 Smac 已提供 Dubins/Reeds--Shepp、解析扩展和平滑器实现。
+\end{itemize}
+
+但 Hybrid A* \textbf{不是未知底盘的默认答案}。Nav2 官方 Smac 文档明确区分：2D A* 支持近圆差速/全向底盘，Hybrid A* 主要适合 Ackermann/类车运动学，State Lattice 可覆盖非圆差速、全向和自定义运动模型\cite{nav2smac2026}。官方示例在约 75 m 路径上报告 Hybrid A* 144 ms、State Lattice 113 ms、2D A* 243 ms，但该结果只能作为实现能力示例，不能替代本项目地图、footprint 和计算机上的实测\cite{nav2smac2026}。
+
+\section{全局规划器条件化选择}
+
+\begin{table}[H]
+\centering
+\caption{底盘运动学与全局规划器映射}
+\begin{tabularx}{\textwidth}{L{3.1cm}L{3.2cm}YY}
+\toprule
+底盘条件 & 首选候选 & 理由 & 必须验证 \\
+\midrule
+近圆差速，可原地转 & Smac 2D A* & 简单、快速，路径可由控制器跟踪 & 窄通道、安全间距、旋转时载荷稳定性 \\
+非圆差速或全向 & State Lattice & 以预生成运动原语保证运动学可行\cite{pivtoraiko2009lattice} & 原语分辨率、倒车、footprint、规划时间 \\
+Ackermann/类车 & Hybrid A* & 直接考虑最小转弯半径和朝向\cite{dolgov2008hybridastar} & 转弯半径、倒车惩罚、解析扩展 \\
+底盘未知 & 不冻结算法 & 防止提前形成错误依赖 & 先确认运动学和尺寸 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{局部控制器选择}
+
+Dynamic Window Approach 在速度空间采样满足动态约束的指令，原论文在有人动态环境中以最高约 \SI{0.95}{m/s} 展示 RHINO 控制\cite{fox1997dwa}。TEB 将状态、控制和时间间隔组成优化变量，论文报告可在少量迭代中逼近时间最优轨迹\cite{rosmann2015teb}。MPPI 使用采样和重要性加权执行模型预测控制，可并行计算复杂非线性代价\cite{williams2017mppi}。
+
+建议第一版使用 Nav2 默认且维护成熟的控制器完成稳定导航；随后以 DWB/DWA 与 MPPI 做对照。实验室任务速度低，选择依据应优先是窄通道成功率、停靠前姿态稳定性和计算 95 分位延迟，而不是最高速度。
+
+\section{两级停靠与操作前重新定位}
+
+移动底盘不应承担亚毫米操作精度。Oba 等人的移动操作研究使用机床内的标记补偿 AGV 定位误差，并面向约 \SI{1}{mm} 级装配要求验证\cite{oba2021mobilemanipulator}；基于单目标记的工业停靠研究也采用 PnP 求相对位姿并做精度与鲁棒性实验\cite{petr2023docking}。因此建议：
+
+\begin{enumerate}
+  \item Nav2 到达工作站前方预停靠位，容差可为厘米级；
+  \item 相机检测工作站标记并进入低速闭环精停靠；
+  \item 底盘停止并制动；
+  \item 再次估计工作站相对机械臂基座位姿；
+  \item 机械臂按照重新定位结果规划，而不是假设底盘到达理想位姿。
+\end{enumerate}
+
+\chapter{任务执行、恢复与可观测性}
+
+\section{任务执行器选择}
+
+行为树将复杂任务组织为可组合、可响应的条件和动作，适合把导航、感知、操作和恢复分开\cite{colledanchise2018bt}。建议系统级使用 BehaviorTree.CPP/Nav2 风格行为树，操作内部使用 MoveIt Task Constructor 分解规划阶段。两者职责不同：行为树决定“何时做什么和如何恢复”，MTC 解决“这一操作由哪些互相关联的规划阶段组成”。
+
+\section{建议任务树}
+
+\begin{lstlisting}
+ROOT
+|-- CheckSafety
+|-- NavigateOrSkipSource
+|-- DockAndRelocaliseSource
+|-- PickSequence
+|   |-- LocaliseObject
+|   |-- PlanPregrasp
+|   |-- ApproachLIN
+|   |-- CloseGripper
+|   |-- VerifyGrasp
+|   `-- RetractLIN
+|-- NavigateOrSkipDestination
+|-- DockAndRelocaliseDestination
+|-- PlaceSequence
+|   |-- PlanPreplace
+|   |-- ApproachOrInsert
+|   |-- OpenGripper
+|   |-- VerifyRelease
+|   `-- RetractLIN
+`-- ReturnSafe
+\end{lstlisting}
+
+\section{失败码与恢复}
+
+不得只返回布尔成功/失败。至少区分：目标未检测、标定失效、IK 无解、规划超时、轨迹执行失败、抓取为空、疑似滑落、释放粘连、接触力过高、导航受阻、停靠超差、通信丢失和急停。每种失败码只能触发白名单恢复，例如重新检测、换一个预抓取姿态、后退重停靠或进入安全停止；禁止无界重试。
+
+\section{日志与可复现性}
+
+每次试验保存 ROS bag、参数快照、Git commit、随机种子、URDF 哈希、场景编号、起终位姿、规划结果、控制器状态和视频时间戳。仿真必须记录 Gazebo 版本、物理引擎、real-time factor 和噪声配置。
+
+\chapter{安全工程与标准边界}
+
+\section{安全不是仿真通过}
+
+Gazebo 中没有碰撞不等于真实系统安全。软件停止也不等于硬件急停。安全工作应从危险分析、风险降低措施、独立安全链路和验证证据开始。
+
+\section{相关标准}
+
+ISO 10218-1:2025 规定工业机器人本体安全要求，ISO 10218-2:2025 面向机器人应用和单元集成\cite{iso10218_1_2025,iso10218_2_2025}。ISO/TS 15066:2016 补充协作机器人应用要求，并讨论安全额定监控停机、手动引导、速度与间距监控、功率与力限制\cite{iso15066_2016}。需要注意，ISO 10218-1 明确不覆盖机械臂固定在移动平台后的移动性风险，因此最终移动操作系统必须由学校安全人员和系统集成风险评估进一步确定适用标准。
+
+\section{初始危险清单}
+
+\begin{longtable}{L{3.2cm}L{4.5cm}L{6.8cm}}
+\caption{初始危险与控制措施}\\
+\toprule
+危险 & 可能后果 & 初始控制措施 \\
+\midrule
+\endfirsthead
+\toprule
+危险 & 可能后果 & 初始控制措施 \\
+\midrule
+\endhead
+机械臂/人员碰撞 & 挤压、撞击 & 限速、隔离区、保护停、硬件急停、上电检查 \\
+底盘运动时机械臂伸展 & 倾覆或设备碰撞 & 运输姿态互锁、稳定性分析、速度/加速度限制 \\
+比色皿破裂或滑落 & 玻璃、液体和污染危险 & 力限制、二次承接、对象存在/滑落检测 \\
+插入碰撞 & 仪器和夹爪损坏 & 低速、力阈值、柔顺、撤退路径、治具 \\
+通信丢失 & 失控或动作停滞 & 控制器 watchdog、超时、定义安全状态 \\
+感知错误 & 错误抓取/碰撞 & 协方差阈值、二次观测、工作区约束、失败拒绝 \\
+电气故障 & 触电、过热、失火 & 合规供电、隔离、保险、急停切能、审查 \\
+化学暴露 & 人员/设备伤害 & 任务物质限制、SDS、实验室审批、防溢措施 \\
+\bottomrule
+\end{longtable}
+
+\chapter{实验设计、指标与统计分析}
+
+\section{分层实验}
+
+\subsection{E1：固定路点复现}
+
+固定源和目标，复现上一组概念基线。测量抓取成功、释放成功、完整循环成功、周期时间和故障类型。该实验用于硬件和任务管线验收，不构成最终贡献。
+
+\subsection{E2：位姿扰动对照}
+
+对源工作站施加分层随机平移和转角扰动，比较固定路点与 AprilTag + TF + MoveIt 重规划。自变量为方法和扰动等级，因变量为定位误差、规划成功、抓取成功、放置误差和周期时间。
+
+\subsection{E3：精密放置/插入}
+
+比较开环位置控制、视觉修正和柔顺/力辅助方法。测量插入成功、峰值接触力、对准误差、完成时间和恢复次数。
+
+\subsection{E4：移动操作}
+
+人为设置或采样底盘停靠纵向、横向和偏航误差，比较“直接按地图位姿操作”与“工作站重新定位后操作”。核心输出是任务成功率随停靠误差的变化曲线。
+
+\section{核心指标}
+
+\begin{table}[H]
+\centering
+\caption{指标、定义和日志来源}
+\begin{tabularx}{\textwidth}{L{3cm}L{6cm}Y}
+\toprule
+指标 & 定义 & 数据来源 \\
+\midrule
+完整任务成功率 & 无人工干预完成全部规定阶段的试验比例 & 任务执行器最终状态 + 视频审核 \\
+抓取/释放成功率 & 对应阶段成功次数/尝试次数 & 夹爪状态、对象位姿和人工盲审 \\
+位姿误差 & 估计/放置位姿与独立基准之间的 SE(3) 误差 & 标定治具、外部测量或高精度标记 \\
+规划时间 & 请求到规划返回的时间 & MoveIt/Nav2 日志 \\
+轨迹安全裕度 & 轨迹最小碰撞距离 & PlanningScene/FCL\cite{pan2012fcl} \\
+周期时间 & 从任务接收到完成/失败 & 统一时钟时间戳 \\
+峰值接触力 & 插入或抓取过程最大力/力矩 & F/T 传感器或经过验证的估计 \\
+停靠误差 & 停止后相对工作站的纵向、横向、偏航误差 & 独立标记/测量系统 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+ISO 18646-2:2024 将位姿精度与重复性、避障、路径偏差、窄通道和建图精度列为室内导航性能指标\cite{iso18646_2_2024}；操作测试应参考 ISO 18646-3 和末端执行器基准文献\cite{iso18646_3_2021,falco2020gripperbench}。
+
+\section{统计规则}
+
+成功率必须同时报告样本数和置信区间。对于 $x$ 次成功、$n$ 次试验，可用 Wilson 区间而不是只给 $x/n$。规划时间等偏态数据报告中位数、四分位距和 95 分位。不同方法使用相同场景和随机种子进行配对比较；失败按预先定义的分类编码。仿真可使用每条件 100 次以上，实机样本量根据时间和功效分析确定，但核心可靠性演示不应少于上一组 50 次的量级。
+
+\section{验收门槛的设定原则}
+
+本报告不在需求未确认时虚构最终数值。门槛来源必须是：真实仪器几何和化学流程要求、厂商限制、学校安全要求或基线实验分布。所有门槛都需记录测量方法和批准人。
+
+\chapter{工作分解、里程碑与交付物}
+
+\section{阶段路线}
+
+\begin{longtable}{L{1.15cm}L{3.15cm}L{4.95cm}L{5.35cm}}
+\caption{建议工作分解结构}\\
+\toprule
+阶段 & 目标 & 主要任务 & 退出证据 \\
+\midrule
+\endfirsthead
+\toprule
+阶段 & 目标 & 主要任务 & 退出证据 \\
+\midrule
+\endhead
+P0 & 冻结输入 & 确认机械臂、ROS 版本、底盘运动学、仪器访问、接收固件/代码 & 决策记录和资产清单完整 \\
+P1 & 夹爪数字模型 & CAD 清理、网格、Xacro、惯量、关节和 TCP & RViz/Gazebo 单体模型通过自动检查 \\
+P2 & 机械臂 + 夹爪 & 引用厂商描述、固定安装、组合碰撞与控制器 & 组合机器人稳定生成并可开合夹爪 \\
+P3 & 规划与任务 & MoveIt、RRT-Connect、LIN、MTC/状态机 & 自动完成仿真抓放并输出结构化日志 \\
+P4 & 感知基线 & AprilTag、相机标定、TF 和位姿扰动 & E2 显示重规划相对固定路点的收益 \\
+P5 & 真实硬件 & 驱动、STM32、TCP、限速和安全审查 & 低速复现基线且故障行为可验证 \\
+P6 & 精密操作 & 视觉修正、治具、力/柔顺按需加入 & E3 定量满足真实工作流要求 \\
+P7 & 移动集成 & Nav2、规划器、停靠、工作站重定位 & E4 完成端到端移动操作 \\
+\bottomrule
+\end{longtable}
+
+\section{2026 S2 建议节奏}
+
+\begin{table}[H]
+\centering
+\caption{2026 S2 参考时间表}
+\begin{tabularx}{\textwidth}{L{2.4cm}Y Y}
+\toprule
+月份 & 核心工作 & 可演示成果 \\
+\midrule
+8 月 & 资产接手、环境、机械臂确认、F3Z 审核、需求和安全边界 & 夹爪模型在 RViz/Gazebo 中出现 \\
+9 月 & 组合 Xacro、ros2\_control、MoveIt、碰撞模型、自动测试 & 机械臂 + 夹爪可控，完成无物体轨迹 \\
+10 月 & MTC 抓放、AprilTag、标定、位姿扰动仿真和实机准备 & 感知引导仿真抓放与 E2 初步结果 \\
+11 月 & 真实机械臂集成、重复试验、报告和移动接口冻结 & 固定平台完整演示与量化数据 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{必须交付的工程制品}
+
+\begin{itemize}
+  \item 可构建 ROS 2 工作区和锁定的依赖说明；
+  \item 模块化 URDF/Xacro、视觉/碰撞网格及来源记录；
+  \item Gazebo worlds、控制器配置和一键 bringup；
+  \item MoveIt 配置、任务执行器和自动化测试；
+  \item 标定工具、标定结果格式和 TF 所有权说明；
+  \item 实验配置、ROS bags、分析脚本和结果表；
+  \item 风险登记、决策日志、已知问题和 sim-to-real 日志；
+  \item 可重复的演示流程，而不是只交演示视频。
+\end{itemize}
+
+\chapter{风险、未确认决策与停止条件}
+
+\section{高优先级风险}
+
+\begin{longtable}{L{1.15cm}L{4.05cm}L{3.25cm}L{6.15cm}}
+\caption{项目风险登记}\\
+\toprule
+编号 & 风险 & 影响 & 缓解与触发条件 \\
+\midrule
+\endfirsthead
+\toprule
+编号 & 风险 & 影响 & 缓解与触发条件 \\
+\midrule
+\endhead
+R1 & 机械臂型号或驱动版本迟迟不确认 & 组合模型和实机接口返工 & 仿真夹爪独立推进；设定确认截止日期；不复制非官方模型 \\
+R2 & CAD 与实物不一致 & TCP、碰撞和制造错误 & 实物尺寸核对；资产哈希和版本记录 \\
+R3 & 真实仪器无法访问 & 无法验证最终工作流 & 尽早建立尺寸等价治具并明确其证据边界 \\
+R4 & 比色皿插入容差过严 & 开环操作失败 & 测量误差预算；依次启用治具、视觉和柔顺 \\
+R5 & Gazebo 抓取不稳定 & 任务管线被接触调参拖延 & 逻辑 attach 基线与物理抓取实验分离 \\
+R6 & 上一组代码缺失 & 真实夹爪调试时间增加 & 仿真不阻塞；重新定义 ROS action；硬件阶段恢复协议 \\
+R7 & 安全架构晚于功能开发 & 无法上电或实验 & P0 建立危险清单；硬件测试前完成审查 \\
+R8 & 算法选择先于底盘确认 & 导航方案不匹配 & Hybrid A*/Lattice/2D A* 保持条件化决策 \\
+\bottomrule
+\end{longtable}
+
+\section{立即需要外部确认的问题}
+
+\begin{enumerate}
+  \item 实际采购机械臂的完整型号、控制器、交付日期和厂商 ROS 2 支持矩阵；
+  \item 移动底盘是差速、全向还是 Ackermann，尺寸、载荷、转弯半径、供电和接口；
+  \item 真实 Opentrons/DynaPro 是否可用，真实插入容差和允许安装标记的位置；
+  \item 相机、LiDAR、IMU、F/T 传感器和计算机型号；
+  \item 上一组固件、ROS 代码、接线、参数、原始数据和物理夹爪；
+  \item 学校实验室风险评估、急停和化学品处理要求。
+\end{enumerate}
+
+\section{高级方案的启动条件}
+
+\begin{table}[H]
+\centering
+\caption{避免无目的复杂化的启动门槛}
+\begin{tabularx}{\textwidth}{L{3cm}Y Y}
+\toprule
+高级方案 & 启动条件 & 启动前必须有的基线 \\
+\midrule
+无标记学习视觉 & 标记不被允许或标记方案在规定条件下失效 & AprilTag 检测率、误差与失败场景 \\
+视觉伺服 & 静态视觉 95 分位误差不满足容差 & 开环抓放结果和时延测量 \\
+阻抗/导纳控制 & 插入接触力或卡滞无法由标定/治具解决 & 低速位置控制的力和成功率分布 \\
+学习残差控制 & 存在重复且可观测的系统性残差 & 模型控制、数据划分和安全边界 \\
+高保真硅胶仿真 & 硅胶变形直接影响研究问题 & 简化夹爪模型及真实材料测试 \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\chapter{结论与推荐起点}
+
+Project ATOM 的可交付核心应是一套可替换硬件后端、可量化误差、可注入故障并可逐步扩展的自主操作架构。当前最合理的起点不是等待上一组全部代码，也不是先讨论强化学习，而是完成以下闭环：
+
+\begin{enumerate}
+  \item 确认机械臂和 ROS/Gazebo 版本；
+  \item 将夹爪 F3Z 转换成经验证的模块化 Xacro；
+  \item 在 Gazebo 中用 ros2\_control 控制组合机器人；
+  \item 使用 RRT-Connect + LIN + MTC 完成可重复仿真抓放；
+  \item 建立 AprilTag 和 TF 感知基线，进行位姿扰动对照；
+  \item 根据真实误差决定是否需要视觉伺服和柔顺插入；
+  \item 底盘确定后，按运动学选择 2D A*、Hybrid A* 或 State Lattice；
+  \item 用两级停靠和工作站重新定位完成移动操作集成。
+\end{enumerate}
+
+\warningbox{本报告的决策边界}{报告中的技术路线是可执行的前置方案，但不是对未知硬件参数的替代。机械臂型号、底盘运动学、真实仪器容差和学校安全要求一经确认，应更新方案矩阵、依赖版本和验收门槛。}
+
+\appendix
+\chapter{最小 Gazebo 交付验收表}
+
+\begin{longtable}{L{1.2cm}L{5.5cm}L{7.9cm}}
+\toprule
+编号 & 验收项 & 通过条件 \\
+\midrule
+\endfirsthead
+\toprule
+编号 & 验收项 & 通过条件 \\
+\midrule
+\endhead
+G1 & 可重复构建 & 干净环境执行依赖安装和 colcon build 成功 \\
+G2 & 组合模型 & 机械臂、夹爪、TCP 和控制关节在同一模型中正确 \\
+G3 & Gazebo 稳定性 & 启动、静置和运动无 NaN、爆炸、持续抖动 \\
+G4 & 控制接口 & 机械臂轨迹和夹爪开度 action 均有成功/失败反馈 \\
+G5 & MoveIt & PlanningScene、SRDF、自碰撞矩阵和控制器一致 \\
+G6 & 基本任务 & 自动执行预抓取、接近、闭合、搬运、释放和撤离 \\
+G7 & 失败处理 & 不可达、规划超时和抓取失败可以终止并返回分类错误 \\
+G8 & 可观测性 & 保存参数、随机种子、轨迹、TF、任务状态和结果 \\
+G9 & 自动测试 & Xacro、TF、控制器、启动和 smoke task 有 CI/脚本测试 \\
+G10 & 文档 & 新成员可按 README 在目标环境复现演示 \\
+\bottomrule
+\end{longtable}
+
+\chapter{文献到工程决策追踪}
+
+\begin{longtable}{L{4.2cm}L{4.8cm}L{5.6cm}}
+\toprule
+文献/标准证据 & 支撑的工程选择 & 不应过度推断的内容 \\
+\midrule
+\endfirsthead
+\toprule
+文献/标准证据 & 支撑的工程选择 & 不应过度推断的内容 \\
+\midrule
+\endhead
+ROS 2 架构\cite{macenski2022ros2} & 模块化节点、QoS、生命周期和硬件解耦 & ROS 2 本身不提供运动规划或安全认证 \\
+Gazebo\cite{koenig2004gazebo} & 在实机前验证模型和系统行为 & 仿真成功不等价于实机成功 \\
+RRT-Connect\cite{kuffner2000rrtconnect} & 机械臂单次高维自由空间规划基线 & 不保证最短或最平滑轨迹 \\
+OMPL 基准\cite{moll2015benchmarking} & 固定问题和种子比较规划器 & 不能照搬其他机器人的排名 \\
+AprilTag 3\cite{krogius2019apriltag3} & 确定性工作站定位基线 & 不能替代本项目相机/光照误差实验 \\
+Hybrid A*\cite{dolgov2008hybridastar} & 有最小转弯半径车辆的运动学可行搜索 & 不应直接用于未知或全向底盘 \\
+State Lattice\cite{pivtoraiko2009lattice} & 非圆、自定义运动学底盘的候选 & 运动原语仍需按实际平台生成 \\
+视觉伺服\cite{chaumette2006visualservo} & 视觉进入闭环的理论与结构 & 不保证在遮挡/时延下稳定 \\
+阻抗控制\cite{hogan1985impedance} & 接触任务的力--运动关系设计 & 需要真实控制接口和安全限值 \\
+ISO 10218/15066\cite{iso10218_1_2025,iso15066_2016} & 风险评估和协作安全设计依据 & 不覆盖所有移动平台和化学危险 \\
+\bottomrule
+\end{longtable}
+
+\printbibliography[heading=bibintoc,title={参考文献}]
+
+\end{document}

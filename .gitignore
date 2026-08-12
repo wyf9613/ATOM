@@ -1,0 +1,25 @@
+# Local/editor state
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.trash/
+.DS_Store
+Thumbs.db
+
+# Temporary inspection and generated files
+tmp/
+*.log
+
+# ROS 2 / colcon
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+
+# IDE
+.vscode/
+.idea/
+
