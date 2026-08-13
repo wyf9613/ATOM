@@ -5,7 +5,7 @@ Items remain open until evidence is linked in `docs/DECISIONS.md`.
 | ID | Item | Current treatment |
 |---|---|---|
 | A-001 | The commercial arm may be a UFactory xArm 850. | Candidate only; do not build against it yet. |
-| A-002 | Ubuntu and ROS 2 will be used for integration. | Direction accepted; exact versions unconfirmed. |
+| A-002 | Ubuntu and ROS 2 will be used for integration. | Supervisor evidence identifies Ubuntu 22.04 and ROS 2 Humble on the previous project and laboratory computer. Treat Humble as the deployment-compatibility target while the exact package patch levels and final purchased-arm support remain unconfirmed. |
 | A-003 | Fiducials may be placed at workstations. | Preferred baseline, subject to lab approval. |
 | A-004 | Real Opentrons Flex and DynaPro NanoStar access will be available. | Unconfirmed; maintain a representative test fixture plan. |
 | A-005 | Precise insertion into the real DynaPro is required. | Unconfirmed; this changes sensing/control requirements. |

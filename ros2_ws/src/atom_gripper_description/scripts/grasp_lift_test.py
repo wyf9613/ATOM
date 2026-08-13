@@ -49,9 +49,17 @@ class GraspLiftTest(Node):
         self.joint_positions.update(zip(message.name, message.position))
 
     def _on_cuvette_pose(self, message):
-        if not message.transforms:
+        transform = next(
+            (
+                candidate
+                for candidate in message.transforms
+                if candidate.child_frame_id == "cuvette"
+            ),
+            None,
+        )
+        if transform is None:
             return
-        transform = message.transforms[0].transform
+        transform = transform.transform
         self.cuvette_pose = (
             transform.translation.x,
             transform.translation.y,

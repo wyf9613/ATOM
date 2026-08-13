@@ -1,0 +1,20 @@
+services:
+  atom-humble:
+    build:
+      context: .
+      dockerfile: docker/humble/Dockerfile
+      args:
+        USER_ID: "${ATOM_UID:-1000}"
+        GROUP_ID: "${ATOM_GID:-1000}"
+    image: atom-humble-fortress:latest
+    network_mode: host
+    ipc: host
+    stdin_open: true
+    tty: true
+    environment:
+      ROS_DOMAIN_ID: "${ROS_DOMAIN_ID:-42}"
+    volumes:
+      - .:/workspace
+      - ./.docker-runtime/humble_ws/build:/humble_ws/build
+      - ./.docker-runtime/humble_ws/install:/humble_ws/install
+      - ./.docker-runtime/humble_ws/log:/humble_ws/log

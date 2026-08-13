@@ -1,3 +1,4 @@
+import os
 import subprocess
 import xml.etree.ElementTree as ET
 
@@ -6,7 +7,12 @@ from ament_index_python.packages import get_package_share_directory
 
 def test_combined_description_expands_with_expected_chain():
     share = get_package_share_directory("atom_gripper_description")
-    description = f"{share}/urdf/ur3e_atom.urdf.xacro"
+    description_name = (
+        "ur3e_atom_humble.urdf.xacro"
+        if os.environ.get("ROS_DISTRO") == "humble"
+        else "ur3e_atom.urdf.xacro"
+    )
+    description = f"{share}/urdf/{description_name}"
     result = subprocess.run(
         ["xacro", description], check=True, capture_output=True, text=True
     )
@@ -75,7 +81,12 @@ def test_combined_description_expands_with_expected_chain():
 
 def test_grasp_world_contains_provisional_contact_baseline():
     share = get_package_share_directory("atom_gripper_description")
-    world = ET.parse(f"{share}/worlds/atom_grasp.sdf").getroot().find("world")
+    world_name = (
+        "atom_grasp_fortress.sdf"
+        if os.environ.get("ROS_DISTRO") == "humble"
+        else "atom_grasp.sdf"
+    )
+    world = ET.parse(f"{share}/worlds/{world_name}").getroot().find("world")
     assert world.find("gravity").text == "0 0 -9.81"
 
     models = {model.attrib["name"]: model for model in world.findall("model")}
@@ -89,4 +100,29 @@ def test_grasp_world_contains_provisional_contact_baseline():
         cuvette.find("link/collision/surface/friction/ode/mu").text == "0.88"
     )
     assert models["cuvette_support"].find("static").text == "true"
-    assert cuvette.find("plugin").attrib["name"] == "gz::sim::systems::PosePublisher"
+    if os.environ.get("ROS_DISTRO") == "humble":
+        world_plugins = {plugin.attrib["name"] for plugin in world.findall("plugin")}
+        assert "ignition::gazebo::systems::SceneBroadcaster" in world_plugins
+    else:
+        assert cuvette.find("plugin").attrib["name"] == (
+            "gz::sim::systems::PosePublisher"
+        )
+
+
+def test_both_gazebo_world_variants_are_well_formed():
+    share = get_package_share_directory("atom_gripper_description")
+    harmonic_world = ET.parse(f"{share}/worlds/atom_grasp.sdf").getroot().find(
+        "world"
+    )
+    harmonic_cuvette = harmonic_world.find("model[@name='cuvette']")
+    assert harmonic_cuvette.find("plugin").attrib["name"] == (
+        "gz::sim::systems::PosePublisher"
+    )
+
+    fortress_world = ET.parse(
+        f"{share}/worlds/atom_grasp_fortress.sdf"
+    ).getroot().find("world")
+    fortress_plugins = {
+        plugin.attrib["name"] for plugin in fortress_world.findall("plugin")
+    }
+    assert "ignition::gazebo::systems::SceneBroadcaster" in fortress_plugins

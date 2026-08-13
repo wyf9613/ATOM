@@ -42,6 +42,12 @@ source ros2_ws/install/setup.bash
 ros2 launch atom_gripper_description sim.launch.py
 ```
 
+The same launch entry points support the repository's Dockerized ROS 2 Humble /
+Gazebo Fortress baseline. On Humble they automatically select the
+`*_fortress.sdf` worlds, the Humble-compatible UR Xacro invocation and
+`ignition.msgs` bridge type names. Do not launch the Fortress world variants
+directly on Jazzy/Harmonic.
+
 In another sourced terminal, run the deterministic motion smoke test:
 
 ```bash

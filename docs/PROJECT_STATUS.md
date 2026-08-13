@@ -31,6 +31,7 @@ deployment stack and does not resolve the purchased-arm decision.
 | Previous ROS/serial integration code | Missing | To request |
 | Wiring diagram and pin map | Missing | To request |
 | Raw experiment data | Missing | To request |
+| Laboratory software baseline | Ubuntu 22.04 / ROS 2 Humble reported by supervisor | Reproduce with Docker, then verify exact packages on laboratory computer |
 | Robot-arm model/driver selection | Unconfirmed | Procurement decision required |
 | Mobile-base specification/interface | Missing | Coordinate with base team |
 

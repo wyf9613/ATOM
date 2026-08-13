@@ -41,3 +41,20 @@ After those decisions are recorded, create modular packages for:
 - later mobile-base, navigation and docking integration.
 
 Do not copy vendor robot models into this repository when an official, versioned upstream package can be pinned instead.
+
+## Ubuntu 22.04 / ROS 2 Humble compatibility environment
+
+The previous-project and laboratory baseline reported by the supervisor is
+Ubuntu 22.04 with ROS 2 Humble. Do not reinstall the workstation solely for that
+reason. The repository provides an isolated Humble/Fortress environment:
+
+```bash
+cd /home/wuyifan/ATOM
+./scripts/docker/humble_build.sh
+./scripts/docker/humble_test.sh
+```
+
+The Humble UR source is independently pinned in `atom_sim_humble.repos` because
+the upstream Humble and Jazzy Xacro interfaces differ. See
+`docker/humble/README.md` for Docker installation, GUI and laboratory validation
+instructions.

@@ -66,3 +66,12 @@
 - Decision: Add a separate gravity-enabled Gazebo scenario with a rigid cuvette, simplified terminal finger-pad collisions and an automated grasp/lift/hold/return/release acceptance test. Preserve the zero-gravity resource and motion smoke test as a separate scenario.
 - Evidence: The inherited report specifies a 14 x 14 mm cuvette cross-section, Silicone 20A pads, a mean friction coefficient of 0.88 from 10 inclined-plane trials and a 20 mm contact height used in its pressure analysis. The CAD confirms symmetric parallel-jaw motion but does not establish physical limits.
 - Boundary: The 45 mm height, 10 g mass, rigid contact, single-side 20 mm joint travel and controller gains are provisional. A pass is software evidence only and does not establish grip force, material stress, hardware reliability or real instrument compatibility.
+
+## D-010 - Add a Humble/Fortress deployment-compatibility container
+
+- Date: 2026-08-13
+- Status: Accepted for compatibility verification
+- Decision: Keep the Ubuntu 24.04 / ROS 2 Jazzy / Gazebo Harmonic host baseline, and add a separate Ubuntu 22.04 / ROS 2 Humble / Gazebo Fortress Docker environment as the deployment-compatibility gate. Include the Humble MoveIt 2 toolchain without selecting an ATOM MoveIt configuration. Use the official Humble branch of the UR description at commit `18e6f603b3ebc2ec479fecb62d6be544b15755e9`.
+- Evidence: The project supervisor reported that the previous project and laboratory computer use Ubuntu 22.04 and ROS 2 Humble. REP-2000 defines Ubuntu 22.04 as Humble's Tier-1 platform, and Gazebo documents Fortress as the recommended Humble pairing.
+- Verification: On 2026-08-13, image `atom-humble-fortress:latest` (`sha256:17ed7eb37301a67ec790d9344fef65193d15bb91be8b1aae829001bb9e46bb6b`) built on the Ubuntu 24.04 workstation. The Humble workspace, URDF check, four package-test results and one headless Fortress grasp/lift/hold/release run passed. Exact test conditions and results are recorded in `docs/SIM2REAL_LOG.md`.
+- Boundary: Container success checks the software stack on the target OS/ROS pairing; it does not reproduce the laboratory computer's GPU, USB/serial devices, vendor controller, firmware, real-time settings or exact installed patch versions. The full test must still be repeated on the laboratory computer.

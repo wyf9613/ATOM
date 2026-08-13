@@ -116,3 +116,50 @@ For each entry, attach units, measurement method, configuration/revision and the
 This is a functional simulation check, not statistical reliability evidence or
 validation of force, compliance, breakage risk, real insertion or the previous
 team's reported 49/50 hardware trials.
+
+## 2026-08-13 - Humble/Fortress container compatibility run
+
+### Reproduced software environment
+
+- Container OS: Ubuntu 22.04; ROS 2 Humble; Python 3.10.12.
+- Gazebo: Ignition Gazebo 6.18.0 (Fortress generation).
+- ROS/Gazebo integration: `ros-humble-ros-gz` 0.244.25.
+- MoveIt 2 metapackage: 2.5.9. No ATOM MoveIt configuration was selected or
+  validated in this run.
+- Official UR description source: commit
+  `18e6f603b3ebc2ec479fecb62d6be544b15755e9`.
+- Built image ID:
+  `sha256:17ed7eb37301a67ec790d9344fef65193d15bb91be8b1aae829001bb9e46bb6b`.
+- Host used for the run: Ubuntu 24.04 workstation with Docker Engine 29.1.3.
+
+### Compatibility corrections
+
+- Humble's UR Xacro interface differs from Jazzy, so the container uses a
+  separate top-level composition Xacro while retaining the same modular UR and
+  gripper packages.
+- Fortress uses the `ignition.msgs` bridge names and
+  `ignition::gazebo::systems` plugin names; Harmonic uses their `gz` equivalents.
+- Fortress resolves Humble UR meshes through `model://ur_description`, so both
+  package share parents must be present in `IGN_GAZEBO_RESOURCE_PATH`.
+- Fortress's model-level PosePublisher produced an empty pose vector in this
+  scenario. The Humble bridge therefore reads
+  `/world/atom_grasp/dynamic_pose/info`, and the evaluator selects the transform
+  whose `child_frame_id` is `cuvette`. Harmonic retains `/model/cuvette/pose`.
+
+### Test evidence
+
+- `rosdep check` reported all source dependencies satisfied.
+- Both `ur_description` and `atom_gripper_description` built successfully.
+- Humble Xacro expansion and `check_urdf` passed for the complete chain.
+- Package tests reported four results with zero errors, failures or skips.
+- One clean headless Fortress grasp/lift/hold/return/release run passed
+  (`N=1`; physics step `0.001 s`; simulated gravity `9.81 m/s^2`).
+- Measured simulation outputs: lift `0.0500 m`, hold drop `0.0000 m` at logged
+  precision, lateral displacement `0.0040 m`, release error `0.0005 m`, and
+  left/right finger contact positions `-0.0128 m`.
+
+This verifies the repository's software simulation on the selected
+Ubuntu/Humble/Fortress pairing. It is not evidence for the laboratory computer's
+GPU, device permissions, controller/firmware, real robot calibration or gripper
+hardware. Repeat the same test on that computer before claiming laboratory
+deployment compatibility.

@@ -17,6 +17,9 @@ ros2_ws/log/
 ros2_ws/src/Universal_Robots_ROS2_Description/
 ros2_ws/src/Universal_Robots_ROS2_GZ_Simulation/
 
+# Container-local build products are isolated from the host ROS workspace.
+.docker-runtime/
+
 # Python
 __pycache__/
 *.py[cod]
