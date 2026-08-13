@@ -22,6 +22,10 @@
 | G-006 | Bonded pads and magnets. | Durability and sensor alignment risk. |
 | G-007 | Software-only reported emergency behaviour. | Does not satisfy a system-level hardware emergency stop. |
 | G-008 | Conflicting final speed (180 in text, 200 in table). | Configuration cannot be trusted without firmware. |
+| G-009 | Simulation joint axes, -15 to +5 mm travel about the CAD assembly pose, inertial split, flange transform and TCP are provisional. | The model is suitable for software integration only; collision and kinematic results must not be treated as hardware evidence. |
+| G-010 | Gazebo baseline uses native joint position controllers rather than the final ros2_control/MoveIt stack. | It validates spawning, resources and topic-level motion, not trajectory execution or controller equivalence to hardware. |
+| G-011 | Contact simulation uses rigid box collisions, a provisional 10 g cuvette and no silicone compliance. | A passing grasp test does not validate grip force, glass/COP stress, release adhesion or hardware reliability. |
+| G-012 | The corrected contact baseline has only one clean run (`N=1`). | It is a regression check, not repeatability or statistical reliability evidence; run a defined batch after the provisional geometry is frozen. |
 
 ## Evidence limitations
 
@@ -29,4 +33,4 @@
 - Placement accuracy on the real DynaPro and workspace integration with real instruments were only partially verified.
 - The one failure was attributed to manual setup, but the system also lacked autonomous detection/recovery for that misplacement.
 - Long-term pad wear, quick-release repeatability and varying object geometries were not evaluated.
-
+- The Gazebo fixture is a scenario support, not geometry for the Opentrons Flex or DynaPro NanoStar.

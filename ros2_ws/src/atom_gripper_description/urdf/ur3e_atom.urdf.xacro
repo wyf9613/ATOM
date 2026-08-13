@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="ur3e_atom">
+  <xacro:include filename="$(find ur_description)/urdf/ur_macro.xacro"/>
+  <xacro:include filename="$(find atom_gripper_description)/urdf/atom_gripper.urdf.xacro"/>
+
+  <xacro:arg name="prefix" default=""/>
+  <xacro:arg name="joint_limit_params" default="$(find ur_description)/config/ur3e/joint_limits.yaml"/>
+  <xacro:arg name="kinematics_params" default="$(find ur_description)/config/ur3e/default_kinematics.yaml"/>
+  <xacro:arg name="physical_params" default="$(find ur_description)/config/ur3e/physical_parameters.yaml"/>
+  <xacro:arg name="visual_params" default="$(find ur_description)/config/ur3e/visual_parameters.yaml"/>
+  <xacro:arg name="initial_finger_position" default="0.0"/>
+
+  <link name="world"/>
+  <xacro:ur_robot
+    name="ur3e_atom"
+    tf_prefix="$(arg prefix)"
+    parent="world"
+    joint_limits_parameters_file="$(arg joint_limit_params)"
+    kinematics_parameters_file="$(arg kinematics_params)"
+    physical_parameters_file="$(arg physical_params)"
+    visual_parameters_file="$(arg visual_params)"
+    safety_limits="true"
+    safety_pos_margin="0.15"
+    safety_k_position="20"
+    force_abs_paths="true">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:ur_robot>
+
+  <!-- Gazebo Harmonic's DART backend does not implement mimic constraints. -->
+  <!-- The upstream flange frame is the mechanical EEF attachment point. -->
+  <xacro:atom_gripper parent="$(arg prefix)flange" prefix="$(arg prefix)" use_mimic="false">
+    <!-- Align the gripper's +Z tool axis with UR's forward-facing tool axis. -->
+    <origin xyz="0 0 0" rpy="1.5707963268 0 1.5707963268"/>
+  </xacro:atom_gripper>
+
+  <gazebo reference="world">
+    <static>true</static>
+  </gazebo>
+
+  <xacro:macro name="gz_position_controller" params="joint initial_position p_gain d_gain cmd_max">
+    <gazebo>
+      <plugin filename="gz-sim-joint-position-controller-system"
+              name="gz::sim::systems::JointPositionController">
+        <joint_name>${joint}</joint_name>
+        <topic>/model/ur3e_atom/joint/${joint}/cmd_pos</topic>
+        <initial_position>${initial_position}</initial_position>
+        <p_gain>${p_gain}</p_gain>
+        <i_gain>0.1</i_gain>
+        <d_gain>${d_gain}</d_gain>
+        <i_max>1</i_max>
+        <i_min>-1</i_min>
+        <cmd_max>${cmd_max}</cmd_max>
+        <cmd_min>-${cmd_max}</cmd_min>
+      </plugin>
+    </gazebo>
+  </xacro:macro>
+
+  <!-- Numerical Gazebo hold gains; these are not UR hardware controller gains. -->
+  <xacro:gz_position_controller joint="$(arg prefix)shoulder_pan_joint" initial_position="0.0" p_gain="300" d_gain="10" cmd_max="100"/>
+  <xacro:gz_position_controller joint="$(arg prefix)shoulder_lift_joint" initial_position="-1.5707963268" p_gain="500" d_gain="20" cmd_max="100"/>
+  <xacro:gz_position_controller joint="$(arg prefix)elbow_joint" initial_position="1.5707963268" p_gain="500" d_gain="20" cmd_max="100"/>
+  <xacro:gz_position_controller joint="$(arg prefix)wrist_1_joint" initial_position="-1.5707963268" p_gain="100" d_gain="5" cmd_max="50"/>
+  <xacro:gz_position_controller joint="$(arg prefix)wrist_2_joint" initial_position="-1.5707963268" p_gain="100" d_gain="5" cmd_max="50"/>
+  <xacro:gz_position_controller joint="$(arg prefix)wrist_3_joint" initial_position="0.0" p_gain="50" d_gain="2" cmd_max="30"/>
+  <xacro:gz_position_controller joint="$(arg prefix)left_finger_joint" initial_position="$(arg initial_finger_position)" p_gain="300" d_gain="0.5" cmd_max="5"/>
+  <xacro:gz_position_controller joint="$(arg prefix)right_finger_joint" initial_position="$(arg initial_finger_position)" p_gain="300" d_gain="0.5" cmd_max="5"/>
+
+  <gazebo>
+    <plugin filename="gz-sim-joint-state-publisher-system"
+            name="gz::sim::systems::JointStatePublisher">
+      <topic>/model/ur3e_atom/joint_state</topic>
+    </plugin>
+  </gazebo>
+</robot>

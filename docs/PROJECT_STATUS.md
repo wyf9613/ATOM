@@ -1,12 +1,21 @@
 # Project Status
 
-Last updated: 2026-08-09
+Last updated: 2026-08-12
 
 ## Phase
 
 **Phase 0 - handover, inventory and architecture definition**
 
-No ROS 2 package, robot model or buildable software stack has been received in this workspace yet.
+A buildable inherited-asset simulation baseline now exists. It is not the final
+deployment stack and does not resolve the purchased-arm decision.
+
+## Current documentation
+
+- [`CURRENT_SIMULATION_BASELINE.md`](CURRENT_SIMULATION_BASELINE.md) records the
+  implemented model, simulation, test evidence, reproduction steps and limits.
+- [`ROS_GAZEBO_MOVEIT_TUTORIAL.md`](ROS_GAZEBO_MOVEIT_TUTORIAL.md) provides the
+  prerequisite knowledge and project exercises for ROS 2, Gazebo,
+  `ros2_control` and MoveIt 2.
 
 ## Assets present
 
@@ -15,6 +24,9 @@ No ROS 2 package, robot model or buildable software stack has been received in t
 | Project context and proposed roadmap | Present | `ATOM_Project_Context.md` |
 | Previous-team final report | Present, 34 pages | `previous report/Capstone_Robotic_Hand_Lab_Experiment.pdf` |
 | End-effector Fusion 360 archive | Present | `hardware/end effector/End Effector Assembly V3.f3z` |
+| End-effector neutral STEP assembly | Present, AP214, 20 products | `hardware/end effector/End Effector Assembly V3.step` |
+| Modular gripper description | Provisional simulation model | `ros2_ws/src/atom_gripper_description` |
+| Official UR3e description/simulation sources | Pinned verification dependency | `ros2_ws/atom_sim.repos` |
 | Previous STM32 firmware | Missing | To request |
 | Previous ROS/serial integration code | Missing | To request |
 | Wiring diagram and pin map | Missing | To request |
@@ -45,9 +57,9 @@ No ROS 2 package, robot model or buildable software stack has been received in t
 | Gate | State | Exit evidence |
 |---|---|---|
 | 1. Inherited gripper understood | Not passed | Physical inspection, CAD hierarchy, firmware, wiring and parameter reconciliation |
-| 2. Gripper robot description | Not started | Valid Xacro, TF, mesh scale, joint directions and limits in RViz |
-| 3. Arm + gripper model | Blocked | Confirmed arm and official vendor description |
-| 4. Simulation baseline | Not started | Controllers, motion planning, gripper action and task state machine |
+| 2. Gripper robot description | In progress | Xacro and mesh scale validate; physical joint directions, limits, inertials, mount and TCP remain open |
+| 3. Arm + gripper model | Verification baseline only | Official UR3e description is composed with the gripper; purchased arm remains unconfirmed |
+| 4. Simulation baseline | In progress | Gazebo spawn, native position-control smoke test and one corrected provisional gravity/contact grasp run pass; the earlier three runs were invalidated by a collision-visual mismatch; ros2_control, MoveIt, gripper action and task state machine remain open |
 | 5. Real-arm deployment | Blocked | Hardware delivery, mount/TCP measurement and commissioning |
 | 6. Perception-guided manipulation | Not started | Pose perturbation experiment against fixed-waypoint baseline |
 | 7. Mobile integration | Not started | Base interfaces, docking measurements and end-to-end trials |

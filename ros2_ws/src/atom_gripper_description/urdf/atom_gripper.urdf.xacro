@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="atom_box_inertial" params="mass x y z">
+    <inertial>
+      <mass value="${mass}"/>
+      <inertia
+        ixx="${mass * (y * y + z * z) / 12.0}" ixy="0" ixz="0"
+        iyy="${mass * (x * x + z * z) / 12.0}" iyz="0"
+        izz="${mass * (x * x + y * y) / 12.0}"/>
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="atom_gripper" params="parent prefix:='' use_mimic:=true *origin">
+    <!--
+      Provisional simulation values only:
+      - 0.58 kg total mass is distributed from the previous report, not CAD mass properties.
+      - The CAD datum is the geometric centre of the two case rear faces, not a
+        measured quick-disconnect interface.
+      - finger travel, joint axes and TCP require physical measurement.
+    -->
+    <link name="${prefix}gripper_mount"/>
+
+    <joint name="${prefix}gripper_mount_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="${prefix}gripper_mount"/>
+      <xacro:insert_block name="origin"/>
+    </joint>
+
+    <link name="${prefix}gripper_base">
+      <xacro:atom_box_inertial mass="0.48" x="0.120" y="0.105" z="0.110"/>
+      <visual>
+        <origin xyz="-0.043494 -0.022225 0.028836" rpy="1.5707963268 1.5707963268 0"/>
+        <geometry>
+          <mesh filename="package://atom_gripper_description/meshes/generated/base.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="atom_body"><color rgba="0.16 0.18 0.20 1"/></material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0.055"/>
+        <geometry><box size="0.120 0.105 0.110"/></geometry>
+      </collision>
+    </link>
+
+    <joint name="${prefix}gripper_base_joint" type="fixed">
+      <parent link="${prefix}gripper_mount"/>
+      <child link="${prefix}gripper_base"/>
+    </joint>
+
+    <link name="${prefix}left_finger">
+      <xacro:atom_box_inertial mass="0.05" x="0.008" y="0.030" z="0.075"/>
+      <visual>
+        <origin xyz="-0.043494 -0.022225 0.028836" rpy="1.5707963268 1.5707963268 0"/>
+        <geometry>
+          <mesh filename="package://atom_gripper_description/meshes/generated/left_finger.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="atom_left_finger"><color rgba="0.72 0.76 0.78 1"/></material>
+      </visual>
+      <collision>
+        <!-- Box aligned to the visible terminal pad in the transformed CAD mesh. -->
+        <origin xyz="0.021 0.0005 0.154"/>
+        <geometry><box size="0.006 0.020 0.020"/></geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}left_finger_joint" type="prismatic">
+      <parent link="${prefix}gripper_base"/>
+      <child link="${prefix}left_finger"/>
+      <axis xyz="1 0 0"/>
+      <limit lower="-0.015" upper="0.005" effort="20" velocity="0.03"/>
+      <dynamics damping="0.5" friction="0.05"/>
+    </joint>
+
+    <link name="${prefix}right_finger">
+      <xacro:atom_box_inertial mass="0.05" x="0.008" y="0.030" z="0.075"/>
+      <visual>
+        <origin xyz="-0.043494 -0.022225 0.028836" rpy="1.5707963268 1.5707963268 0"/>
+        <geometry>
+          <mesh filename="package://atom_gripper_description/meshes/generated/right_finger.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="atom_right_finger"><color rgba="0.72 0.76 0.78 1"/></material>
+      </visual>
+      <collision>
+        <!-- Box aligned to the visible terminal pad in the transformed CAD mesh. -->
+        <origin xyz="-0.024681 0.00045 0.154"/>
+        <geometry><box size="0.006 0.020 0.020"/></geometry>
+      </collision>
+    </link>
+    <joint name="${prefix}right_finger_joint" type="prismatic">
+      <parent link="${prefix}gripper_base"/>
+      <child link="${prefix}right_finger"/>
+      <axis xyz="-1 0 0"/>
+      <limit lower="-0.015" upper="0.005" effort="20" velocity="0.03"/>
+      <dynamics damping="0.5" friction="0.05"/>
+      <xacro:if value="${use_mimic}">
+        <mimic joint="${prefix}left_finger_joint" multiplier="1.0" offset="0"/>
+      </xacro:if>
+    </joint>
+
+    <link name="${prefix}gripper_tcp"/>
+    <joint name="${prefix}gripper_tcp_joint" type="fixed">
+      <parent link="${prefix}gripper_base"/>
+      <child link="${prefix}gripper_tcp"/>
+      <origin xyz="-0.0018 0 0.170536"/>
+    </joint>
+
+    <!-- Reported Silicone 20A / cuvette mean friction, N=10 inclined-plane trials. -->
+    <gazebo reference="${prefix}left_finger">
+      <mu1>0.88</mu1>
+      <mu2>0.88</mu2>
+    </gazebo>
+    <gazebo reference="${prefix}right_finger">
+      <mu1>0.88</mu1>
+      <mu2>0.88</mu2>
+    </gazebo>
+  </xacro:macro>
+</robot>

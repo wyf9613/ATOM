@@ -23,7 +23,10 @@
 7. [技术路线、文献综述与实施计划（LaTeX 源码）](docs/technical_roadmap/main.tex)
 8. [第一阶段最小技术栈与学习路线](docs/PHASE1_MINIMUM_LEARNING_ROADMAP.md)
 
-已编译版本见 `output/pdf/ATOM_Technical_Roadmap.pdf`。
+已编译版本见
+[ATOM_Technical_Roadmap.pdf](output/pdf/ATOM_Technical_Roadmap.pdf)。该 PDF
+由 Git LFS 管理；如果下载后文件只有约 131 字节，请先执行本页“获取仓库后”的
+LFS 命令，不要将指针文本当作 PDF 打开。
 
 ## 目录
 
