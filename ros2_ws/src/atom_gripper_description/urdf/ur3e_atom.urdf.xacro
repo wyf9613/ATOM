@@ -9,6 +9,7 @@
   <xacro:arg name="physical_params" default="$(find ur_description)/config/ur3e/physical_parameters.yaml"/>
   <xacro:arg name="visual_params" default="$(find ur_description)/config/ur3e/visual_parameters.yaml"/>
   <xacro:arg name="initial_finger_position" default="0.0"/>
+  <xacro:property name="atom_ur_joint_limits" value="${xacro.load_yaml('$(arg joint_limit_params)')['joint_limits']}"/>
 
   <link name="world"/>
   <xacro:ur_robot
@@ -55,13 +56,13 @@
     </gazebo>
   </xacro:macro>
 
-  <!-- Numerical Gazebo hold gains; these are not UR hardware controller gains. -->
-  <xacro:gz_position_controller joint="$(arg prefix)shoulder_pan_joint" initial_position="0.0" p_gain="300" d_gain="10" cmd_max="100"/>
-  <xacro:gz_position_controller joint="$(arg prefix)shoulder_lift_joint" initial_position="-1.5707963268" p_gain="500" d_gain="20" cmd_max="100"/>
-  <xacro:gz_position_controller joint="$(arg prefix)elbow_joint" initial_position="1.5707963268" p_gain="500" d_gain="20" cmd_max="100"/>
-  <xacro:gz_position_controller joint="$(arg prefix)wrist_1_joint" initial_position="-1.5707963268" p_gain="100" d_gain="5" cmd_max="50"/>
-  <xacro:gz_position_controller joint="$(arg prefix)wrist_2_joint" initial_position="-1.5707963268" p_gain="100" d_gain="5" cmd_max="50"/>
-  <xacro:gz_position_controller joint="$(arg prefix)wrist_3_joint" initial_position="0.0" p_gain="50" d_gain="2" cmd_max="30"/>
+  <!-- Numerical hold gains are provisional; output caps come from the official UR limits. -->
+  <xacro:gz_position_controller joint="$(arg prefix)shoulder_pan_joint" initial_position="0.0" p_gain="300" d_gain="10" cmd_max="${atom_ur_joint_limits['shoulder_pan_joint']['max_effort']}"/>
+  <xacro:gz_position_controller joint="$(arg prefix)shoulder_lift_joint" initial_position="-1.5707963268" p_gain="500" d_gain="20" cmd_max="${atom_ur_joint_limits['shoulder_lift_joint']['max_effort']}"/>
+  <xacro:gz_position_controller joint="$(arg prefix)elbow_joint" initial_position="1.5707963268" p_gain="500" d_gain="20" cmd_max="${atom_ur_joint_limits['elbow_joint']['max_effort']}"/>
+  <xacro:gz_position_controller joint="$(arg prefix)wrist_1_joint" initial_position="-1.5707963268" p_gain="100" d_gain="5" cmd_max="${atom_ur_joint_limits['wrist_1_joint']['max_effort']}"/>
+  <xacro:gz_position_controller joint="$(arg prefix)wrist_2_joint" initial_position="-1.5707963268" p_gain="100" d_gain="5" cmd_max="${atom_ur_joint_limits['wrist_2_joint']['max_effort']}"/>
+  <xacro:gz_position_controller joint="$(arg prefix)wrist_3_joint" initial_position="0.0" p_gain="50" d_gain="2" cmd_max="${atom_ur_joint_limits['wrist_3_joint']['max_effort']}"/>
   <xacro:gz_position_controller joint="$(arg prefix)left_finger_joint" initial_position="$(arg initial_finger_position)" p_gain="300" d_gain="0.5" cmd_max="5"/>
   <xacro:gz_position_controller joint="$(arg prefix)right_finger_joint" initial_position="$(arg initial_finger_position)" p_gain="300" d_gain="0.5" cmd_max="5"/>
 

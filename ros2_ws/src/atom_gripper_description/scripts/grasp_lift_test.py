@@ -30,6 +30,8 @@ CONTACT_MIN = -0.0145
 CONTACT_MAX = -0.0115
 CONTACT_SYMMETRY_TOLERANCE = 0.001
 MAX_LATERAL_MOTION = 0.010
+MAX_ARM_HOLD_ERROR = 0.020
+MAX_ARM_HOLD_DRIFT = 0.005
 
 
 class GraspLiftTest(Node):
@@ -42,11 +44,15 @@ class GraspLiftTest(Node):
         self.joint_positions = {}
         self.cuvette_pose = None
         self.pose_history = []
+        self.arm_history = []
         self.create_subscription(JointState, "/joint_states", self._on_joints, 20)
         self.create_subscription(TFMessage, "/cuvette/pose", self._on_cuvette_pose, 20)
 
     def _on_joints(self, message):
         self.joint_positions.update(zip(message.name, message.position))
+        if all(joint in self.joint_positions for joint in ARM_JOINTS):
+            positions = tuple(self.joint_positions[joint] for joint in ARM_JOINTS)
+            self.arm_history.append((time.monotonic(), positions))
 
     def _on_cuvette_pose(self, message):
         transform = next(
@@ -95,7 +101,7 @@ class GraspLiftTest(Node):
         while rclpy.ok() and time.monotonic() < deadline:
             rclpy.spin_once(self, timeout_sec=0.05)
             if self.cuvette_pose is not None and all(
-                joint in self.joint_positions for joint in FINGER_JOINTS
+                joint in self.joint_positions for joint in ARM_JOINTS + FINGER_JOINTS
             ):
                 return True
         return False
@@ -105,10 +111,12 @@ class GraspLiftTest(Node):
         if self.cuvette_pose is None:
             missing.append("cuvette pose on /cuvette/pose")
         absent_joints = [
-            joint for joint in FINGER_JOINTS if joint not in self.joint_positions
+            joint
+            for joint in ARM_JOINTS + FINGER_JOINTS
+            if joint not in self.joint_positions
         ]
         if absent_joints:
-            missing.append("gripper joints on /joint_states")
+            missing.append("robot joints on /joint_states")
         return missing
 
 
@@ -144,9 +152,22 @@ def main():
         node.get_logger().info("Stage 4/5: hold for 5 s")
         hold_start = node.cuvette_pose
         node.pose_history.clear()
+        node.arm_history.clear()
         node.hold(LIFT, CLOSED, 5.0)
         held = node.cuvette_pose
         hold_min_z = min(pose[2] for _, pose in node.pose_history)
+
+        arm_samples = [positions for _, positions in node.arm_history]
+        max_arm_hold_error = max(
+            abs(position - target)
+            for positions in arm_samples
+            for position, target in zip(positions, LIFT)
+        )
+        max_arm_hold_drift = max(
+            max(positions[index] for positions in arm_samples)
+            - min(positions[index] for positions in arm_samples)
+            for index in range(len(ARM_JOINTS))
+        )
 
         lift_height = lifted[2] - start[2]
         hold_drop = hold_start[2] - hold_min_z
@@ -173,12 +194,17 @@ def main():
             and hold_drop <= 0.005
             and lateral_motion <= MAX_LATERAL_MOTION
             and retained
+            and max_arm_hold_error <= MAX_ARM_HOLD_ERROR
+            and max_arm_hold_drift <= MAX_ARM_HOLD_DRIFT
             and release_error <= 0.015
         )
         node.get_logger().info(
             f"RESULT {'PASS' if passed else 'FAIL'} | "
             f"lift={lift_height:.4f} m hold_drop={hold_drop:.4f} m "
             f"lateral={lateral_motion:.4f} m release_error={release_error:.4f} m "
+            f"arm_hold_error={max_arm_hold_error:.4f} rad "
+            f"arm_hold_drift={max_arm_hold_drift:.4f} rad "
+            f"arm_samples={len(arm_samples)} "
             f"finger_contact=({contact_positions[0]:.4f}, "
             f"{contact_positions[1]:.4f}) m"
         )

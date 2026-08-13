@@ -78,6 +78,29 @@ def test_combined_description_expands_with_expected_chain():
         "velocity": "0.03",
     }
 
+    gripper_mass = sum(
+        float(robot.find(f"link[@name='{name}']/inertial/mass").attrib["value"])
+        for name in ("gripper_base", "left_finger", "right_finger")
+    )
+    assert abs(gripper_mass - 0.58) < 1e-12
+
+    expected_arm_efforts = {
+        "shoulder_pan_joint": 54.0,
+        "shoulder_lift_joint": 54.0,
+        "elbow_joint": 28.0,
+        "wrist_1_joint": 9.0,
+        "wrist_2_joint": 9.0,
+        "wrist_3_joint": 9.0,
+    }
+    controller_caps = {
+        plugin.find("joint_name").text: float(plugin.find("cmd_max").text)
+        for plugin in robot.findall("gazebo/plugin")
+        if plugin.find("joint_name") is not None
+    }
+    for joint, expected_effort in expected_arm_efforts.items():
+        assert float(joints[joint].find("limit").attrib["effort"]) == expected_effort
+        assert controller_caps[joint] == expected_effort
+
 
 def test_grasp_world_contains_provisional_contact_baseline():
     share = get_package_share_directory("atom_gripper_description")

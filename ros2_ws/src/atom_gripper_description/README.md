@@ -75,8 +75,13 @@ for 5 s, returns and releases. It requires both fingers to stop symmetrically in
 the CAD-derived -14.5 to -11.5 mm contact window. It also fails if the lift is
 below 40 mm, lateral motion exceeds 10 mm, hold drop exceeds 5 mm, or release
 error exceeds 15 mm.
+During the 5 s loaded hold it also requires the largest six-axis position error
+to remain below 0.020 rad and the largest within-hold drift below 0.005 rad.
+The six arm-controller output caps are read from the official UR3e joint-limit
+file (54/54/28/9/9/9 N.m).
 The 14 x 14 x 45 mm geometry, 10 g mass, 20 mm pad collision height and native
 PID gains are simulation inputs pending physical measurement. The reported
+gripper mass is fixed at the previous report's 0.58 kg estimate. The reported
 friction coefficient of 0.88 came from 10 previous-team inclined-plane trials;
 it is not a calibrated Gazebo contact model or proof of grip force.
 

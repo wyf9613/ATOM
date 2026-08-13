@@ -84,6 +84,10 @@ For each entry, attach units, measurement method, configuration/revision and the
   friction was reported.
 - Gazebo-native PID gains were tuned for numerical holding under gravity. They
   are not UR3e, servo, `ros2_control` or hardware gains.
+- Six-axis controller output is capped from the official UR3e joint-limit file
+  at `54/54/28/9/9/9 N.m`. This tests whether the provisional controller can
+  hold the nominal rigid-body model within those caps; it does not model
+  structural compliance, backlash or physical arm deflection.
 
 ### Invalidated result and correction
 
@@ -112,10 +116,47 @@ For each entry, attach units, measurement method, configuration/revision and the
   difference at most `0.001 m`, lift at least `0.040 m`, lateral motion at most
   `0.010 m`, hold drop at most `0.005 m`, object retained at least `0.035 m`
   above start, and release error at most `0.015 m`.
+- From 2026-08-13 onward, the same test additionally records all available
+  six-axis joint-state samples during the `5 s` loaded hold and requires maximum
+  commanded-position error at most `0.020 rad` and maximum within-hold joint
+  drift at most `0.005 rad`. Run-specific values are evidence only after a
+  clean result is recorded below.
 
 This is a functional simulation check, not statistical reliability evidence or
 validation of force, compliance, breakage risk, real insertion or the previous
 team's reported 49/50 hardware trials.
+
+## 2026-08-13 - Official UR3e effort-cap gravity rerun
+
+### Model and test conditions
+
+- UR3e nominal rigid-body data came from the pinned official `ur_description`
+  configuration: link masses, centres of mass, inertia tensors, kinematics and
+  joint limits.
+- Six-axis Gazebo controller output caps were loaded from that joint-limit file:
+  `54/54/28/9/9/9 N.m` from shoulder pan through wrist 3.
+- Simulated gripper mass was `0.58 kg`, split `0.48/0.05/0.05 kg`; this is the
+  inherited-report estimate, not a measurement. The captured provisional
+  cuvette mass was `0.010 kg` and gravity was `9.81 m/s^2` downward.
+- Acceptance limits over the `5 s` loaded hold were maximum commanded-position
+  error `0.020 rad` and maximum within-hold drift `0.005 rad`.
+
+### Results
+
+- Jazzy/Harmonic headless run: pass (`N=1`), maximum six-axis hold error
+  `0.0181 rad`, maximum within-hold drift `0.0001 rad`, `5002` joint-state
+  samples.
+- Humble/Fortress Docker headless run: pass (`N=1`), maximum six-axis hold error
+  `0.0181 rad`, maximum within-hold drift `0.0001 rad`, `5001` joint-state
+  samples.
+- Both runs also retained the previous outputs at displayed precision: lift
+  `0.0500 m`, hold drop `0.0000 m`, lateral displacement `0.0040 m`, release
+  error `0.0005 m`, and finger contact `(-0.0128, -0.0128) m`.
+
+These results show that the provisional position controller holds the nominal
+rigid model within the selected thresholds and official effort caps. They do
+not quantify physical arm sag: Gazebo links and joints remain rigid, and no
+measured compliance, backlash or controller model is available.
 
 ## 2026-08-13 - Humble/Fortress container compatibility run
 
@@ -156,7 +197,8 @@ team's reported 49/50 hardware trials.
   (`N=1`; physics step `0.001 s`; simulated gravity `9.81 m/s^2`).
 - Measured simulation outputs: lift `0.0500 m`, hold drop `0.0000 m` at logged
   precision, lateral displacement `0.0040 m`, release error `0.0005 m`, and
-  left/right finger contact positions `-0.0128 m`.
+  left/right finger contact positions `-0.0128 m`. The later official-effort-cap
+  rerun above supersedes this run as the current gravity-hold evidence.
 
 This verifies the repository's software simulation on the selected
 Ubuntu/Humble/Fortress pairing. It is not evidence for the laboratory computer's

@@ -212,6 +212,12 @@ Gazebo 中的组合机器人
 官方 UR 源固定在 `ros2_ws/atom_sim.repos`，自定义夹爪不复制或修改官方机械臂
 网格。
 
+顶层 Xacro 已直接使用官方 UR3e 的 `joint_limits.yaml`、
+`default_kinematics.yaml`、`physical_parameters.yaml` 和
+`visual_parameters.yaml`。六轴 Gazebo 控制器也从同一份关节限制文件读取
+`54/54/28/9/9/9 N.m` 输出上限。官方文件仍只是标称刚体模型，不包含当前实机
+的序列号标定、关节弹性、间隙、减速器/控制器动态或公开的加速度上限。
+
 ### 8.2 主要 frame 链
 
 ```text
@@ -383,7 +389,7 @@ ros_gz_bridge  --GZ_TO_ROS-->  ROS /cuvette/pose
 
 测试流程：
 
-1. 等待 `/cuvette/pose` 和夹指关节反馈；
+1. 等待 `/cuvette/pose` 和机械臂/夹指全部关节反馈；
 2. 在张开抓取姿态稳定 `2 s`；
 3. 两指关闭 `2 s`；
 4. 机械臂平滑插值到名义 `50 mm` 抬升姿态；
@@ -401,6 +407,8 @@ ros_gz_bridge  --GZ_TO_ROS-->  ROS /cuvette/pose
 | 抬升横向运动 | 不超过 `10 mm` |
 | `5 s` 保持下滑 | 不超过 `5 mm` |
 | 保持末端高度 | 至少高于初始 `35 mm` |
+| 六轴最大保持误差 | 不超过 `0.020 rad` |
+| 六轴最大保持漂移 | 不超过 `0.005 rad` |
 | 释放位置误差 | 不超过 `15 mm` |
 
 ### 12.3 修正后的回归结果
@@ -413,11 +421,16 @@ lift=0.0500 m
 hold_drop=0.0000 m
 lateral=0.0040 m
 release_error=0.0005 m
+arm_hold_error=0.0181 rad
+arm_hold_drift=0.0001 rad
+arm_samples=5002
 finger_contact=(-0.0128, -0.0128) m
 ```
 
-样本数为 `N=1`。这证明最终代码路径能够完成指定的刚性仿真流程，但样本量不足以
-表示可靠性，也不能外推到硬件。
+以上为 Jazzy/Harmonic 一次全新运行（`N=1`）；Humble/Fortress 独立运行得到
+相同显示精度下的误差和漂移，并采集 `5001` 个保持阶段关节状态样本（`N=1`）。
+这证明最终代码路径能够在官方标称关节力矩上限内完成指定的刚性仿真流程，但样本量
+不足以表示可靠性，也不能外推到硬件挠曲或真实控制精度。
 
 ## 13. 构建和运行
 

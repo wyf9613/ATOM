@@ -75,3 +75,12 @@
 - Evidence: The project supervisor reported that the previous project and laboratory computer use Ubuntu 22.04 and ROS 2 Humble. REP-2000 defines Ubuntu 22.04 as Humble's Tier-1 platform, and Gazebo documents Fortress as the recommended Humble pairing.
 - Verification: On 2026-08-13, image `atom-humble-fortress:latest` (`sha256:17ed7eb37301a67ec790d9344fef65193d15bb91be8b1aae829001bb9e46bb6b`) built on the Ubuntu 24.04 workstation. The Humble workspace, URDF check, four package-test results and one headless Fortress grasp/lift/hold/release run passed. Exact test conditions and results are recorded in `docs/SIM2REAL_LOG.md`.
 - Boundary: Container success checks the software stack on the target OS/ROS pairing; it does not reproduce the laboratory computer's GPU, USB/serial devices, vendor controller, firmware, real-time settings or exact installed patch versions. The full test must still be repeated on the laboratory computer.
+
+## D-011 - Use official nominal UR3e dynamics and the report-estimated gripper mass
+
+- Date: 2026-08-13
+- Status: Accepted for simulation baseline only
+- Decision: Continue to source the UR3e joint limits, nominal kinematics, link masses, centres of mass and inertia tensors from the pinned official `ur_description` package. Limit the six Gazebo position-controller outputs using the same official joint-limit file (`54/54/28/9/9/9 N.m`). Use the inherited report's `0.58 kg` total gripper-mass estimate, provisionally split as `0.48/0.05/0.05 kg` across the body and two fingers.
+- Evidence: The official UR3e files are present under `ur_description/config/ur3e` and are already inputs to the modular top-level Xacro. The inherited report is the best currently available source for total gripper mass; no physical gripper or CAD material/mass-property export is available for confirmation.
+- Verification: Description tests require the expanded URDF effort limits and Gazebo output caps to agree with the official UR3e values, and require the three simulated gripper-link masses to sum to `0.58 kg`. The gravity-enabled grasp test also checks six-axis holding error and drift over a `5 s` loaded hold.
+- Boundary: The official files provide a nominal rigid-body model, not serial-number calibration, joint compliance, backlash, gearbox/controller dynamics or public acceleration limits. The gripper mass split, centre of mass and box inertias remain estimates with unknown uncertainty; replace them after weighing the assembly and measuring or calculating its mass properties.
