@@ -2,7 +2,7 @@
 
 > 文档状态：当前基线说明
 >
-> 最后更新：2026-08-12
+> 最后更新：2026-08-13
 >
 > 适用范围：继承资产检查、UR3e 参考平台组合、Gazebo 功能仿真
 >
@@ -18,7 +18,8 @@
 3. UR3e、夹爪、Gazebo 和 ROS 2 如何连接；
 4. 目前能够重复运行哪些仿真；
 5. 哪些参数来自原始资料，哪些仍是临时假设；
-6. 下一阶段进入 `ros2_control` 和 MoveIt 2 前还缺什么。
+6. 当前 `ros2_control`、MoveIt 2 和双模式任务基线如何工作；
+7. 进入实物和感知阶段前还缺什么。
 
 本项目当前处于继承资产验证和架构定义阶段。本文中的“通过”仅指指定的软件回归
 检查通过，不代表真实抓取力、可靠性、插入精度或安全性能已经得到验证。
@@ -48,6 +49,10 @@
 - 建立两个 Gazebo 场景：无重力运动冒烟测试和有重力刚性抓取测试；
 - 建立 ROS 2 与 Gazebo Transport 的命令、关节状态和试管位姿桥接；
 - 建立确定性的运动脚本和自动抓取验收脚本；
+- 建立可切换的 Gazebo-native / `ros2_control` 控制后端；
+- 建立独立 MoveIt 配置、RRT-Connect 自由空间规划和 CartesianPath 接近段；
+- 建立逻辑附着与物理接触相互独立的抓取、转移和释放任务；
+- 建立 Ubuntu 22.04 / ROS 2 Humble / Gazebo Fortress Docker 验收环境；
 - 修复 Conda Python 版本污染导致的 `rclpy` C 扩展加载失败；
 - 修复 UR 法兰安装方向和临时 CAD 基准误判；
 - 修复夹指可视模型与碰撞模型不一致造成的“隔空抓取”；
@@ -663,7 +668,7 @@ ros2 topic info /cuvette/pose --verbose
 | 刚性试管抓取流程 | 修正后 `N=1` 通过 | 自动测试日志 | 真实抓取可靠或安全 |
 | 夹持碰撞对齐 | 与 CAD 切片一致 | URDF、单元测试 | 与实物指垫一致 |
 | TCP | 有临时 frame | Xacro | 已标定 TCP |
-| MoveIt 2 规划 | 未实现 | 无 | 已具备避障或轨迹规划 |
+| MoveIt 2 规划与执行 | 仿真验证基线已实现 | SRDF、OMPL、控制器映射、双模式自动测试 | 已具备真实仪器避障或插入能力 |
 | 真实工作站转移 | 未实现 | 无 | 已验证仪器插入精度 |
 | 硬件急停 | 未实现 | 无 | 具备安全认证 |
 
@@ -680,24 +685,22 @@ ros2 topic info /cuvette/pose --verbose
 
 所有定量测量应记录单位、方法、样本数、工况和不确定度。
 
-### P1：建立标准控制接口
+### P1：完善标准控制接口
 
-1. 将当前 Gazebo 原生位置插件迁移到 `gz_ros2_control`；
-2. 为机械臂配置 `joint_trajectory_controller`；
-3. 为夹爪定义标准 action 和状态反馈；
-4. 在仿真和实机间保持相同的上层 action/topic 接口；
-5. 加入关节限位、超时、取消和错误传播测试。
+1. 保留已实现的原生/`ros2_control` 可切换回归路径；
+2. 为夹爪补充与未来实机驱动一致的标准 gripper action；
+3. 在仿真和实机间保持相同的上层 action/topic 接口；
+4. 加入取消、控制超时、控制器失活和错误传播测试；
+5. 在实验室电脑复跑控制器和轨迹验收。
 
-### P2：建立 MoveIt 2 基线
+### P2：完善 MoveIt 2 基线
 
-1. 新建独立 MoveIt 配置包；
-2. 定义 arm planning group、gripper group 和 end effector；
-3. 生成并审查 self-collision matrix；
-4. 配置 IK、关节限位和控制器映射；
-5. 在 RViz 中完成 plan-only；
-6. 再接 Gazebo trajectory execution；
-7. 将试管架和仪器几何加入 PlanningScene；
-8. 建立固定目标与扰动目标的重复试验。
+1. 审查已实现的 arm、gripper、end-effector 分组和 self-collision matrix；
+2. 用确认后的硬件限制替换临时速度/加速度值；
+3. 将试管架和仪器几何加入 PlanningScene；
+4. 增加 planning-scene 与 Gazebo world 的位姿一致性检查；
+5. 建立固定目标与扰动目标的重复试验；
+6. 补充规划失败、执行超时和恢复路径。
 
 ### P3：感知、标定和任务执行
 
@@ -718,6 +721,7 @@ ros2 topic info /cuvette/pose --verbose
 - [`CAD_INVENTORY.md`](CAD_INVENTORY.md)：CAD 资产盘点；
 - [`SYSTEM_ARCHITECTURE.md`](SYSTEM_ARCHITECTURE.md)：目标系统边界；
 - [`ROS_GAZEBO_MOVEIT_TUTORIAL.md`](ROS_GAZEBO_MOVEIT_TUTORIAL.md)：知识背景和实践教程。
+- [`MOVEIT_GRASP_BASELINE.md`](MOVEIT_GRASP_BASELINE.md)：当前 MoveIt 抓放实现、命令、门控和验收边界。
 
 ## 19. 官方参考资料
 

@@ -205,3 +205,64 @@ Ubuntu/Humble/Fortress pairing. It is not evidence for the laboratory computer's
 GPU, device permissions, controller/firmware, real robot calibration or gripper
 hardware. Repeat the same test on that computer before claiming laboratory
 deployment compatibility.
+
+## 2026-08-13 - MoveIt dual-mode grasp/transfer batch
+
+### Reproduced environment and method
+
+- Image: `atom-humble-fortress:latest`, ID
+  `sha256:6e89bbe1df3e907f303cab868d5bbceef206e4be0f1a38e5c971171872de812c`.
+- Container: Ubuntu 22.04, ROS 2 Humble, Gazebo Fortress 6.18.0 and MoveIt
+  2.5.9; host: Ubuntu 24.04 workstation.
+- Physics: `0.001 s` maximum step and gravity `9.81 m/s^2` downward.
+- Each sample was a new headless Gazebo/MoveIt launch. Logical samples used
+  ROS domain IDs 80--89 and physical samples used 120--129 to prevent live or
+  recently stopped DDS participants from satisfying controller discovery.
+- The task used RRT-Connect for pregrasp and the `0.2 rad` shoulder-pan
+  transfer, and Cartesian paths for the `0.050 m` approach, lift, lower and
+  retreat. Each run made nine planning requests.
+- Logical attach was permitted only after successful close execution, TCP
+  distance `<= 0.035 m`, maximum arm-joint speed `<= 0.020 rad/s` and object
+  speed `<= 0.020 m/s`. Its collision body was deliberately reduced to
+  `4 x 4 x 35 mm` so contact could not substitute for the detachable joint.
+- Physical mode never called the detachable-joint interface. It used the
+  provisional `14 x 14 x 45 mm`, `0.010 kg` rigid cuvette collision and friction
+  coefficient `0.88`.
+
+### Task results
+
+| Mode | Task passes | Lift range | Release XY error range | Cumulative planning-time range | Mean |
+|---|---:|---:|---:|---:|---:|
+| Logical attachment | 10/10 | `0.0500--0.0500 m` | `0.0000--0.0001 m` | `0.077--0.092 s` | `0.085 s` |
+| Physical rigid contact | 10/10 | `0.0500--0.0500 m` | `0.0005--0.0006 m` | `0.074--1.085 s` | `0.187 s` |
+
+There were zero structured task failures and zero 70-second task timeouts in
+these 20 launches. The physical planning-time maximum was one observed
+`1.085 s` sample; the small sample does not establish a timing distribution.
+
+### Additional checks and unresolved teardown failure
+
+- `rosdep check` reported all source-package dependencies satisfied in the
+  container.
+- All four packages built. Description tests passed (`5` pytest cases), MoveIt
+  configuration tests passed (`3` pytest cases), Xacro expansion passed and
+  `check_urdf` accepted the combined model.
+- The Gazebo-native gravity/contact regression remained separate and passed
+  once (`N=1`): `0.0500 m` lift, `0.0000 m` logged hold drop, `0.0040 m`
+  lateral transfer, `0.0005 m` release error, `0.0181 rad` maximum arm hold
+  error and `0.0001 rad` maximum within-hold drift over `5001` joint samples.
+- The host Jazzy description package built and all five description tests
+  passed. Dynamic Jazzy `ros2_control`/MoveIt execution was not run because the
+  host lacks `gz_ros2_control`, `moveit_ros_move_group` and
+  `moveit_configs_utils`.
+- In all 20 Humble samples, after the task emitted `RESULT PASS` and launch
+  requested shutdown, MoveIt 2.5.9 emitted a class-loader warning and
+  `move_group` exited with segmentation fault `-11`. Gazebo then required
+  `SIGTERM` after its shutdown timeout. This is a failed clean-shutdown check,
+  even though the trajectory task had already completed; it is tracked as
+  G-014 and must not be described as a completely clean end-to-end run.
+
+The batch is evidence for repeatability of this fixed, model-based software
+scenario only. It does not validate real collision clearance, instrument
+insertion, contact pressure, glass stress, controller timing, physical TCP or
+laboratory-computer compatibility.

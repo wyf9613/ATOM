@@ -75,6 +75,7 @@
 - Evidence: The project supervisor reported that the previous project and laboratory computer use Ubuntu 22.04 and ROS 2 Humble. REP-2000 defines Ubuntu 22.04 as Humble's Tier-1 platform, and Gazebo documents Fortress as the recommended Humble pairing.
 - Verification: On 2026-08-13, image `atom-humble-fortress:latest` (`sha256:17ed7eb37301a67ec790d9344fef65193d15bb91be8b1aae829001bb9e46bb6b`) built on the Ubuntu 24.04 workstation. The Humble workspace, URDF check, four package-test results and one headless Fortress grasp/lift/hold/release run passed. Exact test conditions and results are recorded in `docs/SIM2REAL_LOG.md`.
 - Boundary: Container success checks the software stack on the target OS/ROS pairing; it does not reproduce the laboratory computer's GPU, USB/serial devices, vendor controller, firmware, real-time settings or exact installed patch versions. The full test must still be repeated on the laboratory computer.
+- Amendment (2026-08-13): D-012 subsequently adds and validates an ATOM-specific MoveIt verification configuration in this container. This does not change the deployment boundary above.
 
 ## D-011 - Use official nominal UR3e dynamics and the report-estimated gripper mass
 
@@ -84,3 +85,12 @@
 - Evidence: The official UR3e files are present under `ur_description/config/ur3e` and are already inputs to the modular top-level Xacro. The inherited report is the best currently available source for total gripper mass; no physical gripper or CAD material/mass-property export is available for confirmation.
 - Verification: Description tests require the expanded URDF effort limits and Gazebo output caps to agree with the official UR3e values, and require the three simulated gripper-link masses to sum to `0.58 kg`. The gravity-enabled grasp test also checks six-axis holding error and drift over a `5 s` loaded hold.
 - Boundary: The official files provide a nominal rigid-body model, not serial-number calibration, joint compliance, backlash, gearbox/controller dynamics or public acceleration limits. The gripper mass split, centre of mass and box inertias remain estimates with unknown uncertainty; replace them after weighing the assembly and measuring or calculating its mass properties.
+
+## D-012 - Use ros2_control and an explicit dual-mode MoveIt grasp baseline
+
+- Date: 2026-08-13
+- Status: Accepted for simulation verification only
+- Decision: Preserve the Gazebo-native position-controller backend as a regression baseline and add a selectable `ros2_control` backend for trajectory execution. Keep the MoveIt configuration in the independent `atom_ur3e_moveit_config` package and task logic in `atom_manipulation`. Use OMPL RRT-Connect for the free-space transfer, Cartesian paths for the `50 mm` approach/lift/lower/retreat segments, and an explicit task state machine.
+- Decision: Test two separate grasp modes. `logical` mode may create a Gazebo detachable fixed joint only after checking TCP distance (`<= 0.035 m`), arm-joint speed (`<= 0.020 rad/s`) and object speed (`<= 0.020 m/s`). `physical` mode never invokes that mechanism and relies only on the provisional rigid collision/friction model.
+- Evidence: The controller YAML, SRDF groups, planning limits and MoveIt controller mappings are checked by package tests. In Ubuntu 22.04 / ROS 2 Humble / Gazebo Fortress / MoveIt 2.5.9, 10/10 fresh logical runs and 10/10 fresh physical-contact runs completed approach, close, acquisition, `50 mm` lift, `0.2 rad` shoulder-pan transfer, lower, release and retreat. All 20 then reproduced the G-014 `move_group` shutdown fault, so clean teardown is not accepted. Exact batch evidence is recorded in `docs/SIM2REAL_LOG.md`.
+- Boundary: The fixtures are not real instrument geometry, their poses are fixed, and the PlanningScene does not yet include the Gazebo supports. The joint acceleration limits are conservative provisional planning values because the received evidence and official description do not provide a complete hardware acceleration model. Neither mode validates the physical mount, TCP, compliance, grip force, breakage risk, insertion tolerance or purchased-arm driver.

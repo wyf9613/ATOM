@@ -23,9 +23,12 @@
 | G-007 | Software-only reported emergency behaviour. | Does not satisfy a system-level hardware emergency stop. |
 | G-008 | Conflicting final speed (180 in text, 200 in table). | Configuration cannot be trusted without firmware. |
 | G-009 | Simulation joint axes, -15 to +5 mm travel about the CAD assembly pose, inertial split, flange transform and TCP are provisional. | The model is suitable for software integration only; collision and kinematic results must not be treated as hardware evidence. |
-| G-010 | Gazebo baseline uses native joint position controllers rather than the final ros2_control/MoveIt stack. | It validates spawning, resources and topic-level motion, not trajectory execution or controller equivalence to hardware. |
+| G-010 | Native Gazebo controllers and `ros2_control` are both retained and are numerically different backends. | The native path remains a regression test; only the `ros2_control` path is used for MoveIt trajectory execution, and neither is equivalent to a real vendor controller. |
 | G-011 | Contact simulation uses rigid box collisions, a provisional 10 g cuvette and no silicone compliance. | A passing grasp test does not validate grip force, glass/COP stress, release adhesion or hardware reliability. |
 | G-012 | The corrected contact baseline has only one clean run (`N=1`). | It is a regression check, not repeatability or statistical reliability evidence; run a defined batch after the provisional geometry is frozen. |
+| G-013 | The MoveIt PlanningScene contains the robot and, during logical grasp, the cuvette, but not the Gazebo supports or real instrument geometry. | Current OMPL success is not obstacle-clearance or instrument-insertion evidence. |
+| G-014 | MoveIt 2.5.9 on Humble can emit a class-loader shutdown fault after the task result while `move_group` is being torn down. | The task process and acceptance result complete first, but shutdown logs are noisy; reproduce against a newer supported MoveIt patch before treating clean process teardown as verified. |
+| G-015 | The Ubuntu 24.04/Jazzy host currently lacks the `gz_ros2_control`, `moveit_ros_move_group` and `moveit_configs_utils` runtime packages. | Jazzy description/Xacro tests pass, but the new trajectory and MoveIt task path is dynamically validated only in the Humble/Fortress container until those host packages are installed. |
 
 ## Evidence limitations
 

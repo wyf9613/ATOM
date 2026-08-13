@@ -22,6 +22,7 @@
 6. [CAD 清单](docs/CAD_INVENTORY.md)
 7. [技术路线、文献综述与实施计划（LaTeX 源码）](docs/technical_roadmap/main.tex)
 8. [第一阶段最小技术栈与学习路线](docs/PHASE1_MINIMUM_LEARNING_ROADMAP.md)
+9. [MoveIt 双模式抓放仿真基线](docs/MOVEIT_GRASP_BASELINE.md)
 
 已编译版本见
 [ATOM_Technical_Roadmap.pdf](output/pdf/ATOM_Technical_Roadmap.pdf)。该 PDF
@@ -38,7 +39,7 @@ LFS 命令，不要将指针文本当作 PDF 打开。
 |-- previous report/               # 上一组原始报告
 |-- reference/                     # 外部参考资料索引
 |-- source_cad/                    # CAD 来源与导出约定
-`-- ros2_ws/                       # ROS 2 工作区（暂未选择发行版）
+`-- ros2_ws/                       # ROS 2 仿真验证工作区
 ```
 
 原始 PDF 和 F3Z 保留在接手时的位置，不在初始化过程中改名或改写。
@@ -50,7 +51,10 @@ git lfs install
 git lfs pull
 ```
 
-ROS 2 环境暂不提供安装命令。先确认目标 Ubuntu/ROS 2 版本和已采购机械臂，再锁定依赖与创建平台相关包。
+本机 Jazzy/Harmonic 用于开发验证；实验室兼容门使用 Ubuntu 22.04、ROS 2
+Humble 和 Gazebo Fortress Docker。两者都不是最终真实机械臂驱动选择，相关边界见
+[`docs/DECISIONS.md`](docs/DECISIONS.md)。Docker 构建与验收命令见
+[`docs/MOVEIT_GRASP_BASELINE.md`](docs/MOVEIT_GRASP_BASELINE.md)。
 
 ## 近期里程碑
 

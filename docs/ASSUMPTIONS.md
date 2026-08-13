@@ -17,6 +17,8 @@ Items remain open until evidence is linked in `docs/DECISIONS.md`.
 | A-011 | The UR3e-to-gripper mounting transform can be inferred from CAD. | The simulation attaches `gripper_mount` to the official UR `flange` frame and uses the CAD case rear-face centre as a provisional datum. Replace this with measured quick-disconnect and TCP transforms before hardware use. |
 | A-012 | A representative cuvette can be simulated with a rigid 14 x 14 x 45 mm, 10 g collision box. | The 14 x 14 mm cross-section is from the report; height and mass are provisional. The visual approximates the official WNDMC disposable COC microcuvette silhouette, but the exact inherited labware is unconfirmed. Replace both with identified labware CAD and filled-mass measurements. |
 | A-013 | The reported mean static friction coefficient of 0.88 can parameterise rigid Gazebo contact. | Use only for baseline sensitivity tests. The report gives N=10 inclined-plane trials but no uncertainty, dynamic friction or compliant contact model. |
+| A-014 | Conservative MoveIt planning limits of 1.0 rad/s and 1.0 rad/s^2 for the three proximal UR3e joints, 1.5 rad/s and 1.5 rad/s^2 for the wrists, and 0.03 m/s and 0.05 m/s^2 for the fingers are suitable for the verification task. | Planning-only values. Confirm against the selected hardware, driver scaling and measured payload response before deployment. |
+| A-015 | A `0.2 rad` shoulder-pan rotation is a sufficient representative transfer between the two simulated supports. | Fixed simulation fixture only; no real workstation pose, obstacle or insertion tolerance is represented. |
 
 ## Questions for supervisors and partner teams
 

@@ -11,7 +11,7 @@ baseline without replacing the Ubuntu 24.04 / ROS 2 Jazzy host installation.
 | ROS 2 | Humble |
 | Gazebo | Fortress (Gazebo Sim 6) |
 | ROS/Gazebo integration | `ros-humble-ros-gz` |
-| Motion-planning tools | MoveIt 2 for Humble (no ATOM MoveIt configuration yet) |
+| Motion-planning tools | MoveIt 2.5.9 with the ATOM verification configuration |
 | UR description | official Humble branch commit `18e6f603b3ebc2ec479fecb62d6be544b15755e9` |
 | Python | Ubuntu 22.04 system Python 3.10 |
 
@@ -56,9 +56,10 @@ This performs:
 
 1. Humble workspace build;
 2. Humble Xacro expansion and `check_urdf`;
-3. description/world package tests;
+3. description/world and MoveIt-configuration package tests;
 4. a headless Fortress grasp/lift/hold/release regression;
-5. an explicit search for `RESULT PASS`.
+5. one logical and one physical-contact MoveIt grasp/transfer/release task;
+6. explicit searches for the structured `RESULT PASS` records.
 
 The first complete workstation run passed on 2026-08-13. This is a regression
 gate, not a substitute for repeating the test on the laboratory computer.
@@ -85,8 +86,13 @@ host, permit the local container user as required by the local display policy,
 then run the GUI wrapper:
 
 ```bash
-./scripts/docker/humble_gui.sh
+./scripts/docker/humble_gui.sh logical
+./scripts/docker/humble_gui.sh physical
 ```
+
+Use `./scripts/docker/humble_gui.sh native` for the original Gazebo-native
+controller regression. The MoveIt modes also open the repository RViz
+configuration.
 
 Wayland, NVIDIA and remote desktop setups may require host-specific rendering
 configuration. Those differences do not block the headless compatibility gate.
