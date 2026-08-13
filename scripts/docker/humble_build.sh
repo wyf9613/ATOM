@@ -14,5 +14,5 @@ docker compose -f docker-compose.humble.yaml run --rm atom-humble bash -lc '
   cd /humble_ws
   rosdep check --from-paths src --ignore-src
   colcon build --symlink-install \
-    --packages-select ur_description atom_gripper_description
+    --packages-select ur_description atom_gripper_description atom_manipulation atom_ur3e_moveit_config
 '

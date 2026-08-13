@@ -18,6 +18,7 @@ def generate_launch_description():
             "headless": LaunchConfiguration("headless"),
             "world": "atom_grasp.sdf",
             "initial_finger_position": "0.0",
+            "control_backend": LaunchConfiguration("control_backend"),
         }.items(),
     )
     automatic_test = TimerAction(
@@ -35,6 +36,7 @@ def generate_launch_description():
         [
             DeclareLaunchArgument("headless", default_value="false"),
             DeclareLaunchArgument("run_test", default_value="false"),
+            DeclareLaunchArgument("control_backend", default_value="native"),
             simulation,
             automatic_test,
         ]

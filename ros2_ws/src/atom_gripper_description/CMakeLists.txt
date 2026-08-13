@@ -4,7 +4,7 @@ project(atom_gripper_description)
 find_package(ament_cmake REQUIRED)
 
 install(
-  DIRECTORY launch meshes urdf worlds
+  DIRECTORY config launch meshes urdf worlds
   DESTINATION share/${PROJECT_NAME}
   PATTERN "__pycache__" EXCLUDE
   PATTERN "*.pyc" EXCLUDE
@@ -15,6 +15,7 @@ install(
     scripts/demo_motion.py
     scripts/extract_step_meshes.py
     scripts/grasp_lift_test.py
+    scripts/trajectory_smoke_test.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

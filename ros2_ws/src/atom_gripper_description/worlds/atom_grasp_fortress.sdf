@@ -59,6 +59,31 @@
       </link>
     </model>
 
+    <model name="cuvette_target_support">
+      <static>true</static>
+      <pose>0.2660 0.1890 0 0 0 0</pose>
+      <link name="support">
+        <collision name="pedestal_collision">
+          <pose>0 0 0.0525 0 0 0</pose>
+          <geometry><box><size>0.030 0.030 0.105</size></box></geometry>
+        </collision>
+        <collision name="tray_collision">
+          <pose>0 0 0.110 0 0 0</pose>
+          <geometry><box><size>0.025 0.025 0.010</size></box></geometry>
+        </collision>
+        <visual name="pedestal_visual">
+          <pose>0 0 0.0525 0 0 0</pose>
+          <geometry><box><size>0.030 0.030 0.105</size></box></geometry>
+          <material><ambient>0.22 0.24 0.18 1</ambient><diffuse>0.36 0.38 0.26 1</diffuse></material>
+        </visual>
+        <visual name="tray_visual">
+          <pose>0 0 0.110 0 0 0</pose>
+          <geometry><box><size>0.025 0.025 0.010</size></box></geometry>
+          <material><ambient>0.22 0.24 0.18 1</ambient><diffuse>0.36 0.38 0.26 1</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
     <model name="cuvette">
       <pose>0.2982 0.13235 0.1375 0 0 0</pose>
       <link name="body">

@@ -12,15 +12,16 @@ docker compose -f docker-compose.humble.yaml run --rm atom-humble bash -lc '
   set -eo pipefail
   cd /humble_ws
   colcon build --symlink-install \
-    --packages-select ur_description atom_gripper_description
+    --packages-select ur_description atom_gripper_description atom_manipulation atom_ur3e_moveit_config
   source install/setup.bash
   xacro \
     src/atom_gripper_description/urdf/ur3e_atom_humble.urdf.xacro \
     > /tmp/ur3e_atom_humble.urdf
   check_urdf /tmp/ur3e_atom_humble.urdf
-  colcon test --packages-select atom_gripper_description \
+  colcon test --packages-select atom_gripper_description atom_ur3e_moveit_config \
     --event-handlers console_direct+
   colcon test-result --test-result-base build/atom_gripper_description --verbose
+  colcon test-result --test-result-base build/atom_ur3e_moveit_config --verbose
 
   set +e
   timeout --signal=INT 50s ros2 launch atom_gripper_description \
@@ -35,3 +36,6 @@ docker compose -f docker-compose.humble.yaml run --rm atom-humble bash -lc '
     exit "${launch_status}"
   fi
 '
+
+"${repo_root}/scripts/docker/humble_moveit_acceptance.sh" \
+  "${ATOM_MOVEIT_ACCEPTANCE_REPETITIONS:-1}"

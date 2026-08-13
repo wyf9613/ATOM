@@ -2,6 +2,7 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="ur3e_atom">
   <xacro:include filename="$(find ur_description)/urdf/ur_macro.xacro"/>
   <xacro:include filename="$(find atom_gripper_description)/urdf/atom_gripper.urdf.xacro"/>
+  <xacro:include filename="$(find atom_gripper_description)/urdf/atom_ros2_control.urdf.xacro"/>
 
   <xacro:arg name="prefix" default=""/>
   <xacro:arg name="joint_limit_params" default="$(find ur_description)/config/ur3e/joint_limits.yaml"/>
@@ -9,7 +10,11 @@
   <xacro:arg name="physical_params" default="$(find ur_description)/config/ur3e/physical_parameters.yaml"/>
   <xacro:arg name="visual_params" default="$(find ur_description)/config/ur3e/visual_parameters.yaml"/>
   <xacro:arg name="initial_finger_position" default="0.0"/>
+  <xacro:arg name="control_backend" default="native"/>
+  <xacro:arg name="enable_logical_grasp" default="false"/>
+  <xacro:arg name="simulation_controllers" default="$(find atom_gripper_description)/config/ros2_controllers.yaml"/>
   <xacro:property name="atom_ur_joint_limits" value="${xacro.load_yaml('$(arg joint_limit_params)')['joint_limits']}"/>
+  <xacro:property name="use_ros2_control" value="${'$(arg control_backend)' == 'ros2_control'}"/>
 
   <link name="world"/>
   <xacro:ur_robot
@@ -56,20 +61,44 @@
     </gazebo>
   </xacro:macro>
 
-  <!-- Numerical hold gains are provisional; output caps come from the official UR limits. -->
-  <xacro:gz_position_controller joint="$(arg prefix)shoulder_pan_joint" initial_position="0.0" p_gain="300" d_gain="10" cmd_max="${atom_ur_joint_limits['shoulder_pan_joint']['max_effort']}"/>
-  <xacro:gz_position_controller joint="$(arg prefix)shoulder_lift_joint" initial_position="-1.5707963268" p_gain="500" d_gain="20" cmd_max="${atom_ur_joint_limits['shoulder_lift_joint']['max_effort']}"/>
-  <xacro:gz_position_controller joint="$(arg prefix)elbow_joint" initial_position="1.5707963268" p_gain="500" d_gain="20" cmd_max="${atom_ur_joint_limits['elbow_joint']['max_effort']}"/>
-  <xacro:gz_position_controller joint="$(arg prefix)wrist_1_joint" initial_position="-1.5707963268" p_gain="100" d_gain="5" cmd_max="${atom_ur_joint_limits['wrist_1_joint']['max_effort']}"/>
-  <xacro:gz_position_controller joint="$(arg prefix)wrist_2_joint" initial_position="-1.5707963268" p_gain="100" d_gain="5" cmd_max="${atom_ur_joint_limits['wrist_2_joint']['max_effort']}"/>
-  <xacro:gz_position_controller joint="$(arg prefix)wrist_3_joint" initial_position="0.0" p_gain="50" d_gain="2" cmd_max="${atom_ur_joint_limits['wrist_3_joint']['max_effort']}"/>
-  <xacro:gz_position_controller joint="$(arg prefix)left_finger_joint" initial_position="$(arg initial_finger_position)" p_gain="300" d_gain="0.5" cmd_max="5"/>
-  <xacro:gz_position_controller joint="$(arg prefix)right_finger_joint" initial_position="$(arg initial_finger_position)" p_gain="300" d_gain="0.5" cmd_max="5"/>
+  <xacro:unless value="${use_ros2_control}">
+    <!-- Numerical hold gains are provisional; output caps come from the official UR limits. -->
+    <xacro:gz_position_controller joint="$(arg prefix)shoulder_pan_joint" initial_position="0.0" p_gain="300" d_gain="10" cmd_max="${atom_ur_joint_limits['shoulder_pan_joint']['max_effort']}"/>
+    <xacro:gz_position_controller joint="$(arg prefix)shoulder_lift_joint" initial_position="-1.5707963268" p_gain="500" d_gain="20" cmd_max="${atom_ur_joint_limits['shoulder_lift_joint']['max_effort']}"/>
+    <xacro:gz_position_controller joint="$(arg prefix)elbow_joint" initial_position="1.5707963268" p_gain="500" d_gain="20" cmd_max="${atom_ur_joint_limits['elbow_joint']['max_effort']}"/>
+    <xacro:gz_position_controller joint="$(arg prefix)wrist_1_joint" initial_position="-1.5707963268" p_gain="100" d_gain="5" cmd_max="${atom_ur_joint_limits['wrist_1_joint']['max_effort']}"/>
+    <xacro:gz_position_controller joint="$(arg prefix)wrist_2_joint" initial_position="-1.5707963268" p_gain="100" d_gain="5" cmd_max="${atom_ur_joint_limits['wrist_2_joint']['max_effort']}"/>
+    <xacro:gz_position_controller joint="$(arg prefix)wrist_3_joint" initial_position="0.0" p_gain="50" d_gain="2" cmd_max="${atom_ur_joint_limits['wrist_3_joint']['max_effort']}"/>
+    <xacro:gz_position_controller joint="$(arg prefix)left_finger_joint" initial_position="$(arg initial_finger_position)" p_gain="300" d_gain="0.5" cmd_max="5"/>
+    <xacro:gz_position_controller joint="$(arg prefix)right_finger_joint" initial_position="$(arg initial_finger_position)" p_gain="300" d_gain="0.5" cmd_max="5"/>
+    <gazebo>
+      <plugin filename="gz-sim-joint-state-publisher-system"
+              name="gz::sim::systems::JointStatePublisher">
+        <topic>/model/ur3e_atom/joint_state</topic>
+      </plugin>
+    </gazebo>
+  </xacro:unless>
 
-  <gazebo>
-    <plugin filename="gz-sim-joint-state-publisher-system"
-            name="gz::sim::systems::JointStatePublisher">
-      <topic>/model/ur3e_atom/joint_state</topic>
-    </plugin>
-  </gazebo>
+  <xacro:if value="${use_ros2_control}">
+    <xacro:atom_ros2_control name="ur3e_atom" hardware_plugin="gz_ros2_control/GazeboSimSystem" prefix="$(arg prefix)" initial_finger_position="$(arg initial_finger_position)"/>
+    <gazebo>
+      <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+        <parameters>$(arg simulation_controllers)</parameters>
+      </plugin>
+    </gazebo>
+  </xacro:if>
+
+  <xacro:if value="$(arg enable_logical_grasp)">
+    <gazebo>
+      <plugin filename="gz-sim-detachable-joint-system" name="gz::sim::systems::DetachableJoint">
+        <!-- Fixed gripper frames are collapsed into wrist_3_link by URDF-to-SDF conversion. -->
+        <parent_link>$(arg prefix)wrist_3_link</parent_link>
+        <child_model>cuvette</child_model>
+        <child_link>body</child_link>
+        <detach_topic>/atom_grasp/detach</detach_topic>
+        <attach_topic>/atom_grasp/attach</attach_topic>
+        <output_topic>/atom_grasp/state</output_topic>
+      </plugin>
+    </gazebo>
+  </xacro:if>
 </robot>

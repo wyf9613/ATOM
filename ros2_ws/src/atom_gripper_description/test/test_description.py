@@ -102,6 +102,50 @@ def test_combined_description_expands_with_expected_chain():
         assert controller_caps[joint] == expected_effort
 
 
+def test_ros2_control_backend_exposes_arm_and_gripper_joints():
+    share = get_package_share_directory("atom_gripper_description")
+    description_name = (
+        "ur3e_atom_humble.urdf.xacro"
+        if os.environ.get("ROS_DISTRO") == "humble"
+        else "ur3e_atom.urdf.xacro"
+    )
+    result = subprocess.run(
+        ["xacro", f"{share}/urdf/{description_name}", "control_backend:=ros2_control"],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    robot = ET.fromstring(result.stdout)
+
+    control = robot.find("ros2_control")
+    assert control is not None
+    assert control.find("hardware/plugin").text in {
+        "gz_ros2_control/GazeboSimSystem",
+        "ign_ros2_control/IgnitionSystem",
+    }
+    controlled_joints = {joint.attrib["name"] for joint in control.findall("joint")}
+    assert controlled_joints == {
+        "shoulder_pan_joint",
+        "shoulder_lift_joint",
+        "elbow_joint",
+        "wrist_1_joint",
+        "wrist_2_joint",
+        "wrist_3_joint",
+        "left_finger_joint",
+        "right_finger_joint",
+    }
+    for joint in control.findall("joint"):
+        assert [interface.attrib["name"] for interface in joint.findall("command_interface")] == [
+            "position"
+        ]
+
+    plugin_names = {
+        plugin.attrib["name"] for plugin in robot.findall("gazebo/plugin")
+    }
+    assert not any("JointPositionController" in name for name in plugin_names)
+    assert any("ROS2ControlPlugin" in name for name in plugin_names)
+
+
 def test_grasp_world_contains_provisional_contact_baseline():
     share = get_package_share_directory("atom_gripper_description")
     world_name = (
@@ -149,3 +193,42 @@ def test_both_gazebo_world_variants_are_well_formed():
         plugin.attrib["name"] for plugin in fortress_world.findall("plugin")
     }
     assert "ignition::gazebo::systems::SceneBroadcaster" in fortress_plugins
+
+
+def test_logical_grasp_is_explicit_and_uses_reduced_collision():
+    share = get_package_share_directory("atom_gripper_description")
+    description_name = (
+        "ur3e_atom_humble.urdf.xacro"
+        if os.environ.get("ROS_DISTRO") == "humble"
+        else "ur3e_atom.urdf.xacro"
+    )
+    result = subprocess.run(
+        [
+            "xacro",
+            f"{share}/urdf/{description_name}",
+            "control_backend:=ros2_control",
+            "enable_logical_grasp:=true",
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    robot = ET.fromstring(result.stdout)
+    detachable = next(
+        plugin
+        for plugin in robot.findall("gazebo/plugin")
+        if "DetachableJoint" in plugin.attrib["name"]
+    )
+    assert detachable.find("parent_link").text == "wrist_3_link"
+    assert detachable.find("child_model").text == "cuvette"
+    assert detachable.find("child_link").text == "body"
+    assert detachable.find("attach_topic").text == "/atom_grasp/attach"
+    assert detachable.find("detach_topic").text == "/atom_grasp/detach"
+
+    for world_name in ("atom_logical_grasp.sdf", "atom_logical_grasp_fortress.sdf"):
+        world = ET.parse(f"{share}/worlds/{world_name}").getroot().find("world")
+        cuvette = world.find("model[@name='cuvette']")
+        assert cuvette.find("link/collision/geometry/box/size").text == (
+            "0.004 0.004 0.035"
+        )
+        assert world.find("model[@name='cuvette_target_support']") is not None

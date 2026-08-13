@@ -23,6 +23,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       ros-humble-ament-cmake-pytest \
       ros-humble-joint-state-publisher \
       ros-humble-joint-state-publisher-gui \
+      ros-humble-ign-ros2-control \
+      ros-humble-ros2-controllers \
+      ros-humble-ros2controlcli \
       ros-humble-launch-testing-ament-cmake \
       ros-humble-launch-testing-ros \
       ros-humble-moveit \
