@@ -1,48 +1,48 @@
 # Project ATOM
 
-**ATOM — Autonomous Transport & Object Manipulation for the Autonomous Chemical Laboratory** 是墨尔本大学 2026 S2--2027 S1 的机电一体化 Capstone 项目，目标是逐步构建一个用于自主化学实验室样品运输与物体操作的移动操作平台。
+**ATOM - Autonomous Transport & Object Manipulation for the Autonomous Chemical Laboratory** 是墨尔本大学 2026 S2 至 2027 S1 的机电一体化 Capstone 项目。
 
-当前处于 **Phase 0：接手、盘点与技术路线确认**。现有成果是上一组的夹爪原型、Fusion 360 装配文件和固定工位实验报告；完整自主实验室系统尚未实现。
+项目目标是集成移动底盘、商用机械臂和上一组留下的自定义夹爪，在受控实验室中完成试管从 A 点到 B 点的运输，并操作指定仪器的盖子和启动按钮。
 
-## 当前事实
+当前仍处于 **Phase 0：交接资产核验、需求确认与架构定义**，但新版分支已经建立了可构建的 UR3e + 夹爪 Gazebo/MoveIt 仿真验证基线。该基线用于复现和验证继承资产，不代表最终机械臂、部署软件栈或真实仪器流程已经确定。
 
-- 上一组使用 UR3e 和人工设定路点，在两个模拟比色皿托盘间完成了 49/50 次完整循环。
-- 49/50 的结果不代表真实 Opentrons Flex 到 DynaPro NanoStar 工作流已经验证。
-- 继承夹爪为 STS3215 驱动的双指平行夹爪，使用 STM32 Nucleo、硅胶接触垫和磁传感反馈。
-- 报告中的夹爪外形约为 225 x 105 x 131 mm，总质量约 580 g。
-- 商用机械臂型号、ROS 2 发行版、移动底盘接口、真实仪器访问条件仍待确认。
+## 建议先读
 
-## 先读这些
+1. [项目中文总览](ATOM_Project_Context.md)
+2. [文档导航](docs/README.md)
+3. [当前状态](docs/PROJECT_STATUS.md)
+4. [项目范围](docs/PROJECT_SCOPE.md)
+5. [当前仿真基线](docs/CURRENT_SIMULATION_BASELINE.md)
+6. [MoveIt 双模式抓取基线](docs/MOVEIT_GRASP_BASELINE.md)
+7. [假设与待确认事项](docs/ASSUMPTIONS.md)
 
-1. [项目背景与长期方案](ATOM_Project_Context.md)
-2. [当前状态](docs/PROJECT_STATUS.md)
-3. [已知问题](docs/KNOWN_ISSUES.md)
-4. [系统架构](docs/SYSTEM_ARCHITECTURE.md)
-5. [夹爪设计摘要](docs/GRIPPER_DESIGN.md)
-6. [CAD 清单](docs/CAD_INVENTORY.md)
-7. [技术路线、文献综述与实施计划（LaTeX 源码）](docs/technical_roadmap/main.tex)
-8. [第一阶段最小技术栈与学习路线](docs/PHASE1_MINIMUM_LEARNING_ROADMAP.md)
-9. [MoveIt 双模式抓放仿真基线](docs/MOVEIT_GRASP_BASELINE.md)
+## 当前最重要的事实
 
-已编译版本见
-[ATOM_Technical_Roadmap.pdf](output/pdf/ATOM_Technical_Roadmap.pdf)。该 PDF
-由 Git LFS 管理；如果下载后文件只有约 131 字节，请先执行本页“获取仓库后”的
-LFS 命令，不要将指针文本当作 PDF 打开。
+- 上一组使用 UR3e 和人工设定路点，在模拟托架之间完成 49/50 次完整循环。
+- 新版仓库已实现模块化 UR3e + 夹爪描述、Gazebo 场景、`ros2_control`、MoveIt 配置和仿真任务状态机。
+- Humble/Fortress 中逻辑抓取和刚体接触抓取各完成 10/10 次任务，但 20 次均复现 MoveIt 关闭阶段故障；因此干净退出尚未通过。
+- 上述仿真不代表真实夹持力、硅胶柔顺、仪器插入、移动导航或安全性能。
+- 继承夹爪 CAD 和报告已收到，但固件、ROS 代码、接线图和原始数据仍缺失。
+- 实际采购机械臂、移动底盘接口和目标仪器参数仍待确认。
+- 2026-08-21 的暂定任务是：A 点取试管，移动至 B 点，开盖、插入、关盖并按启动按钮。
 
-## 目录
+## 仓库结构
 
 ```text
 .
-|-- ATOM_Project_Context.md        # 项目总体背景与路线
-|-- docs/                          # 架构、决策、问题和实验记录
-|-- hardware/                      # 当前收到的硬件资料
-|-- previous report/               # 上一组原始报告
-|-- reference/                     # 外部参考资料索引
-|-- source_cad/                    # CAD 来源与导出约定
-`-- ros2_ws/                       # ROS 2 仿真验证工作区
+|-- ATOM_Project_Context.md       # 中文项目总览
+|-- docs/                         # 范围、状态、架构、决策和验证记录
+|-- docker/                       # Humble/Fortress 兼容环境
+|-- ros2_ws/                      # UR3e + 夹爪仿真验证工作区
+|-- scripts/                      # Docker 构建和验收脚本
+|-- paper/paper/                  # 相关论文 PDF（当前为本地未跟踪资产）
+|-- previous report/              # 上一组原始报告，只读
+|-- hardware/                     # 原始 CAD/硬件资料，只读
+|-- source_cad/                   # 派生 CAD/网格来源说明
+|-- reference/                    # 外部资料索引
+|-- output/pdf/                   # 正式 PDF
+`-- tmp/                          # 临时提取与渲染文件
 ```
-
-原始 PDF 和 F3Z 保留在接手时的位置，不在初始化过程中改名或改写。
 
 ## 获取仓库后
 
@@ -51,15 +51,23 @@ git lfs install
 git lfs pull
 ```
 
-本机 Jazzy/Harmonic 用于开发验证；实验室兼容门使用 Ubuntu 22.04、ROS 2
-Humble 和 Gazebo Fortress Docker。两者都不是最终真实机械臂驱动选择，相关边界见
-[`docs/DECISIONS.md`](docs/DECISIONS.md)。Docker 构建与验收命令见
-[`docs/MOVEIT_GRASP_BASELINE.md`](docs/MOVEIT_GRASP_BASELINE.md)。
+本机 Jazzy/Harmonic 用于开发验证；Ubuntu 22.04、ROS 2 Humble 和 Gazebo Fortress Docker 用于实验室兼容性门。两者都不是最终真实机械臂部署选择。复现命令见 [MoveIt 抓取基线](docs/MOVEIT_GRASP_BASELINE.md) 和 [Docker 说明](docker/humble/README.md)。
 
-## 近期里程碑
+## 文档和资产规则
 
-1. 收齐并校验上一组固件、ROS 代码、接线图和物理夹爪。
-2. 确认机械臂型号、交付时间、相机/力传感器和真实仪器访问条件。
-3. 完成夹爪运动、传感、标定、TCP 与安装接口的实测。
-4. 建立模块化夹爪 URDF/Xacro，再集成厂商官方机械臂描述。
-5. 先完成确定性的 MoveIt 2 仿真基线，再引入感知和闭环修正。
+- 原始 PDF、F3Z 和 STEP 不覆盖、不改写。
+- 确认选择写入 `docs/DECISIONS.md`；假设写入 `docs/ASSUMPTIONS.md`。
+- 风险和阻塞项写入 `docs/KNOWN_ISSUES.md`。
+- 仿真与实物差异写入 `docs/SIM2REAL_LOG.md`。
+- 定量结论必须注明单位、条件、样本数和不确定度。
+- 仿真通过、计划内容和论文结果都不能写成 ATOM 已实现的实机能力。
+
+## 近期行动
+
+1. 修复或明确 MoveIt Humble 关闭故障的边界。
+2. 与化学团队确认并测量试管、仪器、盖子、按钮和人工流程。
+3. 获取机械臂采购证据和移动底盘接口。
+4. 收齐上一组固件、ROS 代码、接线和原始数据。
+5. 实测夹爪质量、行程、TCP、夹持力和快拆重复性。
+6. 用真实测量替换仿真中的暂定几何、惯量、摩擦和安装变换。
+7. 先验证独立仪器技能，再组合移动端到端流程。

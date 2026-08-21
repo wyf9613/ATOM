@@ -1,6 +1,6 @@
-# Simulation-to-Real Log
+# 仿真到实机差异与验证记录
 
-Record every material mismatch between the robot model/simulation and measured hardware.
+本文件保留详细英文测试记录，避免在翻译中改变参数、阈值和日志含义。所有模型假设与真实硬件之间的重要差异都必须记录；仿真通过只能作为软件证据，不能自动外推为实机能力。
 
 | Date | Subsystem | Simulated assumption | Real measurement | Correction | Validation |
 |---|---|---|---|---|---|

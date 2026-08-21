@@ -1,39 +1,50 @@
-# Known Issues
+# 已知问题与风险
 
-## Project blockers
+## 1. 项目阻塞项
 
-| ID | Issue | Impact | Next evidence/action |
-|---|---|---|---|
-| P-001 | Purchased arm is unconfirmed. | Blocks driver, URDF, MoveIt and mount selection. | Obtain purchase order/model/controller details. |
-| P-002 | ROS 2 and Ubuntu versions are unconfirmed. | Blocks reproducible development environment. | Reconcile vendor and mobile-base support matrices. |
-| P-003 | Firmware, ROS code, wiring and raw data are absent. | Cannot reproduce inherited control behaviour. | Request complete handover and archive it unchanged. |
-| P-004 | Real workflow and instrument access are unconfirmed. | Test fixtures and precision requirements may be wrong. | Agree acceptance test with Chemical Engineering. |
-| P-005 | Mobile-base interface is absent. | 2027 mechanical/electrical/software integration risk. | Freeze an interface-control document during 2026 S2. |
+| ID | 问题 | 影响 | 下一步 |
+| --- | --- | --- | --- |
+| P-001 | 已采购机械臂未确认 | 无法冻结真实驱动、URDF、MoveIt 和安装方案 | 获取采购证据 |
+| P-002 | 最终 Ubuntu/ROS 2 和厂商支持矩阵未确认 | Docker 兼容通过不能替代真实部署验证 | 在实验室电脑复现并核对厂商支持 |
+| P-003 | 固件、ROS 代码、接线和原始数据缺失 | 无法复现继承夹爪控制 | 索取完整交接 |
+| P-004 | 真实仪器、试管和流程参数未确认 | 测试夹具和精度要求可能错误 | 与化学团队测量并冻结验收流程 |
+| P-005 | 移动底盘接口缺失 | 机械、电气、软件和安全集成风险高 | 形成接口控制文档 |
+| P-006 | 人机共享空间条件未定义 | 无法选择安全模式、传感器和速度限制 | 场地调查和初步风险评估 |
 
-## Gripper risks
+## 2. 夹爪与模型风险
 
-| ID | Issue | Impact |
-|---|---|---|
-| G-001 | No timeout or maximum travel limit. | Empty grasp and unnecessary loading. |
-| G-002 | No calibrated force measurement. | FR2 (< 5 N per the previous requirement) remains unverified. |
-| G-003 | Silicone adhesion on release. | Placement failures; tape workaround is not production-ready. |
-| G-004 | Quick-disconnect wear. | TCP and mounting repeatability can degrade. |
-| G-005 | Low-mounted STM32 holder. | Collision/clearance risk. |
-| G-006 | Bonded pads and magnets. | Durability and sensor alignment risk. |
-| G-007 | Software-only reported emergency behaviour. | Does not satisfy a system-level hardware emergency stop. |
-| G-008 | Conflicting final speed (180 in text, 200 in table). | Configuration cannot be trusted without firmware. |
-| G-009 | Simulation joint axes, -15 to +5 mm travel about the CAD assembly pose, inertial split, flange transform and TCP are provisional. | The model is suitable for software integration only; collision and kinematic results must not be treated as hardware evidence. |
-| G-010 | Native Gazebo controllers and `ros2_control` are both retained and are numerically different backends. | The native path remains a regression test; only the `ros2_control` path is used for MoveIt trajectory execution, and neither is equivalent to a real vendor controller. |
-| G-011 | Contact simulation uses rigid box collisions, a provisional 10 g cuvette and no silicone compliance. | A passing grasp test does not validate grip force, glass/COP stress, release adhesion or hardware reliability. |
-| G-012 | The corrected contact baseline has only one clean run (`N=1`). | It is a regression check, not repeatability or statistical reliability evidence; run a defined batch after the provisional geometry is frozen. |
-| G-013 | The MoveIt PlanningScene contains the robot and, during logical grasp, the cuvette, but not the Gazebo supports or real instrument geometry. | Current OMPL success is not obstacle-clearance or instrument-insertion evidence. |
-| G-014 | MoveIt 2.5.9 on Humble can emit a class-loader shutdown fault after the task result while `move_group` is being torn down. | The task process and acceptance result complete first, but shutdown logs are noisy; reproduce against a newer supported MoveIt patch before treating clean process teardown as verified. |
-| G-015 | The Ubuntu 24.04/Jazzy host currently lacks the `gz_ros2_control`, `moveit_ros_move_group` and `moveit_configs_utils` runtime packages. | Jazzy description/Xacro tests pass, but the new trajectory and MoveIt task path is dynamically validated only in the Humble/Fortress container until those host packages are installed. |
+| ID | 问题 | 影响 |
+| --- | --- | --- |
+| G-001 | 没有超时和最大行程限制 | 空夹和不必要加载 |
+| G-002 | 没有标定力测量 | 无法验证夹持力低于 5 N |
+| G-003 | 硅胶可能粘附试管 | 放置失败 |
+| G-004 | 快拆磨损 | TCP 和安装重复性下降 |
+| G-005 | STM32 支架偏低 | 桌面和仪器碰撞风险 |
+| G-006 | 硅胶垫和磁铁粘接 | 耐久性和传感对齐风险 |
+| G-007 | 只有软件紧急行为 | 不能替代硬件急停 |
+| G-008 | 速度记录冲突：180/200 | 未取得固件前不能信任配置 |
+| G-009 | 关节轴、行程、惯量、法兰变换和 TCP 暂定 | 模型只适合软件集成，不能作为实机证据 |
+| G-010 | Gazebo native 与 `ros2_control` 数值后端不同 | 两者都不等同于真实厂商控制器 |
+| G-011 | 接触模型为刚体 box、10 g 暂定器皿且无硅胶柔顺 | 抓取通过不能证明力、应力、粘附或可靠性 |
+| G-012 | native 接触回归只有一次干净运行 | 只能算回归检查，不是统计可靠性 |
+| G-013 | MoveIt PlanningScene 不含仿真支架和真实仪器 | 当前规划成功不证明仪器避碰或插入 |
+| G-014 | Humble MoveIt 2.5.9 在任务完成后的关闭阶段可 segfault | 任务结果先完成，但干净 teardown 尚未验证 |
+| G-015 | Jazzy 主机缺少部分 MoveIt/`gz_ros2_control` 运行包 | 动态 MoveIt 路径目前只在 Humble/Fortress 容器验证 |
 
-## Evidence limitations
+## 3. 新任务风险
 
-- The 49/50 result used fixed manually tuned waypoints and simulated holders.
-- Placement accuracy on the real DynaPro and workspace integration with real instruments were only partially verified.
-- The one failure was attributed to manual setup, but the system also lacked autonomous detection/recovery for that misplacement.
-- Long-term pad wear, quick-release repeatability and varying object geometries were not evaluated.
-- The Gazebo fixture is a scenario support, not geometry for the Opentrons Flex or DynaPro NanoStar.
+| ID | 问题 | 影响 |
+| --- | --- | --- |
+| T-001 | 开关盖是接触型约束运动 | 可能需要力反馈、柔顺或专用工具 |
+| T-002 | 插入口公差未知 | 无法确定定位和视觉精度 |
+| T-003 | 同一夹爪能否兼顾夹管、开盖和按键未知 | 可能需要工具或工位改造 |
+| T-004 | 动作成功反馈未定义 | 失败后可能继续执行 |
+| T-005 | 底盘误差会传递到机械臂 | 必须进行工位相对重定位 |
+| T-006 | 人员可能进入路径或工作区 | 需要检测、限速、停止和复位策略 |
+
+## 4. 证据边界
+
+- 上一组 49/50 只适用于固定路点和模拟托架。
+- 新版仿真中的逻辑/物理任务通过只证明该模型和软件链路在指定条件下运行。
+- 仿真支架不是真实 Opentrons Flex 或 DynaPro NanoStar 几何。
+- 尚未验证硅胶长期磨损、快拆重复性、真实试管、真实仪器、底盘或共享空间安全。

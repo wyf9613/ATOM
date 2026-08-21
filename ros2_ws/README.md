@@ -1,14 +1,15 @@
-# ROS 2 Workspace
+# ROS 2 仿真验证工作区
 
-The deployment stack is still unconfirmed. For inherited-asset verification only,
-`docs/DECISIONS.md` records an Ubuntu 24.04, ROS 2 Jazzy, Gazebo Harmonic and UR3e
-simulation baseline. This must not be interpreted as the purchased-arm selection.
+此工作区已经包含 UR3e + 继承夹爪的仿真验证基线。它用于复现上一组平台和验证软件集成，**不代表采购机械臂或最终部署栈已经确定**。
 
-Official upstream sources are pinned in `atom_sim.repos`. Import them into `src/`
-with `vcs import`; do not vendor or modify the Universal Robots model in this
-repository.
+## 当前环境
 
-## Build the verification baseline
+- 主机验证：Ubuntu 24.04、ROS 2 Jazzy、Gazebo Harmonic；
+- 部署兼容门：Ubuntu 22.04、ROS 2 Humble、Gazebo Fortress Docker；
+- 官方 UR 依赖通过 `atom_sim.repos` 和 `atom_sim_humble.repos` 固定；
+- 不复制或直接修改厂商机器人模型。
+
+## Jazzy/Harmonic 基线
 
 ```bash
 cd ros2_ws
@@ -21,40 +22,28 @@ source install/setup.bash
 ros2 launch atom_gripper_description sim.launch.py
 ```
 
-The explicit system-Python selection prevents a user Conda environment from
-overriding ROS 2's Python dependencies. Run the deterministic motion check in a
-second sourced terminal with:
+第二个已 source 的终端运行：
 
 ```bash
 ros2 run atom_gripper_description demo_motion.py
 ```
 
-After those decisions are recorded, create modular packages for:
+显式选择系统 Python 是为了防止 Conda 覆盖 ROS 2 Python 依赖。
 
-- gripper description;
-- combined robot description;
-- MoveIt configuration;
-- gripper driver/state machine;
-- perception/localisation;
-- task control;
-- simulation;
-- later mobile-base, navigation and docking integration.
-
-Do not copy vendor robot models into this repository when an official, versioned upstream package can be pinned instead.
-
-## Ubuntu 22.04 / ROS 2 Humble compatibility environment
-
-The previous-project and laboratory baseline reported by the supervisor is
-Ubuntu 22.04 with ROS 2 Humble. Do not reinstall the workstation solely for that
-reason. The repository provides an isolated Humble/Fortress environment:
+## Humble/Fortress 兼容环境
 
 ```bash
-cd /home/wuyifan/ATOM
 ./scripts/docker/humble_build.sh
 ./scripts/docker/humble_test.sh
 ```
 
-The Humble UR source is independently pinned in `atom_sim_humble.repos` because
-the upstream Humble and Jazzy Xacro interfaces differ. See
-`docker/humble/README.md` for Docker installation, GUI and laboratory validation
-instructions.
+MoveIt 双模式抓取的构建与验收命令见 `../docs/MOVEIT_GRASP_BASELINE.md`，Docker GUI 和实验室复现说明见 `../docker/humble/README.md`。
+
+## 软件包职责
+
+- `atom_gripper_description`：夹爪、组合模型、Gazebo 场景和描述测试；
+- `atom_ur3e_moveit_config`：独立 MoveIt 验证配置；
+- `atom_manipulation`：抓取任务状态机；
+- 官方 `ur_description`：通过固定的上游依赖提供 UR3e 模型。
+
+实机前仍需新增或确认夹爪驱动、真实机械臂驱动、感知、仪器技能、导航、底盘接口和安全监督。
