@@ -1,8 +1,11 @@
 # ROS 2 Workspace
 
-This workspace is intentionally not buildable yet. The commercial arm is now confirmed as the delivered UFactory xArm 850. The controller/firmware inventory, target Ubuntu version, ROS 2 distribution, vendor driver and MoveIt configuration are still unconfirmed.
+The selected development baseline is Docker on Ubuntu 24.04 with ROS 2 Jazzy,
+Gazebo Harmonic and UFactory's official `xarm_ros2` stack for `uf850`. The
+vendor source is pinned by `atom_xarm_jazzy.repos`; it is imported into the
+container workspace rather than copied into this repository.
 
-After those remaining decisions are recorded, create modular packages for:
+Create separate ATOM-owned packages for:
 
 - gripper description;
 - combined robot description;

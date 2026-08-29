@@ -19,7 +19,9 @@ No ROS 2 package, robot model or buildable software stack has been received in t
 | Previous ROS/serial integration code | Missing | To request |
 | Wiring diagram and pin map | Missing | To request |
 | Raw experiment data | Missing | To request |
-| Robot arm | UFactory xArm 850 delivered; driver unselected | Physical controller/accessory inventory and commissioning evidence required |
+| Robot arm | UFactory xArm 850 delivered | Physical controller/accessory inventory and commissioning evidence required |
+| Development environment | Docker definition added: Ubuntu 24.04, ROS 2 Jazzy, Gazebo Harmonic | Not yet built or dynamically verified |
+| Vendor ROS stack | Official UFactory `xarm_ros2` Jazzy commit pinned | `uf850` description/control/MoveIt/Gazebo baseline selected; hardware compatibility still unverified |
 | Mobile-base specification/interface | Missing | Coordinate with base team |
 
 ## Demonstrated by the previous team
@@ -46,7 +48,7 @@ No ROS 2 package, robot model or buildable software stack has been received in t
 |---|---|---|
 | 1. Inherited gripper understood | Not passed | Physical inspection, CAD hierarchy, firmware, wiring and parameter reconciliation |
 | 2. Gripper robot description | Not started | Valid Xacro, TF, mesh scale, joint directions and limits in RViz |
-| 3. Arm + gripper model | Ready to start | xArm 850 confirmed; verify and pin the official description after controller/ROS compatibility review |
+| 3. Arm + gripper model | In progress | Official `uf850` stack pinned; add the inherited gripper as a separate model after measuring the flange transform |
 | 4. Simulation baseline | Not started | Controllers, motion planning, gripper action and task state machine |
 | 5. Real-arm deployment | Not started | Controller inventory, hardware-safe bring-up, mount/TCP measurement and commissioning |
 | 6. Perception-guided manipulation | Not started | Pose perturbation experiment against fixed-waypoint baseline |

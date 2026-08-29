@@ -47,7 +47,14 @@ git lfs install
 git lfs pull
 ```
 
-ROS 2 环境暂不提供安装命令。xArm 850 已到货；先清点控制器、固件和随机资料并确认目标 Ubuntu/ROS 2 兼容性，再锁定驱动依赖与创建平台相关包。继承的 UR3e 仿真基线保留在 `ur3e` 分支。
+当前软件基线为 Docker 中的 Ubuntu 24.04、ROS 2 Jazzy、Gazebo Harmonic 和 UFactory 官方 `xarm_ros2` Jazzy 分支。xArm 850 已到货，但实机连接前仍需清点控制器、固件、标定与安全接口。环境说明见 `docker/jazzy/README.md`；继承的 UR3e 仿真基线保留在 `ur3e` 分支。
+
+准备好构建时，从仓库根目录运行：
+
+```bash
+./scripts/docker/jazzy_build.sh
+./scripts/docker/jazzy_shell.sh
+```
 
 ## 近期里程碑
 

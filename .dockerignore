@@ -1,0 +1,18 @@
+.git
+.github
+.agents
+.codex
+.venv
+.docker-runtime
+tmp
+output
+previous report
+hardware
+ros2_ws/build
+ros2_ws/install
+ros2_ws/log
+ros2_ws/src/Universal_Robots_ROS2_Description
+ros2_ws/src/Universal_Robots_ROS2_GZ_Simulation
+Untitled.base
+**/__pycache__
+**/*.pyc

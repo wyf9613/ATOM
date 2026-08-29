@@ -1,0 +1,20 @@
+services:
+  atom-jazzy:
+    build:
+      context: .
+      dockerfile: docker/jazzy/Dockerfile
+      args:
+        USER_ID: "${ATOM_UID:-1000}"
+        GROUP_ID: "${ATOM_GID:-1000}"
+    image: atom-xarm850-jazzy-harmonic:latest
+    network_mode: host
+    ipc: host
+    stdin_open: true
+    tty: true
+    environment:
+      ROS_DOMAIN_ID: "${ROS_DOMAIN_ID:-42}"
+    volumes:
+      - .:/workspace
+      - ./.docker-runtime/jazzy_ws/build:/jazzy_ws/build
+      - ./.docker-runtime/jazzy_ws/install:/jazzy_ws/install
+      - ./.docker-runtime/jazzy_ws/log:/jazzy_ws/log

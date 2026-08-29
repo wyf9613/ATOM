@@ -43,3 +43,12 @@
 - Evidence: The project team reported physical arrival of the xArm 850 on 2026-08-29.
 - Boundary: Arrival confirms the arm family/model for project work, but does not yet confirm the controller variant, serial-number-specific calibration, firmware, supplied end-effector interface, payload configuration, network settings, ROS 2 compatibility or safety integration. Record those from labels, supplied documents and repeatable commissioning tests before selecting a driver or MoveIt configuration.
 - Effect on D-004: The arm-selection portion is resolved. Ubuntu, ROS 2 distribution, vendor driver and MoveIt configuration remain deferred until compatibility and hardware evidence are recorded.
+
+## D-007 - Use an Ubuntu 24.04 / ROS 2 Jazzy Docker baseline for xArm 850
+
+- Date: 2026-08-29
+- Status: Accepted for development and simulation baseline
+- Decision: Use one Docker baseline based on Ubuntu 24.04 Noble, ROS 2 Jazzy, Gazebo Harmonic, `gz_ros2_control` and MoveIt 2. Use UFactory's official `xarm_ros2` `jazzy` branch for the six-axis `uf850` model and pin repository commit `3dc2b5e8294758d96b54b15fa5920d581b7cbb3d` plus its SDK submodule commit `d84a2b7d533ff988bf1c2197ed50dd0d6723cf30`.
+- Evidence: UFactory lists Ubuntu 24.04 + ROS 2 Jazzy as a developed/tested environment and provides `uf850` description, Gazebo, `ros2_control`, MoveIt fake/simulation and real-arm launch files. ROS 2 Jazzy supports Ubuntu 24.04, and Gazebo documents Harmonic as the recommended Jazzy pairing.
+- Boundary: The Docker definition and dependency pin have not yet been built or dynamically tested in this repository. This decision does not validate the delivered controller firmware, network configuration, serial-number calibration, payload/TCP, custom gripper mount or any hardware motion.
+- Supersedes: D-004 for Ubuntu/ROS selection. The prior Ubuntu 22.04 / ROS 2 Humble compatibility route remains only in the UR3e branch and is not part of the xArm 850 baseline.

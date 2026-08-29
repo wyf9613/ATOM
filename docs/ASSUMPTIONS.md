@@ -5,9 +5,12 @@ Items remain open until evidence is linked in `docs/DECISIONS.md`.
 Resolved: A-001 (arm candidate) is superseded by D-006 after delivery of the
 UFactory xArm 850.
 
+Resolved: A-002 (Ubuntu/ROS direction) is superseded by D-007, selecting the
+Ubuntu 24.04 / ROS 2 Jazzy Docker baseline. Exact package patches remain pinned
+or captured by the container build.
+
 | ID | Item | Current treatment |
 |---|---|---|
-| A-002 | Ubuntu and ROS 2 will be used for integration. | Direction accepted; exact versions unconfirmed. |
 | A-003 | Fiducials may be placed at workstations. | Preferred baseline, subject to lab approval. |
 | A-004 | Real Opentrons Flex and DynaPro NanoStar access will be available. | Unconfirmed; maintain a representative test fixture plan. |
 | A-005 | Precise insertion into the real DynaPro is required. | Unconfirmed; this changes sensing/control requirements. |
