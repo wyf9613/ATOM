@@ -35,3 +35,11 @@
 - Decision: Use Git LFS for Fusion archives/models, neutral CAD meshes and PDFs.
 - Reason: These binary files do not benefit from normal Git deltas and are expected to grow.
 
+## D-006 - Use the delivered UFactory xArm 850 as the Project ATOM arm
+
+- Date: 2026-08-29
+- Status: Accepted
+- Decision: Use the UFactory xArm 850 that has arrived for the Project ATOM manipulation platform. Keep the inherited UR3e simulation baseline on the dedicated `ur3e` branch; do not carry its arm-specific description, controllers or MoveIt configuration into the xArm baseline.
+- Evidence: The project team reported physical arrival of the xArm 850 on 2026-08-29.
+- Boundary: Arrival confirms the arm family/model for project work, but does not yet confirm the controller variant, serial-number-specific calibration, firmware, supplied end-effector interface, payload configuration, network settings, ROS 2 compatibility or safety integration. Record those from labels, supplied documents and repeatable commissioning tests before selecting a driver or MoveIt configuration.
+- Effect on D-004: The arm-selection portion is resolved. Ubuntu, ROS 2 distribution, vendor driver and MoveIt configuration remain deferred until compatibility and hardware evidence are recorded.

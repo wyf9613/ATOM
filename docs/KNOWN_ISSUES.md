@@ -4,7 +4,7 @@
 
 | ID | Issue | Impact | Next evidence/action |
 |---|---|---|---|
-| P-001 | Purchased arm is unconfirmed. | Blocks driver, URDF, MoveIt and mount selection. | Obtain purchase order/model/controller details. |
+| P-001 | The xArm 850 has arrived, but its controller variant, firmware, calibration files and supplied interfaces have not been inventoried. | Blocks evidence-based driver, ROS 2 distribution and MoveIt configuration selection. | Photograph labels, archive supplied files and record controller/firmware/network details. |
 | P-002 | ROS 2 and Ubuntu versions are unconfirmed. | Blocks reproducible development environment. | Reconcile vendor and mobile-base support matrices. |
 | P-003 | Firmware, ROS code, wiring and raw data are absent. | Cannot reproduce inherited control behaviour. | Request complete handover and archive it unchanged. |
 | P-004 | Real workflow and instrument access are unconfirmed. | Test fixtures and precision requirements may be wrong. | Agree acceptance test with Chemical Engineering. |
@@ -29,4 +29,3 @@
 - Placement accuracy on the real DynaPro and workspace integration with real instruments were only partially verified.
 - The one failure was attributed to manual setup, but the system also lacked autonomous detection/recovery for that misplacement.
 - Long-term pad wear, quick-release repeatability and varying object geometries were not evaluated.
-

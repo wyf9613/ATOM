@@ -2,9 +2,11 @@
 
 Items remain open until evidence is linked in `docs/DECISIONS.md`.
 
+Resolved: A-001 (arm candidate) is superseded by D-006 after delivery of the
+UFactory xArm 850.
+
 | ID | Item | Current treatment |
 |---|---|---|
-| A-001 | The commercial arm may be a UFactory xArm 850. | Candidate only; do not build against it yet. |
 | A-002 | Ubuntu and ROS 2 will be used for integration. | Direction accepted; exact versions unconfirmed. |
 | A-003 | Fiducials may be placed at workstations. | Preferred baseline, subject to lab approval. |
 | A-004 | Real Opentrons Flex and DynaPro NanoStar access will be available. | Unconfirmed; maintain a representative test fixture plan. |
@@ -15,7 +17,7 @@ Items remain open until evidence is linked in `docs/DECISIONS.md`.
 
 ## Questions for supervisors and partner teams
 
-1. What exact arm has been ordered, with what controller and delivery date?
+1. What controller, firmware, serial-number calibration and supplied accessories arrived with the xArm 850?
 2. What Ubuntu/ROS 2 versions are required by the arm and mobile-base teams?
 3. What is the exact sample-transfer workflow and success criterion?
 4. Is real instrument insertion mandatory, and what is the true tolerance?
@@ -24,4 +26,3 @@ Items remain open until evidence is linked in `docs/DECISIONS.md`.
 7. What laboratory safety review and emergency-stop architecture are required?
 8. Can the previous team provide firmware, ROS code, wiring, raw data and a handover session?
 9. What are the base payload, power, mounting, docking and navigation interfaces?
-

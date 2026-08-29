@@ -14,6 +14,11 @@ ros2_ws/build/
 ros2_ws/install/
 ros2_ws/log/
 
+# Local simulation/runtime workspaces
+.docker-runtime/
+ros2_ws/src/Universal_Robots_ROS2_Description/
+ros2_ws/src/Universal_Robots_ROS2_GZ_Simulation/
+
 # Python
 __pycache__/
 *.py[cod]
@@ -22,4 +27,3 @@ __pycache__/
 # IDE
 .vscode/
 .idea/
-

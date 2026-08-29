@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-08-09
+Last updated: 2026-08-29
 
 ## Phase
 
@@ -19,7 +19,7 @@ No ROS 2 package, robot model or buildable software stack has been received in t
 | Previous ROS/serial integration code | Missing | To request |
 | Wiring diagram and pin map | Missing | To request |
 | Raw experiment data | Missing | To request |
-| Robot-arm model/driver selection | Unconfirmed | Procurement decision required |
+| Robot arm | UFactory xArm 850 delivered; driver unselected | Physical controller/accessory inventory and commissioning evidence required |
 | Mobile-base specification/interface | Missing | Coordinate with base team |
 
 ## Demonstrated by the previous team
@@ -37,7 +37,7 @@ No ROS 2 package, robot model or buildable software stack has been received in t
 - Perception-guided target localisation and replanning.
 - Robust empty-grasp, timeout and maximum-travel handling.
 - Hardware emergency-stop architecture.
-- Commissioning on the actually purchased commercial arm.
+- Commissioning on the delivered xArm 850.
 - Mobile-base navigation, docking or complete mobile manipulation.
 
 ## Development gates
@@ -46,8 +46,8 @@ No ROS 2 package, robot model or buildable software stack has been received in t
 |---|---|---|
 | 1. Inherited gripper understood | Not passed | Physical inspection, CAD hierarchy, firmware, wiring and parameter reconciliation |
 | 2. Gripper robot description | Not started | Valid Xacro, TF, mesh scale, joint directions and limits in RViz |
-| 3. Arm + gripper model | Blocked | Confirmed arm and official vendor description |
+| 3. Arm + gripper model | Ready to start | xArm 850 confirmed; verify and pin the official description after controller/ROS compatibility review |
 | 4. Simulation baseline | Not started | Controllers, motion planning, gripper action and task state machine |
-| 5. Real-arm deployment | Blocked | Hardware delivery, mount/TCP measurement and commissioning |
+| 5. Real-arm deployment | Not started | Controller inventory, hardware-safe bring-up, mount/TCP measurement and commissioning |
 | 6. Perception-guided manipulation | Not started | Pose perturbation experiment against fixed-waypoint baseline |
 | 7. Mobile integration | Not started | Base interfaces, docking measurements and end-to-end trials |

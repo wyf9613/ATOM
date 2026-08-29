@@ -9,7 +9,7 @@ Task executive
     |-- safety and fault supervisor
     `-- gripper state machine
              |
-Fixed base + commercial arm + inherited gripper
+Fixed base + UFactory xArm 850 + inherited gripper
 ```
 
 The semester target is an integrated manipulation subsystem, not merely arm motion or raw gripper open/close commands.
@@ -43,6 +43,10 @@ combined robot description
 
 The future mobile-base description is another module joined through an `arm_mount` transform. Internal rack-and-pinion contact mechanics may be simplified to two coupled prismatic finger joints at robot level.
 
+For the current project arm, `vendor arm description` means a pinned, verified
+xArm 850 description supplied or published by UFactory. The inherited UR3e
+baseline remains isolated on the `ur3e` branch and is reference evidence only.
+
 ## Provisional frame chain
 
 ```text
@@ -59,4 +63,3 @@ Camera, source workstation, destination workstation, pre-grasp, grasp and insert
 - Perception: timestamped target/workstation pose plus confidence and failure reason.
 - Mobile base: odometry, command velocity/navigation action, docking result, battery and emergency state.
 - Task executive: explicit transitions, retries, recovery and safe-state behaviour.
-

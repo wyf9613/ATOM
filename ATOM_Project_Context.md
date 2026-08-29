@@ -1254,8 +1254,10 @@ The following items must be confirmed rather than assumed:
 11. whether the previous team can provide a technical handover;
 12. availability of complete previous-team source code and raw data.
 
-The previous report identified xArm 850 as the intended platform, but
-this should not be treated as confirmation of the arm currently ordered.
+The UFactory xArm 850 subsequently arrived for Project ATOM on
+2026-08-29. This confirms the project arm model, but not the controller,
+firmware, calibration, ROS 2 support matrix or commissioning state; see
+`docs/DECISIONS.md` D-006.
 
 ------------------------------------------------------------------------
 
