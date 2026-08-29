@@ -4,8 +4,8 @@
 
 | ID | Issue | Impact | Next evidence/action |
 |---|---|---|---|
-| P-001 | The xArm 850 has arrived, but its controller variant, firmware, calibration files and supplied interfaces have not been inventoried. | Blocks evidence-based driver, ROS 2 distribution and MoveIt configuration selection. | Photograph labels, archive supplied files and record controller/firmware/network details. |
-| P-002 | The Ubuntu 24.04 / ROS 2 Jazzy xArm 850 Docker definition is selected but not yet built or dynamically verified. | Dependency or upstream build problems may still block the baseline. | Build the pinned image, record resolved package versions, then run description-only and simulation checks before hardware work. |
+| P-001 | The xArm 850 has arrived, but its controller variant, firmware, calibration files and supplied interfaces have not been inventoried. | Blocks hardware-safe configuration and physical commissioning. | Photograph labels, archive supplied files and record controller/firmware/network details. |
+| P-002 | UFactory's `uf850_moveit_gazebo.launch.py` always starts RViz and the Gazebo GUI. RViz exits in the offscreen container smoke test even though MoveIt and the simulated controllers start. | Prevents a clean display-independent CI/smoke-test path. | Add an ATOM-owned headless wrapper without modifying vendor code, then run repeatability tests and separately verify host X11 GUI operation. |
 | P-003 | Firmware, ROS code, wiring and raw data are absent. | Cannot reproduce inherited control behaviour. | Request complete handover and archive it unchanged. |
 | P-004 | Real workflow and instrument access are unconfirmed. | Test fixtures and precision requirements may be wrong. | Agree acceptance test with Chemical Engineering. |
 | P-005 | Mobile-base interface is absent. | 2027 mechanical/electrical/software integration risk. | Freeze an interface-control document during 2026 S2. |

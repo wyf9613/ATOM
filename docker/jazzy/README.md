@@ -27,7 +27,22 @@ Primary references:
 
 The vendor repository provides the official `xarm_description`,
 `xarm_controller`, `xarm_gazebo`, `xarm_moveit_config`, `xarm_api` and related
-packages. Do not copy those packages into ATOM source packages.
+packages. The image deliberately resolves and builds only the eight core
+packages needed for the `uf850` description, real/simulated control, Gazebo and
+MoveIt. Optional monorepo packages such as joystick, MoveIt Servo and vision
+demos are outside this baseline. Do not copy vendor packages into ATOM source
+packages.
+
+## Verification on 2026-08-29
+
+- Built image `sha256:651e139692da8839bd47a73d8410e5fcc0eb6a9524c64003df8479a2f400738b`.
+- Built all eight core packages once from the pinned source revisions.
+- Validated the six-axis `uf850` Xacro with `check_urdf`.
+- In a 35-second no-hardware smoke run, MoveIt became ready and
+  `joint_state_broadcaster` plus `uf850_traj_controller` activated.
+- RViz exited under offscreen rendering because the official launch hard-codes
+  graphical clients. Host X11 GUI operation and a clean headless wrapper remain
+  to be verified.
 
 ## Build
 

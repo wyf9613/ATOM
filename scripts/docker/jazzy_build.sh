@@ -12,6 +12,24 @@ docker compose -f docker-compose.jazzy.yaml build atom-jazzy
 docker compose -f docker-compose.jazzy.yaml run --rm atom-jazzy bash -lc '
   set -eo pipefail
   cd /jazzy_ws
-  rosdep check --from-paths src --ignore-src
-  colcon build --symlink-install --packages-up-to xarm_moveit_config
+  core_paths=(
+    src/xarm_ros2/uf_ros_lib
+    src/xarm_ros2/xarm_msgs
+    src/xarm_ros2/xarm_sdk
+    src/xarm_ros2/xarm_description
+    src/xarm_ros2/xarm_api
+    src/xarm_ros2/xarm_controller
+    src/xarm_ros2/xarm_gazebo
+    src/xarm_ros2/xarm_moveit_config
+  )
+  rosdep check --from-paths "${core_paths[@]}" --ignore-src
+  colcon build --symlink-install --packages-select \
+    uf_ros_lib \
+    xarm_msgs \
+    xarm_sdk \
+    xarm_description \
+    xarm_api \
+    xarm_controller \
+    xarm_gazebo \
+    xarm_moveit_config
 '

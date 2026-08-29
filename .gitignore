@@ -16,8 +16,6 @@ ros2_ws/log/
 
 # Local simulation/runtime workspaces
 .docker-runtime/
-ros2_ws/src/Universal_Robots_ROS2_Description/
-ros2_ws/src/Universal_Robots_ROS2_GZ_Simulation/
 
 # Python
 __pycache__/
