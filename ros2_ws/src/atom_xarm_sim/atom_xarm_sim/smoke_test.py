@@ -47,19 +47,31 @@ class Uf850SmokeTest(Node):
             raise RuntimeError('timed out waiting for all six xArm joint states')
         self.get_logger().info('PASS: received all six xArm joint states')
 
-    def _check_controllers(self):
-        if not self.controller_client.wait_for_service(timeout_sec=20.0):
+    def _check_controllers(self, timeout_sec=30.0):
+        if not self.controller_client.wait_for_service(timeout_sec=timeout_sec):
             raise RuntimeError('controller manager list service is unavailable')
-        future = self.controller_client.call_async(ListControllers.Request())
-        rclpy.spin_until_future_complete(self, future, timeout_sec=10.0)
-        if not future.done() or future.result() is None:
-            raise RuntimeError('controller manager did not return a controller list')
-        states = {controller.name: controller.state for controller in future.result().controller}
         required = ('joint_state_broadcaster', 'uf850_traj_controller')
+        deadline = time.monotonic() + timeout_sec
+        states = {}
+        while rclpy.ok() and time.monotonic() < deadline:
+            future = self.controller_client.call_async(ListControllers.Request())
+            rclpy.spin_until_future_complete(self, future, timeout_sec=2.0)
+            if future.done() and future.result() is not None:
+                states = {
+                    controller.name: controller.state
+                    for controller in future.result().controller
+                }
+                if all(states.get(name) == 'active' for name in required):
+                    self.get_logger().info(
+                        'PASS: joint-state and trajectory controllers are active'
+                    )
+                    return
+            rclpy.spin_once(self, timeout_sec=0.2)
         inactive = [name for name in required if states.get(name) != 'active']
-        if inactive:
-            raise RuntimeError(f'controllers are not active: {inactive}; observed={states}')
-        self.get_logger().info('PASS: joint-state and trajectory controllers are active')
+        raise RuntimeError(
+            f'controllers did not become active within {timeout_sec:.1f} s: '
+            f'{inactive}; observed={states}'
+        )
 
     def _check_tf(self):
         deadline = time.monotonic() + 20.0

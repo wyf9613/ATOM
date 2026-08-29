@@ -5,7 +5,7 @@
 | ID | Issue | Impact | Next evidence/action |
 |---|---|---|---|
 | P-001 | The xArm 850 has arrived, but its controller variant, firmware, calibration files and supplied interfaces have not been inventoried. | Blocks hardware-safe configuration and physical commissioning. | Photograph labels, archive supplied files and record controller/firmware/network details. |
-| P-002 | The ATOM headless xArm 850 smoke test has passed only once, and host graphical operation has not been checked. | One simulation run is insufficient evidence of repeatability. | Repeat the automated test and separately verify host GUI operation. |
+| P-002 | The ATOM headless xArm 850 smoke test has passed twice consecutively after fixing a controller-readiness race, but host graphical operation has not been checked. | Two simulation runs are still limited repeatability evidence. | Expand automated repetitions and separately verify host GUI operation. |
 | P-003 | Firmware, ROS code, wiring and raw data are absent. | Cannot reproduce inherited control behaviour. | Request complete handover and archive it unchanged. |
 | P-004 | Real workflow and instrument access are unconfirmed. | Test fixtures and precision requirements may be wrong. | Agree acceptance test with Chemical Engineering. |
 | P-005 | Mobile-base interface is absent. | 2027 mechanical/electrical/software integration risk. | Freeze an interface-control document during 2026 S2. |

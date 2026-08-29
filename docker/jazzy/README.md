@@ -38,12 +38,13 @@ packages.
 
 - Built the eight core vendor packages and ATOM's `atom_xarm_sim` package.
 - Validated the six-axis `uf850` Xacro with `check_urdf`.
-- One complete server-only test run received all six joint states, resolved TF
-  `world -> link_eef`, confirmed both controllers active, planned a six-point
-  MoveIt trajectory, and commanded a 0.05 rad joint-1 offset and return over
-  2 s per leg. Maximum reported simulated final-joint error was 0.000024 rad
-  against a 0.02 rad test tolerance. These are simulation results from one run,
-  not physical accuracy measurements.
+- Two consecutive server-only runs after the controller-readiness fix each
+  received all six joint states, resolved TF `world -> link_eef`, confirmed both
+  controllers active, planned a six-point MoveIt trajectory, and commanded a
+  0.05 rad joint-1 offset and return over 2 s per leg. Maximum reported
+  simulated final-joint error across the two runs was 0.000050 rad against a
+  0.02 rad test tolerance. These are simulation results, not physical accuracy
+  measurements.
 
 ## Build
 

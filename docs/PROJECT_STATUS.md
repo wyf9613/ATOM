@@ -24,7 +24,7 @@ task implementation and physical-arm commissioning are not yet implemented or ve
 | Wiring diagram and pin map | Missing | To request |
 | Raw experiment data | Missing | To request |
 | Robot arm | UFactory xArm 850 delivered | Physical controller/accessory inventory and commissioning evidence required |
-| Development environment | Docker image built: Ubuntu 24.04, ROS 2 Jazzy, Gazebo Harmonic | Base image digest pinned; ATOM headless launch and automated smoke test pass once; host GUI remains unverified |
+| Development environment | Docker image built: Ubuntu 24.04, ROS 2 Jazzy, Gazebo Harmonic | Base image digest pinned; ATOM headless launch and automated smoke test passed twice consecutively after the controller-readiness fix; host GUI remains unverified |
 | Vendor ROS stack | Official UFactory `xarm_ros2` Jazzy commit pinned and eight core packages built | `uf850` Xacro, TF, MoveIt planning and simulated trajectory control pass; physical hardware compatibility remains unverified |
 | ATOM simulation package | Present and buildable | `ros2_ws/src/atom_xarm_sim`; server-only launch and automated smoke check |
 | Mobile-base specification/interface | Missing | Coordinate with base team |
@@ -54,7 +54,7 @@ task implementation and physical-arm commissioning are not yet implemented or ve
 | 1. Inherited gripper understood | Not passed | Physical inspection, CAD hierarchy, firmware, wiring and parameter reconciliation |
 | 2. Gripper robot description | Not started | Valid Xacro, TF, mesh scale, joint directions and limits in RViz |
 | 3. Arm + gripper model | In progress | Official `uf850` stack pinned; add the inherited gripper as a separate model after measuring the flange transform |
-| 4. Simulation baseline | In progress | Headless `uf850` TF, planning and arm trajectory check passed once; add repeatability runs, gripper action and task state machine |
+| 4. Simulation baseline | In progress | Headless `uf850` TF, planning and arm trajectory check passed twice consecutively; add broader repeatability runs, gripper action and task state machine |
 | 5. Real-arm deployment | Not started | Controller inventory, hardware-safe bring-up, mount/TCP measurement and commissioning |
 | 6. Perception-guided manipulation | Not started | Pose perturbation experiment against fixed-waypoint baseline |
 | 7. Mobile integration | Not started | Base interfaces, docking measurements and end-to-end trials |
