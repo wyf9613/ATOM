@@ -5,15 +5,19 @@ Gazebo Harmonic and UFactory's official `xarm_ros2` stack for `uf850`. The
 vendor source is pinned by `atom_xarm_jazzy.repos`; it is imported into the
 container workspace rather than copied into this repository.
 
-`src/atom_xarm_sim` is the first ATOM-owned package. It provides a server-only
-Gazebo launch that reuses the pinned UFactory model and MoveIt configuration,
-plus a deterministic smoke check for TF, controllers, planning and simulated
-joint motion. It does not contain or modify vendor robot-description files.
+ATOM-owned packages currently present are:
+
+- `atom_gripper_description`: robot-independent inherited gripper Xacro and
+  derived visual meshes;
+- `atom_xarm_description`: top-level `uf850` plus ATOM gripper composition;
+- `atom_xarm_sim`: server-only Gazebo launch and deterministic arm smoke check.
+
+None of these packages copies or modifies vendor robot-description files. The
+combined gripper description is not yet used by the dynamic MoveIt/Gazebo smoke
+test; that requires gripper control and collision semantics to be ported first.
 
 Create separate ATOM-owned packages for:
 
-- gripper description;
-- combined robot description;
 - MoveIt configuration;
 - gripper driver/state machine;
 - perception/localisation;

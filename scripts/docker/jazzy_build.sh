@@ -21,6 +21,8 @@ docker compose -f docker-compose.jazzy.yaml run --rm atom-jazzy bash -lc '
     src/xarm_ros2/xarm_controller
     src/xarm_ros2/xarm_gazebo
     src/xarm_ros2/xarm_moveit_config
+    /workspace/ros2_ws/src/atom_gripper_description
+    /workspace/ros2_ws/src/atom_xarm_description
     /workspace/ros2_ws/src/atom_xarm_sim
   )
   rosdep check --from-paths "${core_paths[@]}" --ignore-src --skip-keys ament_python
@@ -33,6 +35,8 @@ docker compose -f docker-compose.jazzy.yaml run --rm atom-jazzy bash -lc '
     xarm_controller \
     xarm_gazebo \
     xarm_moveit_config \
+    atom_gripper_description \
+    atom_xarm_description \
     atom_xarm_sim \
     --base-paths /jazzy_ws/src/xarm_ros2 /workspace/ros2_ws/src
 '

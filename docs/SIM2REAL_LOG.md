@@ -4,10 +4,10 @@ Record every material mismatch between the robot model/simulation and measured h
 
 | Date | Subsystem | Simulated assumption | Real measurement | Correction | Validation |
 |---|---|---|---|---|---|
-| TBD | Gripper | Finger travel and joint limits from CAD | Pending | Pending | Pending |
-| TBD | Gripper | Mass/inertia from CAD materials | Reported mass 580 g; measurement pending | Pending | Pending |
-| TBD | Mount | CAD flange-to-gripper transform | Pending | Pending | Pending |
-| TBD | TCP | TCP at nominal cuvette centreline | Pending calibration | Pending | Pending |
+| 2026-08-29 | Gripper | Migrated limits of -15 to +5 mm per finger, 0.03 m/s maximum and simplified terminal-pad collisions | Pending physical measurement | Retain as explicitly provisional inputs in robot-independent Xacro | Standalone description tests pass; no physical validation |
+| 2026-08-29 | Gripper | Total 0.58 kg distributed as 0.48/0.05/0.05 kg with box inertias | Previous report states 580 g; scale measurement and component mass properties pending | Retain traceable approximation | Xacro mass test passes; no physical validation |
+| 2026-08-29 | Mount | Gripper mount coincident and axis-aligned with xArm `link_eef` | Pending adapter/quick-disconnect measurement | Neutral placeholder `xyz=0 0 0` m, `rpy=0 0 0` rad | Combined Xacro and override test pass; not validated on hardware |
+| 2026-08-29 | TCP | `xyz=-0.0018 0 0.170536` m from `gripper_base` | Pending calibration | Retain inherited nominal value | Description test passes; no physical validation |
 | TBD | Perception | Ideal camera extrinsics | Pending calibration | Pending | Pending |
 | TBD | Collision | Simplified collision meshes | Pending clearance tests | Pending | Pending |
 | 2026-08-29 | xArm 850 software baseline | Official generic six-axis `uf850` at pinned vendor commit | Arm delivered; controller/firmware, serial calibration, payload and TCP remain pending | Restrict the baseline to eight core vendor packages, add an ATOM-owned server-only wrapper and keep the custom gripper modular | Two consecutive runs after the controller-readiness fix: nine packages compiled; Xacro passed; six joint states and `world -> link_eef` TF present; both controllers active; MoveIt produced six points; 0.05 rad joint-1 offset and return over 2 s per leg completed with maximum reported simulated final-joint error 0.000050 rad across the two runs (test tolerance 0.02 rad) |

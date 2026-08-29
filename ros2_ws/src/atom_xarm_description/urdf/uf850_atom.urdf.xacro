@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="ATOM_UF850">
+  <xacro:arg name="prefix" default=""/>
+  <xacro:arg name="gripper_mount_xyz" default="0 0 0"/>
+  <xacro:arg name="gripper_mount_rpy" default="0 0 0"/>
+
+  <xacro:include filename="$(find xarm_description)/urdf/xarm_device_macro.xacro"/>
+  <xacro:xarm_device
+    prefix="$(arg prefix)"
+    hw_ns="ufactory"
+    limited="true"
+    dof="6"
+    robot_type="uf850"
+    add_gripper="false"
+    add_vacuum_gripper="false"
+    add_bio_gripper="false"
+    attach_to="world"
+    attach_xyz="0 0 0"
+    attach_rpy="0 0 0"
+    create_attach_link="true"
+    load_gazebo_plugin="false"/>
+
+  <xacro:include filename="$(find atom_gripper_description)/urdf/atom_gripper.urdf.xacro"/>
+  <xacro:atom_gripper parent="$(arg prefix)link_eef" prefix="$(arg prefix)" use_mimic="true">
+    <origin xyz="$(arg gripper_mount_xyz)" rpy="$(arg gripper_mount_rpy)"/>
+  </xacro:atom_gripper>
+</robot>

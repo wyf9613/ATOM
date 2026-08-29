@@ -1,0 +1,204 @@
+{
+  "source": "hardware/end effector/End Effector Assembly V3.step",
+  "source_sha256": "8ee4fd1c064210eab24cb10ba67623e497cab0866adbca86d5be9a0c63aaf351",
+  "step_length_unit": "millimetre",
+  "urdf_mesh_scale": 0.001,
+  "grouping": {
+    "base": {
+      "component_count": 12,
+      "bounds_mm": [
+        -81.608081,
+        -26.914081,
+        -75.133082,
+        36.608081,
+        103.902081,
+        30.683082
+      ],
+      "mesh": "base.stl"
+    },
+    "left_finger": {
+      "component_count": 1,
+      "bounds_mm": [
+        -139.309562,
+        12.440697,
+        -53.834562,
+        -33.090438,
+        85.603562,
+        8.384563
+      ],
+      "mesh": "left_finger.stl"
+    },
+    "right_finger": {
+      "component_count": 1,
+      "bounds_mm": [
+        -139.309562,
+        -2.296112,
+        -53.784563,
+        -33.090438,
+        70.866754,
+        8.434562
+      ],
+      "mesh": "right_finger.stl"
+    }
+  },
+  "notes": [
+    "Assembly placement is inherited CAD data and has not been checked against hardware.",
+    "Meshes are visual geometry; URDF collision geometry uses simplified primitives."
+  ],
+  "components": [
+    {
+      "name": "Spur Gear STS3215 v6:1",
+      "bounds_mm": [
+        -45.287164,
+        24.134779,
+        -41.785022,
+        -35.112836,
+        62.265221,
+        -3.799899
+      ]
+    },
+    {
+      "name": "Finger Sub-Assembly STS3215 v8:1",
+      "bounds_mm": [
+        -139.309562,
+        12.440697,
+        -53.834562,
+        -33.090438,
+        85.603562,
+        8.384563
+      ]
+    },
+    {
+      "name": "Finger Sub-Assembly STS3215 v8 (1):1",
+      "bounds_mm": [
+        -139.309562,
+        -2.296112,
+        -53.784563,
+        -33.090438,
+        70.866754,
+        8.434562
+      ]
+    },
+    {
+      "name": "1612-0815-0024 Linear Ball Bearing v3:1",
+      "bounds_mm": [
+        -73.079183,
+        61.085919,
+        -11.593675,
+        -57.320817,
+        85.742081,
+        4.143675
+      ]
+    },
+    {
+      "name": "Stainless Steel Shaft 8mm x 150mm v2:1",
+      "bounds_mm": [
+        -69.229165,
+        -19.535165,
+        -7.725,
+        -61.170835,
+        100.523165,
+        0.275
+      ]
+    },
+    {
+      "name": "PDL-RS-MTR-FE-URT-1 v1:1",
+      "bounds_mm": [
+        -29.612576,
+        88.281424,
+        -40.587576,
+        36.212576,
+        100.506576,
+        -3.862424
+      ]
+    },
+    {
+      "name": "Shaft Cover v4:1",
+      "bounds_mm": [
+        -70.211666,
+        -26.517666,
+        -59.736665,
+        -60.188334,
+        -16.494334,
+        15.286667
+      ]
+    },
+    {
+      "name": "1612-0815-0024 Linear Ball Bearing v3:2",
+      "bounds_mm": [
+        -73.079183,
+        61.085919,
+        -49.593675,
+        -57.320817,
+        85.742081,
+        -33.856325
+      ]
+    },
+    {
+      "name": "1612-0815-0024 Linear Ball Bearing v3:3",
+      "bounds_mm": [
+        -73.079183,
+        -2.594631,
+        -11.543675,
+        -57.320817,
+        22.061532,
+        4.193675
+      ]
+    },
+    {
+      "name": "1612-0815-0024 Linear Ball Bearing v3:4",
+      "bounds_mm": [
+        -73.079183,
+        -2.594631,
+        -49.543675,
+        -57.320817,
+        22.061532,
+        -33.806325
+      ]
+    },
+    {
+      "name": "Stainless Steel Shaft 8mm x 150mm v2:2",
+      "bounds_mm": [
+        -69.229165,
+        -19.535165,
+        -45.725,
+        -61.170835,
+        100.523165,
+        -37.725
+      ]
+    },
+    {
+      "name": "Case Opened:1",
+      "bounds_mm": [
+        -81.236456,
+        -16.542456,
+        -74.761457,
+        28.836456,
+        43.530456,
+        30.311457
+      ]
+    },
+    {
+      "name": "Case Closed v15:1",
+      "bounds_mm": [
+        -81.236456,
+        43.457544,
+        -74.761455,
+        28.836456,
+        103.530456,
+        30.311455
+      ]
+    },
+    {
+      "name": "STS3215 Sub Assembly:1",
+      "bounds_mm": [
+        -35.359228,
+        -13.159228,
+        -55.884229,
+        17.159228,
+        53.359228,
+        0.159228
+      ]
+    }
+  ]
+}

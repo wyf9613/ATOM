@@ -10,6 +10,7 @@
 | P-004 | Real workflow and instrument access are unconfirmed. | Test fixtures and precision requirements may be wrong. | Agree acceptance test with Chemical Engineering. |
 | P-005 | Mobile-base interface is absent. | 2027 mechanical/electrical/software integration risk. | Freeze an interface-control document during 2026 S2. |
 | P-006 | No 3D occupancy-map sensor plugin is configured in the arm-only MoveIt baseline. | The planner does not yet model sensed obstacles. | Add perception only after selecting a sensor model and defining its calibration and validation plan. |
+| P-007 | The combined xArm 850 + ATOM gripper description uses a neutral placeholder mount and is not yet connected to gripper `ros2_control` or combined MoveIt collision semantics. | The model is suitable for description checks, not grasp simulation or hardware commands. | Measure the mounting transform, port the gripper controller independently, define SRDF collision rules and add integrated simulation acceptance tests. |
 
 ## Gripper risks
 

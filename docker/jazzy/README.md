@@ -36,8 +36,12 @@ packages.
 
 ## Verification on 2026-08-29
 
-- Built the eight core vendor packages and ATOM's `atom_xarm_sim` package.
+- Built eight core vendor packages plus `atom_gripper_description`,
+  `atom_xarm_description` and `atom_xarm_sim` (11 packages total).
 - Validated the six-axis `uf850` Xacro with `check_urdf`.
+- The migrated standalone gripper and modular `uf850` + gripper descriptions
+  passed five pytest checks with no failures; the combined
+  tree also passed `check_urdf`.
 - Two consecutive server-only runs after the controller-readiness fix each
   received all six joint states, resolved TF `world -> link_eef`, confirmed both
   controllers active, planned a six-point MoveIt trajectory, and commanded a
@@ -45,6 +49,21 @@ packages.
   simulated final-joint error across the two runs was 0.000050 rad against a
   0.02 rad test tolerance. These are simulation results, not physical accuracy
   measurements.
+
+The dynamic smoke test still uses the official arm-only MoveIt model. The
+combined gripper description is currently description-tested only; gripper
+`ros2_control`, SRDF collision semantics and a measured mount transform remain
+future work.
+
+Run the two description-package test suites inside `jazzy_shell.sh` with:
+
+```bash
+cd /jazzy_ws
+colcon test \
+  --base-paths /workspace/ros2_ws/src \
+  --packages-select atom_gripper_description atom_xarm_description \
+  --event-handlers console_direct+
+```
 
 ## Build
 

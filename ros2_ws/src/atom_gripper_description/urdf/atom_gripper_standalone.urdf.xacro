@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="atom_gripper_standalone">
+  <link name="world"/>
+  <xacro:include filename="$(find atom_gripper_description)/urdf/atom_gripper.urdf.xacro"/>
+  <xacro:atom_gripper parent="world" use_mimic="true">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </xacro:atom_gripper>
+</robot>
