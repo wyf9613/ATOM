@@ -22,6 +22,7 @@
 | [CAD 资产清单](CAD_INVENTORY.md) | 记录收到的 CAD、校验信息和后续导出要求 |
 | [仿真到实机差异记录](SIM2REAL_LOG.md) | 持续记录模型假设、实测结果和修正验证 |
 | [ROS/Gazebo/MoveIt 教程](ROS_GAZEBO_MOVEIT_TUTORIAL.md) | 新组员学习和项目练习 |
+| [相关工作与论文索引](RELATED_WORK.md) | 按项目问题整理本地论文、证据边界和可用于报告的 related-work 初稿 |
 | `technical_roadmap/` | 文献支持的技术路线 LaTeX 源码 |
 
 ## 文档职责
