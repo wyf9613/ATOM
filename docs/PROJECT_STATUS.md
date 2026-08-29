@@ -13,6 +13,8 @@ No ROS 2 package, robot model or buildable software stack has been received in t
 | Asset | Status | Location |
 |---|---|---|
 | Project context and proposed roadmap | Present | `ATOM_Project_Context.md` |
+| Project scope and Stage 0–4 plan | Present, pending physical confirmation | `docs/PROJECT_SCOPE.md` |
+| Related-work index and source papers | Present | `docs/RELATED_WORK.md`, `paper/paper/` |
 | Previous-team final report | Present, 34 pages | `previous report/Capstone_Robotic_Hand_Lab_Experiment.pdf` |
 | End-effector Fusion 360 archive | Present | `hardware/end effector/End Effector Assembly V3.f3z` |
 | Previous STM32 firmware | Missing | To request |

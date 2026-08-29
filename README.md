@@ -15,13 +15,15 @@
 ## 先读这些
 
 1. [项目背景与长期方案](ATOM_Project_Context.md)
-2. [当前状态](docs/PROJECT_STATUS.md)
-3. [已知问题](docs/KNOWN_ISSUES.md)
-4. [系统架构](docs/SYSTEM_ARCHITECTURE.md)
-5. [夹爪设计摘要](docs/GRIPPER_DESIGN.md)
-6. [CAD 清单](docs/CAD_INVENTORY.md)
-7. [技术路线、文献综述与实施计划（LaTeX 源码）](docs/technical_roadmap/main.tex)
-8. [第一阶段最小技术栈与学习路线](docs/PHASE1_MINIMUM_LEARNING_ROADMAP.md)
+2. [文档导航](docs/README.md)
+3. [当前状态](docs/PROJECT_STATUS.md)
+4. [项目范围与 Stage 0–4](docs/PROJECT_SCOPE.md)
+5. [已知问题](docs/KNOWN_ISSUES.md)
+6. [系统架构](docs/SYSTEM_ARCHITECTURE.md)
+7. [夹爪设计摘要](docs/GRIPPER_DESIGN.md)
+8. [CAD 清单](docs/CAD_INVENTORY.md)
+9. [技术路线、文献综述与实施计划（LaTeX 源码）](docs/technical_roadmap/main.tex)
+10. [第一阶段最小技术栈与学习路线](docs/PHASE1_MINIMUM_LEARNING_ROADMAP.md)
 
 已编译版本见 `output/pdf/ATOM_Technical_Roadmap.pdf`。
 
@@ -58,8 +60,4 @@ git lfs pull
 
 ## 近期里程碑
 
-1. 收齐并校验上一组固件、ROS 代码、接线图和物理夹爪。
-2. 完成 xArm 850 控制器、固件、附件、标定文件及安全接口清点，并确认相机/力传感器和真实仪器访问条件。
-3. 完成夹爪运动、传感、标定、TCP 与安装接口的实测。
-4. 建立模块化夹爪 URDF/Xacro，再集成厂商官方机械臂描述。
-5. 先完成确定性的 MoveIt 2 仿真基线，再引入感知和闭环修正。
+完整任务按 [Stage 0–4](docs/PROJECT_SCOPE.md#5-分阶段交付) 推进。当前先完成 Stage 0 的需求、实物和风险确认，再进入 Stage 1 的固定底座操作基线。
