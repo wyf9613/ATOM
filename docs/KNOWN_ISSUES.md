@@ -5,10 +5,11 @@
 | ID | Issue | Impact | Next evidence/action |
 |---|---|---|---|
 | P-001 | The xArm 850 has arrived, but its controller variant, firmware, calibration files and supplied interfaces have not been inventoried. | Blocks hardware-safe configuration and physical commissioning. | Photograph labels, archive supplied files and record controller/firmware/network details. |
-| P-002 | UFactory's `uf850_moveit_gazebo.launch.py` always starts RViz and the Gazebo GUI. RViz exits in the offscreen container smoke test even though MoveIt and the simulated controllers start. | Prevents a clean display-independent CI/smoke-test path. | Add an ATOM-owned headless wrapper without modifying vendor code, then run repeatability tests and separately verify host X11 GUI operation. |
+| P-002 | The ATOM headless xArm 850 smoke test has passed only once, and host graphical operation has not been checked. | One simulation run is insufficient evidence of repeatability. | Repeat the automated test and separately verify host GUI operation. |
 | P-003 | Firmware, ROS code, wiring and raw data are absent. | Cannot reproduce inherited control behaviour. | Request complete handover and archive it unchanged. |
 | P-004 | Real workflow and instrument access are unconfirmed. | Test fixtures and precision requirements may be wrong. | Agree acceptance test with Chemical Engineering. |
 | P-005 | Mobile-base interface is absent. | 2027 mechanical/electrical/software integration risk. | Freeze an interface-control document during 2026 S2. |
+| P-006 | No 3D occupancy-map sensor plugin is configured in the arm-only MoveIt baseline. | The planner does not yet model sensed obstacles. | Add perception only after selecting a sensor model and defining its calibration and validation plan. |
 
 ## Gripper risks
 

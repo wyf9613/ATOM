@@ -10,6 +10,6 @@ Record every material mismatch between the robot model/simulation and measured h
 | TBD | TCP | TCP at nominal cuvette centreline | Pending calibration | Pending | Pending |
 | TBD | Perception | Ideal camera extrinsics | Pending calibration | Pending | Pending |
 | TBD | Collision | Simplified collision meshes | Pending clearance tests | Pending | Pending |
-| 2026-08-29 | xArm 850 software baseline | Official generic six-axis `uf850` at pinned vendor commit | Arm delivered; controller/firmware, serial calibration, payload and TCP remain pending | Restrict the baseline to eight core vendor packages and keep the custom gripper modular | Image built once; eight packages compiled; Xacro passed; 35-second smoke reached MoveIt ready and activated both controllers; RViz offscreen exit remains open |
+| 2026-08-29 | xArm 850 software baseline | Official generic six-axis `uf850` at pinned vendor commit | Arm delivered; controller/firmware, serial calibration, payload and TCP remain pending | Restrict the baseline to eight core vendor packages, add an ATOM-owned server-only wrapper and keep the custom gripper modular | One run: nine packages compiled; Xacro passed; six joint states and `world -> link_eef` TF present; both controllers active; MoveIt produced six points; 0.05 rad joint-1 offset and return over 2 s per leg completed with maximum reported simulated final-joint error 0.000024 rad (test tolerance 0.02 rad) |
 
 For each entry, attach units, measurement method, configuration/revision and the test that closes the discrepancy.

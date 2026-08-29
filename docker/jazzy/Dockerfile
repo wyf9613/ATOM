@@ -1,4 +1,4 @@
-FROM ros:jazzy-ros-base-noble
+FROM ros:jazzy-ros-base-noble@sha256:2589a8fba5257307857890173c069852c2abf913a0be7970f172478baecb09e4
 
 ARG DEBIAN_FRONTEND=noninteractive
 ARG USER_ID=1000

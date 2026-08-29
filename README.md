@@ -10,7 +10,7 @@
 - 49/50 的结果不代表真实 Opentrons Flex 到 DynaPro NanoStar 工作流已经验证。
 - 继承夹爪为 STS3215 驱动的双指平行夹爪，使用 STM32 Nucleo、硅胶接触垫和磁传感反馈。
 - 报告中的夹爪外形约为 225 x 105 x 131 mm，总质量约 580 g。
-- 项目机械臂已确认为到货的 UFactory xArm 850；控制器/固件清点、ROS 2 发行版、移动底盘接口和真实仪器访问条件仍待确认。
+- 项目机械臂已确认为到货的 UFactory xArm 850；仿真基线使用 ROS 2 Jazzy，控制器/固件清点、移动底盘接口和真实仪器访问条件仍待确认。
 
 ## 先读这些
 
@@ -37,7 +37,7 @@
 |-- previous report/               # 上一组原始报告
 |-- reference/                     # 外部参考资料索引
 |-- source_cad/                    # CAD 来源与导出约定
-`-- ros2_ws/                       # ROS 2 工作区（暂未选择发行版）
+`-- ros2_ws/                       # ROS 2 Jazzy 工作区与 ATOM 自有软件包
 ```
 
 原始 PDF 和 F3Z 保留在接手时的位置，不在初始化过程中改名或改写。
@@ -58,6 +58,12 @@ git lfs pull
 ./scripts/docker/jazzy_shell.sh
 ```
 
+运行无窗口 xArm 850 仿真冒烟测试：
+
+```bash
+./scripts/docker/jazzy_sim_smoke.sh
+```
+
 ## 近期里程碑
 
-完整任务按 [Stage 0–4](docs/PROJECT_SCOPE.md#5-分阶段交付) 推进。当前先完成 Stage 0 的需求、实物和风险确认，再进入 Stage 1 的固定底座操作基线。
+完整任务按 [Stage 0–4](docs/PROJECT_SCOPE.md#5-分阶段交付) 推进。离开实验室期间先推进 Stage 1 的固定底座仿真基线；Stage 0 中依赖实物的控制器、夹爪和安全证据回到实验室后补齐。

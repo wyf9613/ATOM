@@ -24,6 +24,7 @@ Primary references:
 | Vendor repository | `xArm-Developer/xarm_ros2` |
 | Vendor commit | `3dc2b5e8294758d96b54b15fa5920d581b7cbb3d` |
 | SDK submodule commit | `d84a2b7d533ff988bf1c2197ed50dd0d6723cf30` |
+| ROS base image digest | `sha256:2589a8fba5257307857890173c069852c2abf913a0be7970f172478baecb09e4` |
 
 The vendor repository provides the official `xarm_description`,
 `xarm_controller`, `xarm_gazebo`, `xarm_moveit_config`, `xarm_api` and related
@@ -35,14 +36,14 @@ packages.
 
 ## Verification on 2026-08-29
 
-- Built image `sha256:651e139692da8839bd47a73d8410e5fcc0eb6a9524c64003df8479a2f400738b`.
-- Built all eight core packages once from the pinned source revisions.
+- Built the eight core vendor packages and ATOM's `atom_xarm_sim` package.
 - Validated the six-axis `uf850` Xacro with `check_urdf`.
-- In a 35-second no-hardware smoke run, MoveIt became ready and
-  `joint_state_broadcaster` plus `uf850_traj_controller` activated.
-- RViz exited under offscreen rendering because the official launch hard-codes
-  graphical clients. Host X11 GUI operation and a clean headless wrapper remain
-  to be verified.
+- One complete server-only test run received all six joint states, resolved TF
+  `world -> link_eef`, confirmed both controllers active, planned a six-point
+  MoveIt trajectory, and commanded a 0.05 rad joint-1 offset and return over
+  2 s per leg. Maximum reported simulated final-joint error was 0.000024 rad
+  against a 0.02 rad test tolerance. These are simulation results from one run,
+  not physical accuracy measurements.
 
 ## Build
 
@@ -55,13 +56,31 @@ From the repository root:
 This builds the Docker image and then the vendor workspace. Generated colcon
 files are stored below ignored `.docker-runtime/jazzy_ws/` directories.
 
+## Headless simulation smoke test
+
+From the repository root:
+
+```bash
+./scripts/docker/jazzy_sim_smoke.sh
+```
+
+The script rebuilds incrementally, launches Gazebo server-only without RViz,
+runs the checks described above and shuts the simulation down. Its latest log
+is stored at `.docker-runtime/jazzy_ws/log/atom_uf850_headless_smoke.log`.
+
 ## Open a shell
 
 ```bash
 ./scripts/docker/jazzy_shell.sh
 ```
 
-After the workspace has been built, the official simulation entry point is:
+After the workspace has been built, the ATOM headless entry point is:
+
+```bash
+ros2 launch atom_xarm_sim uf850_headless.launch.py
+```
+
+The official graphical simulation entry point is:
 
 ```bash
 ros2 launch xarm_moveit_config uf850_moveit_gazebo.launch.py
