@@ -1,11 +1,21 @@
-# Reference Assets
+# 外部参考资料
 
-The received previous-team report is currently preserved at:
+上一组报告保留在：
 
 `../previous report/Capstone_Robotic_Hand_Lab_Experiment.pdf`
 
-- Pages: 34
-- SHA-256: `6BA71A40453349CEF096C83C3388F97F20F6878AA9502648C47770543167A5AE`
+- 页数：34；
+- SHA-256：`6BA71A40453349CEF096C83C3388F97F20F6878AA9502648C47770543167A5AE`。
 
-Add new external papers, datasheets and vendor documentation here with source URLs, access dates and revision/version information. Do not duplicate the raw handover report during initialization.
+项目相关论文当前位于 `../paper/paper/`。
 
+后续增加论文、数据手册、标准或厂商文档时，应记录：
+
+- 标题和作者/机构；
+- 原始网址或 DOI；
+- 访问日期；
+- 版本或修订号；
+- 与项目的关系；
+- 文件许可证或使用限制。
+
+不要复制上一组原始报告或在多个目录保存无来源说明的重复文件。

@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="atom_ros2_control" params="name hardware_plugin prefix:='' initial_finger_position:=0.0">
+    <ros2_control name="${name}" type="system">
+      <hardware>
+        <plugin>${hardware_plugin}</plugin>
+      </hardware>
+
+      <xacro:property name="arm_initial_positions" value="${dict(
+        shoulder_pan_joint=0.0,
+        shoulder_lift_joint=-1.5707963268,
+        elbow_joint=1.5707963268,
+        wrist_1_joint=-1.5707963268,
+        wrist_2_joint=-1.5707963268,
+        wrist_3_joint=0.0)}"/>
+
+      <xacro:macro name="atom_controlled_joint" params="joint initial_position">
+        <joint name="${prefix}${joint}">
+          <command_interface name="position"/>
+          <state_interface name="position">
+            <param name="initial_value">${initial_position}</param>
+          </state_interface>
+          <state_interface name="velocity"/>
+          <state_interface name="effort"/>
+        </joint>
+      </xacro:macro>
+
+      <xacro:atom_controlled_joint joint="shoulder_pan_joint" initial_position="${arm_initial_positions['shoulder_pan_joint']}"/>
+      <xacro:atom_controlled_joint joint="shoulder_lift_joint" initial_position="${arm_initial_positions['shoulder_lift_joint']}"/>
+      <xacro:atom_controlled_joint joint="elbow_joint" initial_position="${arm_initial_positions['elbow_joint']}"/>
+      <xacro:atom_controlled_joint joint="wrist_1_joint" initial_position="${arm_initial_positions['wrist_1_joint']}"/>
+      <xacro:atom_controlled_joint joint="wrist_2_joint" initial_position="${arm_initial_positions['wrist_2_joint']}"/>
+      <xacro:atom_controlled_joint joint="wrist_3_joint" initial_position="${arm_initial_positions['wrist_3_joint']}"/>
+      <xacro:atom_controlled_joint joint="left_finger_joint" initial_position="${initial_finger_position}"/>
+      <xacro:atom_controlled_joint joint="right_finger_joint" initial_position="${initial_finger_position}"/>
+    </ros2_control>
+  </xacro:macro>
+</robot>

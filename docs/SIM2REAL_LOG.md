@@ -1,6 +1,6 @@
-# Simulation-to-Real Log
+# 仿真到实机差异与验证记录
 
-Record every material mismatch between the robot model/simulation and measured hardware.
+本文件保留详细英文测试记录，避免在翻译中改变参数、阈值和日志含义。所有模型假设与真实硬件之间的重要差异都必须记录；仿真通过只能作为软件证据，不能自动外推为实机能力。
 
 | Date | Subsystem | Simulated assumption | Real measurement | Correction | Validation |
 |---|---|---|---|---|---|
@@ -10,6 +10,259 @@ Record every material mismatch between the robot model/simulation and measured h
 | TBD | TCP | TCP at nominal cuvette centreline | Pending calibration | Pending | Pending |
 | TBD | Perception | Ideal camera extrinsics | Pending calibration | Pending | Pending |
 | TBD | Collision | Simplified collision meshes | Pending clearance tests | Pending | Pending |
+| TBD | Labware | Rigid 14 x 14 x 45 mm, 10 g cuvette | Pending identified labware measurement | Pending | Pending |
+| TBD | Contact | Rigid Coulomb friction, mu=0.88 | Silicone 20A inclined-plane mean 0.88, N=10; uncertainty pending | Pending | Pending |
 
 For each entry, attach units, measurement method, configuration/revision and the test that closes the discrepancy.
 
+## 2026-08-12 - UR3e plus inherited gripper Gazebo baseline
+
+### Simulation configuration
+
+- Ubuntu 24.04.3, ROS 2 Jazzy, `ros_gz` 1.0.22 and Gazebo Sim 8.11.0.
+- Official `ur_description` 3.5.0, with `ur_type:=ur3e` through the upstream UR3e parameter files.
+- Inherited STEP assembly SHA-256
+  `8EE4FD1C064210EAB24CB10BA67623E497CAB0866ADBCA86D5BE9A0C63AAF351`.
+- STEP visuals exported as one fixed body and two moving finger subassemblies.
+  Fixed-body mesh: 120,464 triangles; each finger mesh: 1,068 triangles.
+- Collision geometry uses box primitives rather than detailed CAD.
+- Gazebo-native position controllers provide the deterministic baseline. ROS 2
+  `Float64` command topics and `JointState` feedback are bridged with `ros_gz_bridge`.
+- Gravity is disabled because the available native Gazebo position controller
+  is used only for a kinematic smoke test; gravity-compensating controller
+  behaviour has not been validated.
+
+### Smoke-test evidence
+
+- `check_urdf` parsed the full chain from `world` through the UR3e `flange`,
+  explicit gripper mount, gripper base, both fingers and provisional TCP.
+- Gazebo spawned `ground_plane` and `ur3e_atom` and resolved both UR and gripper meshes.
+- One deterministic four-pose demo run completed (`N=1`; functional smoke test,
+  not a timing or accuracy experiment).
+- Eight seconds after the final home command, one feedback sample showed a
+  maximum arm-joint position error of `0.00210 rad`, a maximum arm-joint speed
+  magnitude of `1.05e-5 rad/s`, and a maximum finger zero-position residual of
+  `2.54e-5 m`.
+
+### Differences and unresolved evidence
+
+- UR3e nominal upstream kinematics are used; no serial-number-specific robot
+  calibration has been applied.
+- The UR3e is the previous team's university test platform, not the confirmed
+  Project ATOM purchase.
+- The reported gripper mass is 0.58 kg, but its simulated 0.48/0.05/0.05 kg
+  link split and box inertias are estimates with unknown uncertainty.
+- The original baseline incorrectly treated the URT-1 servo driver board as a
+  mechanical mount datum and attached the gripper to `tool0`. The corrected
+  baseline attaches `gripper_mount` to the upstream mechanical `flange` frame
+  with the upstream `flange`-to-`tool0` axis alignment, and uses the centre of
+  the CAD case rear faces as a reproducible provisional datum. The physical
+  quick-disconnect transform and TCP have not been measured.
+- Finger direction and the `-15 to +5 mm` single-side travel window are
+  provisional and have not been checked against the physical gripper.
+- No pad compliance, magnetic sensing, servo dynamics, calibrated grip force,
+  fault handling, hardware stop, trajectory planning or real instrument
+  geometry is represented.
+
+## 2026-08-12 - Provisional cuvette gravity/contact baseline
+
+### Scenario configuration
+
+- Gravity: `9.81 m/s^2` downward; physics step: `0.001 s`.
+- Cuvette collision: rigid box, `14 x 14 x 45 mm`; mass: `0.010 kg`
+  provisional because no filled-cuvette mass was received.
+- Cuvette visual approximates the blue-cap, transparent-body and four-foot
+  silhouette shown for the official WNDMC disposable COC microcuvette. The
+  report does not identify a part number or provide its full dimensions, so
+  the visual details are illustrative and do not alter the collision model.
+- Finger collision pads: rigid boxes, `6 x 20 x 20 mm`, aligned to terminal-pad
+  CAD slices. The CAD assembly pose has an approximately `39.681 mm` visible
+  pad gap; finger axes retain the symmetric prismatic simplification with a
+  provisional `-15 to +5 mm` travel window about that pose.
+- Coulomb friction input: `mu=mu2=0.88`, based on the report's mean from 10
+  Silicone 20A/cuvette inclined-plane trials. No uncertainty or dynamic
+  friction was reported.
+- Gazebo-native PID gains were tuned for numerical holding under gravity. They
+  are not UR3e, servo, `ros2_control` or hardware gains.
+- Six-axis controller output is capped from the official UR3e joint-limit file
+  at `54/54/28/9/9/9 N.m`. This tests whether the provisional controller can
+  hold the nominal rigid-body model within those caps; it does not model
+  structural compliance, backlash or physical arm deflection.
+
+### Invalidated result and correction
+
+- An earlier `N=3` result is invalid. The simplified finger collisions were
+  centred near the overall finger bounding boxes rather than the terminal CAD
+  pads. Their inner faces left only a `6.7 mm` gap while the rendered terminal
+  pads left approximately `39.681 mm`, so Gazebo produced an invisible contact
+  and an apparent air grasp. This was a model/test defect, not grasp evidence.
+- CAD mesh slices place the zero-position terminal inner faces at `+18.000 mm`
+  and `-21.681 mm` in the gripper frame. The corrected `6 x 20 x 20 mm`
+  collisions use those faces, and the acceptance test now requires symmetric
+  joint contact in a `-14.5 to -11.5 mm` window. For a centred `14 mm` object,
+  the geometric estimate is `(39.681 - 14) / 2 = 12.8405 mm` per finger.
+
+### Corrected acceptance test evidence
+
+- One clean headless grasp/lift/hold/return/release run passed (`N=1`) after a
+  fresh Gazebo start on 2026-08-12.
+- Commanded lift was nominally `50 mm`; measured lift was `0.0500 m`.
+- Maximum detected drop during the `5 s` hold was `0.0000 m` at the logged
+  precision; lateral displacement during lift was `0.0040 m`.
+- Release position error relative to the initial pose was `0.0005 m`.
+- Both finger joints stopped at `-0.0128 m`, consistent with the `-0.0128405 m`
+  geometric estimate at the displayed `0.1 mm` precision.
+- Test thresholds: both contacts in `[-0.0145, -0.0115] m`, left/right contact
+  difference at most `0.001 m`, lift at least `0.040 m`, lateral motion at most
+  `0.010 m`, hold drop at most `0.005 m`, object retained at least `0.035 m`
+  above start, and release error at most `0.015 m`.
+- From 2026-08-13 onward, the same test additionally records all available
+  six-axis joint-state samples during the `5 s` loaded hold and requires maximum
+  commanded-position error at most `0.020 rad` and maximum within-hold joint
+  drift at most `0.005 rad`. Run-specific values are evidence only after a
+  clean result is recorded below.
+
+This is a functional simulation check, not statistical reliability evidence or
+validation of force, compliance, breakage risk, real insertion or the previous
+team's reported 49/50 hardware trials.
+
+## 2026-08-13 - Official UR3e effort-cap gravity rerun
+
+### Model and test conditions
+
+- UR3e nominal rigid-body data came from the pinned official `ur_description`
+  configuration: link masses, centres of mass, inertia tensors, kinematics and
+  joint limits.
+- Six-axis Gazebo controller output caps were loaded from that joint-limit file:
+  `54/54/28/9/9/9 N.m` from shoulder pan through wrist 3.
+- Simulated gripper mass was `0.58 kg`, split `0.48/0.05/0.05 kg`; this is the
+  inherited-report estimate, not a measurement. The captured provisional
+  cuvette mass was `0.010 kg` and gravity was `9.81 m/s^2` downward.
+- Acceptance limits over the `5 s` loaded hold were maximum commanded-position
+  error `0.020 rad` and maximum within-hold drift `0.005 rad`.
+
+### Results
+
+- Jazzy/Harmonic headless run: pass (`N=1`), maximum six-axis hold error
+  `0.0181 rad`, maximum within-hold drift `0.0001 rad`, `5002` joint-state
+  samples.
+- Humble/Fortress Docker headless run: pass (`N=1`), maximum six-axis hold error
+  `0.0181 rad`, maximum within-hold drift `0.0001 rad`, `5001` joint-state
+  samples.
+- Both runs also retained the previous outputs at displayed precision: lift
+  `0.0500 m`, hold drop `0.0000 m`, lateral displacement `0.0040 m`, release
+  error `0.0005 m`, and finger contact `(-0.0128, -0.0128) m`.
+
+These results show that the provisional position controller holds the nominal
+rigid model within the selected thresholds and official effort caps. They do
+not quantify physical arm sag: Gazebo links and joints remain rigid, and no
+measured compliance, backlash or controller model is available.
+
+## 2026-08-13 - Humble/Fortress container compatibility run
+
+### Reproduced software environment
+
+- Container OS: Ubuntu 22.04; ROS 2 Humble; Python 3.10.12.
+- Gazebo: Ignition Gazebo 6.18.0 (Fortress generation).
+- ROS/Gazebo integration: `ros-humble-ros-gz` 0.244.25.
+- MoveIt 2 metapackage: 2.5.9. No ATOM MoveIt configuration was selected or
+  validated in this run.
+- Official UR description source: commit
+  `18e6f603b3ebc2ec479fecb62d6be544b15755e9`.
+- Built image ID:
+  `sha256:17ed7eb37301a67ec790d9344fef65193d15bb91be8b1aae829001bb9e46bb6b`.
+- Host used for the run: Ubuntu 24.04 workstation with Docker Engine 29.1.3.
+
+### Compatibility corrections
+
+- Humble's UR Xacro interface differs from Jazzy, so the container uses a
+  separate top-level composition Xacro while retaining the same modular UR and
+  gripper packages.
+- Fortress uses the `ignition.msgs` bridge names and
+  `ignition::gazebo::systems` plugin names; Harmonic uses their `gz` equivalents.
+- Fortress resolves Humble UR meshes through `model://ur_description`, so both
+  package share parents must be present in `IGN_GAZEBO_RESOURCE_PATH`.
+- Fortress's model-level PosePublisher produced an empty pose vector in this
+  scenario. The Humble bridge therefore reads
+  `/world/atom_grasp/dynamic_pose/info`, and the evaluator selects the transform
+  whose `child_frame_id` is `cuvette`. Harmonic retains `/model/cuvette/pose`.
+
+### Test evidence
+
+- `rosdep check` reported all source dependencies satisfied.
+- Both `ur_description` and `atom_gripper_description` built successfully.
+- Humble Xacro expansion and `check_urdf` passed for the complete chain.
+- Package tests reported four results with zero errors, failures or skips.
+- One clean headless Fortress grasp/lift/hold/return/release run passed
+  (`N=1`; physics step `0.001 s`; simulated gravity `9.81 m/s^2`).
+- Measured simulation outputs: lift `0.0500 m`, hold drop `0.0000 m` at logged
+  precision, lateral displacement `0.0040 m`, release error `0.0005 m`, and
+  left/right finger contact positions `-0.0128 m`. The later official-effort-cap
+  rerun above supersedes this run as the current gravity-hold evidence.
+
+This verifies the repository's software simulation on the selected
+Ubuntu/Humble/Fortress pairing. It is not evidence for the laboratory computer's
+GPU, device permissions, controller/firmware, real robot calibration or gripper
+hardware. Repeat the same test on that computer before claiming laboratory
+deployment compatibility.
+
+## 2026-08-13 - MoveIt dual-mode grasp/transfer batch
+
+### Reproduced environment and method
+
+- Image: `atom-humble-fortress:latest`, ID
+  `sha256:6e89bbe1df3e907f303cab868d5bbceef206e4be0f1a38e5c971171872de812c`.
+- Container: Ubuntu 22.04, ROS 2 Humble, Gazebo Fortress 6.18.0 and MoveIt
+  2.5.9; host: Ubuntu 24.04 workstation.
+- Physics: `0.001 s` maximum step and gravity `9.81 m/s^2` downward.
+- Each sample was a new headless Gazebo/MoveIt launch. Logical samples used
+  ROS domain IDs 80--89 and physical samples used 120--129 to prevent live or
+  recently stopped DDS participants from satisfying controller discovery.
+- The task used RRT-Connect for pregrasp and the `0.2 rad` shoulder-pan
+  transfer, and Cartesian paths for the `0.050 m` approach, lift, lower and
+  retreat. Each run made nine planning requests.
+- Logical attach was permitted only after successful close execution, TCP
+  distance `<= 0.035 m`, maximum arm-joint speed `<= 0.020 rad/s` and object
+  speed `<= 0.020 m/s`. Its collision body was deliberately reduced to
+  `4 x 4 x 35 mm` so contact could not substitute for the detachable joint.
+- Physical mode never called the detachable-joint interface. It used the
+  provisional `14 x 14 x 45 mm`, `0.010 kg` rigid cuvette collision and friction
+  coefficient `0.88`.
+
+### Task results
+
+| Mode | Task passes | Lift range | Release XY error range | Cumulative planning-time range | Mean |
+|---|---:|---:|---:|---:|---:|
+| Logical attachment | 10/10 | `0.0500--0.0500 m` | `0.0000--0.0001 m` | `0.077--0.092 s` | `0.085 s` |
+| Physical rigid contact | 10/10 | `0.0500--0.0500 m` | `0.0005--0.0006 m` | `0.074--1.085 s` | `0.187 s` |
+
+There were zero structured task failures and zero 70-second task timeouts in
+these 20 launches. The physical planning-time maximum was one observed
+`1.085 s` sample; the small sample does not establish a timing distribution.
+
+### Additional checks and unresolved teardown failure
+
+- `rosdep check` reported all source-package dependencies satisfied in the
+  container.
+- All four packages built. Description tests passed (`5` pytest cases), MoveIt
+  configuration tests passed (`3` pytest cases), Xacro expansion passed and
+  `check_urdf` accepted the combined model.
+- The Gazebo-native gravity/contact regression remained separate and passed
+  once (`N=1`): `0.0500 m` lift, `0.0000 m` logged hold drop, `0.0040 m`
+  lateral transfer, `0.0005 m` release error, `0.0181 rad` maximum arm hold
+  error and `0.0001 rad` maximum within-hold drift over `5001` joint samples.
+- The host Jazzy description package built and all five description tests
+  passed. Dynamic Jazzy `ros2_control`/MoveIt execution was not run because the
+  host lacks `gz_ros2_control`, `moveit_ros_move_group` and
+  `moveit_configs_utils`.
+- In all 20 Humble samples, after the task emitted `RESULT PASS` and launch
+  requested shutdown, MoveIt 2.5.9 emitted a class-loader warning and
+  `move_group` exited with segmentation fault `-11`. Gazebo then required
+  `SIGTERM` after its shutdown timeout. This is a failed clean-shutdown check,
+  even though the trajectory task had already completed; it is tracked as
+  G-014 and must not be described as a completely clean end-to-end run.
+
+The batch is evidence for repeatability of this fixed, model-based software
+scenario only. It does not validate real collision clearance, instrument
+insertion, contact pressure, glass stress, controller timing, physical TCP or
+laboratory-computer compatibility.

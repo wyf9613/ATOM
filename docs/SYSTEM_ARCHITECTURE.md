@@ -1,62 +1,150 @@
-# System Architecture
+# 系统架构
 
-## 2026 S2 target
-
-```text
-Task executive
-    |-- perception and workstation localisation
-    |-- MoveIt 2 motion planning
-    |-- safety and fault supervisor
-    `-- gripper state machine
-             |
-Fixed base + commercial arm + inherited gripper
-```
-
-The semester target is an integrated manipulation subsystem, not merely arm motion or raw gripper open/close commands.
-
-## 2027 S1 extension
+## 1. 总体分层
 
 ```text
-Task executive
-    |-- navigation and docking
-    |-- perception and relocalisation
-    |-- motion planning
-    |-- safety and fault supervisor
-    `-- manipulation
-             |
-Mobile base + arm + gripper + sensors
+实验员命令 / 实验任务
+          |
+          v
+任务执行器（状态机、重试、恢复）
+          |
+   +------+------+----------------+
+   |             |                |
+   v             v                v
+导航与对接   感知与定位       安全与故障监督
+   |             |                |
+   +-------------+----------------+
+                 |
+                 v
+         运动规划与末端控制
+                 |
+          +------+------+
+          |             |
+          v             v
+       机械臂         夹爪状态机
+          |             |
+          +------+------+
+                 |
+                 v
+           试管 / 仪器
 ```
 
-Navigation states should be inserted around the 2026 manipulation sequence without rewriting the manipulation subsystem.
+任务执行器只负责协调，不应把所有驱动、感知和安全逻辑写在一个节点中。安全监督需要独立观察底盘、机械臂、夹爪和人员检测状态，并能阻止不安全的状态转换。
 
-## Description composition
+## 2. 分阶段系统
+
+### 2026 S2：固定底座操作子系统
 
 ```text
-vendor arm description
-        +
-custom gripper description
-        +
-top-level mounting Xacro
-        =
-combined robot description
+固定底座 + 商用机械臂 + 继承夹爪
+    + 工位/目标定位
+    + 运动规划
+    + 任务状态机
+    + 基础安全与故障处理
 ```
 
-The future mobile-base description is another module joined through an `arm_mount` transform. Internal rack-and-pinion contact mechanics may be simplified to two coupled prismatic finger joints at robot level.
+目标是跑通可重复的综合操作流程，而不是只证明机械臂能动或夹爪能开合。
 
-## Provisional frame chain
+### 2027 S1：移动操作系统
 
 ```text
-map -> odom -> base_link -> arm_mount -> arm_base -> ... -> tool0
-    -> gripper_mount -> gripper_base -> gripper_tcp -> cuvette
+移动底盘 + 机械臂 + 夹爪 + 传感器
+    + 导航与对接
+    + 工位重定位
+    + 操作技能
+    + 系统级安全监督
 ```
 
-Camera, source workstation, destination workstation, pre-grasp, grasp and insertion frames will be added when the sensor arrangement and laboratory workflow are confirmed.
+移动导航状态应包围已有操作流程，不能因为加入底盘而重写全部夹取逻辑。
 
-## Interface boundaries to define
+## 3. 机器人描述组成
 
-- Arm: vendor ROS 2 driver, controller interfaces, safety state and MoveIt compatibility.
-- Gripper: action/state interface, calibration, object-present result, timeout and fault codes.
-- Perception: timestamped target/workstation pose plus confidence and failure reason.
-- Mobile base: odometry, command velocity/navigation action, docking result, battery and emergency state.
-- Task executive: explicit transitions, retries, recovery and safe-state behaviour.
+```text
+厂商机械臂描述
+      +
+自定义夹爪描述
+      +
+顶层安装 Xacro
+      +
+未来移动底盘描述
+      =
+完整组合机器人
+```
 
+- 不从 CAD 导出机械臂与夹爪合并的单体 URDF。
+- 详细 CAD 是机械来源；仿真使用简化碰撞网格。
+- 夹爪内部齿条齿轮可在机器人层面简化为两个耦合的移动关节。
+- 底盘、机械臂和夹爪通过实测安装变换组合。
+
+## 4. 暂定 TF 链
+
+```text
+map
+ `-- odom
+      `-- base_link
+           `-- arm_mount
+                `-- arm_base
+                     `-- ...
+                          `-- tool0
+                               `-- gripper_mount
+                                    `-- gripper_base_link
+                                         `-- gripper_tcp
+                                              `-- test_tube
+```
+
+还需要根据最终传感器和仪器添加：
+
+- `camera_link`、`camera_optical_frame`；
+- `source_workstation`、`destination_workstation`；
+- `pre_grasp`、`grasp`、`lid_handle`、`insertion`、`button` 等任务帧。
+
+标定是独立子系统，不是一次性的手工偏移调整。
+
+## 5. 主要接口
+
+| 子系统 | 最小接口内容 |
+| --- | --- |
+| 机械臂 | 厂商驱动、轨迹接口、当前状态、安全状态、MoveIt 兼容性 |
+| 夹爪 | 校准/张开/闭合 Action、对象存在结果、位置/传感状态、超时和故障码 |
+| 感知 | 带时间戳的目标/工位位姿、置信度、不确定度和失败原因 |
+| 移动底盘 | 里程计、导航/速度命令、对接结果、电量和急停/保护状态 |
+| 运动规划 | planning scene、碰撞对象、目标约束、规划和执行结果 |
+| 任务执行器 | 显式状态转换、前置条件、重试次数、恢复和安全结束状态 |
+| 安全监督 | 运行模式、人员/障碍状态、速度限制、停止请求、复位条件和事件日志 |
+
+具体消息、Action 和服务类型在机械臂、底盘和 ROS 2 版本确认后写入接口控制文档。
+
+## 6. 任务状态机
+
+```text
+IDLE
+ -> NAVIGATE_TO_SOURCE
+ -> LOCALISE_SOURCE
+ -> PRE_GRASP
+ -> GRASP
+ -> VERIFY_GRASP
+ -> RETRACT_AND_STOW
+ -> NAVIGATE_TO_DESTINATION
+ -> LOCALISE_INSTRUMENT
+ -> OPEN_LID
+ -> INSERT_TUBE
+ -> CLOSE_LID
+ -> PRESS_START
+ -> VERIFY_RESULT
+ -> RETURN_SAFE
+ -> COMPLETE
+```
+
+任何状态都可根据故障类型进入 `RETRY`、`RECOVERY`、`PROTECTIVE_STOP` 或 `FAULT`。重试必须有上限，且安全事件后不能自动无条件恢复。
+
+## 7. 精度分配原则
+
+移动底盘不必独自达到插入精度。系统应分层处理误差：
+
+1. 底盘导航到达工位附近；
+2. 对接或工位标志物提供较稳定的相对位姿；
+3. 机械臂规划到预操作位姿；
+4. 近距离视觉、力反馈、柔顺或机械导向完成末端精对准；
+5. 动作后使用传感或仪器反馈验证结果。
+
+实际插入公差没有测量前，不提前决定是否必须使用视觉伺服、力/力矩传感器或学习方法。

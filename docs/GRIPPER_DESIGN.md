@@ -1,59 +1,79 @@
-# Inherited Gripper Design
+# 继承夹爪：设计与验证计划
 
-## Reported configuration
+## 1. 上一组报告中的结构
 
-- Two-finger parallel gripper with rack-and-pinion transmission.
-- FeeTech STS3215 servo and STM32 Nucleo controller.
-- Shore 20A silicone pads with embedded magnets and magnetic sensing.
-- ROS-to-STM32 serial communication.
-- Buckle-style quick-disconnect.
-- Reported envelope: 225 x 105 x 131 mm.
-- Reported total mass including STM32: 580 g.
-- Reported production cost: under AUD 200.
+- 双指平行夹爪，使用齿条齿轮传动；
+- FeeTech STS3215 舵机和 STM32 Nucleo 控制器；
+- Shore 20A 硅胶接触垫，内部放置磁铁并使用磁传感器；
+- ROS 到 STM32 串口通信；
+- 卡扣式快拆结构；
+- 报告外形约 225 x 105 x 131 mm；
+- 报告总质量约 580 g，包含 STM32；
+- 报告制造成本低于 AUD 200。
 
-These values come from the previous report and require measurement on the inherited physical unit.
+这些数值来自上一组报告，必须在收到实体后重新测量。
 
-## Previous experiment
+## 2. 上一组实验边界
 
-- Platform: university UR3e, not the proposed future commercial arm.
-- Workcell: two simplified cuvette holders secured on a table.
-- Motion: manually tuned fixed waypoints.
-- Result: 49/50 complete cycles; the failed trial followed incorrect manual cuvette placement.
-- One-cycle time: 25.3 s.
-- Real-instrument insertion and grip force were not verified.
+- 平台：学校 UR3e，不是未来采购机械臂；
+- 工位：桌面上固定的两个模拟比色皿托架；
+- 运动：人工调节的固定路点；
+- 结果：50 次完整循环成功 49 次；失败与试管人工摆放错误有关；
+- 单循环时间：25.3 s；
+- 没有验证真实仪器插入和实际夹持力。
 
-## Reported tuning values
+## 3. 报告参数
 
-| Parameter | Reported final value | Confidence |
-|---|---:|---|
-| Waypoint wait time | 5 s | Table value |
-| Drop speed | 50 | Table value; device units not documented here |
-| Magnetic-field threshold | 500 | Table value; sensor units not documented here |
-| Load-detection delay | 500 ms | Table value |
-| Load threshold | 240 | Table value; device units not documented here |
-| Gripper speed | 200 in Table 2; 180 in surrounding text | Conflict - confirm from firmware |
+| 参数 | 报告最终值 | 可信度/问题 |
+| --- | ---: | --- |
+| 路点等待时间 | 5 s | 来自表格 |
+| 下降速度 | 50 | 未记录设备单位 |
+| 磁场阈值 | 500 | 未记录传感器单位 |
+| 负载检测延迟 | 500 ms | 来自表格 |
+| 负载阈值 | 240 | 未记录设备单位 |
+| 夹爪速度 | 表格 200，正文 180 | 存在冲突，必须以固件和实测确认 |
 
-Do not copy these values into production configuration until the original firmware and servo conventions are recovered.
+在取得原始固件并确认舵机单位前，不得直接把这些值用于正式配置。
 
-## Known design risks
+## 4. 目标软件抽象
 
-- No timeout or maximum travel limit; an empty grasp can close until the silicone pads compress together.
-- Magnetic threshold is not a calibrated force measurement.
-- High silicone friction can make the cuvette stick during release; tape was used as a temporary workaround.
-- Transient high load at speed can occur before braking and trigger the software stop.
-- Debug serial printing added control-loop latency.
-- STM32 holder extends below the gripper and can reduce table clearance.
-- Bonded silicone pads and magnets may detach or shift with repeated use.
-- Printed buckle surfaces can wear and reduce mount repeatability.
-- Steel shafts add avoidable mass.
+夹爪应提供明确状态，而不只是裸 `open/close` 命令：
 
-## Required initial tests
+```text
+UNCALIBRATED -> CALIBRATING -> OPEN -> CLOSING
+                                      |       |
+                                      v       v
+                                   GRASPED  EMPTY_GRASP
+                                      |
+                                   HOLDING
+                                      |
+                                  RELEASING -> OPEN
+```
 
-1. Photograph and identify the actual as-received configuration.
-2. Measure envelope, mass, finger range, mounting transform and candidate TCP.
-3. Recover firmware and map all servo/sensor units.
-4. Test calibration repeatability and hard/soft travel limits at reduced speed.
-5. Calibrate magnetic readings against an independent force reference.
-6. Characterise object-present, empty-grasp, slip and release detection.
-7. Quantify quick-disconnect translational and angular repeatability.
+故障至少包括：`SENSOR_FAULT`、`SERVO_FAULT`、`TIMEOUT`、`OVERLOAD`、`SLIP_DETECTED` 和 `EMERGENCY_STOP`。
 
+## 5. 已知设计风险
+
+- 空夹缺少超时和最大行程限制；
+- 磁阈值不是标定力值；
+- 硅胶摩擦较大，释放时可能粘住试管；
+- 高速瞬态负载可能在制动前触发软件停止；
+- 串口调试输出可能增加控制循环延迟；
+- STM32 支架影响桌面间隙；
+- 硅胶垫和磁铁可能松动；
+- 3D 打印快拆表面磨损会降低安装重复性；
+- 钢轴增加不必要质量。
+
+## 6. 首轮实物测试
+
+1. 拍照并记录收到的实际装配版本。
+2. 测量外形、质量、手指行程、安装变换和候选 TCP。
+3. 恢复固件，建立舵机与传感器单位映射。
+4. 在低速下测试标定重复性、软件限位和物理极限。
+5. 用独立力传感参考标定磁读数和实际夹持力。
+6. 量化对象存在、空夹、滑移和释放检测。
+7. 量化快拆安装后的平移和角度重复性。
+8. 用目标试管在空载和代表性装载条件下测试保持与损伤。
+9. 评估现有手指是否能够安全完成开盖和按键；若不能，记录工具或工位改造需求。
+
+每项测试必须记录硬件版本、单位、条件、样本数、原始数据和不确定度。

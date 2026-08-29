@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>atom_manipulation</name>
+  <version>0.1.0</version>
+  <description>Deterministic MoveIt grasp-transfer-release task and simulation acceptance checks.</description>
+  <maintainer email="project-atom@unimelb.edu.au">Project ATOM</maintainer>
+  <license>Proprietary</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <depend>geometry_msgs</depend>
+  <depend>moveit_core</depend>
+  <depend>moveit_msgs</depend>
+  <depend>moveit_ros_planning_interface</depend>
+  <depend>rclcpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>shape_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>tf2_msgs</depend>
+
+  <export><build_type>ament_cmake</build_type></export>
+</package>

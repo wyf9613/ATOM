@@ -1,27 +1,37 @@
-# Assumptions and Open Questions
+# 假设与待确认事项
 
-Items remain open until evidence is linked in `docs/DECISIONS.md`.
+以下内容在获得证据并记录到 `docs/DECISIONS.md` 前，不能作为已确认事实。仿真参数只用于验证软件链路，不代表真实硬件参数。
 
-| ID | Item | Current treatment |
-|---|---|---|
-| A-001 | The commercial arm may be a UFactory xArm 850. | Candidate only; do not build against it yet. |
-| A-002 | Ubuntu and ROS 2 will be used for integration. | Direction accepted; exact versions unconfirmed. |
-| A-003 | Fiducials may be placed at workstations. | Preferred baseline, subject to lab approval. |
-| A-004 | Real Opentrons Flex and DynaPro NanoStar access will be available. | Unconfirmed; maintain a representative test fixture plan. |
-| A-005 | Precise insertion into the real DynaPro is required. | Unconfirmed; this changes sensing/control requirements. |
-| A-006 | The inherited physical gripper matches the received F3Z and report. | Must be checked by inspection and measurement. |
-| A-007 | Magnetic sensing can verify grasp force. | Only threshold-based contact was shown; force calibration is missing. |
-| A-008 | The mobile base can carry and power the selected arm safely. | Requires payload, CoM, overturning moment and power data. |
+| ID | 暂定假设 | 当前处理方式 |
+| --- | --- | --- |
+| A-001 | 商用机械臂可能是 UFactory xArm 850。 | 仅作为候选，不按该型号开发。 |
+| A-002 | 实验室部署兼容目标为 Ubuntu 22.04 和 ROS 2 Humble。 | 导师提供了上一组和实验室电脑信息；已用 Docker 验证基础兼容，但最终机械臂支持和实际补丁版本未确认。 |
+| A-003 | 可以在工位布置 AprilTag、ArUco 等标志物。 | 优先基线，需实验室批准。 |
+| A-004 | 可以使用真实 Opentrons Flex 和 DynaPro NanoStar。 | 未确认，同时保留代表性测试夹具方案。 |
+| A-005 | 必须向真实仪器完成高精度插入。 | 未确认；这会直接影响传感和控制方案。 |
+| A-006 | 实体夹爪与收到的 F3Z、STEP 和报告一致。 | 必须通过实物检查和测量确认。 |
+| A-007 | 磁传感器可以验证夹持力。 | 目前只有阈值接触检测，没有力标定。 |
+| A-008 | 移动底盘能够安全承载并供电给最终机械臂。 | 需要载荷、重心、倾覆力矩和功率证据。 |
+| A-009 | STEP 装配位置代表实物几何。 | 仅用于仿真视觉，实机前核对。 |
+| A-010 | 齿条齿轮可简化为两个对称移动关节。 | 机器人级暂定模型；需要实测轴线、零位和行程。 |
+| A-011 | UR3e 至夹爪的安装变换可由 CAD 暂定。 | 仿真使用官方 `flange` 和外壳后表面中心基准；实机前替换为快拆和 TCP 实测。 |
+| A-012 | 比色皿可建模为 14 x 14 x 45 mm、10 g 刚体。 | 14 x 14 mm 来自报告，其余暂定；需确认实际实验器皿和装液质量。 |
+| A-013 | 报告均值 0.88 可作为 Gazebo 刚体摩擦系数。 | 仅用于敏感性/回归测试；缺少不确定度、动态摩擦和柔顺模型。 |
+| A-014 | MoveIt 中的保守速度和加速度限制适合验证任务。 | 仅规划参数；实机前与厂商限制、负载和驱动缩放核对。 |
+| A-015 | 肩关节旋转 0.2 rad 可代表两个仿真支架间转移。 | 仅固定仿真夹具，不代表真实工位和障碍物。 |
+| A-016 | 目标流程为 A 点取试管，移动至 B 点，开盖、插入、关盖并按启动按钮。 | 来源为 2026-08-21 化学团队会议，仍需确认具体仪器和流程。 |
+| A-017 | 机器人将与实验员共享实验室空间。 | 需要确认人员活动范围、速度限制、传感覆盖和停止策略。 |
 
-## Questions for supervisors and partner teams
+## 需要确认
 
-1. What exact arm has been ordered, with what controller and delivery date?
-2. What Ubuntu/ROS 2 versions are required by the arm and mobile-base teams?
-3. What is the exact sample-transfer workflow and success criterion?
-4. Is real instrument insertion mandatory, and what is the true tolerance?
-5. Can fiducials or structured fixtures be attached to each workstation?
-6. Which cameras, force/torque sensors and compute hardware are available?
-7. What laboratory safety review and emergency-stop architecture are required?
-8. Can the previous team provide firmware, ROS code, wiring, raw data and a handover session?
-9. What are the base payload, power, mounting, docking and navigation interfaces?
-
+1. 最终采购机械臂、控制器、安全接口和交付日期是什么？
+2. 实验室电脑的准确软件包版本，以及最终机械臂和底盘支持矩阵是什么？
+3. 目标试管、试管架、仪器、盖子和按钮是什么？
+4. 试管质量、材料、内容物和允许夹持力是多少？
+5. 插入、开盖和按键的几何、力、行程、允许接触区域和成功反馈是什么？
+6. 是否允许增加标志物、定位夹具、导向结构或设备端相机？
+7. 有哪些相机、力/力矩传感器和计算硬件可用？
+8. 实验室要求哪一种风险评估、安全审批和急停架构？
+9. 底盘载荷、供电、安装、导航、对接和安全接口是什么？
+10. 上一组能否提供固件、ROS 代码、接线、原始数据和交接说明？
+11. 各技能和端到端流程的样本数与验收门槛是什么？
