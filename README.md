@@ -12,18 +12,16 @@
 - 报告中的夹爪外形约为 225 x 105 x 131 mm，总质量约 580 g。
 - 项目机械臂已确认为到货的 UFactory xArm 850；仿真基线使用 ROS 2 Jazzy，控制器/固件清点、移动底盘接口和真实仪器访问条件仍待确认。
 
-## 先读这些
+## 从这里开始
 
-1. [项目背景与长期方案](ATOM_Project_Context.md)
-2. [文档导航](docs/README.md)
-3. [当前状态](docs/PROJECT_STATUS.md)
-4. [项目范围与 Stage 0–4](docs/PROJECT_SCOPE.md)
-5. [已知问题](docs/KNOWN_ISSUES.md)
-6. [系统架构](docs/SYSTEM_ARCHITECTURE.md)
-7. [夹爪设计摘要](docs/GRIPPER_DESIGN.md)
-8. [CAD 清单](docs/CAD_INVENTORY.md)
-9. [技术路线、文献综述与实施计划（LaTeX 源码）](docs/technical_roadmap/main.tex)
-10. [第一阶段最小技术栈与学习路线](docs/PHASE1_MINIMUM_LEARNING_ROADMAP.md)
+日常开发先看以下三份即可：
+
+1. [当前阶段、仿真用法与代码结构](docs/ARM_ONLY_SIMULATION.md)
+2. [当前项目状态](docs/PROJECT_STATUS.md)
+3. [Stage 0–4 项目范围](docs/PROJECT_SCOPE.md)
+
+决策、风险、CAD 和论文等专题资料统一从[文档导航](docs/README.md)查找。
+项目的长期背景保留在 [ATOM_Project_Context.md](ATOM_Project_Context.md)。
 
 已编译版本见 `output/pdf/ATOM_Technical_Roadmap.pdf`。
 
@@ -49,7 +47,7 @@ git lfs install
 git lfs pull
 ```
 
-当前软件基线为 Docker 中的 Ubuntu 24.04、ROS 2 Jazzy、Gazebo Harmonic 和 UFactory 官方 `xarm_ros2` Jazzy 分支。xArm 850 已到货，但实机连接前仍需清点控制器、固件、标定与安全接口。环境说明见 `docker/jazzy/README.md`；继承的 UR3e 仿真基线保留在 `ur3e` 分支。
+当前软件基线为 Docker 中的 Ubuntu 24.04、ROS 2 Jazzy、Gazebo Harmonic 和 UFactory 官方 `xarm_ros2` Jazzy 分支。xArm 850 已到货，但实机连接前仍需清点控制器、固件、标定与安全接口。当前开发说明见 [`docs/ARM_ONLY_SIMULATION.md`](docs/ARM_ONLY_SIMULATION.md)；底层环境和固定版本见 [`docker/jazzy/README.md`](docker/jazzy/README.md)。继承的 UR3e 仿真基线保留在 `ur3e` 分支。
 
 准备好构建时，从仓库根目录运行：
 

@@ -10,11 +10,14 @@ ATOM-owned packages currently present are:
 - `atom_gripper_description`: robot-independent inherited gripper Xacro and
   derived visual meshes;
 - `atom_xarm_description`: top-level `uf850` plus ATOM gripper composition;
-- `atom_xarm_sim`: server-only Gazebo launch and deterministic arm smoke check.
+- `atom_xarm_sim`: arm-only Gazebo/MoveIt launch, deterministic smoke check and
+  plan-and-execute trajectory demo.
 
 None of these packages copies or modifies vendor robot-description files. The
 combined gripper description is not yet used by the dynamic MoveIt/Gazebo smoke
 test; that requires gripper control and collision semantics to be ported first.
+The current package layout and run commands are documented in
+[`docs/ARM_ONLY_SIMULATION.md`](../docs/ARM_ONLY_SIMULATION.md).
 
 Create separate ATOM-owned packages for:
 
