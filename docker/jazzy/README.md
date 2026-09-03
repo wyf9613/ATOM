@@ -120,6 +120,35 @@ The script rebuilds incrementally, launches Gazebo server-only without RViz,
 runs the checks described above and shuts the simulation down. Its latest log
 is stored at `.docker-runtime/jazzy_ws/log/atom_uf850_headless_smoke.log`.
 
+## Monitored actuator-dynamics simulation
+
+Run the separate torque-driven nominal model with:
+
+```bash
+./scripts/docker/jazzy_arm_dynamics_sim.sh
+```
+
+This path uses the vendor UF850 rigid-body inertias and effort limits, Gazebo
+DART physics, and an ATOM-owned saturated joint-space PD actuator layer. It
+writes:
+
+- `.docker-runtime/jazzy_ws/log/atom_uf850_nominal_dynamics_tracking.csv` —
+  100 Hz reference, feedback, error and controller output for every joint;
+- `.docker-runtime/jazzy_ws/log/atom_uf850_nominal_dynamics_summary.json` —
+  per-phase/per-joint RMS and maximum position/velocity errors plus peak
+  feedback velocity;
+- `.docker-runtime/jazzy_ws/log/atom_uf850_nominal_dynamics.log` — complete
+  launch and controller log.
+
+The gains are nominal simulation inputs, not identified xArm 850 servo
+parameters. This test can expose controller/model behavior and regression, but
+cannot yet predict physical vibration. Real motor current, temperature,
+gearbox compliance/backlash and controller delay are not available in this
+report and must be collected during supervised hardware commissioning.
+
+The same trajectory monitor also runs in the ideal bare-arm trajectory script,
+using the `atom_uf850_trajectory_*` report names.
+
 ## Open a shell
 
 ```bash

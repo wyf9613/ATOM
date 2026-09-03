@@ -1,0 +1,43 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 250
+
+    # Nominal simulation values only. Replace them with identified parameters
+    # before drawing conclusions about the physical UF850 response.
+    atom_actuator_kp: [1000.0, 1000.0, 1000.0, 800.0, 800.0, 1000.0]
+    atom_actuator_kd: [30.0, 30.0, 25.0, 15.0, 8.0, 5.0]
+    atom_actuator_effort_limit: [200.0, 200.0, 90.0, 68.0, 19.0, 19.0]
+
+    joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+
+    uf850_traj_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+uf850_traj_controller:
+  ros__parameters:
+    command_interfaces:
+      - position
+      - velocity
+    state_interfaces:
+      - position
+      - velocity
+    joints:
+      - joint1
+      - joint2
+      - joint3
+      - joint4
+      - joint5
+      - joint6
+    constraints:
+      goal_time: 5.0
+      stopped_velocity_tolerance: 0.02
+      joint1: {trajectory: 0.50, goal: 0.03}
+      joint2: {trajectory: 0.50, goal: 0.03}
+      joint3: {trajectory: 0.50, goal: 0.03}
+      joint4: {trajectory: 0.50, goal: 0.03}
+      joint5: {trajectory: 0.50, goal: 0.03}
+      joint6: {trajectory: 0.50, goal: 0.03}
+    interface_name: position
+    state_publish_rate: 100.0
+    action_monitor_rate: 20.0

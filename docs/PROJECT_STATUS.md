@@ -29,7 +29,7 @@ physical-arm commissioning are not yet implemented or verified.
 | Robot arm | UFactory xArm 850 delivered | Physical controller/accessory inventory and commissioning evidence required |
 | Development environment | Docker image built: Ubuntu 24.04, ROS 2 Jazzy, Gazebo Harmonic | Base image digest pinned; headless acceptance tests pass; Gazebo and RViz X11 startup plus automated bare-arm motion verified on the current Ubuntu host |
 | Vendor ROS stack | Official UFactory `xarm_ros2` Jazzy commit pinned and eight core packages built | `uf850` Xacro, TF, MoveIt planning and simulated trajectory control pass; physical hardware compatibility remains unverified |
-| ATOM simulation package | Bare-arm baseline passes | `ros2_ws/src/atom_xarm_sim`; server-only launch, infrastructure smoke check and MoveIt plan-and-execute acceptance script |
+| ATOM simulation packages | Ideal bare-arm and nominal actuator-dynamics baselines pass | `ros2_ws/src/atom_xarm_sim` and `atom_xarm_dynamics`; server-only launch, MoveIt plan-and-execute acceptance, and 100 Hz per-joint tracking reports |
 | xArm + gripper composition | Description checks pass | `ros2_ws/src/atom_xarm_description`; neutral mount transform is a simulation placeholder, not a measured interface |
 | Mobile-base specification/interface | Missing | Coordinate with base team |
 
@@ -50,6 +50,8 @@ physical-arm commissioning are not yet implemented or verified.
 - Hardware emergency-stop architecture.
 - Commissioning on the delivered xArm 850.
 - Dynamic Gazebo/MoveIt operation of the xArm 850 with the ATOM gripper attached.
+- Physically identified arm actuator dynamics or validated vibration prediction.
+- MPC implementation or comparison against the deterministic trajectory controller.
 - Mobile-base navigation, docking or complete mobile manipulation.
 
 ## Development gates
@@ -59,7 +61,7 @@ physical-arm commissioning are not yet implemented or verified.
 | 1. Inherited gripper understood | Not passed | Physical inspection, CAD hierarchy, firmware, wiring and parameter reconciliation |
 | 2. Gripper robot description | In progress | Standalone Xacro, mesh provenance and parameter tests pass; RViz inspection and physical measurements remain |
 | 3. Arm + gripper model | In progress | Modular combined Xacro and `check_urdf` pass with a neutral placeholder transform; measure the flange/adapter transform and validate collisions |
-| 4. Simulation baseline | In progress | Headless bare-arm `uf850` TF and controller smoke checks pass; two independent MoveIt plan-and-execute runs pass without a gripper. Gripper control/SRDF, gripper action and task state machine remain separate follow-on work |
+| 4. Simulation baseline | In progress | Ideal and nominal torque-driven bare-arm MoveIt runs pass without a gripper; 100 Hz per-joint reference/feedback reports are generated. Physical model identification, gripper control/SRDF, gripper action and task state machine remain separate follow-on work |
 | 5. Real-arm deployment | Not started | Controller inventory, hardware-safe bring-up, mount/TCP measurement and commissioning |
 | 6. Perception-guided manipulation | Not started | Pose perturbation experiment against fixed-waypoint baseline |
 | 7. Mobile integration | Not started | Base interfaces, docking measurements and end-to-end trials |

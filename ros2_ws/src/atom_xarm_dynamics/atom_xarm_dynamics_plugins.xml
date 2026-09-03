@@ -1,0 +1,11 @@
+<library path="atom_nominal_actuator_system">
+  <class
+    name="atom_xarm_dynamics/NominalActuatorSystem"
+    type="atom_xarm_dynamics::NominalActuatorSystem"
+    base_class_type="gz_ros2_control::GazeboSimSystemInterface">
+    <description>
+      Nominal joint-space PD actuator that converts position and velocity
+      commands to saturated Gazebo joint torques.
+    </description>
+  </class>
+</library>

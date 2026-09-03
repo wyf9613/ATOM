@@ -7,9 +7,15 @@ from pathlib import Path
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, OpaqueFunction, RegisterEventHandler
+from launch.actions import (
+    DeclareLaunchArgument,
+    IncludeLaunchDescription,
+    OpaqueFunction,
+    RegisterEventHandler,
+)
 from launch.event_handlers import OnProcessExit, OnProcessStart
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 from uf_ros_lib.moveit_configs_builder import MoveItConfigsBuilder
 from uf_ros_lib.uf_robot_utils import generate_ros2_control_params_temp_file
@@ -21,17 +27,31 @@ def launch_setup(context):
     # cannot be hidden inside the bare-arm acceptance test.
     robot_type = 'uf850'
     dof = '6'
-    ros2_control_params = generate_ros2_control_params_temp_file(
-        os.path.join(
+    actuator_model = LaunchConfiguration('actuator_model').perform(context)
+    if actuator_model == 'nominal':
+        controller_config = os.path.join(
+            get_package_share_directory('atom_xarm_dynamics'),
+            'config',
+            'uf850_dynamic_controllers.yaml',
+        )
+        update_rate = 250
+        physics_engine = 'gz-physics-dartsim-plugin'
+    else:
+        controller_config = os.path.join(
             get_package_share_directory('xarm_controller'),
             'config',
             'uf850_controllers.yaml',
-        ),
+        )
+        update_rate = 1000
+        physics_engine = 'gz-physics-bullet-featherstone-plugin'
+
+    ros2_control_params = generate_ros2_control_params_temp_file(
+        controller_config,
         prefix='',
         add_gripper=False,
         add_bio_gripper=False,
         ros_namespace='',
-        update_rate=1000,
+        update_rate=update_rate,
         use_sim_time=True,
         robot_type=robot_type,
     )
@@ -53,6 +73,9 @@ def launch_setup(context):
         attach_rpy='"0 0 0"',
         mesh_suffix='stl',
         kinematics_suffix='',
+        # The vendor Xacro only inserts the Gazebo system plugin when this
+        # exact value is used. The nominal mode swaps only the ros2_control
+        # hardware class after expansion, leaving the vendor source untouched.
         ros2_control_plugin='gz_ros2_control/GazeboSimSystem',
         ros2_control_params=ros2_control_params,
         gripper_version='G1',
@@ -75,6 +98,16 @@ def launch_setup(context):
         geometry_mesh_tcp_rpy='"0 0 0"',
     ).to_moveit_configs()
     moveit_dict = moveit_config.to_dict()
+    if actuator_model == 'nominal':
+        standard_hardware = '<plugin>gz_ros2_control/GazeboSimSystem</plugin>'
+        nominal_hardware = '<plugin>atom_xarm_dynamics/NominalActuatorSystem</plugin>'
+        if standard_hardware not in moveit_dict['robot_description']:
+            raise RuntimeError('could not locate the Gazebo hardware plugin in robot_description')
+        moveit_dict['robot_description'] = moveit_dict['robot_description'].replace(
+            standard_hardware,
+            nominal_hardware,
+            1,
+        )
 
     robot_state_publisher = Node(
         package='robot_state_publisher',
@@ -94,7 +127,7 @@ def launch_setup(context):
         launch_arguments={
             'gz_args': (
                 f'-s -r -v 3 {world} '
-                '--physics-engine gz-physics-bullet-featherstone-plugin'
+                f'--physics-engine {physics_engine}'
             ),
         }.items(),
     )
@@ -168,4 +201,12 @@ def launch_setup(context):
 
 
 def generate_launch_description():
-    return LaunchDescription([OpaqueFunction(function=launch_setup)])
+    return LaunchDescription([
+        DeclareLaunchArgument(
+            'actuator_model',
+            default_value='ideal',
+            choices=['ideal', 'nominal'],
+            description='Gazebo actuator layer: ideal position following or nominal torque-PD',
+        ),
+        OpaqueFunction(function=launch_setup),
+    ])

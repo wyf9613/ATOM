@@ -23,6 +23,7 @@
   <exec_depend>tf2_ros</exec_depend>
   <exec_depend>trajectory_msgs</exec_depend>
   <exec_depend>uf_ros_lib</exec_depend>
+  <exec_depend>atom_xarm_dynamics</exec_depend>
   <exec_depend>xarm_controller</exec_depend>
   <exec_depend>xarm_description</exec_depend>
   <exec_depend>xarm_gazebo</exec_depend>
