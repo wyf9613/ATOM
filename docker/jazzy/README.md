@@ -89,6 +89,18 @@ executed trajectory and final simulated joint error, then plans and executes a
 return to the initial state. This is the primary bare-arm trajectory acceptance
 path.
 
+To view the same bare-arm motion in Gazebo and RViz from an X11 host session:
+
+```bash
+./scripts/docker/jazzy_arm_trajectory_gui.sh
+```
+
+The graphical script forwards the current X11 display and authorization into
+the container, launches the official UF850 Gazebo/RViz view with all gripper
+options disabled, runs the trajectory demo once, and leaves the windows open.
+Press `Ctrl+C` in the launching terminal to stop it. Its launch log is stored at
+`.docker-runtime/jazzy_ws/log/atom_uf850_arm_trajectory_gui.log`.
+
 ## Headless infrastructure smoke test
 
 From the repository root:

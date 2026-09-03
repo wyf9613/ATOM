@@ -70,6 +70,12 @@ git lfs pull
 ./scripts/docker/jazzy_arm_trajectory_sim.sh
 ```
 
+打开 Gazebo 与 RViz 并观看同一段轨迹：
+
+```bash
+./scripts/docker/jazzy_arm_trajectory_gui.sh
+```
+
 ## 近期里程碑
 
 完整任务按 [Stage 0–4](docs/PROJECT_SCOPE.md#5-分阶段交付) 推进。离开实验室期间先推进 Stage 1 的固定底座仿真基线；Stage 0 中依赖实物的控制器、夹爪和安全证据回到实验室后补齐。

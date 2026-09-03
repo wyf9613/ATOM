@@ -27,7 +27,7 @@ physical-arm commissioning are not yet implemented or verified.
 | Wiring diagram and pin map | Missing | To request |
 | Raw experiment data | Missing | To request |
 | Robot arm | UFactory xArm 850 delivered | Physical controller/accessory inventory and commissioning evidence required |
-| Development environment | Docker image built: Ubuntu 24.04, ROS 2 Jazzy, Gazebo Harmonic | Base image digest pinned; ATOM headless launch and automated smoke test passed twice consecutively after the controller-readiness fix; host GUI remains unverified |
+| Development environment | Docker image built: Ubuntu 24.04, ROS 2 Jazzy, Gazebo Harmonic | Base image digest pinned; headless acceptance tests pass; Gazebo and RViz X11 startup plus automated bare-arm motion verified on the current Ubuntu host |
 | Vendor ROS stack | Official UFactory `xarm_ros2` Jazzy commit pinned and eight core packages built | `uf850` Xacro, TF, MoveIt planning and simulated trajectory control pass; physical hardware compatibility remains unverified |
 | ATOM simulation package | Bare-arm baseline passes | `ros2_ws/src/atom_xarm_sim`; server-only launch, infrastructure smoke check and MoveIt plan-and-execute acceptance script |
 | xArm + gripper composition | Description checks pass | `ros2_ws/src/atom_xarm_description`; neutral mount transform is a simulation placeholder, not a measured interface |
