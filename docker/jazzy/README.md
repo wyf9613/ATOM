@@ -84,10 +84,11 @@ Run the complete MoveIt plan-and-execute simulation, with no gripper loaded:
 ./scripts/docker/jazzy_arm_trajectory_sim.sh
 ```
 
-The demo commands a conservative four-joint offset through MoveIt, verifies the
-executed trajectory and final simulated joint error, then plans and executes a
-return to the initial state. This is the primary bare-arm trajectory acceptance
-path.
+The demo commands a clearly visible six-joint motion through MoveIt, with a
+maximum joint offset of 0.70 rad and 0.05 velocity/acceleration scaling. It
+verifies the executed trajectory and final simulated joint error, then plans and
+executes a return to the initial state. This is the primary bare-arm trajectory
+acceptance path.
 
 To view the same bare-arm motion in Gazebo and RViz from an X11 host session:
 
@@ -100,6 +101,12 @@ the container, launches the official UF850 Gazebo/RViz view with all gripper
 options disabled, runs the trajectory demo once, and leaves the windows open.
 Press `Ctrl+C` in the launching terminal to stop it. Its launch log is stored at
 `.docker-runtime/jazzy_ws/log/atom_uf850_arm_trajectory_gui.log`.
+
+In RViz, open the **MotionPlanning** panel and select planning group `uf850`.
+Move the interactive end-effector marker (or choose a random valid goal), click
+**Plan** to preview the planned motion, and click **Execute** to send that plan
+through the ROS 2 trajectory controller to the Gazebo robot. **Plan & Execute**
+performs both steps consecutively.
 
 ## Headless infrastructure smoke test
 

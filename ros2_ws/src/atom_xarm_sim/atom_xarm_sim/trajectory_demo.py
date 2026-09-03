@@ -17,6 +17,9 @@ from sensor_msgs.msg import JointState
 
 JOINT_NAMES = [f'joint{index}' for index in range(1, 7)]
 GOAL_TOLERANCE_RAD = 0.02
+# A visible six-joint motion that stays well inside the vendor's limited-model
+# joint bounds when starting from the simulation home pose.
+DEMO_OFFSETS_RAD = [0.70, -0.45, -0.55, 0.50, 0.45, -0.50]
 
 
 class Uf850TrajectoryDemo(Node):
@@ -91,8 +94,8 @@ class Uf850TrajectoryDemo(Node):
         goal.request.group_name = 'uf850'
         goal.request.num_planning_attempts = 5
         goal.request.allowed_planning_time = 5.0
-        goal.request.max_velocity_scaling_factor = 0.1
-        goal.request.max_acceleration_scaling_factor = 0.1
+        goal.request.max_velocity_scaling_factor = 0.05
+        goal.request.max_acceleration_scaling_factor = 0.05
         goal.request.start_state.is_diff = True
         goal.request.goal_constraints.append(self._goal_constraints(target, label))
         goal.planning_options.plan_only = False
@@ -150,11 +153,10 @@ class Uf850TrajectoryDemo(Node):
         self._wait_for_arm_only_state()
         self._wait_for_controllers()
         initial = list(self.positions)
-        target = list(initial)
-        target[0] += 0.10
-        target[1] -= 0.10
-        target[2] -= 0.10
-        target[4] += 0.10
+        target = [
+            position + offset
+            for position, offset in zip(initial, DEMO_OFFSETS_RAD)
+        ]
 
         self._plan_and_execute(target, 'offset')
         self._plan_and_execute(initial, 'return')
