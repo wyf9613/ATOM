@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+"""Launch the bare six-axis UFactory 850 in server-only Gazebo with MoveIt."""
+
 import os
 from pathlib import Path
 
@@ -14,6 +16,9 @@ from uf_ros_lib.uf_robot_utils import generate_ros2_control_params_temp_file
 
 
 def launch_setup(context):
+    # Keep this baseline deliberately arm-only. The ATOM gripper is integrated
+    # and tested on a separate branch/path so controller and collision failures
+    # cannot be hidden inside the bare-arm acceptance test.
     robot_type = 'uf850'
     dof = '6'
     ros2_control_params = generate_ros2_control_params_temp_file(

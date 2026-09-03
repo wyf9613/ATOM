@@ -12,7 +12,7 @@ mkdir -p .docker-runtime/jazzy_ws/{build,install,log}
 
 docker compose -f docker-compose.jazzy.yaml run --rm atom-jazzy bash -lc '
   set -euo pipefail
-  log_file=/jazzy_ws/log/atom_uf850_headless_smoke.log
+  log_file=/jazzy_ws/log/atom_uf850_arm_trajectory.log
   ros2 launch atom_xarm_sim uf850_arm_only.launch.py >"${log_file}" 2>&1 &
   launch_pid=$!
   cleanup() {
@@ -30,6 +30,6 @@ docker compose -f docker-compose.jazzy.yaml run --rm atom-jazzy bash -lc '
     wait "${launch_pid}" 2>/dev/null || true
   }
   trap cleanup EXIT
-  ros2 run atom_xarm_sim smoke_test
-  echo "Smoke log: ${log_file}"
+  ros2 run atom_xarm_sim trajectory_demo
+  echo "Trajectory log: ${log_file}"
 '

@@ -1,15 +1,15 @@
 # Project Status
 
-Last updated: 2026-08-29
+Last updated: 2026-09-03
 
 ## Phase
 
 **Phase 0 - handover and architecture definition, with xArm 850 software-baseline verification underway**
 
-The pinned official xArm 850 ROS 2 stack now builds in Docker and its description,
-MoveIt and simulated-controller startup have been smoke-tested. The ATOM gripper,
-whose generic description was migrated from the UR3e branch, now composes with
-the official arm model. Integrated gripper control, task implementation and
+The pinned official xArm 850 ROS 2 stack builds in Docker. A clean bare-arm path
+now performs MoveIt planning and simulated trajectory execution without loading
+the gripper. Separately, the migrated generic ATOM gripper description composes
+with the official arm model. Integrated gripper control, task implementation and
 physical-arm commissioning are not yet implemented or verified.
 
 ## Assets present
@@ -29,7 +29,7 @@ physical-arm commissioning are not yet implemented or verified.
 | Robot arm | UFactory xArm 850 delivered | Physical controller/accessory inventory and commissioning evidence required |
 | Development environment | Docker image built: Ubuntu 24.04, ROS 2 Jazzy, Gazebo Harmonic | Base image digest pinned; ATOM headless launch and automated smoke test passed twice consecutively after the controller-readiness fix; host GUI remains unverified |
 | Vendor ROS stack | Official UFactory `xarm_ros2` Jazzy commit pinned and eight core packages built | `uf850` Xacro, TF, MoveIt planning and simulated trajectory control pass; physical hardware compatibility remains unverified |
-| ATOM simulation package | Present and buildable | `ros2_ws/src/atom_xarm_sim`; server-only launch and automated smoke check |
+| ATOM simulation package | Bare-arm baseline passes | `ros2_ws/src/atom_xarm_sim`; server-only launch, infrastructure smoke check and MoveIt plan-and-execute acceptance script |
 | xArm + gripper composition | Description checks pass | `ros2_ws/src/atom_xarm_description`; neutral mount transform is a simulation placeholder, not a measured interface |
 | Mobile-base specification/interface | Missing | Coordinate with base team |
 
@@ -59,7 +59,7 @@ physical-arm commissioning are not yet implemented or verified.
 | 1. Inherited gripper understood | Not passed | Physical inspection, CAD hierarchy, firmware, wiring and parameter reconciliation |
 | 2. Gripper robot description | In progress | Standalone Xacro, mesh provenance and parameter tests pass; RViz inspection and physical measurements remain |
 | 3. Arm + gripper model | In progress | Modular combined Xacro and `check_urdf` pass with a neutral placeholder transform; measure the flange/adapter transform and validate collisions |
-| 4. Simulation baseline | In progress | Headless arm-only `uf850` TF, planning and trajectory checks pass; port gripper control/SRDF, then add the gripper action and task state machine |
+| 4. Simulation baseline | In progress | Headless bare-arm `uf850` TF and controller smoke checks pass; two independent MoveIt plan-and-execute runs pass without a gripper. Gripper control/SRDF, gripper action and task state machine remain separate follow-on work |
 | 5. Real-arm deployment | Not started | Controller inventory, hardware-safe bring-up, mount/TCP measurement and commissioning |
 | 6. Perception-guided manipulation | Not started | Pose perturbation experiment against fixed-waypoint baseline |
 | 7. Mobile integration | Not started | Base interfaces, docking measurements and end-to-end trials |

@@ -22,6 +22,7 @@ setup(
     license='BSD-3-Clause',
     entry_points={
         'console_scripts': [
+            'trajectory_demo = atom_xarm_sim.trajectory_demo:main',
             'smoke_test = atom_xarm_sim.smoke_test:main',
         ],
     },

@@ -62,3 +62,13 @@
 - Evidence: The migrated model retains derived meshes tied to source STEP SHA-256 `8ee4fd1c064210eab24cb10ba67623e497cab0866adbca86d5be9a0c63aaf351`. On 2026-08-29, both new packages built in the Jazzy container; the standalone and combined descriptions passed five pytest checks with no errors or failures; the combined tree passed `check_urdf`; and the existing arm-only MoveIt/Gazebo smoke test still passed.
 - Boundary: The default mount (`xyz=0 0 0` m, `rpy=0 0 0` rad), 0.58 kg mass distribution, finger limits, collision primitives and TCP are provisional simulation inputs, not measurements. The dynamic smoke test remains arm-only. Gripper `ros2_control`, combined SRDF/collision validation, Gazebo actuation and physical commissioning are not demonstrated.
 - Reinforces: D-002 modular-description boundary.
+
+## D-009 - Keep a separately testable bare-arm trajectory baseline
+
+- Date: 2026-09-03
+- Status: Accepted for simulation development
+- Decision: Maintain a headless `uf850` simulation path that loads exactly the six vendor arm joints, with all gripper options disabled. Its acceptance test must ask MoveIt to plan and execute a conservative joint-space offset and return through the simulated `uf850_traj_controller`. Gripper dynamics, SRDF and control are a separate integration step.
+- Reason: A small deterministic arm-only baseline isolates vendor-arm planning/control faults from custom end-effector integration and provides a clean regression point for the two work streams.
+- Verification: On branch `feature/uf850-arm-only-trajectory-sim`, two independent Docker launches on 2026-09-03 each observed exactly `joint1` through `joint6`, active joint-state and trajectory controllers, and successful MoveIt plan-and-execute results for a 0.10 rad four-joint offset followed by return. The two runs produced 9/9 and 9/8 planned/executed points per leg. Maximum simulated final-joint error was 0.009432 rad against a 0.02 rad acceptance tolerance.
+- Boundary: This verifies deterministic command flow in the generic vendor simulation only. It does not establish physical trajectory accuracy, collision clearance, calibrated inertial/TCP data, controller/firmware compatibility, fault handling or any safety property.
+- Reinforces: D-002 and D-003.

@@ -76,7 +76,20 @@ From the repository root:
 This builds the Docker image and then the vendor workspace. Generated colcon
 files are stored below ignored `.docker-runtime/jazzy_ws/` directories.
 
-## Headless simulation smoke test
+## Bare-arm trajectory planning and control
+
+Run the complete MoveIt plan-and-execute simulation, with no gripper loaded:
+
+```bash
+./scripts/docker/jazzy_arm_trajectory_sim.sh
+```
+
+The demo commands a conservative four-joint offset through MoveIt, verifies the
+executed trajectory and final simulated joint error, then plans and executes a
+return to the initial state. This is the primary bare-arm trajectory acceptance
+path.
+
+## Headless infrastructure smoke test
 
 From the repository root:
 
@@ -97,7 +110,7 @@ is stored at `.docker-runtime/jazzy_ws/log/atom_uf850_headless_smoke.log`.
 After the workspace has been built, the ATOM headless entry point is:
 
 ```bash
-ros2 launch atom_xarm_sim uf850_headless.launch.py
+ros2 launch atom_xarm_sim uf850_arm_only.launch.py
 ```
 
 The official graphical simulation entry point is:
