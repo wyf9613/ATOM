@@ -16,13 +16,15 @@
 - 固定版本的 UFactory `xarm_ros2` Jazzy 源码；
 - 纯 UF850 六关节模型、TF、MoveIt 和模拟轨迹控制器启动；
 - MoveIt 规划并执行六关节大幅往返轨迹；
+- 独立发布夹取/放置 `PoseStamped` 目标；
+- 模拟夹取成功后的垂直抬升、姿态约束搬运和垂直下降；
 - 无界面自动验收，以及 Gazebo + RViz 图形启动入口。
 
 当前没有完成：
 
 - ATOM 夹爪的动态控制和组合 MoveIt 配置；
 - 试管、试管架和仪器场景；
-- 多 waypoint 的任务 combo、夹取和放置状态机；
+- 真实夹取/释放、attached object 和完整任务状态机；
 - 实机控制器、标定、TCP、负载、碰撞和安全验证。
 
 因此，目前结果证明的是软件命令链在仿真中可以工作，不代表实机精度或安全能力。
@@ -30,7 +32,7 @@
 ## 2. 当前软件链路
 
 ```text
-trajectory_demo.py 或 RViz
+trajectory_demo.py、transfer_demo.py 或 RViz
           │  目标/MoveGroup 请求
           ▼
         MoveIt
@@ -40,6 +42,17 @@ uf850_traj_controller
           │
           ▼
 Gazebo 中的 UF850 ── joint_states / TF ──► MoveIt、RViz、自动检查
+```
+
+搬运测试中的目标数据链路为：
+
+```text
+transfer_targets.yaml
+          │
+          ▼
+ target_publisher ── /atom/pick_pose、/atom/place_pose ──► transfer_demo
+                                                               │
+                         MoveIt 笛卡尔路径和姿态约束 ◄──────────┘
 ```
 
 - **MoveIt** 负责碰撞检查和轨迹规划；
@@ -63,11 +76,16 @@ ATOM/
 │   ├── atom_xarm_jazzy.repos      # 固定 UFactory 源码版本
 │   └── src/
 │       ├── atom_xarm_sim/         # 当前纯机械臂动态仿真
+│       │   ├── config/
+│       │   │   └── transfer_targets.yaml
 │       │   ├── launch/
-│       │   │   └── uf850_arm_only.launch.py
+│       │   │   ├── uf850_arm_only.launch.py
+│       │   │   └── uf850_transfer.launch.py
 │       │   └── atom_xarm_sim/
 │       │       ├── smoke_test.py
-│       │       └── trajectory_demo.py
+│       │       ├── trajectory_demo.py
+│       │       ├── target_publisher.py
+│       │       └── transfer_demo.py
 │       ├── atom_gripper_description/ # 独立夹爪描述，当前仿真不加载
 │       └── atom_xarm_description/    # UF850 + 夹爪组合描述，尚未动态控制
 └── scripts/docker/
@@ -75,6 +93,7 @@ ATOM/
     ├── jazzy_sim_smoke.sh
     ├── jazzy_arm_trajectory_sim.sh
     ├── jazzy_arm_trajectory_gui.sh
+    ├── jazzy_transfer_sim.sh
     └── jazzy_shell.sh
 ```
 
@@ -85,13 +104,18 @@ ATOM/
 | `uf850_arm_only.launch.py` | 无窗口启动 Gazebo server、UF850、MoveIt、TF 和两个控制器 |
 | `trajectory_demo.py` | 提交目标、等待控制器、规划并执行、检查最终误差 |
 | `smoke_test.py` | 分别检查 joint states、TF、MoveIt 规划和控制器执行 |
+| `transfer_targets.yaml` | 集中设置夹取/放置位姿、两个独立高度、运动轴和验收容差 |
+| `target_publisher.py` | 从 YAML 读取并发布夹取和放置 `PoseStamped` 目标 |
+| `transfer_demo.py` | 等待目标和夹取结果，执行并检查抬升、受约束搬运和下降 |
+| `uf850_transfer.launch.py` | 组合裸臂仿真与目标发布节点 |
 | `jazzy_arm_trajectory_sim.sh` | 构建并运行无窗口轨迹验收，结束后自动退出 |
 | `jazzy_arm_trajectory_gui.sh` | 转发 X11，打开 Gazebo/RViz，自动演示后保留窗口 |
+| `jazzy_transfer_sim.sh` | 构建并运行无窗口三段搬运验收，生成日志和 JSON 报告 |
 
 厂商源码不会复制进本仓库；Docker 构建时根据 `.repos` 文件导入
 `/jazzy_ws/src/xarm_ros2`。
 
-## 4. 最常用的三个命令
+## 4. 最常用的四个命令
 
 ### 无界面验收
 
@@ -121,6 +145,22 @@ ATOM/
 ```bash
 ./scripts/docker/jazzy_shell.sh
 ```
+
+### 抓取后搬运验收
+
+```bash
+./scripts/docker/jazzy_transfer_sim.sh
+```
+
+这个无界面测试从配置文件发布夹取和放置位姿，然后执行：到达夹取位、模拟夹取
+成功、垂直抬升、在末端姿态约束下搬运到放置点上方、垂直下降。两个上方高度
+分别由 `pick_lift_height_m` 和 `place_approach_height_m` 设置。
+
+当前 MoveIt 模型仍为纯机械臂，因此测试约束 `link_eef`，并用
+`simulate_grasp_success: true` 代替尚未实现的夹爪反馈。所有目标和运动参数集中在
+`ros2_ws/src/atom_xarm_sim/config/transfer_targets.yaml`。组合 MoveIt 配置、实测
+`gripper_tcp` 和夹爪控制完成后，应把 `tcp_link` 改为 `gripper_tcp`，并关闭模拟
+夹取成功。
 
 ## 5. 在 RViz 中手动规划
 
@@ -182,7 +222,7 @@ Home → 抓取上方 → 抓取位 → 夹爪闭合 → 抬起
 
 接下来的工作分为两个相互独立的部分：
 
-1. **纯机械臂**：实现多 waypoint combo、分段检查和轨迹显示；
+1. **纯机械臂**：扩展已实现的目标发布与受约束三段搬运基线，加入场景碰撞体和轨迹显示；
 2. **机械臂 + ATOM 夹爪**：补充夹爪控制、组合 SRDF、碰撞矩阵和动作接口。
 
 只有这两部分分别通过后，再组合抓取、搬运和放置任务。

@@ -68,6 +68,15 @@ git lfs pull
 ./scripts/docker/jazzy_arm_trajectory_sim.sh
 ```
 
+运行目标发布、垂直抬升、姿态约束搬运和垂直下降验收：
+
+```bash
+./scripts/docker/jazzy_transfer_sim.sh
+```
+
+当前搬运验收使用纯机械臂 `link_eef` 和模拟夹取成功；目标位姿、两个独立高度
+及约束参数在 `ros2_ws/src/atom_xarm_sim/config/transfer_targets.yaml` 中设置。
+
 打开 Gazebo 与 RViz 并观看同一段轨迹：
 
 ```bash

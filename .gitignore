@@ -10,9 +10,15 @@ tmp/
 *.log
 
 # ROS 2 / colcon
+/build/
+/install/
+/log/
 ros2_ws/build/
 ros2_ws/install/
 ros2_ws/log/
+
+# Reviewable reports, slides and demo recordings under output/ are
+# intentionally tracked. Do not add output/ to this ignore file.
 
 # Local simulation/runtime workspaces
 .docker-runtime/

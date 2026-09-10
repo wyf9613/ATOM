@@ -13,6 +13,13 @@ export ATOM_UID="$(id -u)"
 export ATOM_GID="$(id -g)"
 mkdir -p .docker-runtime/jazzy_ws/{build,install,log}
 
+# Mesa cannot always access the host DRI device from this container. In that
+# case RViz starts as a ROS node but never creates a usable OpenGL window.
+# Default to Mesa software rendering for a portable GUI baseline. Developers
+# with a configured GPU passthrough can opt out with
+# ATOM_GUI_SOFTWARE_RENDERING=0.
+atom_gui_software_rendering="${ATOM_GUI_SOFTWARE_RENDERING:-1}"
+
 ./scripts/docker/jazzy_build.sh
 
 docker_args=(
@@ -22,6 +29,12 @@ docker_args=(
   -e QT_X11_NO_MITSHM=1
   -v /tmp/.X11-unix:/tmp/.X11-unix:rw
 )
+
+if [[ "${atom_gui_software_rendering}" == "1" ]]; then
+  docker_args+=(
+    -e LIBGL_ALWAYS_SOFTWARE=1
+  )
+fi
 
 xauthority_path="${XAUTHORITY:-${HOME}/.Xauthority}"
 if [[ -r "${xauthority_path}" ]]; then

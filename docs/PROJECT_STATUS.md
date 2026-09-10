@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-09-03
+Last updated: 2026-09-10
 
 ## Phase
 
@@ -8,8 +8,11 @@ Last updated: 2026-09-03
 
 The pinned official xArm 850 ROS 2 stack builds in Docker. A clean bare-arm path
 now performs MoveIt planning and simulated trajectory execution without loading
-the gripper. Separately, the migrated generic ATOM gripper description composes
-with the official arm model. Integrated gripper control, task implementation and
+the gripper. A separate arm-only transfer baseline publishes configurable pick
+and place poses, then verifies vertical lift, orientation-constrained transfer
+and vertical descent after simulated grasp success. Separately, the migrated
+generic ATOM gripper description composes with the official arm model. Integrated
+gripper control, attached-object handling, the complete task state machine and
 physical-arm commissioning are not yet implemented or verified.
 
 ## Assets present
@@ -29,7 +32,7 @@ physical-arm commissioning are not yet implemented or verified.
 | Robot arm | UFactory xArm 850 delivered | Physical controller/accessory inventory and commissioning evidence required |
 | Development environment | Docker image built: Ubuntu 24.04, ROS 2 Jazzy, Gazebo Harmonic | Base image digest pinned; headless acceptance tests pass; Gazebo and RViz X11 startup plus automated bare-arm motion verified on the current Ubuntu host |
 | Vendor ROS stack | Official UFactory `xarm_ros2` Jazzy commit pinned and eight core packages built | `uf850` Xacro, TF, MoveIt planning and simulated trajectory control pass; physical hardware compatibility remains unverified |
-| ATOM simulation packages | Ideal bare-arm and nominal actuator-dynamics baselines pass | `ros2_ws/src/atom_xarm_sim` and `atom_xarm_dynamics`; server-only launch, MoveIt plan-and-execute acceptance, and 100 Hz per-joint tracking reports |
+| ATOM simulation packages | Ideal bare-arm, nominal actuator-dynamics and configurable transfer baselines pass | `ros2_ws/src/atom_xarm_sim` and `atom_xarm_dynamics`; server-only launch, MoveIt plan-and-execute acceptance, 100 Hz per-joint tracking reports, published pick/place poses and constrained three-segment transfer |
 | xArm + gripper composition | Description checks pass | `ros2_ws/src/atom_xarm_description`; neutral mount transform is a simulation placeholder, not a measured interface |
 | Mobile-base specification/interface | Missing | Coordinate with base team |
 
@@ -61,7 +64,7 @@ physical-arm commissioning are not yet implemented or verified.
 | 1. Inherited gripper understood | Not passed | Physical inspection, CAD hierarchy, firmware, wiring and parameter reconciliation |
 | 2. Gripper robot description | In progress | Standalone Xacro, mesh provenance and parameter tests pass; RViz inspection and physical measurements remain |
 | 3. Arm + gripper model | In progress | Modular combined Xacro and `check_urdf` pass with a neutral placeholder transform; measure the flange/adapter transform and validate collisions |
-| 4. Simulation baseline | In progress | Ideal and nominal torque-driven bare-arm MoveIt runs pass without a gripper; 100 Hz per-joint reference/feedback reports are generated. Physical model identification, gripper control/SRDF, gripper action and task state machine remain separate follow-on work |
+| 4. Simulation baseline | In progress | Ideal and nominal torque-driven bare-arm MoveIt runs pass without a gripper; 100 Hz per-joint reports and a target-publisher-driven lift/constrained-transfer/descent test are implemented. Physical model identification, combined gripper control/SRDF, attached-object handling and the complete task state machine remain follow-on work |
 | 5. Real-arm deployment | Not started | Controller inventory, hardware-safe bring-up, mount/TCP measurement and commissioning |
 | 6. Perception-guided manipulation | Not started | Pose perturbation experiment against fixed-waypoint baseline |
 | 7. Mobile integration | Not started | Base interfaces, docking measurements and end-to-end trials |

@@ -1,0 +1,43 @@
+target_publisher:
+  ros__parameters:
+    use_sim_time: true
+    reference_frame: world
+    publish_rate_hz: 2.0
+
+    # Provisional simulation poses for link_eef. The pick pose is the FK result
+    # of the already-tested six-joint demo target. Replace these values after
+    # measuring the gripper mount and gripper_tcp transform.
+    pick_position_xyz_m: [0.32085, 0.24571, 0.22907]
+    pick_orientation_xyzw: [0.90719, 0.32546, 0.26609, 0.01660]
+    place_position_xyz_m: [0.28085, 0.30571, 0.22907]
+    place_orientation_xyzw: [0.90719, 0.32546, 0.26609, 0.01660]
+
+transfer_demo:
+  ros__parameters:
+    use_sim_time: true
+    reference_frame: world
+    planning_group: uf850
+    tcp_link: link_eef
+
+    # The two clearances are deliberately independent.
+    pick_lift_height_m: 0.050
+    place_approach_height_m: 0.080
+    pick_up_axis_xyz: [0.0, 0.0, 1.0]
+    place_up_axis_xyz: [0.0, 0.0, 1.0]
+
+    position_tolerance_m: 0.003
+    vertical_alignment_tolerance_m: 0.004
+    orientation_tolerance_xyz_rad: [0.05, 0.05, 0.05]
+    final_orientation_error_tolerance_rad: 0.09
+    max_path_orientation_error_rad: 0.09
+    cartesian_max_step_m: 0.005
+    cartesian_jump_threshold: 2.0
+    minimum_cartesian_fraction: 0.999
+    velocity_scaling: 0.05
+    acceleration_scaling: 0.05
+    planning_time_sec: 10.0
+
+    # The combined gripper controller is not available yet. The integration
+    # test therefore treats arrival at the pick pose as a simulated successful
+    # grasp. Set false once /atom/gripper/grasp_success is driven by hardware.
+    simulate_grasp_success: true

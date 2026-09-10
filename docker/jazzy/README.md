@@ -108,6 +108,31 @@ Move the interactive end-effector marker (or choose a random valid goal), click
 through the ROS 2 trajectory controller to the Gazebo robot. **Plan & Execute**
 performs both steps consecutively.
 
+## Configurable post-grasp transfer
+
+Run the headless target-publisher and constrained-transfer regression with:
+
+```bash
+./scripts/docker/jazzy_transfer_sim.sh
+```
+
+The test moves to the published pick pose, accepts the configured simulated
+grasp result, moves vertically to the pick clearance, follows an
+orientation-constrained Cartesian path to the independently configured place
+clearance, and descends vertically to the place pose. Edit targets, clearances,
+axes and tolerances in
+`ros2_ws/src/atom_xarm_sim/config/transfer_targets.yaml`.
+
+The latest launch log and machine-readable result are written to:
+
+- `.docker-runtime/jazzy_ws/log/atom_uf850_transfer.log`;
+- `.docker-runtime/jazzy_ws/log/atom_uf850_transfer_summary.json`.
+
+This test currently constrains the arm-only `link_eef`; it does not command the
+ATOM gripper or attach a tube collision object. Replace the provisional target
+data and validate `gripper_tcp` after the combined MoveIt configuration and
+physical TCP calibration are available.
+
 ## Headless infrastructure smoke test
 
 From the repository root:
