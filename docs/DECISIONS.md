@@ -93,3 +93,12 @@
 - Verification: On 2026-09-10, one `scripts/docker/jazzy_transfer_sim.sh` run built all 12 selected packages and completed all three Cartesian segments at fraction 1.0 with velocity/acceleration scaling 0.05. Against the configured 0.003 m endpoint, 0.004 m vertical-alignment and 0.09 rad total path-orientation limits, the largest final-position error during the constrained stages was 0.000010 m, the largest vertical lateral component was 0.002713 m, and the largest measured orientation error was 0.057725 rad. The JSON report records 1,416, 3,512 and 3,333 TF samples for lift, transfer and descent respectively. This is a single ideal-simulation regression run, not repeatability or physical-system evidence.
 - Boundary: The present obstacle-free baseline uses a direct Cartesian transfer; introduce a collision-aware constrained free-space planner when workstation geometry is added. The MoveIt model constrains `link_eef`, not the provisional `gripper_tcp`; grasp success is simulated and no tube is attached in the planning scene. The configured target poses, clearances and tolerances are regression inputs, not measured workstation or safety parameters. Replace them with measured values and repeat validation after combined gripper SRDF/control and TCP calibration are available.
 - Reinforces: D-002 and D-003.
+
+
+## D-012 - Split shared-workspace validation into stop and reactive avoidance phases
+
+- Date: 2026-09-11
+- Status: Accepted for roadmap scope and development order; not implemented capability
+- Decision: Split project Stage/Phase 4 into 4a (entry-triggered stop) and 4b (constrained reactive avoidance), with 4a retained as a higher-priority fallback. Begin perception, static collision modelling and stop-interface work during fixed-base development. Keep work package P4 as the separate perception work package.
+- Evidence: The team relayed the supervisor's previous-week request in this session. Research and source links are recorded in `technical_roadmap/shared_workspace_perception.tex` and `RELATED_WORK.md`.
+- Boundary: No shared-space safety property, numerical separation limit, sensor model, hardware stop interface or new planner configuration is accepted by this decision. RGB-D with RGB fiducials and measured rack geometry is a proposed evaluation configuration. Hybrid Planning, Servo and MPC remain candidates subject to compatibility and benchmark evidence against D-007/D-011.

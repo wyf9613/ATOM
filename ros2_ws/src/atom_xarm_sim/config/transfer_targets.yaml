@@ -7,9 +7,12 @@ target_publisher:
     # Provisional simulation poses for link_eef. The pick pose is the FK result
     # of the already-tested six-joint demo target. Replace these values after
     # measuring the gripper mount and gripper_tcp transform.
+    # A visibly wider, left-to-right visual regression: pick at lower world-Y
+    # and place at higher world-Y. These are simulation-only targets, not
+    # measured workstation coordinates.
     pick_position_xyz_m: [0.32085, 0.24571, 0.22907]
     pick_orientation_xyzw: [0.90719, 0.32546, 0.26609, 0.01660]
-    place_position_xyz_m: [0.28085, 0.30571, 0.22907]
+    place_position_xyz_m: [0.28085, 0.40571, 0.22907]
     place_orientation_xyzw: [0.90719, 0.32546, 0.26609, 0.01660]
 
 transfer_demo:

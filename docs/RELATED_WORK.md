@@ -1,6 +1,6 @@
 # Project ATOM 相关工作与论文索引
 
-更新日期：2026-08-28
+更新日期：2026-09-11
 
 ## 1. 使用范围
 
@@ -127,3 +127,20 @@
 - Tom et al., *Self-Driving Laboratories for Chemistry and Materials Science*: https://doi.org/10.1021/acs.chemrev.4c00055
 - ISO 10218-1:2025 与 ISO 10218-2:2025：工业机器人及应用安全要求；标准文本与论文的证据用途不同。
 - ISO 18646-2:2024 与 ISO 18646-3:2021：服务机器人导航与操作性能测试框架。
+
+
+## 9. 动态避障与感知路点研究补充（2026-09-11）
+
+以下是本次核验的原始论文/作者机构记录与官方文档；没有新增本地论文 PDF，也未复现论文结果。详细实施方案进入 roadmap 正文 [新增章节](technical_roadmap/shared_workspace_perception.tex)，BibTeX 已同步到本目录及 roadmap 文献库。
+
+| 来源与链接 | 用于哪个问题 | 可迁移内容与边界 |
+| --- | --- | --- |
+| Marvel & Norcross, *Implementing Speed and Separation Monitoring in Collaborative Robot Workcells*, RCIM 44, 144–155, 2017（在线 2016）[NIST](https://www.nist.gov/publications/implementing-speed-and-separation-monitoring-collaborative-robot-workcells) | 4a 何时停止 | 分解反应、制动、进入量和测量误差；需要本机停止实测，不能照抄距离阈值。 |
+| Svarny et al., *Safe physical HRI*, IROS 2019, 7574–7581 [作者稿及出版信息](https://arxiv.org/abs/1908.03046) | 区域检测还是人体关键点 | 对比区域与 RGB-D 骨架间距监控；在 ATOM 中骨架只能细化，未知占用不能因没有识别人而放行。 |
+| Zhu et al., *Real-Time Dynamic Obstacle Avoidance for Robot Manipulators Based on Cascaded Nonlinear MPC With Artificial Potential Field*, TIE 71(7), 7424–7434, 2024（在线 2023）[机构记录与作者稿](https://eprints.whiterose.ac.uk/id/eprint/205260/) | 4b 预测与平滑避障 | 高层规划、低层约束跟踪和障碍运动估计；作为模型辨识后的进阶对照，不替代当前确定性基线。 |
+| [MoveIt Hybrid Planning 官方文档](https://moveit.picknik.ai/main/doc/examples/hybrid_planning/hybrid_planning_tutorial.html) | 全局换路与局部反应如何集成 | 提供组合架构，需要规划逻辑和失败策略；Rolling 文档不是当前 Jazzy 版本兼容性证据。 |
+| [MoveIt Servo 官方文档](https://moveit.picknik.ai/main/doc/examples/realtime_servo/realtime_servo_tutorial.html) | 局部执行与视觉伺服 | 支持指令跟随、碰撞接近降速及奇异性检查；不自动选择绕行路线，不提供安全认证。 |
+| Krogius et al., *Flexible Layouts for Fiducial Tags*, IROS 2019；[AprilTag 3 官方实现](https://github.com/AprilRobotics/apriltag)；[OpenCV PnP](https://docs.opencv.org/4.13.0/d5/d1f/calib3d_solvePnP.html) | 单目能否定位三维 waypoint | 已知标记尺寸和内参时估计公制位姿，再组合工位/槽位/TCP 标定；检测框中心不是抓取位姿。 |
+| Sajjan et al., *ClearGrasp: 3D Shape Estimation of Transparent Objects for Manipulation*, ICRA 2020 [论文](https://arxiv.org/abs/1910.02550)、[作者实现及会议信息](https://github.com/Shreeyak/cleargrasp) | 为什么 depth camera 仍可能看不准试管 | 透明物体会使原始深度失真；学习补全可作为后续对照，不能作为未经本地测试的精密插入或安全边界。 |
+
+本次结论是工程方案推导：用固定 RGB-D 的 RGB 通道估计架/仪器位姿，深度通道构建未知占用；试管先按结构化槽位与实际存在/姿态核验定位。先实现 4a，再在自由空间运输阶段推进 4b；接触动作停止优先。最终相机、误差阈值与规划插件均需试验确定。

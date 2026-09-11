@@ -21,6 +21,16 @@ or captured by the container build.
 | A-010 | The migrated gripper limits, mass distribution, TCP and terminal-pad collisions represent the inherited physical gripper. | Retained as traceable simulation inputs from the UR3e branch; verify against the delivered gripper and record measured replacements. |
 | A-011 | Nominal joint PD gains reproduce the delivered xArm 850 servo response. | False until identified: current gains are simulation-only tuning inputs. Measure step/swept-sine response, delay, friction, backlash/compliance and payload dependence before using the model for prediction or MPC. |
 
+## Perception and shared-workspace inputs (2026-09-11)
+
+| ID | Unresolved input | Required evidence / closure |
+|---|---|---|
+| A-012 | Rigid fiducial boards can be attached to racks/instruments and slot geometry predicts the tube grasp pose. | Confirm mounting permission and measure rack-to-tag transform, tube seating, height and tilt variation; otherwise add direct object observations. |
+| A-013 | A fixed RGB-D view covers the approach paths and provides useful depth under lab lighting. | Record camera assets, working distances, coverage/occlusion map, depth invalidity, latency and cross-view needs; no camera model selected. |
+| A-014 | The delivered arm and gripper can execute and confirm a controlled stop while retaining the sample. | Verify controller/firmware interfaces, hardware protection path, watchdog, stop displacement by pose/speed/load, clamp hold and power-loss behavior. |
+| A-015 | Calibration and waypoint error fit the true grasp/insertion tolerance. | Independently measure intrinsics/extrinsics, TCP, slot and aperture geometry; evaluate held-out poses and error budget in mm/rad. |
+| A-016 | Online planning can meet the target computer and driver deadlines while preserving tube constraints. | Check D-007 pinned-version compatibility, measured planning/execution delay, command arbitration, predicted occupancy and timeout fallback before accepting a plugin/configuration. |
+
 ## Questions for supervisors and partner teams
 
 1. What controller, firmware, serial-number calibration and supplied accessories arrived with the xArm 850?

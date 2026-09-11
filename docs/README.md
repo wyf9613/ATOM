@@ -26,7 +26,7 @@ UR3e 的已实现仿真、MoveIt 抓取和 Humble/Fortress 验证文档保留在
 | [CAD 资产清单](CAD_INVENTORY.md) | 记录收到的 CAD、校验信息和后续导出要求 |
 | [仿真到实机差异记录](SIM2REAL_LOG.md) | 持续记录模型假设、实测结果和修正验证 |
 | [相关工作与论文索引](RELATED_WORK.md) | 按项目问题整理本地论文、证据边界和可用于报告的 related-work 初稿 |
-| `technical_roadmap/` | 文献支持的技术路线 LaTeX 源码 |
+| [技术 roadmap](technical_roadmap/README.md) | 文献支持的路线、Phase 4a/4b 动态避障、RGB/RGB-D 比较与感知 waypoint 方案 |
 
 ## 文档职责
 

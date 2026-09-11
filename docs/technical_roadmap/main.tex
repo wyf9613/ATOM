@@ -27,6 +27,7 @@
 \definecolor{LightGray}{HTML}{F4F5F6}
 
 \hypersetup{
+  hypertexnames=false,
   colorlinks=true,
   linkcolor=AtomBlue,
   citecolor=AtomTeal,
@@ -93,7 +94,7 @@
   \vspace{1.5cm}
   {\LARGE\bfseries 技术路线、文献综述与实施计划\par}
   \vspace{0.4cm}
-  {\Large 前置研究报告（Version 0.1）\par}
+  {\Large 前置研究报告（Version 0.2）\par}
   \vspace{1.5cm}
   \begin{tikzpicture}[node distance=8mm, every node/.style={font=\small}]
     \node[draw=AtomBlue,fill=LightBlue,rounded corners,minimum width=3.0cm,minimum height=1cm] (sim) {仿真与数字模型};
@@ -106,7 +107,7 @@
   {\large University of Melbourne Mechatronics Capstone\par}
   {\large 2026 Semester 2 -- 2027 Semester 1\par}
   \vspace{0.5cm}
-  {\large 编制日期：2026-08-09\par}
+  {\large 更新日期：2026-09-11\par}
   \vspace{1cm}
 \end{titlepage}
 
@@ -115,7 +116,7 @@
 \chapter*{执行摘要}
 \addcontentsline{toc}{chapter}{执行摘要}
 \begingroup
-\small
+\footnotesize
 
 Project ATOM 的目标不是复现一个固定路点夹取演示，而是建立一套可从 Gazebo 迁移到真实硬件、可从固定机械臂扩展到移动操作机器人的模块化实验室操作系统。上一组工作已经证明双指夹爪在 UR3e 和两个模拟托盘之间可以完成 49/50 次固定路点循环，但没有验证真实 Opentrons Flex 到 DynaPro NanoStar 的插入任务、感知引导重规划、移动底盘误差补偿或系统级硬件安全。因此，本报告将上一组成果定义为“夹爪子系统原型”，而不是完整自主实验室系统。
 
@@ -129,6 +130,7 @@ Project ATOM 的目标不是复现一个固定路点夹取演示，而是建立�
   \item 工作台和比色皿定位优先使用 AprilTag 3 形成确定性基线；完成相机内参、手眼或眼到手标定以及完整误差预算后，再考虑无标记目标姿态估计\cite{krogius2019apriltag3,tsai1989handeye}。
   \item 移动导航算法由底盘运动学决定：Ackermann 底盘优先评估 Hybrid A*；非圆差速或全向底盘优先评估 State Lattice；可原地旋转的近圆差速底盘可采用 2D A*。Hybrid A* 不是在底盘未知时即可固定的结论\cite{dolgov2008hybridastar,pivtoraiko2009lattice,nav2smac2026}。
   \item 工作站采用“全局导航到预停靠点 + 视觉闭环精停靠 + 操作前重新定位”的两级定位策略，避免要求移动底盘本身达到机械臂插入所需精度\cite{oba2021mobilemanipulator,petr2023docking}。
+  \item 人机共享空间分为 Phase 4a 进入检测停止、Phase 4b 受约束动态绕行；优先验证停止，再增加在线重规划，见第~\ref{ch:dynamic-perception}~章。
   \item 系统验证采用逐级对照实验：固定路点、目标位姿扰动、精密放置/插入、移动停靠误差补偿。每次试验保存随机种子、轨迹、TF、规划时间、误差、接触力和失败类型。
 \end{enumerate}
 
@@ -631,6 +633,8 @@ ISO 10218-1:2025 规定工业机器人本体安全要求，ISO 10218-2:2025 面�
 \bottomrule
 \end{longtable}
 
+\input{shared_workspace_perception}
+
 \chapter{实验设计、指标与统计分析}
 
 \section{分层实验}
@@ -686,6 +690,8 @@ ISO 18646-2:2024 将位姿精度与重复性、避障、路径偏差、窄通道
 
 \section{阶段路线}
 
+以下 P0--P7 为技术工作包；项目 Stage/Phase 4 为端到端受监督演示，其 4a（进入即停）和 4b（动态绕行）见第~\ref{ch:dynamic-perception}~章。感知及停止链路在固定平台阶段提前实施。
+
 \begin{longtable}{L{1.15cm}L{3.15cm}L{4.95cm}L{5.35cm}}
 \caption{建议工作分解结构}\\
 \toprule
@@ -700,7 +706,7 @@ P0 & 冻结输入 & 确认机械臂、ROS 版本、底盘运动学、仪器访�
 P1 & 夹爪数字模型 & CAD 清理、网格、Xacro、惯量、关节和 TCP & RViz/Gazebo 单体模型通过自动检查 \\
 P2 & 机械臂 + 夹爪 & 引用厂商描述、固定安装、组合碰撞与控制器 & 组合机器人稳定生成并可开合夹爪 \\
 P3 & 规划与任务 & MoveIt、RRT-Connect、LIN、MTC/状态机 & 自动完成仿真抓放并输出结构化日志 \\
-P4 & 感知基线 & AprilTag、相机标定、TF 和位姿扰动 & E2 显示重规划相对固定路点的收益 \\
+P4 & 感知基线 & RGB/RGB-D 对照、标定、工位相对路点、有效性门禁 & 留出姿态误差满足容差；E2 对照及异常观测拒绝 \\
 P5 & 真实硬件 & 驱动、STM32、TCP、限速和安全审查 & 低速复现基线且故障行为可验证 \\
 P6 & 精密操作 & 视觉修正、治具、力/柔顺按需加入 & E3 定量满足真实工作流要求 \\
 P7 & 移动集成 & Nav2、规划器、停靠、工作站重定位 & E4 完成端到端移动操作 \\
