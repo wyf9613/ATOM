@@ -4,11 +4,14 @@
 
 import os
 from pathlib import Path
+import tempfile
+import math
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import (
     DeclareLaunchArgument,
+    ExecuteProcess,
     IncludeLaunchDescription,
     OpaqueFunction,
     RegisterEventHandler,
@@ -20,6 +23,11 @@ from launch_ros.actions import Node
 from uf_ros_lib.moveit_configs_builder import MoveItConfigsBuilder
 from uf_ros_lib.uf_robot_utils import generate_ros2_control_params_temp_file
 
+from atom_xarm_sim.camera_experiment import (
+    add_wrist_camera, experiment_world, write_tag_rack,
+    write_two_level_shelf, write_transparent_tube, SLOT_Y_M, TRANSFER_SLOT_INDEX,
+)
+
 
 def launch_setup(context):
     # Keep this baseline deliberately arm-only. The ATOM gripper is integrated
@@ -28,6 +36,18 @@ def launch_setup(context):
     robot_type = 'uf850'
     dof = '6'
     actuator_model = LaunchConfiguration('actuator_model').perform(context)
+    camera_mode = LaunchConfiguration('camera_mode').perform(context)
+    demo_gripper = LaunchConfiguration('demo_gripper').perform(context).lower() == 'true'
+    scene_fixtures = LaunchConfiguration('scene_fixtures').perform(context).lower() == 'true'
+    fixture_group = LaunchConfiguration('fixture_group').perform(context)
+    show_gui = LaunchConfiguration('gui').perform(context).lower() == 'true'
+    rack_dx_m = float(LaunchConfiguration('rack_dx_m').perform(context))
+    rack_dy_m = float(LaunchConfiguration('rack_dy_m').perform(context))
+    rack_dyaw_rad = float(LaunchConfiguration('rack_dyaw_rad').perform(context))
+    if not all(math.isfinite(value) for value in (rack_dx_m, rack_dy_m, rack_dyaw_rad)):
+        raise ValueError('rack perturbations must be finite')
+    if abs(rack_dx_m) > 0.05 or abs(rack_dy_m) > 0.05 or abs(rack_dyaw_rad) > 0.2:
+        raise ValueError('rack perturbations exceed the provisional experiment bounds')
     if actuator_model == 'nominal':
         controller_config = os.path.join(
             get_package_share_directory('atom_xarm_dynamics'),
@@ -48,7 +68,7 @@ def launch_setup(context):
     ros2_control_params = generate_ros2_control_params_temp_file(
         controller_config,
         prefix='',
-        add_gripper=False,
+        add_gripper=demo_gripper,
         add_bio_gripper=False,
         ros_namespace='',
         update_rate=update_rate,
@@ -79,7 +99,7 @@ def launch_setup(context):
         ros2_control_plugin='gz_ros2_control/GazeboSimSystem',
         ros2_control_params=ros2_control_params,
         gripper_version='G1',
-        add_gripper=False,
+        add_gripper=demo_gripper,
         add_vacuum_gripper=False,
         add_bio_gripper=False,
         add_realsense_d435i=False,
@@ -98,6 +118,9 @@ def launch_setup(context):
         geometry_mesh_tcp_rpy='"0 0 0"',
     ).to_moveit_configs()
     moveit_dict = moveit_config.to_dict()
+    moveit_dict['robot_description'] = add_wrist_camera(
+        moveit_dict['robot_description'], camera_mode
+    )
     if actuator_model == 'nominal':
         standard_hardware = '<plugin>gz_ros2_control/GazeboSimSystem</plugin>'
         nominal_hardware = '<plugin>atom_xarm_dynamics/NominalActuatorSystem</plugin>'
@@ -120,6 +143,15 @@ def launch_setup(context):
     )
 
     world = str(Path(get_package_share_directory('xarm_gazebo')) / 'worlds' / 'table_gz.world')
+    if camera_mode != 'none':
+        runtime_dir = Path(tempfile.mkdtemp(prefix='atom_camera_experiment_'))
+        world = str(experiment_world(world, runtime_dir / 'world.sdf'))
+        rack_path = str(write_tag_rack(runtime_dir / 'source_rack.sdf'))
+        destination_rack_path = str(write_tag_rack(
+            runtime_dir / 'destination_rack.sdf', tagged=False,
+            name='atom_destination_rack'))
+        shelf_path = str(write_two_level_shelf(runtime_dir / 'shelf.sdf'))
+        tube_path = str(write_transparent_tube(runtime_dir / 'tube.sdf'))
     gazebo_server = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             os.path.join(get_package_share_directory('ros_gz_sim'), 'launch', 'gz_sim.launch.py')
@@ -154,6 +186,63 @@ def launch_setup(context):
         output='screen',
     )
 
+    camera_actions = []
+    if camera_mode != 'none':
+        source_shelf_x = -0.57
+        source_x = source_shelf_x - rack_dy_m
+        source_y = -0.22 + rack_dx_m
+        source_yaw = 1.571 + rack_dyaw_rad
+        tube_x = (source_x + 0.030 * math.cos(source_yaw)
+                  - SLOT_Y_M[TRANSFER_SLOT_INDEX] * math.sin(source_yaw))
+        tube_y = (source_y + 0.030 * math.sin(source_yaw)
+                  + SLOT_Y_M[TRANSFER_SLOT_INDEX] * math.cos(source_yaw))
+        fixtures = (
+            (shelf_path, 'atom_two_level_shelf', source_x,
+             source_y, 1.021, source_yaw),
+            (rack_path, 'atom_source_rack', source_x,
+             source_y, 1.159, source_yaw),
+            (destination_rack_path, 'atom_destination_rack', -0.12,
+             -0.22, 1.030, 1.571),
+            (tube_path, 'atom_transfer_tube', tube_x,
+             tube_y, 1.2155, 0.0),
+        )
+        if scene_fixtures:
+            for fixture_path, name, x, y, z, yaw in fixtures:
+                if fixture_group == 'shelf' and name != 'atom_two_level_shelf':
+                    continue
+                if fixture_group == 'racks' and name not in (
+                    'atom_source_rack', 'atom_destination_rack'):
+                    continue
+                if fixture_group == 'tube' and name != 'atom_transfer_tube':
+                    continue
+                camera_actions.append(Node(
+                    package='ros_gz_sim', executable='create', output='screen',
+                    arguments=['-file', fixture_path, '-name', name,
+                               '-x', str(x), '-y', str(y), '-z', str(z),
+                               '-Y', str(yaw)],
+                    parameters=[{'use_sim_time': True}],
+                ))
+        bridge_args = []
+        if camera_mode == 'rgb':
+            bridge_args.append(
+                '/atom/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo'
+            )
+            bridge_args.append('/atom/wrist_camera@sensor_msgs/msg/Image[gz.msgs.Image')
+        else:
+            bridge_args.extend([
+                '/atom/wrist_camera/camera_info@sensor_msgs/msg/CameraInfo[gz.msgs.CameraInfo',
+                '/atom/wrist_camera/image@sensor_msgs/msg/Image[gz.msgs.Image',
+            ])
+            bridge_args.append(
+                '/atom/wrist_camera/depth_image@sensor_msgs/msg/Image[gz.msgs.Image'
+            )
+        camera_actions.append(Node(
+            package='ros_gz_bridge',
+            executable='parameter_bridge',
+            arguments=bridge_args,
+            output='screen',
+        ))
+
     controller_spawners = [
         Node(
             package='controller_manager',
@@ -162,7 +251,10 @@ def launch_setup(context):
             arguments=[name, '--controller-manager', '/controller_manager'],
             parameters=[{'use_sim_time': True}],
         )
-        for name in ('joint_state_broadcaster', 'uf850_traj_controller')
+        for name in (
+            'joint_state_broadcaster', 'uf850_traj_controller',
+            *(['uf850_gripper_traj_controller'] if demo_gripper else []),
+        )
     ]
 
     move_group = Node(
@@ -181,11 +273,29 @@ def launch_setup(context):
         parameters=[{'use_sim_time': True}],
     )
 
+    gui_actions = []
+    if show_gui:
+        gui_actions.append(ExecuteProcess(cmd=['gz', 'sim', '-g'], output='screen'))
+        gui_actions.append(Node(
+            package='rviz2',
+            executable='rviz2',
+            arguments=[
+                '-d',
+                os.path.join(
+                    get_package_share_directory('xarm_moveit_config'),
+                    'rviz', 'moveit.rviz',
+                ),
+            ],
+            parameters=[moveit_dict, {'use_sim_time': True}],
+            output='screen',
+        ))
+
     return [
         RegisterEventHandler(
             OnProcessStart(
                 target_action=robot_state_publisher,
-                on_start=[gazebo_server, spawn_robot, clock_bridge],
+                on_start=[gazebo_server, spawn_robot, clock_bridge,
+                          *camera_actions, *gui_actions],
             )
         ),
         RegisterEventHandler(
@@ -208,5 +318,24 @@ def generate_launch_description():
             choices=['ideal', 'nominal'],
             description='Gazebo actuator layer: ideal position following or nominal torque-PD',
         ),
+        DeclareLaunchArgument(
+            'camera_mode',
+            default_value='none',
+            choices=['none', 'rgb', 'depth'],
+            description='Simulation-only wrist sensor; RGB and depth are mutually exclusive',
+        ),
+        DeclareLaunchArgument('demo_gripper', default_value='false',
+                              choices=['true', 'false'],
+                              description='Attach the official UFactory G1 demo gripper'),
+        DeclareLaunchArgument('scene_fixtures', default_value='true',
+                              choices=['true', 'false'],
+                              description='Spawn the two-level rack and tube fixtures'),
+        DeclareLaunchArgument('fixture_group', default_value='all',
+                              choices=['all', 'shelf', 'racks', 'tube'],
+                              description='Diagnostic subset of the scene fixtures'),
+        DeclareLaunchArgument('rack_dx_m', default_value='0.0'),
+        DeclareLaunchArgument('rack_dy_m', default_value='0.0'),
+        DeclareLaunchArgument('rack_dyaw_rad', default_value='0.0'),
+        DeclareLaunchArgument('gui', default_value='false', choices=['true', 'false']),
         OpaqueFunction(function=launch_setup),
     ])

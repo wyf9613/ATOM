@@ -33,6 +33,7 @@ physical-arm commissioning are not yet implemented or verified.
 | Development environment | Docker image built: Ubuntu 24.04, ROS 2 Jazzy, Gazebo Harmonic | Base image digest pinned; headless acceptance tests pass; Gazebo and RViz X11 startup plus automated bare-arm motion verified on the current Ubuntu host |
 | Vendor ROS stack | Official UFactory `xarm_ros2` Jazzy commit pinned and eight core packages built | `uf850` Xacro, TF, MoveIt planning and simulated trajectory control pass; physical hardware compatibility remains unverified |
 | ATOM simulation packages | Ideal bare-arm, nominal actuator-dynamics and configurable transfer baselines pass | `ros2_ws/src/atom_xarm_sim` and `atom_xarm_dynamics`; server-only launch, MoveIt plan-and-execute acceptance, 100 Hz per-joint tracking reports, published pick/place poses and constrained three-segment transfer |
+| Wrist camera and two-level tube-transfer fixture | Source rack on upper shelf with four front-facing tags, destination rack on tabletop, transparent dynamic tube, temporary vendor G1 gripper; mutually exclusive RGB / single RGB-D modes run in Gazebo | `docs/CAMERA_EXPERIMENT.md`; both modes decoded front tag ID 0 and completed an observation trajectory in the full scene. Actual contact grasp, tube transfer, target-to-MoveIt integration and hardware validation remain pending |
 | xArm + gripper composition | Description checks pass | `ros2_ws/src/atom_xarm_description`; neutral mount transform is a simulation placeholder, not a measured interface |
 | Mobile-base specification/interface | Missing | Coordinate with base team |
 
@@ -66,5 +67,5 @@ physical-arm commissioning are not yet implemented or verified.
 | 3. Arm + gripper model | In progress | Modular combined Xacro and `check_urdf` pass with a neutral placeholder transform; measure the flange/adapter transform and validate collisions |
 | 4. Simulation baseline | In progress | Ideal and nominal torque-driven bare-arm MoveIt runs pass without a gripper; 100 Hz per-joint reports and a target-publisher-driven lift/constrained-transfer/descent test are implemented. Physical model identification, combined gripper control/SRDF, attached-object handling and the complete task state machine remain follow-on work |
 | 5. Real-arm deployment | Not started | Controller inventory, hardware-safe bring-up, mount/TCP measurement and commissioning |
-| 6. Perception-guided manipulation | Not started | Pose perturbation experiment against fixed-waypoint baseline |
+| 6. Perception-guided manipulation | Camera fixture in progress | RGB and RGB-D streams plus one slot-tag detection verified in simulation; pose perturbation comparison, target-to-MoveIt integration and fixed-waypoint baseline comparison remain |
 | 7. Mobile integration | Not started | Base interfaces, docking measurements and end-to-end trials |

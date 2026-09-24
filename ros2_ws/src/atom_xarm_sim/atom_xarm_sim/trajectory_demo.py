@@ -42,6 +42,8 @@ class Uf850TrajectoryDemo(Node):
         )
         self.declare_parameter('report_stem', 'atom_uf850_trajectory')
         self.declare_parameter('demo_offsets_rad', DEMO_OFFSETS_RAD)
+        self.declare_parameter('hold_at_offset_sec', 0.0)
+        self.declare_parameter('allow_demo_gripper_joints', False)
         self.declare_parameter('goal_tolerance_rad', GOAL_TOLERANCE_RAD)
         self.create_subscription(JointState, '/joint_states', self._joint_state_callback, 10)
         self.create_subscription(
@@ -97,11 +99,14 @@ class Uf850TrajectoryDemo(Node):
         if self.positions is None:
             raise RuntimeError('timed out waiting for all six UFactory 850 joints')
         unexpected = sorted(self.observed_joint_names - set(JOINT_NAMES))
-        if unexpected:
+        if unexpected and not self.get_parameter('allow_demo_gripper_joints').value:
             raise RuntimeError(f'arm-only baseline published unexpected joints: {unexpected}')
         if not all(math.isfinite(position) for position in self.positions):
             raise RuntimeError('joint state contains a non-finite position')
-        self.get_logger().info('PASS: received exactly six arm joints and no gripper joints')
+        if unexpected:
+            self.get_logger().info(f'PASS: received six arm joints and demo gripper joints: {unexpected}')
+        else:
+            self.get_logger().info('PASS: received exactly six arm joints and no gripper joints')
 
     def _wait_for_controllers(self, timeout_sec=30.0):
         if not self.controller_client.wait_for_service(timeout_sec=timeout_sec):
@@ -306,10 +311,19 @@ class Uf850TrajectoryDemo(Node):
         ]
 
         self._plan_and_execute(target, 'offset')
+        hold_sec = float(self.get_parameter('hold_at_offset_sec').value)
+        if not math.isfinite(hold_sec) or hold_sec < 0.0:
+            raise RuntimeError('hold_at_offset_sec must be finite and nonnegative')
+        deadline = time.monotonic() + hold_sec
+        while rclpy.ok() and time.monotonic() < deadline:
+            rclpy.spin_once(self, timeout_sec=min(0.2, deadline - time.monotonic()))
         self._plan_and_execute(initial, 'return')
         self._write_monitoring_report()
+        scope = ('UFactory 850 with temporary G1 gripper' if
+                 self.get_parameter('allow_demo_gripper_joints').value else
+                 'bare UFactory 850')
         self.get_logger().info(
-            'PASS: bare UFactory 850 MoveIt planning/control simulation completed'
+            f'PASS: {scope} MoveIt planning/control simulation completed'
         )
 
 

@@ -30,6 +30,10 @@ or captured by the container build.
 | A-014 | The delivered arm and gripper can execute and confirm a controlled stop while retaining the sample. | Verify controller/firmware interfaces, hardware protection path, watchdog, stop displacement by pose/speed/load, clamp hold and power-loss behavior. |
 | A-015 | Calibration and waypoint error fit the true grasp/insertion tolerance. | Independently measure intrinsics/extrinsics, TCP, slot and aperture geometry; evaluate held-out poses and error budget in mm/rad. |
 | A-016 | Online planning can meet the target computer and driver deadlines while preserving tube constraints. | Check D-007 pinned-version compatibility, measured planning/execution delay, command arbitration, predicted occupancy and timeout fallback before accepting a plugin/configuration. |
+| A-017 | One ordinary RGB or one RGB-D camera can fit on the UF850 wrist at the provisional simulated mount without blocking the gripper or workspace. | Compare real candidate dimensions, mass, cable routing, field of view and motion clearance; measure a separate hand-eye transform for each candidate. No camera purchase is selected. |
+| A-018 | One 0.040 m AprilTag can be installed on the front face of each of four source-rack slots and resolved from wrist observation poses. | Measure the actual rack pitch, front label area, occlusion and lighting; verify every tag ID across repeated poses and perturbations. The current four-slot Gazebo layout is only a fixture. |
+| A-019 | The temporary vendor G1 gripper can hold and release the intended transparent tube without slip or fracture. | Demonstrate collision-aware approach, contact grasp, lift, release and placement in Gazebo; then test the actual selected end effector with measured tube and grip-force limits. Controller actuation alone is insufficient. |
+| A-020 | The provisional two-level shelf, rack positions and empty tube mass/inertia approximate the intended bench. | Measure shelf clearances, rack/slot coordinates, tube outer/inner dimensions and mass; update SDF collision/inertia and compare repeated pickup/placement outcomes. |
 
 ## Questions for supervisors and partner teams
 

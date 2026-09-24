@@ -1,5 +1,13 @@
 # Decision Log
 
+## D-012 - Use the vendor G1 gripper only as a temporary Gazebo test tool
+
+- Date: 2026-09-24
+- Status: Accepted for the camera/transfer experiment fixture only
+- Decision: Enable UFactory's BSD-3-Clause xArm G1 gripper from the pinned `xarm_ros2` description with `demo_gripper:=true`. Keep the default bare-arm launch and the separate ATOM gripper description available. This does not select the physical end effector or replace the inherited ATOM gripper design.
+- Evidence: The official UFactory `xarm_ros2` README explicitly lists `uf850` with `add_gripper:=true`; the pinned repository includes the G1 Xacro, `XArmGripperSystem` and `uf850_gripper_traj_controller` configuration. In Gazebo, the controller became active and accepted a `drive_joint` position action; one 0.5 rad command reported success. Source: https://github.com/xArm-Developer/xarm_ros2
+- Boundary: The G1 gripper mount, mimic fingers, tube contact grasp and physical ATOM interface are not validated. The original arm-only trajectory offsets collide or otherwise violate trajectory tolerance in the expanded fixture; a reduced observation trajectory passed after moving the shelf clear. No successful tube transfer is claimed.
+
 ## D-001 - Preserve raw handover assets
 
 - Date: 2026-08-09

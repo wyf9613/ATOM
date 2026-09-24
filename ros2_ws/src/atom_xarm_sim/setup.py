@@ -27,6 +27,7 @@ setup(
             'smoke_test = atom_xarm_sim.smoke_test:main',
             'target_publisher = atom_xarm_sim.target_publisher:main',
             'transfer_demo = atom_xarm_sim.transfer_demo:main',
+            'camera_probe = atom_xarm_sim.camera_probe:main',
         ],
     },
 )
