@@ -25,6 +25,9 @@ UR3e 的已实现仿真、MoveIt 抓取和 Humble/Fortress 验证文档保留在
 | [夹爪设计与验证](GRIPPER_DESIGN.md) | 汇总上一组夹爪结构、实验结果、风险和首轮测试 |
 | [CAD 资产清单](CAD_INVENTORY.md) | 记录收到的 CAD、校验信息和后续导出要求 |
 | [仿真到实机差异记录](SIM2REAL_LOG.md) | 持续记录模型假设、实测结果和修正验证 |
+| [腕部相机与观察实验](CAMERA_EXPERIMENT.md) | 当前场景、预观察与两段接近的接口、运行命令及验证边界 |
+| [RGB 与 RGB-D 单例精度对比](RGB_VS_RGBD_SINGLE_RUN_COMPARISON_20260925.md) | 两例成功运行的终点误差和逐帧定位误差；与独立重复试验区分 |
+| [阶段性 HTML 报告](../output/slides/ATOM_observation_progress_2026-09-25.html) | 英文展示页：定位方案、三段轨迹、演示视频、精度对比和下一步 |
 | [相关工作与论文索引](RELATED_WORK.md) | 按项目问题整理本地论文、证据边界和可用于报告的 related-work 初稿 |
 | [技术 roadmap](technical_roadmap/README.md) | 文献支持的路线、Phase 4a/4b 动态避障、RGB/RGB-D 比较与感知 waypoint 方案 |
 

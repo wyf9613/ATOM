@@ -1,6 +1,6 @@
 # Project Status
 
-Last updated: 2026-09-10
+Last updated: 2026-09-25
 
 ## Phase
 
@@ -33,7 +33,8 @@ physical-arm commissioning are not yet implemented or verified.
 | Development environment | Docker image built: Ubuntu 24.04, ROS 2 Jazzy, Gazebo Harmonic | Base image digest pinned; headless acceptance tests pass; Gazebo and RViz X11 startup plus automated bare-arm motion verified on the current Ubuntu host |
 | Vendor ROS stack | Official UFactory `xarm_ros2` Jazzy commit pinned and eight core packages built | `uf850` Xacro, TF, MoveIt planning and simulated trajectory control pass; physical hardware compatibility remains unverified |
 | ATOM simulation packages | Ideal bare-arm, nominal actuator-dynamics and configurable transfer baselines pass | `ros2_ws/src/atom_xarm_sim` and `atom_xarm_dynamics`; server-only launch, MoveIt plan-and-execute acceptance, 100 Hz per-joint tracking reports, published pick/place poses and constrained three-segment transfer |
-| Wrist camera and two-level tube-transfer fixture | Source rack on upper shelf with four front-facing tags, destination rack on tabletop, transparent dynamic tube, temporary vendor G1 gripper; mutually exclusive RGB / single RGB-D modes run in Gazebo | `docs/CAMERA_EXPERIMENT.md`; both modes decoded front tag ID 0 and completed an observation trajectory in the full scene. Actual contact grasp, tube transfer, target-to-MoveIt integration and hardware validation remain pending |
+| Wrist camera and two-level tube-transfer fixture | One four-slot rack on the upper shelf with front-facing tag IDs 0–3, a transparent dynamic tube initially in slot 1, and a temporary vendor G1 gripper; mutually exclusive RGB / single RGB-D modes run in Gazebo. The current stage target is an in-rack slot 1 (tag 1) to slot 2 (tag 2) transfer. The workflow is topic-driven pre-observation followed by a separate approach phase | `docs/CAMERA_EXPERIMENT.md`; `pre_observation_target_pose` computes the default 0.35 m bearing target and `pre_observation_demo` executes it and reports Tag 1/2 poses in `link_base`, while the GUI wrapper launches Gazebo/RViz. The two-segment obstacle-free approach now executes to a 0.10 m selected-Tag standoff; one nominal RGB and one nominal RGB-D run passed with FK path checks and recorded visual updates. The real base/rack input, environment collision planning, actual contact grasp, in-rack transfer and hardware validation remain pending |
+| Visual approach comparison and progress report | One complete successful RGB run and one complete successful RGB-D run have independent simulated-geometry error measurements. A separate 10-run RGB test reported by the team had 4 terminations classified as planning failures; its run-level logs and conditions are not archived here | `docs/RGB_VS_RGBD_SINGLE_RUN_COMPARISON_20260925.md`; `output/slides/ATOM_observation_progress_2026-09-25.html`; `output/video/Observation.webm`. The single-run comparison is not a success-rate or RGB-D-benefit estimate; depth is not yet fused into Tag pose |
 | xArm + gripper composition | Description checks pass | `ros2_ws/src/atom_xarm_description`; neutral mount transform is a simulation placeholder, not a measured interface |
 | Mobile-base specification/interface | Missing | Coordinate with base team |
 
@@ -49,7 +50,7 @@ physical-arm commissioning are not yet implemented or verified.
 
 - Real Opentrons Flex to DynaPro NanoStar transfer or the specified +/-0.2 mm insertion accuracy.
 - Measured gripping force below 5 N.
-- Perception-guided target localisation and replanning.
+- Perception-guided grasp/place and online replanning. A simulated Tag-guided approach to 0.10 m standoff is demonstrated, but it does not execute a grasp or placement.
 - Robust empty-grasp, timeout and maximum-travel handling.
 - Hardware emergency-stop architecture.
 - Commissioning on the delivered xArm 850.
@@ -67,5 +68,11 @@ physical-arm commissioning are not yet implemented or verified.
 | 3. Arm + gripper model | In progress | Modular combined Xacro and `check_urdf` pass with a neutral placeholder transform; measure the flange/adapter transform and validate collisions |
 | 4. Simulation baseline | In progress | Ideal and nominal torque-driven bare-arm MoveIt runs pass without a gripper; 100 Hz per-joint reports and a target-publisher-driven lift/constrained-transfer/descent test are implemented. Physical model identification, combined gripper control/SRDF, attached-object handling and the complete task state machine remain follow-on work |
 | 5. Real-arm deployment | Not started | Controller inventory, hardware-safe bring-up, mount/TCP measurement and commissioning |
-| 6. Perception-guided manipulation | Camera fixture in progress | RGB and RGB-D streams plus one slot-tag detection verified in simulation; pose perturbation comparison, target-to-MoveIt integration and fixed-waypoint baseline comparison remain |
+| 6. Perception-guided manipulation | Tag-guided approach baseline passes; full gate open | RGB and RGB-D streams, pre-observation target topic, selected-Tag localisation and MoveIt approach to 0.10 m standoff pass in nominal simulation. Still require measured calibration, environment collision planning, robust repeated trials, grasp/place execution and fixed-waypoint comparison |
 | 7. Mobile integration | Not started | Base interfaces, docking measurements and end-to-end trials |
+
+## Immediate next work
+
+1. Add arm-reach/reachability checks to pre-observation and an explicit realignment step when the latest Tag normal no longer passes through the alignment endpoint; archive the team's ten RGB trial logs and failure categories.
+2. Obtain and verify the inherited gripper control code, then integrate measured TCP, contact feedback, grasp, lift and placement for the in-rack slot 1 → slot 2 task.
+3. Design and 3D-print the rack and camera adapter, measure their transforms and repeatability, and begin small supervised physical trials after hardware-safe bring-up.

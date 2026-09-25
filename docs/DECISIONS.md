@@ -110,3 +110,32 @@
 - Decision: Split project Stage/Phase 4 into 4a (entry-triggered stop) and 4b (constrained reactive avoidance), with 4a retained as a higher-priority fallback. Begin perception, static collision modelling and stop-interface work during fixed-base development. Keep work package P4 as the separate perception work package.
 - Evidence: The team relayed the supervisor's previous-week request in this session. Research and source links are recorded in `technical_roadmap/shared_workspace_perception.tex` and `RELATED_WORK.md`.
 - Boundary: No shared-space safety property, numerical separation limit, sensor model, hardware stop interface or new planner configuration is accepted by this decision. RGB-D with RGB fiducials and measured rack geometry is a proposed evaluation configuration. Hybrid Planning, Servo and MPC remain candidates subject to compatibility and benchmark evidence against D-007/D-011.
+
+## D-013 - Use a tag-guided transfer between two slots in one rack for the current Gazebo stage
+
+- Date: 2026-09-24
+- Status: Accepted for the current camera/transfer experiment stage
+- Decision: Replace the two-rack source-to-destination demo with a transfer inside the four-slot rack on the upper shelf. The fixed task is slot 1 (AprilTag ID 1) to slot 2 (AprilTag ID 2). Remove the former tabletop destination rack from the generated Gazebo scene. Generate the pick and place targets from the respective observed tag poses and calibrated tag-to-slot/TCP offsets.
+- Reason: This narrows the current stage to tag-guided localisation, contact grasp and controlled placement using one verified fixture, while retaining distinct perception-derived source and destination targets.
+- Boundary: The changed stage target is an implementation and validation baseline, not evidence that tag IDs 1 and 2 are currently detected, that the tube can be grasped or placed, or that the simulated geometry and transforms match hardware. The broader Project ATOM objective still includes transfer between real workstations and instrument interaction.
+- Reinforces: D-003 and D-011.
+
+## D-014 - Split visual manipulation into pre-observation and approach phases
+
+- Date: 2026-09-25
+- Status: Accepted; provisional pre-observation and two-segment approach simulation implemented; real base input pending
+- Decision: Before each pick or place, run a pre-observation phase that subscribes to a coarse target-bearing topic. A separate target-pose node places the TCP at the current default 0.35 m from the `link_base` origin along that bearing, uses the known target height, and aligns the gripper extension direction with the same bearing. Only after a valid RGB/RGB-D Tag observation may the approach phase change `x/y` and enter the grasp or placement region.
+- Interface: The provisional topic is `/atom/pre_observation_target` with type `geometry_msgs/msg/PoseStamped`, referenced to the current simulation frame `link_base`. Its `pose.position.z` carries the pre-observation TCP height and its yaw carries the coarse bearing, positive counter-clockwise about `link_base` +Z; x/y are ignored as input. The target-pose node publishes the computed `PoseStamped` on `/atom/pre_observation_pose`. Until the base-localisation interface exists, the simulation bearing is `theta_true + U(-5°, +5°)` and the height is computed from the theoretical Tag height plus the provisional camera offset. The pick/place Tag ID remains task context rather than a field in this temporary message.
+- Reason: Separate coarse, low-lateral-motion sensor alignment from fine visual target correction and the later approach. This prevents the noisy prior bearing from being mistaken for a precise manipulation target; environmental collision planning is a later increment under D-015.
+- Boundary: The fixed six-joint camera trajectory remains a legacy observation baseline. The new script validates provisional pre-observation and two-segment obstacle-free approach in simulation; no environmental obstacle avoidance, grasp success or placement success is implied.
+- Reinforces: D-011 and D-013.
+
+## D-015 - Use two constrained, observation-updated approach segments
+
+- Date: 2026-09-25
+- Status: Accepted; provisional obstacle-free implementation validated once each in RGB and RGB-D nominal simulation
+- Decision: The first approach segment uses the selected Tag pose observed at the end of pre-observation to move the front reference point to 0.40 m from the Tag plane. The second segment uses the latest valid observation published during the first segment and moves that point along a line perpendicular to the updated Tag plane to 0.10 m. The front reference point is 0.20 m along the gripper extension direction from `link_eef`, not the unmeasured physical grasp TCP. The action-type field distinguishes future pick/place tasks but is ignored by the current approach motion.
+- Constraints: Hold the `link_eef` origin's height, roll and pitch at their measured post-pre-observation values; allow x, y and yaw. Require the camera optical axis, computed through the fixed camera mount, to keep the selected Tag center within a configurable angular tolerance. Constrain the second segment's front reference point to the updated Tag normal line. Each MoveIt request freezes its target estimate for that segment. RGB/RGB-D observations continue at a provisional maximum processing rate of 5 Hz during both segments and are published and logged without changing the active trajectory.
+- Boundary: The first implementation is obstacle-free with respect to the environment but retains joint-limit and self-collision checks. It ends at the 0.10 m standoff and reports both segments' results and measured errors; it does not grasp, place, update an executing trajectory or claim environmental obstacle avoidance. If the new Tag estimate makes the second segment's normal-line constraint incompatible with its measured start, do not execute a path that violates the constraint.
+- Reason: This gives a repeatable MoveIt planning baseline with a clear handoff between fresh perception and the final approach. OMPL path constraints are attempted first; if its orientation parameterization fails strict FK validation, the first segment uses Cartesian waypoints with the same FK acceptance limits. The Tag1/Tag2 center line supplies a stable common rack-plane normal because single-Tag PnP normals varied by several degrees at close range.
+- Reinforces: D-014.

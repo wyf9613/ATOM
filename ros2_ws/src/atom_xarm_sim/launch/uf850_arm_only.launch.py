@@ -24,8 +24,8 @@ from uf_ros_lib.moveit_configs_builder import MoveItConfigsBuilder
 from uf_ros_lib.uf_robot_utils import generate_ros2_control_params_temp_file
 
 from atom_xarm_sim.camera_experiment import (
-    add_wrist_camera, experiment_world, write_tag_rack,
-    write_two_level_shelf, write_transparent_tube, SLOT_Y_M, TRANSFER_SLOT_INDEX,
+    add_wrist_camera, allow_wrist_camera_self_collisions, experiment_world, write_tag_rack,
+    write_two_level_shelf, write_transparent_tube, SLOT_Y_M, SOURCE_SLOT_INDEX,
 )
 
 
@@ -121,6 +121,11 @@ def launch_setup(context):
     moveit_dict['robot_description'] = add_wrist_camera(
         moveit_dict['robot_description'], camera_mode
     )
+    if camera_mode != 'none':
+        moveit_dict['robot_description_semantic'] = allow_wrist_camera_self_collisions(
+            moveit_dict['robot_description_semantic'],
+            moveit_dict['robot_description'],
+        )
     if actuator_model == 'nominal':
         standard_hardware = '<plugin>gz_ros2_control/GazeboSimSystem</plugin>'
         nominal_hardware = '<plugin>atom_xarm_dynamics/NominalActuatorSystem</plugin>'
@@ -147,9 +152,6 @@ def launch_setup(context):
         runtime_dir = Path(tempfile.mkdtemp(prefix='atom_camera_experiment_'))
         world = str(experiment_world(world, runtime_dir / 'world.sdf'))
         rack_path = str(write_tag_rack(runtime_dir / 'source_rack.sdf'))
-        destination_rack_path = str(write_tag_rack(
-            runtime_dir / 'destination_rack.sdf', tagged=False,
-            name='atom_destination_rack'))
         shelf_path = str(write_two_level_shelf(runtime_dir / 'shelf.sdf'))
         tube_path = str(write_transparent_tube(runtime_dir / 'tube.sdf'))
     gazebo_server = IncludeLaunchDescription(
@@ -174,7 +176,7 @@ def launch_setup(context):
             '-x', '-0.2',
             '-y', '-0.54',
             '-z', '1.021',
-            '-Y', '1.571',
+            '-Y', '-1.571',
         ],
         parameters=[{'use_sim_time': True}],
     )
@@ -188,21 +190,19 @@ def launch_setup(context):
 
     camera_actions = []
     if camera_mode != 'none':
-        source_shelf_x = -0.57
+        source_shelf_x = 0.50
         source_x = source_shelf_x - rack_dy_m
-        source_y = -0.22 + rack_dx_m
-        source_yaw = 1.571 + rack_dyaw_rad
+        source_y = -1.00 + rack_dx_m
+        source_yaw = -0.00 + rack_dyaw_rad
         tube_x = (source_x + 0.030 * math.cos(source_yaw)
-                  - SLOT_Y_M[TRANSFER_SLOT_INDEX] * math.sin(source_yaw))
+                  - SLOT_Y_M[SOURCE_SLOT_INDEX] * math.sin(source_yaw))
         tube_y = (source_y + 0.030 * math.sin(source_yaw)
-                  + SLOT_Y_M[TRANSFER_SLOT_INDEX] * math.cos(source_yaw))
+                  + SLOT_Y_M[SOURCE_SLOT_INDEX] * math.cos(source_yaw))
         fixtures = (
             (shelf_path, 'atom_two_level_shelf', source_x,
              source_y, 1.021, source_yaw),
             (rack_path, 'atom_source_rack', source_x,
              source_y, 1.159, source_yaw),
-            (destination_rack_path, 'atom_destination_rack', -0.12,
-             -0.22, 1.030, 1.571),
             (tube_path, 'atom_transfer_tube', tube_x,
              tube_y, 1.2155, 0.0),
         )
@@ -210,8 +210,8 @@ def launch_setup(context):
             for fixture_path, name, x, y, z, yaw in fixtures:
                 if fixture_group == 'shelf' and name != 'atom_two_level_shelf':
                     continue
-                if fixture_group == 'racks' and name not in (
-                    'atom_source_rack', 'atom_destination_rack'):
+                if fixture_group == 'rack' and name not in (
+                    'atom_two_level_shelf', 'atom_source_rack'):
                     continue
                 if fixture_group == 'tube' and name != 'atom_transfer_tube':
                     continue
@@ -331,8 +331,10 @@ def generate_launch_description():
                               choices=['true', 'false'],
                               description='Spawn the two-level rack and tube fixtures'),
         DeclareLaunchArgument('fixture_group', default_value='all',
-                              choices=['all', 'shelf', 'racks', 'tube'],
-                              description='Diagnostic subset of the scene fixtures'),
+                              choices=['all', 'shelf', 'rack', 'tube'],
+                              description=(
+                                  'Diagnostic subset; rack includes its supporting shelf'
+                              )),
         DeclareLaunchArgument('rack_dx_m', default_value='0.0'),
         DeclareLaunchArgument('rack_dy_m', default_value='0.0'),
         DeclareLaunchArgument('rack_dyaw_rad', default_value='0.0'),

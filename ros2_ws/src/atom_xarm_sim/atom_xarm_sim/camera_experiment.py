@@ -9,19 +9,24 @@ CAMERA_MODES = ('none', 'rgb', 'depth')
 TAG_FAMILY = 'DICT_APRILTAG_36h11'
 TAG_IDS = (0, 1, 2, 3)
 SLOT_Y_M = (-0.105, -0.035, 0.035, 0.105)
-TRANSFER_SLOT_INDEX = 1
+SOURCE_SLOT_INDEX = 1
+DESTINATION_SLOT_INDEX = 2
 TAG_SIZE_M = 0.040
 
 
 def add_wrist_camera(robot_description: str, mode: str) -> str:
-    """Attach exactly one provisional camera to the vendor arm description."""
+    """Attach one provisional forward-looking camera below the demo gripper."""
     if mode not in CAMERA_MODES:
         raise ValueError(f'camera mode must be one of {CAMERA_MODES}')
     if mode == 'none':
         return robot_description
     root = ET.fromstring(robot_description)
-    if root.tag != 'robot' or root.find(".//link[@name='link_eef']") is None:
-        raise ValueError('expected a robot description containing link_eef')
+    if root.tag != 'robot' or root.find(
+            ".//link[@name='xarm_gripper_base_link']") is None:
+        raise ValueError(
+            'camera mode requires the G1 demo gripper and '
+            'xarm_gripper_base_link'
+        )
     if root.find(".//link[@name='wrist_camera_link']") is not None:
         raise ValueError('wrist camera already exists')
 
@@ -39,12 +44,14 @@ def add_wrist_camera(robot_description: str, mode: str) -> str:
     material = ET.SubElement(visual, 'material', name='atom_camera_black')
     ET.SubElement(material, 'color', rgba='0.08 0.09 0.11 1')
     joint = ET.SubElement(root, 'joint', name='wrist_camera_mount', type='fixed')
-    ET.SubElement(joint, 'parent', link='link_eef')
+    ET.SubElement(joint, 'parent', link='xarm_gripper_base_link')
     ET.SubElement(joint, 'child', link='wrist_camera_link')
-    # A side-mounted bracket clears the temporary G1 gripper. Gazebo camera
-    # looks along +X; tilt and yaw target the vertical source-rack fascia.
-    ET.SubElement(joint, 'origin', xyz='-0.040 -0.120 -0.040',
-                  rpy='0 -0.78539816339 -0.30')
+    # The G1 points along gripper +Z while the Gazebo camera looks along its
+    # local +X. Ry(-pi/2) aligns those axes. The provisional offset places the
+    # camera below and forward of the gripper body without centring it between
+    # the fingers; replace it with the measured bracket transform later.
+    ET.SubElement(joint, 'origin', xyz='-0.080 0 0.060',
+                  rpy='0 -1.57079632679 0')
 
     optical = ET.SubElement(root, 'link', name='wrist_camera_optical_frame')
     optical_joint = ET.SubElement(root, 'joint', name='wrist_camera_optical_joint', type='fixed')
@@ -69,6 +76,37 @@ def add_wrist_camera(robot_description: str, mode: str) -> str:
     ET.SubElement(clip, 'near').text = '0.08'
     ET.SubElement(clip, 'far').text = '2.0'
     return ET.tostring(root, encoding='unicode')
+
+
+def allow_wrist_camera_self_collisions(semantic_description: str,
+                                       robot_description: str) -> str:
+    """Allow the fixed sensor body to overlap the robot's own links in MoveIt.
+
+    The camera is a rigid child of the gripper, so its collision geometry must
+    not make every arm start state invalid. It remains available for future
+    environment collision modelling; only robot-internal pairs are disabled.
+    """
+    semantic_root = ET.fromstring(semantic_description)
+    robot_root = ET.fromstring(robot_description)
+    link_names = [link.attrib['name'] for link in robot_root.findall('link')]
+    existing = {
+        frozenset((item.attrib.get('link1'), item.attrib.get('link2')))
+        for item in semantic_root.findall('disable_collisions')
+    }
+    for link_name in link_names:
+        if link_name == 'wrist_camera_link':
+            continue
+        pair = frozenset(('wrist_camera_link', link_name))
+        if pair in existing:
+            continue
+        ET.SubElement(
+            semantic_root,
+            'disable_collisions',
+            link1='wrist_camera_link',
+            link2=link_name,
+            reason='FixedSensor',
+        )
+    return ET.tostring(semantic_root, encoding='unicode')
 
 
 def experiment_world(source_world: str, destination: Path) -> Path:
@@ -113,12 +151,12 @@ def _box(parent, name, size, pose, color, collision=False):
         ET.SubElement(ET.SubElement(geo, 'box'), 'size').text = size
 
 
-def write_tag_rack(destination: Path, *, tagged=True, name='atom_source_rack') -> Path:
-    """Generate a rack with vertical, front-facing tag plates on the source."""
+def write_tag_rack(destination: Path) -> Path:
+    """Generate the four-slot rack with one front-facing tag per slot."""
     import cv2
     dictionary = cv2.aruco.Dictionary_get(getattr(cv2.aruco, TAG_FAMILY))
     sdf = ET.Element('sdf', version='1.9')
-    model = ET.SubElement(sdf, 'model', name=name)
+    model = ET.SubElement(sdf, 'model', name='atom_source_rack')
     ET.SubElement(model, 'static').text = 'true'
     link = ET.SubElement(model, 'link', name='rack')
     _box(link, 'rack_body', '0.125 0.31 0.018', '0 0 0 0 0 0',
@@ -143,8 +181,6 @@ def write_tag_rack(destination: Path, *, tagged=True, name='atom_source_rack') -
             _box(link, f'slot_{slot}_{side}', '0.004 0.028 0.008',
                  f'{x:.6f} {y:.6f} 0.048 0 0 0', '0.22 0.28 0.34 1',
                  collision=True)
-        if not tagged:
-            continue
         # A bright white plate gives every marker a quiet zone.
         _box(link, f'tag_{slot}_plate', '0.001 0.048 0.048',
              f'-0.0685 {y:.6f} 0.029 0 0 0', white)

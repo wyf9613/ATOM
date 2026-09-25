@@ -28,6 +28,8 @@ setup(
             'target_publisher = atom_xarm_sim.target_publisher:main',
             'transfer_demo = atom_xarm_sim.transfer_demo:main',
             'camera_probe = atom_xarm_sim.camera_probe:main',
+            'pre_observation_target_pose = atom_xarm_sim.pre_observation_target_pose:main',
+            'pre_observation_demo = atom_xarm_sim.pre_observation_demo:main',
         ],
     },
 )
