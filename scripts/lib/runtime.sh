@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
+# Internal implementation; use scripts/atom.sh.
 set -euo pipefail
-
-repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-cd "${repo_root}"
-
-export ATOM_UID="$(id -u)"
-export ATOM_GID="$(id -g)"
+source "$(dirname "${BASH_SOURCE[0]}")/common.sh"
+operation="${1:?Missing internal operation}"
+shift
+case "${operation}" in
+build)
 mkdir -p .docker-runtime/jazzy_ws/{build,install,log}
 
 docker compose -f docker-compose.jazzy.yaml build atom-jazzy
@@ -42,3 +42,11 @@ docker compose -f docker-compose.jazzy.yaml run --rm atom-jazzy bash -lc '
     atom_xarm_sim \
     --base-paths /jazzy_ws/src/xarm_ros2 /workspace/ros2_ws/src
 '
+;;
+shell)
+mkdir -p .docker-runtime/jazzy_ws/{build,install,log}
+
+docker compose -f docker-compose.jazzy.yaml run --rm atom-jazzy bash
+;;
+*) echo "Unknown internal operation: ${operation}" >&2; exit 2 ;;
+esac

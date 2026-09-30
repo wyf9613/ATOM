@@ -60,8 +60,8 @@ theta_observation = theta_true + U(-5 deg, +5 deg)
 在仓库根目录运行，保持两种相机的架位扰动一致：
 
 ```bash
-./scripts/docker/jazzy_camera_experiment.sh rgb 0.0 0.0 0.0
-./scripts/docker/jazzy_camera_experiment.sh depth 0.0 0.0 0.0
+./scripts/atom.sh demo camera --camera rgb
+./scripts/atom.sh demo camera --camera depth
 ```
 
 后三个参数依次是上层搁板及源架整体在机械臂基座坐标中的 `dx`（m）、`dy`（m）和偏航扰动（rad）；暂允许 `|dx|,|dy| ≤ 0.05 m`、`|dyaw| ≤ 0.2 rad`。旧的固定六关节观察往返仍可通过原入口回归；新的预观察入口见下文，它由独立目标位姿节点按方向生成默认 0.35 m 目标、规划高度和姿态，并在静止帧中累积 Tag 1/2 的观测。
@@ -69,7 +69,7 @@ theta_observation = theta_true + U(-5 deg, +5 deg)
 输出在 `tmp/camera_experiment/<模式_时间戳>/`：条件、启动/轨迹/探测日志，`report.json`（tag ID、相机坐标位姿、图像信息），`rgb_annotated.png`；RGB-D 还保存 `depth_m.npy` 和 `depth_preview.png`。图形桌面录像入口为：
 
 ```bash
-./scripts/docker/jazzy_camera_experiment_gui.sh rgb 0.0 0.0 0.0
+./scripts/atom.sh demo camera --gui --camera rgb
 ```
 
 将 `rgb` 换成 `depth` 即为另一组。Gazebo GUI 与 RViz 会保持打开，按 `Ctrl+C` 结束；图片和日志放在 `tmp/camera_experiment/gui_current/`。单独开发可运行：
@@ -88,8 +88,8 @@ docker compose -f docker-compose.jazzy.yaml run --rm atom-jazzy \
 预观察脚本入口为：
 
 ```bash
-./scripts/docker/jazzy_pre_observation_gui.sh rgb 0.0 0.0 0.0
-./scripts/docker/jazzy_pre_observation_gui.sh depth 0.0 0.0 0.0
+./scripts/atom.sh demo approach --gui --camera rgb
+./scripts/atom.sh demo approach --gui --camera depth
 ```
 
 默认脚本使用 0.35 m 预观察目标距离；第五个参数可覆盖该值。脚本先完成预观察，再按任务 topic 指定的 Tag ID 执行两段接近；未收到外部任务时默认发布 `{"tag_id":1,"action":"pick"}`（`std_msgs/msg/String` JSON）。观测发布到 `/atom/approach/tag_observation`（同为 JSON），每条包含选定 Tag 的 `link_base` 位姿、图像时间戳和深度质量；结果保存在 `tmp/camera_experiment/pre_observation_current/` 下的 `pre_observation_report.json`、`approach_report.json`、`tag_observations.jsonl` 和标注图；成功运行后另保存带 `_rgb` 或 `_depth` 后缀的报告与逐帧观测文件，避免切换模式覆盖。名义场景 RGB 与 RGB-D 各完成一次预观察和两段接近仿真；原 0.2 m 目标在当前高度/姿态下不可采样。实际试管夹取、放置与环境避障未验证。

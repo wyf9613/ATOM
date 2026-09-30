@@ -1,0 +1,14 @@
+{
+  "camera_topic": "/atom/wrist_camera/image/compressed",
+  "joint_topic": "/joint_states",
+  "odom_topic": "/odom",
+  "battery_topic": "/battery_state",
+  "diagnostics_topic": "/diagnostics",
+  "safety_topic": "/atom/safety/status",
+  "task_topic": "/atom/task/status",
+  "request_topic": "/atom/operator/request",
+  "observe_service": "/atom/task/observe",
+  "cancel_service": "/atom/task/cancel",
+  "stop_service": "/atom/safety/stop",
+  "reset_stop_service": "/atom/safety/reset_stop"
+}

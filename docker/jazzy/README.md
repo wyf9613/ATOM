@@ -70,7 +70,7 @@ colcon test \
 From the repository root:
 
 ```bash
-./scripts/docker/jazzy_build.sh
+./scripts/atom.sh build
 ```
 
 This builds the Docker image and then the vendor workspace. Generated colcon
@@ -81,7 +81,7 @@ files are stored below ignored `.docker-runtime/jazzy_ws/` directories.
 Run the complete MoveIt plan-and-execute simulation, with no gripper loaded:
 
 ```bash
-./scripts/docker/jazzy_arm_trajectory_sim.sh
+./scripts/atom.sh demo arm
 ```
 
 The demo commands a clearly visible six-joint motion through MoveIt, with a
@@ -93,7 +93,7 @@ acceptance path.
 To view the same bare-arm motion in Gazebo and RViz from an X11 host session:
 
 ```bash
-./scripts/docker/jazzy_arm_trajectory_gui.sh
+./scripts/atom.sh demo arm --gui
 ```
 
 The graphical script forwards the current X11 display and authorization into
@@ -113,7 +113,7 @@ performs both steps consecutively.
 Run the headless target-publisher and constrained-transfer regression with:
 
 ```bash
-./scripts/docker/jazzy_transfer_sim.sh
+./scripts/atom.sh demo transfer
 ```
 
 The test moves to the published pick pose, accepts the configured simulated
@@ -138,7 +138,7 @@ physical TCP calibration are available.
 From the repository root:
 
 ```bash
-./scripts/docker/jazzy_sim_smoke.sh
+./scripts/atom.sh demo smoke
 ```
 
 The script rebuilds incrementally, launches Gazebo server-only without RViz,
@@ -150,7 +150,7 @@ is stored at `.docker-runtime/jazzy_ws/log/atom_uf850_headless_smoke.log`.
 Run the separate torque-driven nominal model with:
 
 ```bash
-./scripts/docker/jazzy_arm_dynamics_sim.sh
+./scripts/atom.sh demo dynamics
 ```
 
 This path uses the vendor UF850 rigid-body inertias and effort limits, Gazebo
@@ -177,7 +177,7 @@ using the `atom_uf850_trajectory_*` report names.
 ## Open a shell
 
 ```bash
-./scripts/docker/jazzy_shell.sh
+./scripts/atom.sh shell
 ```
 
 After the workspace has been built, the ATOM headless entry point is:

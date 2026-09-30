@@ -75,6 +75,8 @@ class TransferDemo(Node):
         self.declare_parameter('acceleration_scaling', 0.05)
         self.declare_parameter('planning_time_sec', 10.0)
         self.declare_parameter('simulate_grasp_success', True)
+        self.declare_parameter('keep_status_alive', False)
+        self.declare_parameter('report_path', str(REPORT_PATH))
 
         self.reference_frame = str(self.get_parameter('reference_frame').value)
         self.group_name = str(self.get_parameter('planning_group').value)
@@ -135,6 +137,12 @@ class TransferDemo(Node):
         self.create_subscription(
             Bool, '/atom/gripper/grasp_success', self._grasp_callback, 10
         )
+        self.status_publisher = self.create_publisher(String, '/atom/task/status', 10)
+        self.current_phase='INITIALIZING'
+        self.task_state='RUNNING'
+        self.task_detail='Legacy fixed-target arm motion test; targets are unrelated to current tube slots'
+        self.request_id=f'transfer_{time.time_ns()}'
+        self.create_timer(.5,self._publish_status)
         self.phase_publisher = self.create_publisher(String, '/atom/transfer_phase', 10)
 
         self.cartesian_client = self.create_client(
@@ -172,7 +180,22 @@ class TransferDemo(Node):
     def _grasp_callback(self, message):
         self.grasp_success = bool(message.data)
 
+    def _publish_status(self):
+        stages=['INITIALIZING','MOVE_TO_PICK','VERIFY_GRASP','VERTICAL_LIFT',
+                'CONSTRAINED_TRANSFER','VERTICAL_DESCENT','COMPLETE']
+        self.status_publisher.publish(String(data=json.dumps({
+            'schema_version':1,'source':'transfer_baseline','request_id':self.request_id,
+            'phase':self.current_phase,'state':self.task_state,'detail':self.task_detail,
+            'progress':stages.index(self.current_phase)/(len(stages)-1),
+            'simulate_grasp_success':self.simulate_grasp_success,
+            'grasp_completed':False,'place_completed':False,'metrics':self.phase_metrics})))
+
     def _publish_phase(self, phase):
+        self.current_phase=phase
+        if phase=='COMPLETE':
+            self.task_state='SUCCEEDED'
+            self.task_detail='Fixed-target arm motion test passed; no tube pick/place was executed'
+        self._publish_status()
         self.phase_publisher.publish(String(data=phase))
         self.get_logger().info(f'PHASE: {phase}')
 
@@ -532,7 +555,8 @@ class TransferDemo(Node):
         self._verify_pose(target, label)
 
     def _write_report(self, pick_lift_pose, place_approach_pose):
-        REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)
+        report_path=Path(self.get_parameter('report_path').value)
+        report_path.parent.mkdir(parents=True, exist_ok=True)
         report = {
             'scope': (
                 'arm-only Gazebo baseline with simulated grasp success; '
@@ -554,10 +578,10 @@ class TransferDemo(Node):
             ],
             'phases': self.phase_metrics,
         }
-        with REPORT_PATH.open('w', encoding='utf-8') as stream:
+        with report_path.open('w', encoding='utf-8') as stream:
             json.dump(report, stream, indent=2)
             stream.write('\n')
-        self.get_logger().info(f'Transfer report: {REPORT_PATH}')
+        self.get_logger().info(f'Transfer report: {report_path}')
 
     def run(self):
         self._wait_for_targets()
@@ -610,10 +634,20 @@ def main():
             'transfer_demo'
         )
         logger.error(f'FAIL: {error}')
+        if node is not None:
+            node.task_state='FAILED'
+            node.task_detail=str(error)
+            node._publish_status()
         return_code = 1
     else:
         return_code = 0
     finally:
+        if node is not None and node.get_parameter('keep_status_alive').value:
+            try:
+                while rclpy.ok():
+                    rclpy.spin_once(node,timeout_sec=.2)
+            except KeyboardInterrupt:
+                pass
         if node is not None:
             node.destroy_node()
         rclpy.shutdown()

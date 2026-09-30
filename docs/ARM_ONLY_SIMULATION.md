@@ -120,7 +120,7 @@ ATOM/
 ### 无界面验收
 
 ```bash
-./scripts/docker/jazzy_arm_trajectory_sim.sh
+./scripts/atom.sh demo arm
 ```
 
 这是判断当前基线是否正常的首选命令。
@@ -128,7 +128,7 @@ ATOM/
 ### 查看 Gazebo 和 RViz
 
 ```bash
-./scripts/docker/jazzy_arm_trajectory_gui.sh
+./scripts/atom.sh demo arm --gui
 ```
 
 图形界面准备好后，脚本自动执行一次大幅往返动作，随后保持窗口打开；在终端按
@@ -143,13 +143,13 @@ ATOM/
 ### 进入开发容器
 
 ```bash
-./scripts/docker/jazzy_shell.sh
+./scripts/atom.sh shell
 ```
 
 ### 抓取后搬运验收
 
 ```bash
-./scripts/docker/jazzy_transfer_sim.sh
+./scripts/atom.sh demo transfer
 ```
 
 这个无界面测试从配置文件发布夹取和放置位姿，然后执行：到达夹取位、模拟夹取

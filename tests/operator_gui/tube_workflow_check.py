@@ -1,0 +1,45 @@
+"""Observe the real RGB-D experiment and record UI/API workflow progression."""
+import argparse
+import json
+from pathlib import Path
+import time
+import urllib.request
+import urllib.error
+parser=argparse.ArgumentParser();parser.add_argument('--require-success',action='store_true');args=parser.parse_args()
+output=Path('tmp/operator_gui');output.mkdir(parents=True,exist_ok=True)
+records=[];deadline=time.monotonic()+300
+base='http://127.0.0.1:8089'
+last_phase=None
+while time.monotonic()<deadline:
+    try:
+        with urllib.request.urlopen(base+'/api/v1/state',timeout=3) as r:state=json.load(r)
+    except urllib.error.URLError:time.sleep(.5);continue
+    task=state['streams'].get('task',{}).get('value',{})
+    if task.get('source')!='tube_approach_experiment':time.sleep(.5);continue
+    phase=(task.get('phase'),task.get('state'))
+    if phase!=last_phase:
+        print('Workflow:',phase,task.get('detail'),flush=True);last_phase=phase
+    records.append(state)
+    if task.get('state') in ('SUCCEEDED','FAILED'):break
+    time.sleep(.5)
+else:raise AssertionError('External workflow completion timeout')
+(output/'tube_workflow_check.json').write_text(json.dumps(records,indent=2))
+assert any(s['streams'].get('depth',{}).get('fresh') for s in records),'No live depth'
+assert any(s['streams'].get('tags',{}).get('fresh') for s in records),'No detection frames'
+assert any(s['streams'].get('tags',{}).get('value',{}).get('detected') for s in records),'No Tag detected'
+assert any(s['streams'].get('arm',{}).get('fresh') for s in records),'No arm feedback'
+for path,magic in [('camera',b'\xff\xd8'),('depth',b'\x89PNG')]:
+    with urllib.request.urlopen(base+'/api/v1/'+path) as r:content=r.read()
+    assert content.startswith(magic)
+    (output/('tube_'+path+('.jpg' if path=='camera' else '.png'))).write_bytes(content)
+assert not task.get('grasp_completed') and not task.get('place_completed')
+assert not state['commands_enabled'],'External monitor must not start competing tasks'
+print('PASS: external workflow state, RGB-D depth preview, Tag results, joints and terminal outcome reach GUI',flush=True)
+if task['state']!='SUCCEEDED':
+    print('EXPERIMENT FAILED: '+task['detail'])
+    if args.require_success:raise AssertionError(task['detail'])
+else:
+    segments=set(task['completed_segments'])
+    assert {'alignment','perpendicular'} <= segments
+    assert all(phase in ('alignment','perpendicular') or phase.startswith('realignment_') for phase in segments)
+    print('EXPERIMENT SUCCEEDED: both visual approach segments completed; no physical grasp claimed')

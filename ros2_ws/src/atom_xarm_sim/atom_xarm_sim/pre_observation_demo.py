@@ -32,6 +32,7 @@ from shape_msgs.msg import SolidPrimitive
 from std_msgs.msg import String
 from tf2_ros import Buffer, TransformException, TransformListener
 
+from atom_xarm_sim.rack_pose import estimate_rack_pair
 from atom_xarm_sim.camera_experiment import SLOT_Y_M, TAG_FAMILY, TAG_SIZE_M
 
 
@@ -178,6 +179,7 @@ class PreObservationDemo(Node):
         self.current_stage = 'initialization'
         self.planning_attempts = {}
         self.declare_parameter('camera_mode', 'rgb')
+        self.declare_parameter('keep_status_alive', False)
         self.declare_parameter('robot_frame', ROBOT_FRAME)
         self.declare_parameter('tcp_link', TCP_LINK)
         self.declare_parameter('input_topic', INPUT_TOPIC)
@@ -201,6 +203,7 @@ class PreObservationDemo(Node):
         self.declare_parameter('height_tolerance_m', 0.015)
         self.declare_parameter('tilt_tolerance_rad', 0.10)
         self.declare_parameter('ray_width_m', 0.025)
+        self.declare_parameter('max_realignment_attempts', 3)
         self.declare_parameter('moveit_visibility_constraint', False)
 
         self.camera_mode = str(self.get_parameter('camera_mode').value)
@@ -262,6 +265,8 @@ class PreObservationDemo(Node):
         self.camera_offset = None
         self.camera_rotation = None
         self.rack_plane_normal = None
+        self.rack_observation = None
+        self.rack_observation_wall = 0.0
 
         self.camera_info = None
         self.rgb_message = None
@@ -299,6 +304,49 @@ class PreObservationDemo(Node):
         self.pre_observation_command = None
         self.target_pose_command = None
         self.measured_ray_error_rad = None
+        self.gui_request_id = 'approach_' + str(time.time_ns())
+        self.gui_final = None
+        self.gui_execution_metrics = {}
+        self.gui_status_publisher = self.create_publisher(String, '/atom/task/status', input_qos)
+        self.create_timer(0.5, self._publish_gui_status)
+        self._publish_gui_status()
+
+    def _publish_gui_status(self):
+        phases = {
+            'initialization': (0.0, 'Initializing experiment'),
+            'pre_observation_setup': (0.05, 'Waiting for TF, coarse target and controllers'),
+            'pre_observation_move': (0.20, 'Moving to the pre-observation pose'),
+            'pre_observation_capture': (0.35, 'Detecting Tag 1 and Tag 2'),
+            'realignment': (0.60, 'Re-observing and correcting alignment at 0.40 m'),
+            'alignment': (0.55, 'Aligning the front reference point at 0.40 m'),
+            'perpendicular': (0.80, 'Approaching the selected Tag plane to 0.10 m'),
+            'complete': (1.0, 'Visual approach completed; physical grasp is not implemented'),
+        }
+        progress, detail = phases.get(self.current_stage, (0, self.current_stage))
+        state = 'RUNNING'
+        if self.gui_final:
+            state, detail = self.gui_final
+        status = {
+            'schema_version': 1, 'source': 'tube_approach_experiment',
+            'request_id': self.gui_request_id, 'state': state,
+            'phase': self.current_stage, 'progress': progress,
+            'detail': detail, 'camera_mode': self.camera_mode,
+            'tag_id': self.task['tag_id'] if self.task else int(self.get_parameter('demo_tag_id').value),
+            'requested_action': self.task['action'] if self.task else 'pick',
+            'observed_tag_ids': sorted(self.observed),
+            'observation_count': len(self.all_observations),
+            'completed_segments': list(self.phase_metrics),
+            'planning_attempts': dict(self.planning_attempts),
+            'execution': 'executing' if self.approach_phase else 'planning_or_waiting',
+            'metrics': dict(self.gui_execution_metrics),
+            'grasp_completed': False, 'place_completed': False,
+        }
+        self.gui_status_publisher.publish(String(data=json.dumps(status)))
+        # Persist actual status for run inspection; never synthesize task success.
+        path = self.output_dir / 'runtime_status.json'
+        temporary = self.output_dir / 'runtime_status.tmp'
+        temporary.write_text(json.dumps(status, indent=2) + '\n', encoding='utf-8')
+        temporary.replace(path)
 
     def _input_callback(self, message):
         self.input_message = message
@@ -666,7 +714,25 @@ class PreObservationDemo(Node):
                 return
             k = np.array(self.camera_info.k, dtype=np.float64).reshape(3, 3)
             d = np.array(self.camera_info.d, dtype=np.float64)
+            # Reject duplicate nested contours for the same marker ID.
+            best = {}
+            for index, tag_id in enumerate(ids_list):
+                area = abs(cv2.contourArea(corners[index].reshape(-1, 2)))
+                if tag_id not in best or area > best[tag_id][0]:
+                    best[tag_id] = (area, index)
+            indices = [value[1] for value in best.values()]
+            corners = [corners[index] for index in indices]
+            ids_list = [ids_list[index] for index in indices]
+            ids = np.asarray(ids_list, dtype=np.int32).reshape(-1, 1)
             rvecs, tvecs, _ = cv2.aruco.estimatePoseSingleMarkers(corners, TAG_SIZE_M, k, d)
+            pair_poses = {}
+            if all(tag_id in ids_list for tag_id in (1, 2)):
+                # Marker +X is image-right (-rack Y); +Y points upwards.
+                # Fit the rigid two-tag board in one image, rather than
+                # differencing independently estimated single-tag depths.
+                pair_poses = estimate_rack_pair(
+                    {tag_id: corners[ids_list.index(tag_id)] for tag_id in (1, 2)},
+                    k, d, TAG_SIZE_M, SLOT_Y_M)
             # This code runs inside the image subscription callback. Do not
             # spin a nested executor while waiting for TF; skip this frame and
             # let the next synchronized frame try again.
@@ -682,11 +748,12 @@ class PreObservationDemo(Node):
             for index, tag_id in enumerate(ids_list):
                 if tag_id not in (1, 2):
                     continue
-                rotation_matrix, _ = cv2.Rodrigues(rvecs[index].reshape(3))
+                tag_rotation, tag_translation = pair_poses.get(tag_id, (rvecs[index], tvecs[index]))
+                rotation_matrix, _ = cv2.Rodrigues(tag_rotation.reshape(3))
                 orientation = _quat_from_matrix(rotation_matrix.tolist())
                 position, orientation = self._transform_pose(
                     camera_to_robot,
-                    [float(value) for value in tvecs[index].reshape(3)],
+                    [float(value) for value in tag_translation.reshape(3)],
                     orientation,
                 )
                 pose = PoseStamped()
@@ -714,6 +781,9 @@ class PreObservationDemo(Node):
             # latest pose for each required ID and complete once both have
             # been observed, even if they were not decoded in one image.
             self.observed.update(observed)
+            if pair_poses:
+                self.rack_observation = deepcopy(observed)
+                self.rack_observation_wall = time.monotonic()
             if self.approach_phase is not None and self.task is not None:
                 selected = self.task['tag_id']
                 if selected in observed:
@@ -770,9 +840,10 @@ class PreObservationDemo(Node):
                                 for axis in ('x', 'y', 'z', 'w')]
 
     def _update_rack_plane_normal(self):
-        if 1 not in self.observed or 2 not in self.observed:
-            raise RuntimeError('rack plane needs observations of both tag1 and tag2')
-        first, second = self.observed[1].pose.position, self.observed[2].pose.position
+        pair = self.rack_observation
+        if pair is None or time.monotonic()-self.rack_observation_wall > float(self.get_parameter('observation_max_age_sec').value):
+            raise RuntimeError('rack plane requires a fresh same-frame two-tag observation')
+        first, second = pair[1].pose.position, pair[2].pose.position
         tangent = [second.x - first.x, second.y - first.y]
         separation = math.hypot(*tangent)
         if not 0.055 <= separation <= 0.09:
@@ -944,7 +1015,10 @@ class PreObservationDemo(Node):
                 f'{label}: selected-tag observation stale by {age:.3f} s; '
                 f'last_detected_ids={self.last_detected_ids}, capture_error={self.capture_error}'
             )
-        return self._record_pose(record)
+        pair_age = time.monotonic()-self.rack_observation_wall
+        if self.rack_observation is None or pair_age > float(self.get_parameter('observation_max_age_sec').value):
+            raise RuntimeError(f'{label}: no fresh same-frame two-tag rack pose')
+        return deepcopy(self.rack_observation[self.task['tag_id']])
 
     def _record_execution_sample(self, tag, samples):
         try:
@@ -959,6 +1033,7 @@ class PreObservationDemo(Node):
                 'front_plane_distance_m': geometry['distance_m'],
                 'ray_lateral_error_m': geometry['lateral_m'],
             })
+            self.gui_execution_metrics = dict(samples[-1])
         except (RuntimeError, TransformException):
             pass
 
@@ -1067,7 +1142,7 @@ class PreObservationDemo(Node):
         )
 
     def _plan_and_execute_approach(self, label, target, tag, ray=None):
-        self.current_stage = label
+        self.current_stage = 'realignment' if label.startswith('realignment_') else label
         self.planning_attempts[label] = 0
         ik_solution = None
         if self.ik_client.wait_for_service(timeout_sec=5.0):
@@ -1240,7 +1315,7 @@ class PreObservationDemo(Node):
         self._camera_mount()
         self._update_rack_plane_normal()
         self.approach_start_pose = self._current_tcp_pose()
-        tag_initial = deepcopy(self.observed[selected])
+        tag_initial = deepcopy(self.rack_observation[selected])
         self.get_logger().info(
             f'APPROACH START: geometry={self._geometry(self.approach_start_pose, tag_initial)}, '
             f'camera_mount_xyz={self.camera_offset}, camera_mount_xyzw={self.camera_rotation}'
@@ -1253,20 +1328,33 @@ class PreObservationDemo(Node):
         )
         self.get_logger().info(f'APPROACH TASK: {self.task}; segment 1 alignment at 0.40 m')
         align_actual, updates = self._plan_and_execute_approach('alignment', align_target, tag_initial)
-        tag_second = self._fresh_observation(updates, 'alignment')
-        self._update_rack_plane_normal()
-        normal = self._geometry(align_actual, tag_second)['horizontal_normal']
-        tag_xy = [tag_second.pose.position.x, tag_second.pose.position.y]
-        start_front = self._geometry(align_actual, tag_second)['front']
-        ray_error = abs((start_front[0] - tag_xy[0]) * normal[1] -
-                        (start_front[1] - tag_xy[1]) * normal[0])
-        self.get_logger().info(
-            f'UPDATED TAG: {_pose_dict(tag_second)}; alignment front={start_front}; '
-            f'updated-ray lateral error={ray_error:.4f} m'
-        )
+        max_corrections = int(self.get_parameter('max_realignment_attempts').value)
+        if not 0 <= max_corrections <= 5:
+            raise RuntimeError('max_realignment_attempts must be between 0 and 5')
         ray_width = float(self.get_parameter('ray_width_m').value)
-        if ray_error > ray_width:
-            raise RuntimeError(f'updated normal ray misses alignment point by {ray_error:.4f} m (limit {ray_width:.4f} m); realignment required')
+        for correction in range(max_corrections+1):
+            tag_second = self._fresh_observation(updates, 'alignment')
+            self._update_rack_plane_normal()
+            geometry = self._geometry(align_actual, tag_second)
+            normal = geometry['horizontal_normal']
+            start_front = geometry['front']
+            ray_error = geometry['lateral_m']
+            self.gui_execution_metrics.update({
+                'ray_lateral_error_m': ray_error,
+                'front_plane_distance_m': geometry['distance_m'],
+                'realignment_attempts': correction,
+            })
+            self.get_logger().info(f'UPDATED RACK: ray error={ray_error:.4f} m, correction={correction}/{max_corrections}')
+            if ray_error <= ray_width and abs(geometry['distance_m']-ALIGNMENT_DISTANCE_M) <= ray_width:
+                break
+            if correction == max_corrections:
+                raise RuntimeError(f'updated normal ray misses alignment point by {ray_error:.4f} m '
+                                   f'(limit {ray_width:.4f} m); realignment retry limit reached')
+            self.current_stage = 'realignment'
+            self._publish_gui_status()
+            target = self._approach_target(tag_second, ALIGNMENT_DISTANCE_M)
+            align_actual, updates = self._plan_and_execute_approach(
+                f'realignment_{correction+1}', target, tag_second)
         final_target = self._approach_target(tag_second, FINAL_DISTANCE_M)
         end_front = self._geometry(final_target, tag_second)['front']
         self.get_logger().info('SEGMENT 2: perpendicular approach to 0.10 m with updated frozen tag pose')
@@ -1371,12 +1459,22 @@ def main():
         node.run()
     except Exception as error:
         node.get_logger().error(f'FAIL: OBSERVATION_OR_APPROACH_INCOMPLETE: {error}')
+        node.gui_final = ('FAILED', str(error))
+        node._publish_gui_status()
         node._write_trial_summary(False, str(error))
         return_code = 1
     else:
+        node.gui_final = ('SUCCEEDED', 'Visual approach completed; no physical grasp or placement')
+        node._publish_gui_status()
         node._write_trial_summary(True)
         return_code = 0
     finally:
+        try:
+            if bool(node.get_parameter('keep_status_alive').value):
+                while rclpy.ok():
+                    rclpy.spin_once(node, timeout_sec=0.2)
+        except KeyboardInterrupt:
+            pass
         node.destroy_node()
         rclpy.shutdown()
     raise SystemExit(return_code)

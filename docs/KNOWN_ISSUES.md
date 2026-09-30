@@ -36,3 +36,27 @@
 - Placement accuracy on the real DynaPro and workspace integration with real instruments were only partially verified.
 - The one failure was attributed to manual setup, but the system also lacked autonomous detection/recovery for that misplacement.
 - Long-term pad wear, quick-release repeatability and varying object geometries were not evaluated.
+
+## Operator GUI integration (2026-09-30)
+
+- Browser UI is implemented but browser visual verification was blocked by the browser permission policy in this session. API and fake-source ROS checks passed; real hardware execution/stop remains unverified.
+- Real pick/place/navigation buttons are unavailable until the proposed ExecuteTask ActionClient/server is connected. Stop/observe services require robot-local supervisor/task servers.
+- Static map is shown; live OccupancyGrid, map/odom TF overlays, hardware stop feedback, authentication/control lease and persistent stop supervision are deployment work. See `OPERATOR_GUI_INTERFACES.md`.
+
+Gazebo control follow-up supersedes the earlier missing-server note for observation/stop only. The new simulation supervisor supports fixed observation, arm-controller stop/reset and Action cancellation. It does not support hardware, environment avoidance, physical grasp, base navigation or system-wide stop of independent command publishers; authentication/control lease and real operator visual verification remain pending.
+
+RGB-D workflow monitor verification: first monitored run completed alignment/perpendicular; a second run terminated after alignment because the refreshed Tag normal ray missed the alignment point by approximately 0.0920 m (configured limit 0.0250 m). GUI correctly reports FAILED with the reason and keeps live depth/Tag feedback; the algorithm needs a separately validated realignment step. Two runs are not a success-rate estimate. Monitoring acceptance and approach-task acceptance are separate; `tube_workflow_check.py --require-success` additionally requires the physical simulation approach to complete.
+
+### Transfer GUI integration scope (2026-09-30)
+
+The branch already has complete arm motion transfer phases, previously omitted from the GUI launch. These are now monitored through the same task schema. Original transfer still accepts `simulate_grasp_success=true`; its fixed pick/place poses are not calibrated to the current tube racks, no gripper closure/contact/attachment/release is performed, and visual approach has not been chained to transfer. A motion PASS is not physical pick/place PASS. GUI command buttons remain disabled for this external experiment runner. Browser visual/frame rendering validation remains pending.
+
+### Correction: legacy transfer targets do not match the tube scene (2026-09-30)
+
+The previous default-to-transfer GUI launcher decision was incorrect for the tube experiment and is superseded. Default is restored to `approach`; `transfer` must be explicitly selected and labelled as a legacy fixed-target motion test. Nominal scene coordinates from source: robot spawn [-0.2, -0.54, 1.021] m with yaw -1.571 rad; tube centre [0.530, -1.035, 1.2155] m in Gazebo. Converting into the nominal robot base frame gives approximately [0.495, 0.730, 0.195] m. Legacy pick uses [0.32085, 0.24571, 0.22907] m for link_eef, with no calibrated finger/TCP conversion. These poses are not the same target; the Gazebo spawn transform differs from the temporary identity ROS world-to-base TF. This is a source-based nominal calculation, not measured pose accuracy. Do not relabel the fixed-target motion PASS as a tube transfer or simply substitute the tube centre for the flange target. Full integration still requires Tag-to-slot/TCP conversion, collision-aware reachability, gripper/contact verification and physical transfer/release.
+
+### Same-frame rack estimate and bounded realignment (2026-09-30)
+
+A GUI-observed approach failure was reproduced: initial alignment passed against its frozen pose, then independent latest single-tag PnP positions changed the inferred normal and gave 0.0696 m lateral error against the unchanged 0.025 m bound. Rack estimation now deduplicates marker contours, fits tags 1/2 jointly in one image using provisional 0.040 m size / 0.070 m spacing, rejects reprojection RMS >2 px, and requires a fresh coherent pair for normal/selected pose. It uses observed image data and TF, not simulator truth. Motion still freezes observations per trajectory. After settling, the updated ray and distance are checked; up to three corrective alignment motions are allowed, otherwise the task fails. Limits on height, tilt, visibility and ray width are unchanged. GUI exposes a realignment phase and the updated geometric error rather than the prior frozen error.
+
+First depth-mode run after the change passed alignment and perpendicular approach: updated-ray lateral 0.0151 m; final estimated plane distance 0.1016 m, frozen-ray lateral approximately 0.0002 m. Conditions: nominal static rack, software rendering, N=1, uncalibrated simulator geometry; no uncertainty/reliability or physical grasp claim. Report `tmp/operator_gui/workflow/run_20260930_045125/approach_report.json`. This run needed zero corrective motions; retry exhaustion and correction execution still require separate validation. Three synthetic-image regression tests verify known board pose, subpixel noise/rigid spacing and inconsistent-corner rejection; 16 gateway/sensor/geometry tests passed in the Jazzy container.

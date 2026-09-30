@@ -1,0 +1,21 @@
+{
+  "profile": "gazebo",
+  "use_sim_time": true,
+  "joint_topic": "/joint_states",
+  "raw_camera_topic": "/atom/wrist_camera/image",
+  "camera_topic": "/atom/wrist_camera/image/compressed",
+  "tool_parent_frame": "link_base",
+  "tool_frame": "link_eef",
+  "arm_controller": "uf850_traj_controller",
+  "controller_service": "/controller_manager/list_controllers",
+  "perception_topic": "/atom/approach/tag_observation",
+  "safety_topic": "/atom/safety/status",
+  "task_topic": "/atom/task/status",
+  "task_action": "/atom/task/execute",
+  "task_operations": [
+    "observe"
+  ],
+  "tag_monitor": true,
+  "camera_info_topic": "/atom/wrist_camera/camera_info",
+  "depth_topic": "/atom/wrist_camera/depth_image"
+}

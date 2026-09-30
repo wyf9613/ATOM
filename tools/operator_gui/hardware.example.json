@@ -1,0 +1,19 @@
+{
+  "camera_topic": "/atom/wrist_camera/image/compressed",
+  "joint_topic": "/ufactory/joint_states",
+  "odom_topic": "/odom",
+  "battery_topic": "/battery_state",
+  "diagnostics_topic": "/diagnostics",
+  "safety_topic": "/atom/safety/status",
+  "task_topic": "/atom/task/status",
+  "request_topic": "/atom/operator/request",
+  "observe_service": "/atom/task/observe",
+  "cancel_service": "/atom/task/cancel",
+  "stop_service": "/atom/safety/stop",
+  "reset_stop_service": "/atom/safety/reset_stop",
+  "profile": "hardware",
+  "use_sim_time": false,
+  "tool_parent_frame": "link_base",
+  "tool_frame": "link_eef",
+  "vendor_state_topic": "/ufactory/robot_states"
+}

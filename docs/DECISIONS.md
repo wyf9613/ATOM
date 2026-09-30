@@ -139,3 +139,51 @@
 - Boundary: The first implementation is obstacle-free with respect to the environment but retains joint-limit and self-collision checks. It ends at the 0.10 m standoff and reports both segments' results and measured errors; it does not grasp, place, update an executing trajectory or claim environmental obstacle avoidance. If the new Tag estimate makes the second segment's normal-line constraint incompatible with its measured start, do not execute a path that violates the constraint.
 - Reason: This gives a repeatable MoveIt planning baseline with a clear handoff between fresh perception and the final approach. OMPL path constraints are attempted first; if its orientation parameterization fails strict FK validation, the first segment uses Cartesian waypoints with the same FK acceptance limits. The Tag1/Tag2 center line supplies a stable common rack-plane normal because single-Tag PnP normals varied by several degrees at close range.
 - Reinforces: D-014.
+
+## D-016 - Add a browser operator GUI behind a robot-local gateway
+
+- Date: 2026-09-30
+- Status: Accepted for development; hardware deployment pending
+- Decision: Use a separate Python HTTP gateway and browser UI with demo and ROS 2 modes. Reuse the D-007 Jazzy baseline and standard ROS telemetry/Trigger services; provide an ExecuteTask action contract for future task integration. Default to loopback and ROS read-only operation.
+- Evidence: User requested arm/base/environment monitoring, command interfaces, checks and stopping, with deployment adapters to follow. ROS fake-source integration validates JointState reception and Trigger stop acknowledgment; GUI browser visual verification remains pending.
+- Wireless direction: Keep robot-local control/stop supervision and wired arm Ethernet. Reach the gateway from the operator over Wi-Fi, initially via SSH forwarding. Vendor topology evidence: https://docs.xarm.ufactory.cc/2.hardware_installation.html . Actual hardware interfaces and wireless performance are unverified.
+- Boundary: GUI software stop is not hardware emergency stop. Parameter-bearing real tasks and navigation, hardware safety supervisor, authentication/control ownership, live map/TF overlays and hardware trials remain pending. See `OPERATOR_GUI_INTERFACES.md` and `tools/operator_gui/README.md`.
+
+### D-016 follow-up — Gazebo first, shared GUI with source profiles
+
+- Date: 2026-09-30
+- Decision: Use English GUI text, shared browser/API contracts and explicit Gazebo/hardware configuration profiles. Verify the monitoring path in Gazebo before connecting physical devices. Do not infer real motion or hardware safety equivalence from simulation telemetry.
+- Evidence: Actual Gazebo RGB session received six arm joints, drive_joint, link_base → link_eef, advancing /clock, active controllers, DiagnosticArray and JPEG converted from raw Image. A two-sample check separated by 1 s passed; snapshots saved under tmp/operator_gui. Vendor source revision: 3dc2b5e8294758d96b54b15fa5920d581b7cbb3d.
+- Boundary: Read-only simulation; the task/safety service servers and real ActionClient integration remain pending. The static lab map is a separate reference environment. Browser visual inspection remains pending.
+
+### D-016 follow-up — Simulation observation action and software-stop adapter
+
+- Date: 2026-09-30
+- Decision: Add a standard ExecuteTask ActionClient and an explicitly Gazebo-only observation/safety supervisor. Reuse the validated reduced observation trajectory rather than claim unimplemented pick/place capability. Supervisor startup is locked and requires explicit reset after confirming standstill.
+- Stop mechanism: Terminate the owned observation process, cancel MoveIt/trajectory goals, deactivate the arm trajectory controller and require fresh simulated joint-velocity observations below 0.01 rad/s for three consecutive samples. Reset activates the controller but never resumes a task. This is a provisional simulation test mechanism, not a physical stopping strategy.
+- Evidence: End-to-end HTTP/action/MoveIt observation, software stop during movement, rejected repeat while latched, 1 s standstill sample, manual reset and standard action cancellation pass. Source snapshots and condition details are recorded in tmp/operator_gui/gazebo_control_check.json.
+- Boundary: Only OBSERVE is implemented in the simulation task server; simulated hardware_estop is not_applicable. Physical stop, contact grasp, environment avoidance, mobile navigation and validated command ownership remain separate work.
+
+### D-016 follow-up — Attach GUI to the real tube workflow
+
+- Decision: Monitor the existing visual pre-observation/two-segment experiment directly through ROS status, image/depth and Tag messages. Keep this read-only workflow separate from the fixed Observe action supervisor; provide an independent attach launcher that starts no scene or motion.
+- Evidence: A real RGB-D run reports observed Tags 1/2 and completed alignment/perpendicular segments, while GUI receives live joints, annotated RGB, depth and terminal status. Gateway/sensor checks include byte order, invalid depth masking, known Tag recognition and PnP; 13 checks pass.
+- Boundary: Display detection is independent of the controller's detector and commands no motion. Visual approach success does not set grasp/place completion. Static lab map remains a reference map, not a Gazebo workstation localization result.
+
+### D-016 follow-up: original transfer runner and image cadence (2026-09-30)
+
+Connect the existing `transfer_demo` rather than treating visual approach as the whole branch workflow. The unified launcher defaults to transfer; `approach` explicitly selects the existing visual runner. Only one motion runner publishes task status per scene. Transfer uses existing fixed targets and simulated grasp confirmation; it does not validate physical tube transport or feed Tag poses into transfer. RGB/depth browser refresh is independent of telemetry; backend preview cap defaults to 15 Hz for the existing 10 Hz sensor, Tag monitor remains 2 Hz. Rates report wall-clock samples and window duration. No ROS/Ubuntu/vendor selection changed.
+
+### Correction: legacy transfer targets do not match the tube scene (2026-09-30)
+
+The previous default-to-transfer GUI launcher decision was incorrect for the tube experiment and is superseded. Default is restored to `approach`; `transfer` must be explicitly selected and labelled as a legacy fixed-target motion test. Nominal scene coordinates from source: robot spawn [-0.2, -0.54, 1.021] m with yaw -1.571 rad; tube centre [0.530, -1.035, 1.2155] m in Gazebo. Converting into the nominal robot base frame gives approximately [0.495, 0.730, 0.195] m. Legacy pick uses [0.32085, 0.24571, 0.22907] m for link_eef, with no calibrated finger/TCP conversion. These poses are not the same target; the Gazebo spawn transform differs from the temporary identity ROS world-to-base TF. This is a source-based nominal calculation, not measured pose accuracy. Do not relabel the fixed-target motion PASS as a tube transfer or simply substitute the tube centre for the flange target. Full integration still requires Tag-to-slot/TCP conversion, collision-aware reachability, gripper/contact verification and physical transfer/release.
+
+### Same-frame rack estimate and bounded realignment (2026-09-30)
+
+A GUI-observed approach failure was reproduced: initial alignment passed against its frozen pose, then independent latest single-tag PnP positions changed the inferred normal and gave 0.0696 m lateral error against the unchanged 0.025 m bound. Rack estimation now deduplicates marker contours, fits tags 1/2 jointly in one image using provisional 0.040 m size / 0.070 m spacing, rejects reprojection RMS >2 px, and requires a fresh coherent pair for normal/selected pose. It uses observed image data and TF, not simulator truth. Motion still freezes observations per trajectory. After settling, the updated ray and distance are checked; up to three corrective alignment motions are allowed, otherwise the task fails. Limits on height, tilt, visibility and ray width are unchanged. GUI exposes a realignment phase and the updated geometric error rather than the prior frozen error.
+
+First depth-mode run after the change passed alignment and perpendicular approach: updated-ray lateral 0.0151 m; final estimated plane distance 0.1016 m, frozen-ray lateral approximately 0.0002 m. Conditions: nominal static rack, software rendering, N=1, uncalibrated simulator geometry; no uncertainty/reliability or physical grasp claim. Report `tmp/operator_gui/workflow/run_20260930_045125/approach_report.json`. This run needed zero corrective motions; retry exhaustion and correction execution still require separate validation. Three synthetic-image regression tests verify known board pose, subpixel noise/rigid spacing and inconsistent-corner rejection; 16 gateway/sensor/geometry tests passed in the Jazzy container.
+
+### Script entry consolidation (2026-09-30)
+
+Replace fourteen public Docker shell launchers with one `scripts/atom.sh` command interface and six internal library scripts. Merge the four headless baseline runners into a shared launch/cleanup implementation; group desktop and operator modes behind named subcommands. Existing simulation/controller/task behavior is preserved. Update active documentation and benchmark references; old file paths in historical decision evidence describe past runs only. No ROS distribution, image/version or vendor selection changes. Container stop is explicitly session lifecycle management, not an emergency stop.

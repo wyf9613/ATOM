@@ -29,7 +29,7 @@ def run_trial(output, mode, index, seed, timeout_sec):
         '-e', f'ATOM_BENCH_RUN_DIR={in_container}',
         '-e', f'ATOM_BENCH_MODE={mode}',
         '-e', f'ATOM_BENCH_SEED={seed}',
-        'atom-jazzy', 'bash', '/workspace/scripts/docker/jazzy_approach_trial.sh',
+        'atom-jazzy', 'bash', '/workspace/scripts/lib/operator.sh', 'trial',
     ]
     print(f'START {trial_name} seed={seed}', flush=True)
     started = time.monotonic()

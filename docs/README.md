@@ -3,6 +3,8 @@
 本目录存放项目的可维护文档。日常开发不需要逐份阅读；先使用下面的三个入口，
 遇到具体问题时再查专题记录。
 
+理解当前运行链路请先看 [当前实现架构：package、node、通信与 GUI](SYSTEM_ARCHITECTURE.md)，包含总览、时序和可选控制链路图。
+
 ## 推荐阅读顺序
 
 1. [当前阶段、纯机械臂仿真与代码结构](ARM_ONLY_SIMULATION.md)：当前开发的主入口。
@@ -16,7 +18,8 @@ UR3e 的已实现仿真、MoveIt 抓取和 Humble/Fortress 验证文档保留在
 
 | 文档 | 用途 |
 | --- | --- |
-| [系统架构](SYSTEM_ARCHITECTURE.md) | 子系统、接口、TF 和任务执行关系 |
+| [当前实现架构](SYSTEM_ARCHITECTURE.md) | 当前 package/node 数量、运行图、消息/Action/Service、GUI 与仿真协同 |
+| [架构 roadmap](SYSTEM_ARCHITECTURE_ROADMAP.md) | 原有学期/未来移动底盘目标架构；规划而非已实现能力 |
 | [xArm 850 Jazzy Docker 基线](../docker/jazzy/README.md) | 软件版本、官方依赖和环境细节 |
 | [决策记录](DECISIONS.md) | 已确认的工程选择、依据和验证边界 |
 | [已知问题](KNOWN_ISSUES.md) | 当前阻塞项、风险和证据限制 |
@@ -42,3 +45,7 @@ UR3e 的已实现仿真、MoveIt 抓取和 Humble/Fortress 验证文档保留在
 - 定量结论必须注明单位、测试条件、样本数和不确定度或离散程度。
 
 计划文档描述的是拟开展工作，不代表功能已经实现。
+
+- [操作 GUI 接口](OPERATOR_GUI_INTERFACES.md)：监控、任务/停止接口与部署接线；[运行说明](../tools/operator_gui/README.md)。
+
+- [任务组合与重构建议](TASK_COMPOSITION.md)：诊断当前实验 node 的耦合，区分原子能力、node 和任务配方；建议尚未实现。

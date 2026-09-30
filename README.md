@@ -52,26 +52,26 @@ git lfs pull
 准备好构建时，从仓库根目录运行：
 
 ```bash
-./scripts/docker/jazzy_build.sh
-./scripts/docker/jazzy_shell.sh
+./scripts/atom.sh build
+./scripts/atom.sh shell
 ```
 
 运行无窗口 xArm 850 仿真冒烟测试：
 
 ```bash
-./scripts/docker/jazzy_sim_smoke.sh
+./scripts/atom.sh demo smoke
 ```
 
 运行不含夹爪的 MoveIt 轨迹规划与控制仿真：
 
 ```bash
-./scripts/docker/jazzy_arm_trajectory_sim.sh
+./scripts/atom.sh demo arm
 ```
 
 运行目标发布、垂直抬升、姿态约束搬运和垂直下降验收：
 
 ```bash
-./scripts/docker/jazzy_transfer_sim.sh
+./scripts/atom.sh demo transfer
 ```
 
 当前搬运验收使用纯机械臂 `link_eef` 和模拟夹取成功；目标位姿、两个独立高度
@@ -80,9 +80,26 @@ git lfs pull
 打开 Gazebo 与 RViz 并观看同一段轨迹：
 
 ```bash
-./scripts/docker/jazzy_arm_trajectory_gui.sh
+./scripts/atom.sh demo arm --gui
 ```
+
+## 常用运行入口
+
+Shell 操作统一使用 `scripts/atom.sh`，内部实现放在 `scripts/lib/`。旧 `scripts/docker/jazzy_*.sh` 已合并移除，命令迁移见 [脚本说明](scripts/README.md)。
+
+```bash
+./scripts/atom.sh sim --camera depth             # Gazebo + 英文 GUI，视觉接近实验
+./scripts/atom.sh sim --camera depth --restart   # 重新运行
+./scripts/atom.sh attach --camera depth          # 只监控已有仿真
+./scripts/atom.sh status                         # 查看运行状态
+./scripts/atom.sh stop                           # 关闭试管仿真会话
+./scripts/atom.sh --help                         # 所有子命令
+```
+
+仿真 GUI 地址：`http://127.0.0.1:8089`。视觉接近、旧固定目标运动测试和实际夹取放置是不同的验收范围。
 
 ## 近期里程碑
 
 完整任务按 [Stage 0–4](docs/PROJECT_SCOPE.md#5-分阶段交付) 推进。离开实验室期间先推进 Stage 1 的固定底座仿真基线；Stage 0 中依赖实物的控制器、夹爪和安全证据回到实验室后补齐。
+
+当前实现的 package、node 和信息协作图见 [架构说明](docs/SYSTEM_ARCHITECTURE.md)。

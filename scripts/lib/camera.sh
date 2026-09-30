@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
+# Internal implementation; use scripts/atom.sh.
 set -euo pipefail
-
-repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-cd "${repo_root}"
-
+source "$(dirname "${BASH_SOURCE[0]}")/common.sh"
+operation="${1:?Missing internal operation}"
+shift
+case "${operation}" in
+probe)
 camera_mode="${1:-}"
 if [[ "${camera_mode}" != "rgb" && "${camera_mode}" != "depth" ]]; then
   echo "Usage: $0 rgb|depth [rack_dx_m] [rack_dy_m] [rack_dyaw_rad]" >&2
@@ -13,8 +15,6 @@ rack_dx="${2:-0.0}"
 rack_dy="${3:-0.0}"
 rack_dyaw="${4:-0.0}"
 
-export ATOM_UID="$(id -u)"
-export ATOM_GID="$(id -g)"
 run_name="${camera_mode}_$(date +%Y%m%d_%H%M%S)"
 output_dir="/workspace/tmp/camera_experiment/${run_name}"
 mkdir -p "tmp/camera_experiment/${run_name}" .docker-runtime/jazzy_ws/{build,install,log}
@@ -22,7 +22,7 @@ printf 'camera_mode=%s\nrack_dx_m=%s\nrack_dy_m=%s\nrack_dyaw_rad=%s\n' \
   "${camera_mode}" "${rack_dx}" "${rack_dy}" "${rack_dyaw}" \
   >"tmp/camera_experiment/${run_name}/conditions.txt"
 
-./scripts/docker/jazzy_build.sh
+"${repo_root}/scripts/atom.sh" build
 
 docker compose -f docker-compose.jazzy.yaml run --rm \
   -e ATOM_CAMERA_MODE="${camera_mode}" \
@@ -88,3 +88,6 @@ docker compose -f docker-compose.jazzy.yaml run --rm \
   '
 
 echo "Experiment artifacts: tmp/camera_experiment/${run_name}"
+;;
+*) echo "Unknown internal operation: ${operation}" >&2; exit 2 ;;
+esac
