@@ -49,3 +49,6 @@ UR3e 的已实现仿真、MoveIt 抓取和 Humble/Fortress 验证文档保留在
 - [操作 GUI 接口](OPERATOR_GUI_INTERFACES.md)：监控、任务/停止接口与部署接线；[运行说明](../tools/operator_gui/README.md)。
 
 - [任务组合与重构建议](TASK_COMPOSITION.md)：诊断当前实验 node 的耦合，区分原子能力、node 和任务配方；建议尚未实现。
+
+- [模块与任务组合：本次重构](MODULES_AND_TASKS.md)：已实施的能力模块、复用配方、node 边界及当前限制。
+- [重构回归报告](REFACTOR_TEST_REPORT.md)：构建、组合故障测试及实际 Gazebo 回归证据。

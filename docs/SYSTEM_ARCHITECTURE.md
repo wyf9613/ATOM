@@ -15,7 +15,7 @@ flowchart LR
     end
     subgraph ROS[ROS 2：当前执行链]
         B[ros_gz_bridge]
-        P[pre_observation_demo\n感知 + 实验任务 + 运动请求]
+        P[task_executive\n感知 + 实验任务 + 运动请求]
         M[MoveIt move_group\n规划 / IK / FK / 轨迹执行管理]
         C[ros2_control\n机械臂关节轨迹控制器]
         T[robot_state_publisher\n关节状态 → TF]
@@ -45,7 +45,7 @@ flowchart LR
 | 概念 | 在本项目中的例子 | 理解方式 |
 | --- | --- | --- |
 | ROS package | `atom_xarm_sim` | 一组可构建、安装的代码/配置/资源；不是一个运行进程 |
-| ROS node | `/atom_pre_observation_demo` | 运行后接收数据、计算或发出请求的参与者 |
+| ROS node | `/atom_task_executive` | 运行后接收数据、计算或发出请求的参与者 |
 | Launch 文件 | `uf850_arm_only.launch.py` | 组装配置并启动多个进程/node |
 | Gazebo 插件 | `GazeboSimSystem` | 在仿真进程内部接入控制，不是独立 package 实例 |
 | 普通模块 | `rack_pose.py` | 被 node 调用的函数；没有自己的 ROS node |
@@ -59,7 +59,7 @@ flowchart LR
 
 | Package                                                                | 内容/职责                                           | 默认试管实验是否使用                       |
 | ---------------------------------------------------------------------- | ----------------------------------------------- | -------------------------------- |
-| [`atom_xarm_sim`](../ros2_ws/src/atom_xarm_sim/)                       | 启动 Gazebo/MoveIt、生成腕部相机与场景、7 个实验可执行入口、Tag 定位与接近 | **使用**，主实验 package               |
+| [`atom_xarm_sim`](../ros2_ws/src/atom_xarm_sim/)                       | 启动 Gazebo/MoveIt、生成腕部相机与场景、8 个可执行入口（含兼容别名）、Tag 定位与接近 | **使用**，主实验 package               |
 | [`atom_gripper_description`](../ros2_ws/src/atom_gripper_description/) | 继承的 ATOM 夹爪 Xacro、网格、CAD 提取工具及描述检查              | **不装到当前演示机器人上**；当前演示使用官方 G1      |
 | [`atom_xarm_description`](../ros2_ws/src/atom_xarm_description/)       | 组合官方机械臂与 ATOM 自定义夹爪的模块化 Xacro                   | 当前默认 launch 未采用这条组合路径            |
 | [`atom_xarm_dynamics`](../ros2_ws/src/atom_xarm_dynamics/)             | 可选名义执行器 C++ 插件 `NominalActuatorSystem` 与配置      | 默认不用；`demo dynamics` 启用          |
@@ -79,7 +79,7 @@ GUI 代码在 [`tools/operator_gui/`](../tools/operator_gui/)，**还不是一�
 
 | 主要 node                             |  个数 | 来自哪里                                | 负责什么                                          |
 | ----------------------------------- | --: | ----------------------------------- | --------------------------------------------- |
-| `/atom_pre_observation_demo`        |   1 | `atom_xarm_sim`                     | 当前实验协调者：产生粗目标、处理相机、估计 Tag/架平面、请求规划与执行、验收、发布状态 |
+| `/atom_task_executive`        |   1 | `atom_xarm_sim`                     | 当前实验协调者：产生粗目标、处理相机、估计 Tag/架平面、请求规划与执行、验收、发布状态 |
 | `/atom_pre_observation_target_pose` |   1 | `atom_xarm_sim`                     | 把粗高度/方位转换为预观察末端位姿                             |
 | `/atom_operator_gateway`            |   1 | `tools/operator_gui/ros_adapter.py` | 订阅遥测、查询控制器和 TF、处理预览，供 HTTP 服务读取               |
 | `/robot_state_publisher`            |   1 | ROS 框架                              | URDF + JointState → 动态/静态 TF                  |
@@ -183,7 +183,7 @@ sequenceDiagram
     Note over E,W: 每个阶段持续发布状态；GUI 旁路监控<br/>视觉接近终点不是抓取终点
 ```
 
-当前主实验 node 同时承担了感知、实验任务协调和运动请求；还没有拆成独立 perception server + 通用 task executive。`rack_pose.py` 是联合位姿估计函数，`camera_experiment.py` 是模型/场景生成函数，都不是额外 node。
+当前由同一个 task executive node 组合感知、运动和状态能力；内部已按模块拆分，但没有新增独立 perception server。两个视觉任务复用同一套能力，详见 [模块与任务](MODULES_AND_TASKS.md)。`rack_pose.py` 是联合位姿估计函数，`camera_experiment.py` 是模型/场景生成函数，都不是额外 node。
 
 粗方位现在由实验 node 根据已知仿真布置和随机方位误差产生；不是底盘定位的真实输出。控制用 Tag PnP 结果经图像时间戳 TF 转换；预定义仿真真实位姿另外用于报告比较。
 
@@ -210,7 +210,7 @@ sequenceDiagram
 
 | 命令 | 运动任务发布者 | GUI 能否发任务 | 验收范围 |
 | --- | --- | --- | --- |
-| `sim --camera depth` | `pre_observation_demo` | 只读 | Tag 视觉接近 |
+| `sim --camera depth` | `task_executive` | 只读 | Tag 视觉接近 |
 | `sim --workflow transfer` | `transfer_demo` + 固定位姿 publisher | 只读 | 旧固定坐标机械臂运动，目标不对应当前试管槽；模拟抓取成功 |
 | `observe --control` | Gazebo task supervisor | 支持 Observe/取消/软件停止/复位 | 固定关节观察往返，不是试管取放 |
 | `attach --camera depth` | 不启动运动任务 | 只读 | 只加入现有 ROS 图监控 |
@@ -261,7 +261,7 @@ flowchart LR
 
 1. [`scripts/atom.sh`](../scripts/atom.sh) → [`scripts/lib/operator.sh`](../scripts/lib/operator.sh)：选择启动模式、容器和实验进程。
 2. [`uf850_arm_only.launch.py`](../ros2_ws/src/atom_xarm_sim/launch/uf850_arm_only.launch.py)：机器人描述、场景、桥接、MoveIt、控制器。
-3. [`pre_observation_demo.py`](../ros2_ws/src/atom_xarm_sim/atom_xarm_sim/pre_observation_demo.py)：当前实际控制流程；[`rack_pose.py`](../ros2_ws/src/atom_xarm_sim/atom_xarm_sim/rack_pose.py)：同帧双 Tag 联合估计。
+3. [`tasks/executive.py`](../ros2_ws/src/atom_xarm_sim/atom_xarm_sim/tasks/executive.py)：当前实际控制流程；[`rack_pose.py`](../ros2_ws/src/atom_xarm_sim/atom_xarm_sim/rack_pose.py)：同帧双 Tag 联合估计。
 4. [`pre_observation_target_pose.py`](../ros2_ws/src/atom_xarm_sim/atom_xarm_sim/pre_observation_target_pose.py)：粗指令如何变成末端位姿。
 5. [`ros_adapter.py`](../tools/operator_gui/ros_adapter.py) → [`server.py`](../tools/operator_gui/server.py) → [`app.js`](../tools/operator_gui/static/app.js)：ROS 遥测如何进入英文网页。
 6. [`sim_supervisor.py`](../tools/operator_gui/sim_supervisor.py) + [`ExecuteTask.action`](../ros2_ws/src/atom_operator_interfaces/action/ExecuteTask.action)：另一个模式中的标准任务接口和仿真停止逻辑。
@@ -281,4 +281,6 @@ flowchart LR
 
 ## 应用层复用问题
 
-当前底层 ROS/MoveIt 已复用，但应用层仍以完整实验 node 为主，尚非可组合的任务执行架构。现状诊断、能力划分与渐进迁移建议见 [从实验流程 node 转向可组合任务](TASK_COMPOSITION.md)。该文件是建议，未实现。
+本次已在现有 package 内拆出感知、运动、仿真输入和状态能力，视觉任务由同一执行 node 按配方组合。旧诊断和后续迁移建议见 [任务组合建议](TASK_COMPOSITION.md)，已实施部分见 [模块与任务](MODULES_AND_TASKS.md)。GUI 任务 Action 与视觉执行器的统一仍待集成。
+
+本次模块重构后的结构与 node 新增规则见 [MODULES_AND_TASKS.md](MODULES_AND_TASKS.md)。上述 2026-09-30 旧快照的实验 node 名称在新运行中由 `/atom_task_executive` 替换，主要角色数量未增加。

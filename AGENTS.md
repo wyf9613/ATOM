@@ -37,3 +37,11 @@ Planning documents describe intended work and must not be presented as implement
 - Record unresolved facts in `docs/ASSUMPTIONS.md` or `docs/KNOWN_ISSUES.md`.
 - Record simulation-to-hardware differences in `docs/SIM2REAL_LOG.md`.
 - Attach units, test conditions, sample counts and uncertainty to quantitative claims.
+
+## Modular task composition
+
+- Define functionality within perception, planning/motion, task execution, gripper, safety, simulation and operator modules. A module may host multiple nodes when justified.
+- Before adding a task-specific node, check whether existing capabilities/nodes can compose the required behavior. Prefer a task recipe or parameters when they can.
+- A new node requires a documented reason existing composition is insufficient and why an independent runtime/interface boundary is needed. A new task or atomic function alone is not a sufficient reason.
+- Keep regression/demo entry points thin; do not duplicate the production perception, planning or task implementation.
+- Preserve single motion ownership, fault gates and simulation/hardware limitations during refactors.

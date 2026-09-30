@@ -29,6 +29,7 @@ setup(
             'transfer_demo = atom_xarm_sim.transfer_demo:main',
             'camera_probe = atom_xarm_sim.camera_probe:main',
             'pre_observation_target_pose = atom_xarm_sim.pre_observation_target_pose:main',
+            'task_executive = atom_xarm_sim.tasks.executive:main',
             'pre_observation_demo = atom_xarm_sim.pre_observation_demo:main',
         ],
     },

@@ -187,3 +187,7 @@ First depth-mode run after the change passed alignment and perpendicular approac
 ### Script entry consolidation (2026-09-30)
 
 Replace fourteen public Docker shell launchers with one `scripts/atom.sh` command interface and six internal library scripts. Merge the four headless baseline runners into a shared launch/cleanup implementation; group desktop and operator modes behind named subcommands. Existing simulation/controller/task behavior is preserved. Update active documentation and benchmark references; old file paths in historical decision evidence describe past runs only. No ROS distribution, image/version or vendor selection changes. Container stop is explicitly session lifecycle management, not an emergency stop.
+
+### Module-based task composition (2026-09-30)
+
+User-confirmed rule: organize nodes by module responsibilities; reuse existing nodes/capabilities to compose new tasks before adding a node. Record a necessity/independent-boundary justification for additions. Implemented first refactor on `refactor/modular-task-composition`: extract perception, planning/motion, gripper verification, simulation inputs, task telemetry and recipe execution modules within existing packages; replace the visual demo implementation with one task executive hosting both visual_observe and visual_approach. Existing command/status contracts, motion limits and hardware capability boundaries remain. No new ROS distribution, driver or planning configuration selected. See MODULES_AND_TASKS and regression report.

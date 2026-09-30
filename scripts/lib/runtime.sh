@@ -25,6 +25,7 @@ docker compose -f docker-compose.jazzy.yaml run --rm atom-jazzy bash -lc '
     /workspace/ros2_ws/src/atom_xarm_description
     /workspace/ros2_ws/src/atom_xarm_dynamics
     /workspace/ros2_ws/src/atom_xarm_sim
+    /workspace/ros2_ws/src/atom_operator_interfaces
   )
   rosdep check --from-paths "${core_paths[@]}" --ignore-src --skip-keys ament_python
   colcon build --symlink-install --packages-select \
@@ -40,6 +41,7 @@ docker compose -f docker-compose.jazzy.yaml run --rm atom-jazzy bash -lc '
     atom_xarm_description \
     atom_xarm_dynamics \
     atom_xarm_sim \
+    atom_operator_interfaces \
     --base-paths /jazzy_ws/src/xarm_ros2 /workspace/ros2_ws/src
 '
 ;;

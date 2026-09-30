@@ -1,6 +1,6 @@
 # 从实验流程 node 转向可组合任务
 
-2026-09-30：本文件是对当前结构的诊断和重构建议，**未实现、未选定新的 ROS/硬件栈**。当前真实运行图仍见 [SYSTEM_ARCHITECTURE.md](SYSTEM_ARCHITECTURE.md)。
+2026-09-30：本文件保留重构前的诊断和目标建议。其能力拆分、视觉观察/接近配方共用一个执行 node 已在本次分支实施，详见 [模块与任务](MODULES_AND_TASKS.md)；独立能力服务器、统一视觉 Action/停止和物理取放仍未实现。未选定新的 ROS/硬件栈。当前真实运行图仍见 [SYSTEM_ARCHITECTURE.md](SYSTEM_ARCHITECTURE.md)。
 
 ## 当前判断
 

@@ -7,7 +7,7 @@ usage() {
 Usage: ./scripts/atom.sh COMMAND [OPTIONS]
 
 Daily workflow:
-  sim       [--camera depth|rgb] [--restart] [--workflow approach|transfer]
+  sim       [--camera depth|rgb] [--restart] [--workflow approach|transfer] [--recipe visual_observe|visual_approach]
             Gazebo + English web GUI. Default: Tag-guided approach, not physical pick/place.
   attach    [--camera depth|rgb]       Monitor an existing simulation; no motion starts.
   observe   [--camera depth|rgb] [--control]
@@ -47,7 +47,7 @@ case "${command_name}" in
     ;;
   *) fail "Unknown command ${command_name}; see --help" ;;
 esac
-camera=depth;restart='';workflow=approach;gui=false;control=monitor;session=tube
+recipe=visual_approach;camera=depth;restart='';workflow=approach;gui=false;control=monitor;session=tube
 dx=0.0;dy=0.0;dyaw=0.0;distance=0.35;dry_run=false
 while (($#)); do
   option="$1"; shift
@@ -57,13 +57,14 @@ while (($#)); do
     --restart) [[ "${command_name}" == sim ]] || fail '--restart applies to sim'; restart=--restart ;;
     --gui) [[ "${command_name}" == demo && "${demo}" =~ ^(arm|camera|approach)$ ]] || fail '--gui applies to demo arm/camera/approach'; gui=true ;;
     --control) [[ "${command_name}" == observe ]] || fail '--control applies to observe'; control=control ;;
-    --camera|--workflow|--session|--rack-dx|--rack-dy|--rack-yaw|--distance)
+    --recipe|--camera|--workflow|--session|--rack-dx|--rack-dy|--rack-yaw|--distance)
       (($#)) || fail "Missing value for ${option}"
       value="$1";shift
       case "${option}" in
         --camera)
           [[ "${command_name}" =~ ^(sim|attach|observe)$ || "${demo}" =~ ^(camera|approach)$ ]] || fail '--camera is not supported for this command'
           [[ "${value}" == rgb || "${value}" == depth ]] || fail 'Camera must be rgb or depth';camera="${value}" ;;
+        --recipe) [[ "${command_name}" == sim ]] || fail '--recipe applies to sim';[[ "${value}" == visual_observe || "${value}" == visual_approach ]] || fail 'Unknown recipe';recipe="${value}" ;;
         --workflow) [[ "${command_name}" == sim ]] || fail '--workflow applies to sim';[[ "${value}" == approach || "${value}" == transfer ]] || fail 'Workflow must be approach or transfer';workflow="${value}" ;;
         --session) [[ "${command_name}" == stop ]] || fail '--session applies to stop';[[ "${value}" =~ ^(tube|observe|monitor)$ ]] || fail 'Unknown session';session="${value}" ;;
         --rack-*|--distance)
@@ -75,6 +76,7 @@ while (($#)); do
     *) fail "Unknown option ${option}; see --help" ;;
   esac
 done
+[[ "${workflow}" != transfer || "${recipe}" == visual_approach ]] || fail '--recipe cannot be combined with legacy transfer'
 # Reject malformed/non-finite geometry before any build or container operation.
 python3 - "${dx}" "${dy}" "${dyaw}" "${distance}" <<'PY'
 import math,sys
@@ -86,7 +88,7 @@ except (ValueError,AssertionError):
     sys.exit('Invalid geometry: finite rack offsets <=0.05 m / yaw <=0.2 rad, positive distance required')
 PY
 case "${command_name}" in
-  sim) selected=(bash "${repo_root}/scripts/lib/operator.sh" workflow "${camera}" "${restart}" "${workflow}") ;;
+  sim) selected=(bash "${repo_root}/scripts/lib/operator.sh" workflow "${camera}" "${restart}" "${workflow}" "${recipe}") ;;
   attach) selected=(bash "${repo_root}/scripts/lib/operator.sh" attach "${camera}") ;;
   observe) selected=(bash "${repo_root}/scripts/lib/operator.sh" observe "${camera}" "${control}") ;;
   build|shell) selected=(bash "${repo_root}/scripts/lib/runtime.sh" "${command_name}") ;;

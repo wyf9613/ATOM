@@ -20,9 +20,10 @@ class CliTests(unittest.TestCase):
         return shlex.split(result.stdout)
 
     def test_default_sim_and_explicit_transfer(self):
-        self.assertEqual(self.route('sim')[-4:],['workflow','depth','','approach'])
-        self.assertEqual(self.route('sim','--camera','rgb','--restart','--workflow','transfer')[-4:],
-                         ['workflow','rgb','--restart','transfer'])
+        self.assertEqual(self.route('sim')[-5:],['workflow','depth','','approach','visual_approach'])
+        self.assertEqual(self.route('sim','--recipe','visual_observe')[-1],'visual_observe')
+        self.assertEqual(self.route('sim','--camera','rgb','--restart','--workflow','transfer')[-5:],
+                         ['workflow','rgb','--restart','transfer','visual_approach'])
 
     def test_attach_and_observation_are_distinct(self):
         self.assertEqual(self.route('attach')[-2:],['attach','depth'])
@@ -43,7 +44,7 @@ class CliTests(unittest.TestCase):
     def test_invalid_options_fail_before_routing(self):
         for args in [('sim','--camera','bad'),('sim','--camera'),('build','--restart'),
                      ('demo','arm','--camera','depth'),('demo','camera','--rack-dx','nan'),
-                     ('demo','camera','--rack-dx','.1'),('demo','approach'),('sim','--unknown')]:
+                     ('demo','camera','--rack-dx','.1'),('demo','approach'),('sim','--unknown'),('sim','--recipe','unsupported'),('sim','--workflow','transfer','--recipe','visual_observe')]:
             self.assertNotEqual(self.run_cli(*args,'--dry-run').returncode,0,args)
 
     def test_benchmark_help_uses_moved_tools(self):

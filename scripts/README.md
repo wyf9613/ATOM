@@ -54,3 +54,5 @@ Rack perturbations use `--rack-dx` / `--rack-dy` in metres and `--rack-yaw` in r
 - `lib/operator.sh`: web experiment, attach, observation and benchmark trial.
 
 Validation: `python3 -m unittest discover -s tests/scripts -v` passes seven CLI checks, including invalid-option rejection, named stop targets, routing, moved benchmark help and shared-baseline Docker shell syntax through a fake Docker executable. All seven shell files pass `bash -n`. Re-running `sim` against the existing live session confirms reuse without restart; newly launched scenes and desktop windows were not re-executed solely for this reorganisation.
+
+视觉任务现在共用一个 `atom_task_executive` node：`sim --recipe visual_observe` 只观察，默认 `sim --recipe visual_approach` 观察后对齐/接近。`--camera rgb|depth` 是同一能力的数据源参数，不创建另一套任务实现。

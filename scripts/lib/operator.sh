@@ -9,6 +9,7 @@ workflow)
 camera_mode="${1:-depth}"
 restart="${2:-}"
 workflow="${3:-approach}"
+recipe="${4:-visual_approach}"
 if [[ "${camera_mode}" != rgb && "${camera_mode}" != depth ]] || [[ -n "${restart}" && "${restart}" != --restart ]] || [[ "${workflow}" != transfer && "${workflow}" != approach ]]; then
   echo "Usage: $0 [rgb|depth] [--restart] [transfer|approach]" >&2
   exit 2
@@ -56,7 +57,7 @@ PORT_CHECK
 mkdir -p tmp/operator_gui/workflow
 # One scene, one original motion runner, and an independent monitor.
 docker compose -f docker-compose.jazzy.yaml run --rm -T --name atom-tube-workflow \
-  -e ATOM_GUI_WORKFLOW="${workflow}" -e ATOM_GUI_CAMERA_MODE="${camera_mode}" -e LIBGL_ALWAYS_SOFTWARE=1 atom-jazzy bash -lc '
+  -e ATOM_GUI_TASK_RECIPE="${recipe}" -e ATOM_GUI_WORKFLOW="${workflow}" -e ATOM_GUI_CAMERA_MODE="${camera_mode}" -e LIBGL_ALWAYS_SOFTWARE=1 atom-jazzy bash -lc '
     set -eo pipefail
     cd /jazzy_ws
     colcon build --base-paths /workspace/ros2_ws/src/atom_xarm_sim --packages-select atom_xarm_sim --symlink-install \
@@ -81,7 +82,7 @@ docker compose -f docker-compose.jazzy.yaml run --rm -T --name atom-tube-workflo
       ros2 run atom_xarm_sim pre_observation_target_pose --ros-args -p target_distance_m:=0.35 \
         >"${log_dir}/target_pose.log" 2>&1 &
       target_pid=$!
-      ros2 run atom_xarm_sim pre_observation_demo --ros-args -p camera_mode:="${ATOM_GUI_CAMERA_MODE}" \
+      ros2 run atom_xarm_sim task_executive --ros-args -p task_recipe:="${ATOM_GUI_TASK_RECIPE}" -p camera_mode:="${ATOM_GUI_CAMERA_MODE}" \
         -p output_dir:="${log_dir}" -p keep_status_alive:=true \
         >"${log_dir}/workflow.log" 2>&1 &
     fi
@@ -170,7 +171,7 @@ cleanup() {
 trap cleanup EXIT
 
 set +e
-ros2 run atom_xarm_sim pre_observation_demo --ros-args \
+ros2 run atom_xarm_sim task_executive --ros-args \
   -p camera_mode:="${ATOM_BENCH_MODE}" \
   -p random_seed:="${ATOM_BENCH_SEED}" \
   -p output_dir:="${ATOM_BENCH_RUN_DIR}" \

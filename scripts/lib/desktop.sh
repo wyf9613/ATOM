@@ -261,7 +261,7 @@ docker compose -f docker-compose.jazzy.yaml run --rm \
       fi
       sleep 0.5
     done
-    ros2 run atom_xarm_sim pre_observation_demo \
+    ros2 run atom_xarm_sim task_executive \
       --ros-args \
       -p camera_mode:="${ATOM_CAMERA_MODE}" \
       -p rack_dx_m:="${ATOM_RACK_DX}" \
