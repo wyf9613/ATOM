@@ -49,7 +49,7 @@
 python3 -m unittest discover -s tests/architecture -v
 python3 -m unittest discover -s tests/scripts -v
 # GUI/sensor tests require OpenCV/numpy; use the existing Jazzy container.
-docker exec atom-tube-workflow bash -lc 'cd /workspace && python3 -m unittest discover -s tests/operator_gui -v'
+docker exec atom-tube-workflow bash -lc 'source /jazzy_ws/install/setup.bash; cd /workspace; python3 -m unittest discover -s tests/operator_gui -v'
 ./scripts/atom.sh sim --camera depth --recipe visual_approach --restart
 python3 tests/operator_gui/tube_workflow_check.py --require-success
 ```

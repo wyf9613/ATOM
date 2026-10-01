@@ -5,7 +5,7 @@ from pathlib import Path
 import time
 import urllib.request
 import urllib.error
-parser=argparse.ArgumentParser();parser.add_argument('--require-success',action='store_true');args=parser.parse_args()
+parser=argparse.ArgumentParser();parser.add_argument('--require-success',action='store_true');parser.add_argument('--require-depth-fusion',action='store_true');args=parser.parse_args()
 output=Path('tmp/operator_gui');output.mkdir(parents=True,exist_ok=True)
 records=[];deadline=time.monotonic()+300
 base='http://127.0.0.1:8089'
@@ -24,6 +24,8 @@ while time.monotonic()<deadline:
     time.sleep(.5)
 else:raise AssertionError('External workflow completion timeout')
 (output/'tube_workflow_check.json').write_text(json.dumps(records,indent=2))
+if args.require_depth_fusion:
+    assert any(s['streams']['task']['value'].get('depth_quality',{}).get('fusion',{}).get('used') for s in records), 'No accepted depth-fused pose reached task state'
 depth_configured=bool(state.get('metadata',{}).get('interfaces',{}).get('depth_topic'))
 if depth_configured:
     assert any(s['streams'].get('depth',{}).get('fresh') for s in records),'No live depth'
@@ -43,6 +45,11 @@ if task['state']!='SUCCEEDED':
     print('EXPERIMENT FAILED: '+task['detail'])
     if args.require_success:raise AssertionError(task['detail'])
 else:
+    if task.get('rack_tag_ids'):
+        assert set(task['rack_tag_ids']) <= set(task['observed_tag_ids']), 'Incomplete rack observation'
+        assert task['tag_id'] in task['observed_tag_ids'], 'Selected target not observed'
+        coarse=task.get('coarse_rack_command')
+        assert coarse and abs(coarse['position_m']['x'])+abs(coarse['position_m']['y'])>0, 'No coarse rack XY'
     segments=set(task['completed_segments'])
     if task.get('task_recipe')=='visual_observe':
         assert not segments, 'Observation recipe must not execute approach motion'

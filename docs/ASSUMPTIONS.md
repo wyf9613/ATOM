@@ -48,3 +48,11 @@ or captured by the container build.
 7. What laboratory safety review and emergency-stop architecture are required?
 8. Can the previous team provide firmware, ROS code, wiring, raw data and a handover session?
 9. What are the base payload, power, mounting, docking and navigation interfaces?
+
+## 2026-10-01 — Coarse rack input limitations
+
+Coarse rack XY noise is independently uniform ±0.025 m per axis by default, provisionally chosen for simulation regression, not measured base/localization error. Exact z is the desired pre-observation TCP height computed from nominal scene tag height plus the existing 0.080 m camera offset. Rack membership defaults to scene IDs 0..3; physical tag inventory, size, spacing and hand-eye/TCP calibration need measurement. Full configured rack visibility in a coherent frame is required before alignment; failure to see it must fail observation rather than substitute simulation truth. Separate pose/task topics currently have no atomic multi-task identity contract. RGB-D remains RGB PnP with depth-stream validation.
+
+## 2026-10-01 — Depth fusion assumptions
+
+Fusion needs registered optical-Z depth in metres, synchronized RGB and matching calibrated intrinsics/distortion. Simulation's single rgbd_camera is explicitly accepted by its scripts; no real sensor registration or noise model is confirmed. Planar opaque tag surfaces, known rigid tag layout and per-region depth support are assumed. Joint residual scales (0.7 px / 2 mm), plane quality and conflict gates are provisional; calibrate/validate against physical measurements before hardware use. Depth holes return RGB PnP with diagnostics; persistent conflict rejects observations. [Details](DEPTH_FUSION.md).

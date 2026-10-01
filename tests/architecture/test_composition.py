@@ -44,7 +44,7 @@ class CompositionTests(unittest.TestCase):
 
     def test_capability_modules_do_not_create_new_nodes(self):
         package=ROOT/'ros2_ws/src/atom_xarm_sim/atom_xarm_sim'
-        for module in ['perception/observer.py','planning/approach.py','planning/clients.py','simulation/inputs.py','telemetry/task_status.py','tasks/recipes.py']:
+        for module in ['perception/depth_fusion.py','perception/observer.py','planning/approach.py','planning/clients.py','simulation/inputs.py','telemetry/task_status.py','tasks/recipes.py']:
             tree=ast.parse((package/module).read_text())
             for node in ast.walk(tree):
                 if isinstance(node,ast.ClassDef):

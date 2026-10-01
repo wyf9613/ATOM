@@ -1,4 +1,5 @@
 """Reusable TaskTelemetry capability; hosted by the task node."""
+from copy import deepcopy
 import json
 import math
 import time
@@ -14,7 +15,7 @@ class TaskTelemetry:
             'initialization': (0.0, 'Initializing experiment'),
             'pre_observation_setup': (0.05, 'Waiting for TF, coarse target and controllers'),
             'pre_observation_move': (0.20, 'Moving to the pre-observation pose'),
-            'pre_observation_capture': (0.35, 'Detecting Tag 1 and Tag 2'),
+            'pre_observation_capture': (0.35, 'Detecting rack tags and verifying selected target'),
             'realignment': (0.60, 'Re-observing and correcting alignment at 0.40 m'),
             'alignment': (0.55, 'Aligning the front reference point at 0.40 m'),
             'perpendicular': (0.80, 'Approaching the selected Tag plane to 0.10 m'),
@@ -33,7 +34,10 @@ class TaskTelemetry:
             'detail': detail, 'camera_mode': self.camera_mode,
             'tag_id': self.task['tag_id'] if self.task else int(self.get_parameter('demo_tag_id').value),
             'requested_action': self.task['action'] if self.task else 'pick',
+            'rack_tag_ids': list(self.rack_tag_ids),
+            'coarse_rack_command': _pose_dict(self.pre_observation_command) if self.pre_observation_command else None,
             'observed_tag_ids': sorted(self.observed),
+            'depth_quality': deepcopy(self.depth_quality),
             'observation_count': len(self.all_observations),
             'completed_segments': list(self.phase_metrics),
             'completed_capabilities': list(getattr(self, 'completed_capabilities', [])),
@@ -55,6 +59,9 @@ class TaskTelemetry:
             'input_topic': self.input_topic,
             'robot_frame': self.robot_frame,
             'camera_mode': self.camera_mode,
+            'rack_tag_ids': list(self.rack_tag_ids),
+            'target_tag_id': self.task['tag_id'] if self.task else None,
+            'xy_noise_m': float(self.get_parameter('xy_noise_m').value),
             'input_command': _pose_dict(self.pre_observation_command),
             'target_pose_command': _pose_dict(self.target_pose_command),
             'target_pose_topic': self.target_pose_topic,
@@ -66,6 +73,7 @@ class TaskTelemetry:
             'theoretical_bearing_rad': self.theoretical_bearing,
             'observation_bearing_rad': self.observation_bearing,
             'expected_tag_poses_robot': {str(tag_id): _pose_dict(pose) for tag_id, pose in self.expected.items()},
+            'rgb_pnp_tag_poses_robot': {str(tag_id): _pose_dict(pose) for tag_id, pose in self.rgb_pnp_observed.items()},
             'observed_tag_poses_robot': {str(tag_id): _pose_dict(pose) for tag_id, pose in self.observed.items()},
             'depth_quality': self.depth_quality,
         }
@@ -95,6 +103,7 @@ class TaskTelemetry:
             },
             'observation_count': len(self.all_observations),
             'latest_capture_error': self.capture_error,
+            'depth_quality': deepcopy(self.depth_quality),
         }
         (self.output_dir / 'trial_summary.json').write_text(
             json.dumps(summary, indent=2) + '\n', encoding='utf-8'

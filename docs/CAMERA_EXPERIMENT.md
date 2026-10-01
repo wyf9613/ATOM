@@ -16,34 +16,30 @@
 
 ### 预观察阶段
 
-预观察阶段从一个 topic 同时接收粗略方向和预观察高度：
+预观察输入在 2026-10-01 改为粗略带噪声的试管架 XY 坐标与精确的预观察 TCP 高度。RGB 与 RGB-D 共用输入、Tag 身份门限和任务实现。
 
 ```text
 topic: /atom/pre_observation_target
 type:  geometry_msgs/msg/PoseStamped
 frame: link_base
-pose.position.z: 预观察 TCP 高度（m）
-pose.orientation yaw: 粗略方向（rad，绕 link_base +Z，逆时针为正）
-pose.position.x/y: 当前阶段不作为输入，由目标位姿节点按 yaw 重新计算
+pose.position.x/y: 试管架 Tag 阵列中心的粗略估计（m）
+pose.position.z: 精确预观察 TCP 高度（m），不是架面高度
+pose.orientation: 单位四元数，不再承载粗方位角
 ```
 
-当前仿真方向值暂定为：
+当前仿真由 `atom_task_executive` 的 SimulationInputs 模块发布该输入；取配置架上所有 tag 的理论中心，x/y 各加独立 `U(-xy_noise_m,+xy_noise_m)`，默认 ±0.025 m、固定 random_seed。高度沿用理论 Tag 高度 + 暂定相机补偿 0.080 m，不加噪声；这里的“精确”只指仿真输入约定，不代表实机测量。未来定位/规划订阅者可直接使用 XY；不应把它当最终抓取位置。
 
-```text
-theta_observation = theta_true + U(-5 deg, +5 deg)
-```
+同一发布节点在预观察前通过 `/atom/approach_task`（`std_msgs/String` JSON）发布 `{"tag_id":1,"action":"pick","rack_tag_ids":[0,1,2,3]}`，目标由 `demo_tag_id` / `demo_action` 参数指定，允许配置架成员 0、1、2、3。该话题与粗坐标均使用 reliable + transient_local，后加入的规划订阅者可收到最新值；当前单任务仿真没有跨 topic 的事务/request_id 契约，不应扩展为并发多架任务接口。`rack_tag_ids` 默认 `[0,1,2,3]`，记录在状态和报告中。未知目标在预观察运动前拒绝；活动任务中禁止切换目标。
 
-这个值只代表带底座定位误差的预定方向。预观察高度由理论 Tag 高度和当前 provisional 相机安装偏移计算得到。后续方向和高度由底座/试管架定位模块提供，不能把该输入当作绝对精确的最终抓取位姿。
-当前任务的目标 Tag ID 仍由任务上下文指定：夹取使用 ID 1，放置使用 ID 2；临时 `PoseStamped` topic 本身暂不携带目标 ID。
+预观察动作顺序：
 
-预观察动作顺序为：
+1. 发布目标 tag 编号与粗 XY/精确 TCP 高度。
+2. `atom_pre_observation_target_pose` 从 XY 计算 `atan2(y,x)`，沿此方向在基座原点半径 0.35 m 处生成完整预观察位姿；z 原样保留。旧的 yaw 输入语义不再支持，零 XY/非有限值拒绝。
+3. 移动、停稳后启用观测，识别当前架所有可见 tag，而非只处理 1、2。
+4. 同帧至少两个配置架成员联合 PnP，使用已知 tag 尺寸/间距及重投影误差门限。预观察完成要求同一有效联合拟合包含全部配置架 tag，且包含任务目标；历史跨帧累计检测不能满足该门限。
+5. 根据观测 tag 连线计算架面法向，从当前有效架观测选取指定目标进行对齐。段间重新观测必须包含该目标和至少另一架成员，保留原有约束和重对齐次数限值。
 
-1. 订阅目标方向和已知目标高度；
-2. `pre_observation_target_pose` 默认将 TCP 放到 `link_base` 原点沿该方向 0.35 m 的位置，并把输入高度作为 TCP z；
-3. 把夹爪延伸方向调整到订阅的粗略方向，使相机光轴朝向目标 Tag；
-4. 等待机械臂和图像稳定，采集 RGB 或 RGB-D 数据；
-5. 用 Tag ID、相机内参、深度有效性和时间戳检查观测；
-6. 观测有效后输出目标位姿，转入接近阶段。
+RGB-D 模式现已加入深度融合（2026-10-01），详见 [融合实现与验证](DEPTH_FUSION.md)。先用 RGB 多 tag PnP 初始化，再以配准深度的 tag 内部点约束架面法向与距离，联合优化一个刚体位姿。纯 RGB 流程保留。深度支撑不足时有原因地回退 PnP；严重冲突拒绝该帧。
 
 由于当前传感器视野和安装位置不能充分承担避障，预观察阶段不主动搜索大范围的 `x/y` 位置，也不宣称已经完成完整避障。当前启动脚本中已有的固定关节观察往返仍是旧的传感器基线；topic 驱动的预观察与两段接近已接入独立演示脚本。
 
@@ -92,7 +88,7 @@ docker compose -f docker-compose.jazzy.yaml run --rm atom-jazzy \
 ./scripts/atom.sh demo approach --gui --camera depth
 ```
 
-默认脚本使用 0.35 m 预观察目标距离；第五个参数可覆盖该值。脚本先完成预观察，再按任务 topic 指定的 Tag ID 执行两段接近；未收到外部任务时默认发布 `{"tag_id":1,"action":"pick"}`（`std_msgs/msg/String` JSON）。观测发布到 `/atom/approach/tag_observation`（同为 JSON），每条包含选定 Tag 的 `link_base` 位姿、图像时间戳和深度质量；结果保存在 `tmp/camera_experiment/pre_observation_current/` 下的 `pre_observation_report.json`、`approach_report.json`、`tag_observations.jsonl` 和标注图；成功运行后另保存带 `_rgb` 或 `_depth` 后缀的报告与逐帧观测文件，避免切换模式覆盖。名义场景 RGB 与 RGB-D 各完成一次预观察和两段接近仿真；原 0.2 m 目标在当前高度/姿态下不可采样。实际试管夹取、放置与环境避障未验证。
+默认脚本使用 0.35 m 预观察目标距离；第五个参数可覆盖该值。脚本先完成预观察，再按任务 topic 指定的 Tag ID 执行两段接近；未收到外部任务时默认发布 `{"tag_id":1,"action":"pick","rack_tag_ids":[0,1,2,3]}`（`std_msgs/msg/String` JSON）。观测发布到 `/atom/approach/tag_observation`（同为 JSON），每条包含选定 Tag 的 `link_base` 位姿、图像时间戳和深度质量；结果保存在 `tmp/camera_experiment/pre_observation_current/` 下的 `pre_observation_report.json`、`approach_report.json`、`tag_observations.jsonl` 和标注图；成功运行后另保存带 `_rgb` 或 `_depth` 后缀的报告与逐帧观测文件，避免切换模式覆盖。名义场景 RGB 与 RGB-D 各完成一次预观察和两段接近仿真；原 0.2 m 目标在当前高度/姿态下不可采样。实际试管夹取、放置与环境避障未验证。
 
 理论 Tag 位姿当前按 launch 中的 Gazebo 机器人生成位姿转换到 `link_base`；这是为了补偿临时 `world → link_base` 单位 TF，后续应由统一的实测/仿真 TF 链替换。RGB-D 模式目前用同步深度统计质量，不把透明试管深度直接融合进 Tag 位姿。
 

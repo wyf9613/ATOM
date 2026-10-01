@@ -2,9 +2,9 @@
 
 """Convert a coarse pre-observation bearing into a MoveIt target pose.
 
-The input is a PoseStamped in ``link_base``.  Its z coordinate is the
-pre-observation TCP height and the yaw encoded by its quaternion is a bearing
-from the robot origin.  The generated target is placed on that bearing at a
+The input is a PoseStamped in ``link_base``. Its x/y coordinates are a
+noisy estimate of the rack centre; z is the exact pre-observation TCP height.
+The bearing is computed from x/y, not the quaternion.  The generated target is placed on that bearing at a
 fixed distance from the robot origin and uses the horizontal gripper/camera
 orientation convention used by the simulation.
 """
@@ -49,19 +49,9 @@ def _quat_mul(first, second):
     ]
 
 
-def _yaw_from_quaternion(quaternion):
-    x, y, z, w = _normalise(quaternion)
-    return math.atan2(2.0 * (w * z + x * y), 1.0 - 2.0 * (y * y + z * z))
-
-
 def target_pose_from_command(command, target_distance_m=TARGET_DISTANCE_M,
                              robot_frame=ROBOT_FRAME):
-    """Return the target pose and bearing represented by ``command``.
-
-    The target position is deliberately independent of the command x/y fields.
-    This keeps the interface focused on the coarse height and bearing while
-    making the generated lateral displacement explicit and deterministic.
-    """
+    """Convert coarse rack XY and exact TCP height into an observation pose."""
     if command.header.frame_id != robot_frame:
         raise ValueError(
             f'input frame {command.header.frame_id!r} does not match {robot_frame!r}'
@@ -71,12 +61,10 @@ def target_pose_from_command(command, target_distance_m=TARGET_DISTANCE_M,
         raise ValueError('input target height must be finite')
     if not math.isfinite(target_distance_m) or target_distance_m <= 0.0:
         raise ValueError('target_distance_m must be finite and positive')
-    bearing = _yaw_from_quaternion([
-        command.pose.orientation.x,
-        command.pose.orientation.y,
-        command.pose.orientation.z,
-        command.pose.orientation.w,
-    ])
+    x, y = float(command.pose.position.x), float(command.pose.position.y)
+    if not all(math.isfinite(value) for value in (x, y)) or math.hypot(x, y) < 1e-6:
+        raise ValueError('coarse rack XY must be finite and away from the base origin')
+    bearing = math.atan2(y, x)
 
     # link_eef +Z is the gripper/camera extension axis in this simulation.
     # Rz(bearing + pi) * Ry(-pi/2) maps that axis to the requested horizontal

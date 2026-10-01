@@ -263,7 +263,7 @@ docker compose -f docker-compose.jazzy.yaml run --rm \
     done
     ros2 run atom_xarm_sim task_executive \
       --ros-args \
-      -p camera_mode:="${ATOM_CAMERA_MODE}" \
+      -p depth_registered:=true -p camera_mode:="${ATOM_CAMERA_MODE}" \
       -p rack_dx_m:="${ATOM_RACK_DX}" \
       -p rack_dy_m:="${ATOM_RACK_DY}" \
       -p rack_dyaw_rad:="${ATOM_RACK_DYAW}" \

@@ -56,7 +56,7 @@ class SimulationInputs:
         inverse_spawn_q = [
             -spawn_q[0], -spawn_q[1], -spawn_q[2], spawn_q[3]
         ]
-        for tag_id in (1, 2):
+        for tag_id in self.rack_tag_ids:
             position, orientation = self._expected_tag_world(tag_id)
             relative = [
                 position[0] - ROBOT_SPAWN_XYZ_M[0],
@@ -75,33 +75,31 @@ class SimulationInputs:
 
     def _publish_provisional_input(self, expected):
         rack_position = [
-            (expected[1].pose.position.x + expected[2].pose.position.x) / 2.0,
-            (expected[1].pose.position.y + expected[2].pose.position.y) / 2.0,
+            sum(pose.pose.position.x for pose in expected.values()) / len(expected),
+            sum(pose.pose.position.y for pose in expected.values()) / len(expected),
         ]
         self.theoretical_bearing = math.atan2(rack_position[1], rack_position[0])
-        noise_limit = math.radians(float(self.get_parameter('bearing_noise_deg').value))
+        noise_limit = float(self.get_parameter('xy_noise_m').value)
         if not math.isfinite(noise_limit) or noise_limit < 0.0:
-            raise RuntimeError('bearing_noise_deg must be nonnegative and finite')
+            raise RuntimeError('xy_noise_m must be nonnegative and finite')
         rng = random.Random(int(self.get_parameter('random_seed').value))
-        noise = rng.uniform(-noise_limit, noise_limit)
-        self.observation_bearing = self.theoretical_bearing + noise
-
-        # The topic carries the desired TCP height. The provisional camera
-        # mount places the optical origin 0.080 m below the horizontal TCP
-        # pose used here; replace this offset after hand-eye measurement.
-        target_height = (expected[1].pose.position.z + expected[2].pose.position.z) / 2.0
+        noisy_xy = [value + rng.uniform(-noise_limit, noise_limit) for value in rack_position]
+        if math.hypot(*noisy_xy) < 1e-6:
+            raise RuntimeError('coarse rack XY is at base origin')
+        self.observation_bearing = math.atan2(noisy_xy[1], noisy_xy[0])
+        # z remains the desired TCP height, not the rack surface height.
+        target_height = sum(pose.pose.position.z for pose in expected.values()) / len(expected)
         tcp_height = target_height + CAMERA_EEF_VERTICAL_OFFSET_M
         message = PoseStamped()
         message.header.frame_id = self.robot_frame
         message.header.stamp = self.get_clock().now().to_msg()
+        message.pose.position.x, message.pose.position.y = noisy_xy
         message.pose.position.z = tcp_height
-        noisy_orientation = _quat_from_yaw(self.observation_bearing)
-        message.pose.orientation.x, message.pose.orientation.y = noisy_orientation[0], noisy_orientation[1]
-        message.pose.orientation.z, message.pose.orientation.w = noisy_orientation[2], noisy_orientation[3]
+        # Direction is derived by the consumer; quaternion carries no bearing.
+        message.pose.orientation.w = 1.0
         self.input_publisher.publish(message)
         self.pre_observation_command = message
         self.get_logger().info(
-            f'INPUT: {self.input_topic} bearing={self.observation_bearing:.6f} rad '
-            f'(true={self.theoretical_bearing:.6f}, noise={noise:.6f}), '
-            f'tcp_height={tcp_height:.6f} m'
+            f'INPUT: {self.input_topic} noisy rack XY={noisy_xy} m, '
+            f'bearing={self.observation_bearing:.6f} rad, tcp_height={tcp_height:.6f} m'
         )

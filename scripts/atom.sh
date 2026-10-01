@@ -7,7 +7,7 @@ usage() {
 Usage: ./scripts/atom.sh COMMAND [OPTIONS]
 
 Daily workflow:
-  sim       [--camera depth|rgb] [--restart] [--workflow approach|transfer] [--recipe visual_observe|visual_approach]
+  sim       [--camera depth|rgb] [--restart] [--workflow approach|transfer] [--recipe visual_observe|visual_approach] [--tag-id 0|1|2|3]
             Gazebo + English web GUI. Default: Tag-guided approach, not physical pick/place.
   attach    [--camera depth|rgb]       Monitor an existing simulation; no motion starts.
   observe   [--camera depth|rgb] [--control]
@@ -47,7 +47,7 @@ case "${command_name}" in
     ;;
   *) fail "Unknown command ${command_name}; see --help" ;;
 esac
-recipe=visual_approach;camera=depth;restart='';workflow=approach;gui=false;control=monitor;session=tube
+tag_id=1;recipe=visual_approach;camera=depth;restart='';workflow=approach;gui=false;control=monitor;session=tube
 dx=0.0;dy=0.0;dyaw=0.0;distance=0.35;dry_run=false
 while (($#)); do
   option="$1"; shift
@@ -57,10 +57,13 @@ while (($#)); do
     --restart) [[ "${command_name}" == sim ]] || fail '--restart applies to sim'; restart=--restart ;;
     --gui) [[ "${command_name}" == demo && "${demo}" =~ ^(arm|camera|approach)$ ]] || fail '--gui applies to demo arm/camera/approach'; gui=true ;;
     --control) [[ "${command_name}" == observe ]] || fail '--control applies to observe'; control=control ;;
-    --recipe|--camera|--workflow|--session|--rack-dx|--rack-dy|--rack-yaw|--distance)
+    --tag-id|--recipe|--camera|--workflow|--session|--rack-dx|--rack-dy|--rack-yaw|--distance)
       (($#)) || fail "Missing value for ${option}"
       value="$1";shift
       case "${option}" in
+        --tag-id)
+          [[ "${command_name}" == sim ]] || fail '--tag-id applies to sim'
+          [[ "${value}" =~ ^[0-3]$ ]] || fail 'Tag ID must be 0, 1, 2 or 3';tag_id="${value}" ;;
         --camera)
           [[ "${command_name}" =~ ^(sim|attach|observe)$ || "${demo}" =~ ^(camera|approach)$ ]] || fail '--camera is not supported for this command'
           [[ "${value}" == rgb || "${value}" == depth ]] || fail 'Camera must be rgb or depth';camera="${value}" ;;
@@ -88,7 +91,7 @@ except (ValueError,AssertionError):
     sys.exit('Invalid geometry: finite rack offsets <=0.05 m / yaw <=0.2 rad, positive distance required')
 PY
 case "${command_name}" in
-  sim) selected=(bash "${repo_root}/scripts/lib/operator.sh" workflow "${camera}" "${restart}" "${workflow}" "${recipe}") ;;
+  sim) selected=(bash "${repo_root}/scripts/lib/operator.sh" workflow "${camera}" "${restart}" "${workflow}" "${recipe}" "${tag_id}") ;;
   attach) selected=(bash "${repo_root}/scripts/lib/operator.sh" attach "${camera}") ;;
   observe) selected=(bash "${repo_root}/scripts/lib/operator.sh" observe "${camera}" "${control}") ;;
   build|shell) selected=(bash "${repo_root}/scripts/lib/runtime.sh" "${command_name}") ;;

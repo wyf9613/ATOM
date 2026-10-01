@@ -46,6 +46,8 @@ class TaskExecutive(RackObserver, ApproachMotion, SimulationInputs, TaskTelemetr
         self.current_stage = 'initialization'
         self.planning_attempts = {}
         self.declare_parameter('camera_mode', 'rgb')
+        self.declare_parameter('depth_fusion_enabled', True)
+        self.declare_parameter('depth_registered', False)
         self.declare_parameter('task_recipe', 'visual_approach')
         self.declare_parameter('keep_status_alive', False)
         self.declare_parameter('robot_frame', ROBOT_FRAME)
@@ -56,7 +58,8 @@ class TaskExecutive(RackObserver, ApproachMotion, SimulationInputs, TaskTelemetr
         self.declare_parameter('rack_dy_m', 0.0)
         self.declare_parameter('rack_dyaw_rad', 0.0)
         self.declare_parameter('random_seed', 20260925)
-        self.declare_parameter('bearing_noise_deg', 5.0)
+        self.declare_parameter('xy_noise_m', 0.025)
+        self.declare_parameter('rack_tag_ids', [0, 1, 2, 3])
         self.declare_parameter('settle_sec', 1.0)
         self.declare_parameter('timeout_sec', 90.0)
         self.declare_parameter('output_dir', '/tmp/atom_pre_observation')
@@ -74,6 +77,9 @@ class TaskExecutive(RackObserver, ApproachMotion, SimulationInputs, TaskTelemetr
         self.declare_parameter('max_realignment_attempts', 3)
         self.declare_parameter('moveit_visibility_constraint', False)
 
+        self.rack_tag_ids = tuple(int(value) for value in self.get_parameter('rack_tag_ids').value)
+        if len(set(self.rack_tag_ids)) != len(self.rack_tag_ids) or len(self.rack_tag_ids) < 2 or any(tag not in range(4) for tag in self.rack_tag_ids):
+            raise RuntimeError('rack_tag_ids must contain at least two distinct scene tag IDs (0..3)')
         self.camera_mode = str(self.get_parameter('camera_mode').value)
         if self.camera_mode not in ('rgb', 'depth'):
             raise RuntimeError('camera_mode must be rgb or depth')
@@ -156,6 +162,7 @@ class TaskExecutive(RackObserver, ApproachMotion, SimulationInputs, TaskTelemetr
         self.detector_params.maxMarkerPerimeterRate = 4.0
         self.capture_enabled = False
         self.observed = {}
+        self.rgb_pnp_observed = {}
         self.depth_quality = {}
         self.capture_error = None
         self.result = None
@@ -183,10 +190,14 @@ class TaskExecutive(RackObserver, ApproachMotion, SimulationInputs, TaskTelemetr
     def _task_callback(self, message):
         try:
             task = json.loads(message.data)
+            if 'rack_tag_ids' in task and list(task['rack_tag_ids']) != list(self.rack_tag_ids):
+                raise ValueError('task rack membership does not match this configured rack')
             tag_id = int(task['tag_id'])
             action = str(task['action'])
-            if tag_id not in (1, 2) or action not in ('pick', 'place'):
-                raise ValueError('tag_id must be 1 or 2; action must be pick or place')
+            if tag_id not in self.rack_tag_ids or action not in ('pick', 'place'):
+                raise ValueError('tag_id must belong to rack_tag_ids; action must be pick or place')
+            if self.current_stage not in ('initialization', 'pre_observation_setup') and self.task != {'tag_id': tag_id, 'action': action}:
+                raise ValueError('cannot change the target during an active observation/approach')
             self.task = {'tag_id': tag_id, 'action': action}
         except (ValueError, KeyError, TypeError) as error:
             self.get_logger().warning(f'Ignoring malformed approach task: {error}')
@@ -201,19 +212,11 @@ class TaskExecutive(RackObserver, ApproachMotion, SimulationInputs, TaskTelemetr
             raise RuntimeError(
                 f'input frame {self.input_message.header.frame_id!r} does not match {self.robot_frame!r}'
             )
-        quaternion = [
-            self.input_message.pose.orientation.x,
-            self.input_message.pose.orientation.y,
-            self.input_message.pose.orientation.z,
-            self.input_message.pose.orientation.w,
-        ]
-        norm = math.sqrt(sum(value * value for value in quaternion))
-        if norm < 1e-12:
-            raise RuntimeError('input orientation is zero')
-        x, y, z, w = [value / norm for value in quaternion]
-        self.observation_bearing = math.atan2(
-            2.0 * (w * z + x * y), 1.0 - 2.0 * (y * y + z * z)
-        )
+        xy = [self.input_message.pose.position.x, self.input_message.pose.position.y]
+        if not all(math.isfinite(value) for value in xy) or math.hypot(*xy) < 1e-6:
+            raise RuntimeError('coarse rack XY must be finite and away from the base origin')
+        self.observation_bearing = math.atan2(xy[1], xy[0])
+        self.pre_observation_command = deepcopy(self.input_message)
 
     def _wait_for_target_pose(self):
         deadline = time.monotonic() + 10.0
@@ -239,8 +242,9 @@ class TaskExecutive(RackObserver, ApproachMotion, SimulationInputs, TaskTelemetr
         self.current_stage = 'pre_observation_setup'
         self.expected = self._expected_in_robot_frame()
         self.get_logger().info('THEORETICAL EXPECTED TAG POSES (robot frame):')
-        for tag_id in (1, 2):
+        for tag_id in self.rack_tag_ids:
             self.get_logger().info(f'  tag{tag_id}: {_pose_dict(self.expected[tag_id])}')
+        self._ensure_task()
         self._publish_provisional_input(self.expected)
         self._wait_for_input()
         self._wait_for_target_pose()
@@ -268,28 +272,27 @@ class TaskExecutive(RackObserver, ApproachMotion, SimulationInputs, TaskTelemetr
             rclpy.spin_once(self, timeout_sec=0.1)
         if self.result is None:
             reason = self.capture_error or (
-                'did not observe both tag IDs 1 and 2 '
+                f'did not observe rack tags {self.rack_tag_ids} including target {self.task["tag_id"]} '
                 f'(frames={self.capture_frame_count}, last_detected_ids={self.last_detected_ids})'
             )
             raise RuntimeError(f'pre-observation visual capture failed: {reason}')
         self._write_report()
         self.get_logger().info('OBSERVED TAG POSES (robot frame):')
-        for tag_id in (1, 2):
+        for tag_id in sorted(self.observed):
             self.get_logger().info(f'  tag{tag_id}: {_pose_dict(self.observed[tag_id])}')
         self.get_logger().info(
-            'PASS: PRE_OBSERVATION_COMPLETE; both tag1 and tag2 were detected '
+            f'PASS: PRE_OBSERVATION_COMPLETE; rack tags {sorted(self.observed)} including target {self.task["tag_id"]} were detected '
             f'and transformed into {self.robot_frame}'
         )
         self.get_logger().info(f'Report: {self.output_dir / "pre_observation_report.json"}')
 
-    def prepare_approach(self):
-        if not self.execute_client.wait_for_server(timeout_sec=30.0):
-            raise RuntimeError('/execute_trajectory is unavailable')
+    def _ensure_task(self):
         if self.task is None:
             provisional = String()
             provisional.data = json.dumps({
                 'tag_id': int(self.get_parameter('demo_tag_id').value),
                 'action': str(self.get_parameter('demo_action').value),
+                'rack_tag_ids': list(self.rack_tag_ids),
             })
             self.task_publisher.publish(provisional)
             deadline = time.monotonic() + 2.0
@@ -297,6 +300,11 @@ class TaskExecutive(RackObserver, ApproachMotion, SimulationInputs, TaskTelemetr
                 rclpy.spin_once(self, timeout_sec=0.05)
         if self.task is None:
             raise RuntimeError('no valid approach task')
+
+    def prepare_approach(self):
+        if not self.execute_client.wait_for_server(timeout_sec=30.0):
+            raise RuntimeError('/execute_trajectory is unavailable')
+        self._ensure_task()
         selected = self.task['tag_id']
         if selected not in self.observed:
             raise RuntimeError(f'tag {selected} was not detected in pre-observation')
