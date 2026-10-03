@@ -6,6 +6,7 @@ import unittest
 import json
 import urllib.request
 import urllib.error
+from concurrent.futures import Future
 from http.server import ThreadingHTTPServer
 
 path = Path(__file__).resolve().parents[2] / 'tools/operator_gui/server.py'
@@ -17,7 +18,55 @@ class Adapter:
     def available(self): return {c:True for c in module.COMMANDS}
     def send(self,*args): self.calls.append(args)
 
+class Gripper:
+    def __init__(self): self.calls=[]; self.future=Future(); self.busy=False
+    def touch(self): pass
+    def snapshot(self): return {'available':True,'busy':self.busy,'force_calibrated':False}
+    def submit(self,command,parameters):
+        import sys
+        sys.path.insert(0,str(path.parents[2]/'ros2_ws/src/atom_gripper_hardware'))
+        from atom_gripper_hardware.controller import validate
+        validate(command,parameters)
+        self.calls.append(command); return self.future
+
 class GatewayTests(unittest.TestCase):
+    def test_manual_gripper_and_arm_task_cannot_overlap(self):
+        gateway=module.Gateway(False,True); gateway.gripper=Gripper(); gateway.adapter=Adapter()
+        gateway.pending.add('observe')
+        with self.assertRaises(PermissionError): gateway.gripper_command({'command':'open'})
+        gateway.gripper_command({'command':'stop'})
+        gateway.pending.clear(); gateway.gripper.busy=True
+        self.assertIn('observe',gateway.command_blocks({},gateway.adapter.available()))
+
+    def test_stale_reset_result_cannot_clear_new_stop(self):
+        gateway=module.Gateway(False,True); gateway.gripper=Gripper(); gateway.metadata['profile']='gripper'
+        gateway.stop_latched=True
+        gateway.gripper_command({'command':'reset'})
+        gateway.command({'command':'stop'})
+        gateway.gripper.future.set_result({'success':True})
+        self.assertTrue(gateway.stop_latched)
+
+    def test_supervisor_stop_blocks_manual_gripper(self):
+        gateway=module.Gateway(False,True); gateway.gripper=Gripper()
+        gateway.update('safety',{'hardware_estop':'pressed'})
+        with self.assertRaises(PermissionError): gateway.gripper_command({'command':'arm'})
+        self.assertEqual(gateway.gripper.calls,[])
+
+    def test_gripper_http_force_gate_and_validation(self):
+        gateway=module.Gateway(False,True); gateway.gripper=Gripper()
+        server=ThreadingHTTPServer(('127.0.0.1',0),module.handler_for(gateway))
+        threading.Thread(target=server.serve_forever,daemon=True).start()
+        base='http://127.0.0.1:'+str(server.server_port)
+        try:
+            for data,headers,code in [({'command':'open'},{},403),
+                    ({'command':'force','parameters':{'force_n':1}},{'X-ATOM-Token':gateway.token},409),
+                    ({'command':'move','parameters':{'position':2601}},{'X-ATOM-Token':gateway.token},400)]:
+                req=urllib.request.Request(base+'/api/v1/gripper/commands',data=json.dumps(data).encode(),headers=headers)
+                with self.assertRaises(urllib.error.HTTPError) as cm: urllib.request.urlopen(req)
+                self.assertEqual(cm.exception.code,code)
+            self.assertEqual(gateway.gripper.calls,[])
+        finally: server.shutdown(); server.server_close()
+
     def test_external_stop_blocks_motion_and_display(self):
         gateway=module.Gateway(False,True);gateway.adapter=Adapter()
         gateway.update('arm',{});gateway.update('diagnostics',[])
@@ -34,7 +83,7 @@ class GatewayTests(unittest.TestCase):
     def test_english_and_dom_ids(self):
         import re
         root=path.parent/'static'
-        html=(root/'index.html').read_text();js=(root/'app.js').read_text()
+        html=(root/'index.html').read_text(encoding='utf-8');js=(root/'app.js').read_text(encoding='utf-8')
         self.assertFalse(re.search(r'[\u4e00-\u9fff]', html+js))
         ids=set(re.findall(r'id="([^"]+)"',html))
         referenced=set(re.findall(r"(?:el|text)\('([^']+)'",js))

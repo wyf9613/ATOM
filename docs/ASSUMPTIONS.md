@@ -1,5 +1,18 @@
 # Assumptions and Open Questions
 
+## 2026-10-03 reinforced adapter update
+
+- User tentatively selected PLA and estimates gripper plus camera at roughly 0.7 kg by heft; no scale, CoM, uncertainty, print parameters or motion/load history supplied. Include the new adapter, fasteners, ESP32 and cables in future weighed tool payload.
+- Backplate v2 supersedes v1 geometry: 52 mm rear offset, 12/14 mm plate thicknesses and continuous Ø76 annular body. These are design dimensions, not validated printed stiffness/capacity. Original M3 shell tabs remain a potential load-path bottleneck.
+- ESP32 now has a separate bracket on the lower seam holes opposite the camera. The provisional PCB/connector envelope reaches z=-97 mm in inherited coordinates; tabletop, finger and cable clearance require verification. See [v2 limits](../source_cad/backplate/v2/README.md).
+
+## 2026-10-03 backplate / ESP32 mechanical inputs
+
+- User-provisional ESP32 hole centres are 46.5 × 23.5 mm, Ø4.0 mm; no measurement method, sample count or uncertainty supplied. Actual PCB outline, thickness, corner-hole land, USB/headers/antenna and attached cables remain to be checked. The supplied electrical/module PDFs do not dimension the complete development board.
+- Rear-hole Ø3.2 mm / 18 × 97 mm pattern and 10 mm tab depth are inherited CAD geometry, not hardware verification. Confirm fasteners, nut/washer access and physical agreement.
+- UF850 nominal flange comes from official V2.3.0 p26. Delivered flange revision, Ø31.50 H6 mating fit, locating pin, actual usable thread depth and wrist/connector clearance remain open.
+- Backplate v1 uses provisional 64.2 mm rear extension and 6/8 mm plate thicknesses. Material, stress/deflection, fatigue, preload, inertial data and calibrated mount/TCP are unverified. See [CAD v1](../source_cad/backplate/v1/README.md).
+
 Items remain open until evidence is linked in `docs/DECISIONS.md`.
 
 Resolved: A-001 (arm candidate) is superseded by D-006 after delivery of the
@@ -37,6 +50,11 @@ or captured by the container build.
 | A-021 | The pick/place target has an accurately calibrated world-frame pose and the robot base has an approximate planar world-frame pose. | This pair of assumptions supplies target height and coarse bearing for pre-observation; the current simulation substitutes theoretical rack geometry and `theta_true + U(-5°, +5°)` for a base-localisation measurement. Define the real base-localisation method, measure bearing/height error over repeated dockings, and verify the common TF chain before hardware use. |
 | A-022 | A custom multi-slot rack can be placed repeatably at a calibrated workstation pose, with one resolvable numbered Tag for each relevant slot and a measured camera-to-gripper adapter. | Design and 3D-print the rack and adapter, measure placement repeatability, tag-to-slot transforms, camera extrinsics and reachable viewpoints; the current printed hardware and metrology do not yet exist. |
 
+## Camera bracket unresolved inputs (2026-10-02)
+
+- User tentatively recalls a RealSense D435; verify the physical model before finalizing mounting geometry or screw insertion depth.
+- Reusing the two upper shell-fastening holes is a proposed concept. Hole geometry, existing fastener stack, shell clamping, bracket stiffness, finger/FOV/cable clearance and repeatable camera-to-gripper calibration remain unverified. See [camera bracket concept](GRIPPER_CAMERA_BRACKET_CONCEPT.md).
+
 ## Questions for supervisors and partner teams
 
 1. What controller, firmware, serial-number calibration and supplied accessories arrived with the xArm 850?
@@ -56,3 +74,22 @@ Coarse rack XY noise is independently uniform ±0.025 m per axis by default, pro
 ## 2026-10-01 — Depth fusion assumptions
 
 Fusion needs registered optical-Z depth in metres, synchronized RGB and matching calibrated intrinsics/distortion. Simulation's single rgbd_camera is explicitly accepted by its scripts; no real sensor registration or noise model is confirmed. Planar opaque tag surfaces, known rigid tag layout and per-region depth support are assumed. Joint residual scales (0.7 px / 2 mm), plane quality and conflict gates are provisional; calibrate/validate against physical measurements before hardware use. Depth holes return RGB PnP with diagnostics; persistent conflict rejects observations. [Details](DEPTH_FUSION.md).
+
+## ESP32 migration unresolved facts (2026-10-02)
+
+- Sensor is provisionally MLX90393 based on user identification and board markings; full ordering code, carrier circuitry and sensor count are unconfirmed. User screenshots confirm address 0x14 and valid XYZ records.
+- GPIO21/22 are selected from the photographed classic ESP32 DEVKIT V1; user confirmed wiring and sensor communication, but physical voltage is unmeasured. Initial address 0x0C was superseded by observed 0x14.
+- STS3215 and URT-1 are reported inherited parts; actual labels, motor supply/current, interface levels, ID/baud/mode and travel limits still need verification. Report interface-board 5V must not be treated as confirmed motor supply.
+- Original STM32 source and protocol are unavailable in the current handover. New protocol is not backwards-compatible evidence.
+- New sensor frame has no measured mount TF, covariance or force calibration. Initial failed host captures were followed by reset/reopen fixes and two clean hardware runs (102 and 303 valid records). Long-duration reliability and motor/ROS runtime remain unverified. See GRIPPER_VALIDATION_LOG.md.
+
+### 2026-10-02 motor implementation boundary
+
+Optional motor commissioning code is implemented, but actual servo/driver model, UART compatibility, supply rating, ID/baud, position mode, limits/direction, load/voltage units and thresholds remain unmeasured. Candidate ID 1 / 1 Mbps are not confirmed. No real motor motion, fault-stop latency or force-control result is claimed. Default motor enable is zero; all measured limit/voltage/load configuration is unset. See GRIPPER_MOTOR_COMMISSIONING.md.
+
+2026-10-03: User confirms STS3215, ID1/1Mbps/position mode via successful feedback. Observed tight1917/open2688, N=1 each; repeatability, rated voltage variant, force/load calibration and actual stopping response unresolved. First motion configuration uses provisional margins and +/-5count-only gates; no physical motion validation yet.
+
+
+## 2026-10-03 — Provisional gripper integration envelope
+
+UI/ROS Open2600 and Close2000counts use the nominal span covered by the one successful72segment empty-gripper sweep; they are not full mechanical limits or contact targets. Positive counts open. ±3counts completion tolerance is an encoder criterion, not measured mm accuracy. Servo load80 is a provisional raw abort setting without force meaning. Force estimate is unknown and force control disabled. Physical arm/real TF, calibrated jaw aperture and object grasp remain unverified; see GRIPPER_SYSTEM_INTEGRATION.md.

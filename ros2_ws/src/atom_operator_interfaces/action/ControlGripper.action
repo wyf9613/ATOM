@@ -1,0 +1,17 @@
+# Encoder-position commissioning, not a grasp guarantee. force remains calibration gated.
+string command
+# Caller session owns gripper from successful ARM through STOP/DISARM.
+string control_owner
+int32 position
+float64 force_n
+---
+bool success
+string message
+int32 final_position
+bool position_verified
+bool grasp_verified
+---
+string state
+int32 position
+int32 load_raw
+bool fault

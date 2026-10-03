@@ -34,7 +34,14 @@ def tag_preview(image, camera_info=None, frame=None):
     dictionary=cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_APRILTAG_36h11)
     params=cv2.aruco.DetectorParameters_create() if hasattr(cv2.aruco,'DetectorParameters_create') else cv2.aruco.DetectorParameters()
     params.minMarkerDistanceRate=.01;params.minMarkerPerimeterRate=.02
-    corners,ids,_=cv2.aruco.detectMarkers(cv2.cvtColor(image,cv2.COLOR_BGR2GRAY),dictionary,parameters=params)
+    gray=cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+    if hasattr(cv2.aruco,'ArucoDetector'):
+        # AprilTag contour refinement preserves the marker border in newer OpenCV
+        # when the small inter-marker distance setting groups nested candidates.
+        params.cornerRefinementMethod=cv2.aruco.CORNER_REFINE_APRILTAG
+        corners,ids,_=cv2.aruco.ArucoDetector(dictionary,params).detectMarkers(gray)
+    else:
+        corners,ids,_=cv2.aruco.detectMarkers(gray,dictionary,parameters=params)
     detected=[] if ids is None else [int(i) for i in ids.flatten()]
     # Each slot has a unique ID. Nested contour candidates can decode twice.
     if detected:
@@ -52,8 +59,14 @@ def tag_preview(image, camera_info=None, frame=None):
         if camera_info and camera_info.header.frame_id==frame and camera_info.k[0]>0:
             k=np.asarray(camera_info.k,dtype=float).reshape(3,3)
             d=np.asarray(camera_info.d,dtype=float)
-            _,tvecs,_=cv2.aruco.estimatePoseSingleMarkers(corners,.04,k,d)
-            poses={str(i):[float(v) for v in t.reshape(3)] for i,t in zip(detected,tvecs)}
+            if hasattr(cv2.aruco,'estimatePoseSingleMarkers'):
+                _,tvecs,_=cv2.aruco.estimatePoseSingleMarkers(corners,.04,k,d)
+                poses={str(i):[float(v) for v in t.reshape(3)] for i,t in zip(detected,tvecs)}
+            else:
+                square=np.array([[-.02,.02,0],[.02,.02,0],[.02,-.02,0],[-.02,-.02,0]],dtype=np.float32)
+                for i,c in zip(detected,corners):
+                    ok,_,t=cv2.solvePnP(square,c.reshape(4,2),k,d,flags=cv2.SOLVEPNP_IPPE_SQUARE)
+                    if ok: poses[str(i)]=[float(v) for v in t.reshape(3)]
     return {'family':'AprilTag 36h11','detected_ids':detected,'detected':bool(detected),
             'poses_camera_m':poses,'pose_method':'RGB PnP','tag_size_m':.04,
             'frame':frame,'pose_valid':bool(poses)}

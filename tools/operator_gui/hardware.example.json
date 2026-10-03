@@ -15,5 +15,7 @@
   "use_sim_time": false,
   "tool_parent_frame": "link_base",
   "tool_frame": "link_eef",
-  "vendor_state_topic": "/ufactory/robot_states"
+  "vendor_state_topic": "/ufactory/robot_states",
+  "gripper_action": "/atom/gripper/control",
+  "gripper_status_topic": "/atom/gripper/status"
 }

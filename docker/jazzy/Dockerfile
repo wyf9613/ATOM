@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       locales \
       python3-colcon-common-extensions \
       python3-rosdep \
+      python3-serial \
       python3-vcstool \
       ros-jazzy-gz-ros2-control \
       ros-jazzy-joint-state-publisher \

@@ -6,6 +6,8 @@ OBSERVATION = ('prepare_observation', 'move_observation', 'capture_observation')
 RECIPES = {
     'visual_observe': OBSERVATION,
     'visual_approach': OBSERVATION + ('prepare_approach', 'align_selected', 'approach_selected'),
+    'gripper_position_check': ('prepare_gripper', 'open_gripper', 'close_gripper', 'stop_gripper'),
+    'visual_approach_gripper_open': ('prepare_gripper','open_gripper') + OBSERVATION + ('prepare_approach','align_selected','approach_selected','stop_gripper'),
 }
 CAPABILITY_STEPS = tuple(dict.fromkeys(step for recipe in RECIPES.values() for step in recipe))
 

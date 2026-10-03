@@ -48,6 +48,12 @@ class RosAdapter:
         gateway.metadata.update({'profile': config.get('profile','ros'),
                                  'use_sim_time':bool(config.get('use_sim_time',False)), 'interfaces':config})
         self.clients = {}
+        if config.get('gripper_action'):
+            try:
+                from gripper_adapter import RosGripper
+                gateway.gripper=RosGripper(self.node,config['gripper_action'],config.get('gripper_status_topic','/atom/gripper/status'),False)
+            except ImportError:
+                gateway.event('error','Gripper action unavailable: build/source atom_operator_interfaces')
         self.futures = {}
         self.subscriptions = []
         def parameter(name, default):

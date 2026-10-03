@@ -27,6 +27,7 @@ class Gateway:
         self.streams = {}
         self.pending = set()
         self.adapter = None
+        self.gripper = None
         self.camera_image = None
         self.depth_image = None
         self.metadata = {"profile": "demo" if demo else "ros", "use_sim_time": False,
@@ -58,11 +59,38 @@ class Gateway:
                 streams = {k: {'age_s': round(now-v['received'], 2), 'fresh': now-v['received'] < 2,
                                'value': v['value']} for k,v in self.streams.items()}
             available = self.adapter.available() if self.adapter else {c: self.demo for c in COMMANDS}
-            return {'schema_version': 1, 'mode': 'demo' if self.demo else 'ros', 'time': time.time(),
+            return {'schema_version': 1, 'mode': 'demo' if self.demo else self.metadata['profile'], 'time': time.time(),
                     'commands_enabled': self.demo or self.enable_commands,
                     'stop_latched': self.stop_latched or streams.get('safety',{}).get('value',{}).get('software_stop_latched',False),
                     'metadata': self.metadata, 'command_blocks': self.command_blocks(streams, available),
-                    'streams': streams, 'available': available, 'pending': sorted(self.pending), 'events': list(self.events)}
+                    'streams': streams, 'available': available, 'pending': sorted(self.pending), 'events': list(self.events),
+                    'gripper_control': self.gripper.snapshot() if self.gripper else {'available':False,'blocks':{},'force_calibrated':False}}
+
+    def gripper_command(self, data):
+        command=data.get('command'); parameters=data.get('parameters',{})
+        if not self.gripper: raise PermissionError('Gripper interface not connected')
+        if not isinstance(parameters,dict): raise ValueError('parameters must be an object')
+        with self.lock:
+            if command not in {'stop','disarm','reset'}:
+                if self.stop_latched: raise PermissionError('Software stop latched')
+                safety=self.streams.get('safety',{}).get('value',{})
+                if safety.get('software_stop_latched') or safety.get('hardware_estop')=='pressed':
+                    raise PermissionError('Safety supervisor stop active')
+                if self.pending.intersection({'observe','pick','place','navigate'}): raise PermissionError('Task owns motion; manual gripper commands blocked')
+            generation=self.stop_generation
+            future=self.gripper.submit(command,parameters)
+            request_id=secrets.token_hex(8)
+            self.event('info',f'Gripper {command}: submitted ({request_id})')
+            def completed(result):
+                try:
+                    value=result.result()
+                    self.event('info',f'Gripper {command}: {value}')
+                    with self.lock:
+                        if command=='reset' and self.metadata['profile']=='gripper' and generation==self.stop_generation:
+                            self.stop_latched=False
+                except Exception as exc: self.event('error',f'Gripper {command}: {exc}')
+            future.add_done_callback(completed)
+            return {'status':'submitted','request_id':request_id,'command':command}
 
     def safety_permits_reset(self, value):
         if self.metadata['profile']=='gazebo':
@@ -81,6 +109,8 @@ class Gateway:
                 reason = 'Request pending'
             elif command in ('observe','pick','place','navigate') and self.pending.intersection({'observe','pick','place','navigate'}):
                 reason = 'Another task is active'
+            elif command in ('observe','pick','place','navigate') and self.gripper and self.gripper.snapshot().get('busy'):
+                reason = 'Manual gripper request active'
             elif command not in ('stop', 'cancel', 'reset_stop'):
                 if self.stop_latched or streams.get('safety',{}).get('value',{}).get('software_stop_latched',False):
                     reason = 'Software stop latched'
@@ -123,6 +153,11 @@ class Gateway:
             if command == 'stop':
                 self.stop_latched = True  # Inhibit even when downstream service is absent.
                 self.stop_generation += 1
+                if self.gripper:
+                    try: self.gripper.submit('stop',{})
+                    except Exception as exc: self.event('error','Gripper stop unconfirmed: '+str(exc))
+                    if self.adapter is None:
+                        return {'status':'submitted','command':'stop','request_id':secrets.token_hex(8)}
             elif command not in ('cancel', 'reset_stop'):
                 if self.stop_latched:
                     raise PermissionError('Software stop is latched')
@@ -197,6 +232,7 @@ def handler_for(gateway):
         def do_GET(self):
             path = self.path.split('?')[0]
             if path == '/api/v1/state':
+                if gateway.gripper: gateway.gripper.touch()
                 return self.respond(200, gateway.snapshot())
             if path == '/api/v1/session':
                 return self.respond(200, {'token': gateway.token})
@@ -219,7 +255,7 @@ def handler_for(gateway):
             return self.respond(404, {'error': 'Not found'})
 
         def do_POST(self):
-            if self.path != '/api/v1/commands':
+            if self.path not in ('/api/v1/commands','/api/v1/gripper/commands'):
                 return self.respond(404, {'error': 'Not found'})
             # Reject cross-origin browser commands. This token is CSRF protection, not user authentication.
             origin = self.headers.get('Origin')
@@ -234,7 +270,7 @@ def handler_for(gateway):
                 data = json.loads(self.rfile.read(length))
                 if not isinstance(data, dict):
                     raise ValueError('Expected object')
-                self.respond(202, gateway.command(data))
+                self.respond(202, gateway.gripper_command(data) if self.path=='/api/v1/gripper/commands' else gateway.command(data))
             except PermissionError as exc:
                 self.respond(409, {'error': str(exc)})
             except (ValueError, TypeError) as exc:
@@ -247,16 +283,24 @@ def handler_for(gateway):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--mode', choices=['demo','ros'], default='demo')
+    parser.add_argument('--mode', choices=['demo','ros','gripper'], default='demo')
+    parser.add_argument('--gripper-port',default='COM4')
+    parser.add_argument('--enable-gripper',action='store_true')
     parser.add_argument('--host', default='127.0.0.1')
     parser.add_argument('--port', type=int, default=8088)
     parser.add_argument('--enable-commands', action='store_true')
     parser.add_argument('--ros-config', type=Path, default=Path(__file__).resolve().parent / 'ros_config.json')
     args = parser.parse_args()
     gateway = Gateway(args.mode == 'demo', args.enable_commands)
+    if args.mode=='gripper':
+        from gripper_adapter import LocalGripper
+        gateway.metadata['profile']='gripper'
+        gateway.enable_commands=args.enable_gripper
+        gateway.gripper=LocalGripper(args.gripper_port,args.enable_gripper)
     if args.mode == 'ros':
         from ros_adapter import RosAdapter
-        gateway.adapter = RosAdapter(gateway, json.loads(args.ros_config.read_text()))
+        gateway.adapter = RosAdapter(gateway, json.loads(args.ros_config.read_text(encoding='utf-8')))
+        if args.enable_gripper and gateway.gripper: gateway.gripper.enabled=True
     server = ThreadingHTTPServer((args.host,args.port),handler_for(gateway))
     def stop_server(signum, frame):
         threading.Thread(target=server.shutdown,daemon=True).start()
@@ -269,6 +313,7 @@ def main():
         pass
     finally:
         server.server_close()
+        if gateway.gripper: gateway.gripper.close()
         if gateway.adapter:
             gateway.adapter.close()
 

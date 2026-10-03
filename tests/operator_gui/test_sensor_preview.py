@@ -28,7 +28,8 @@ class SensorTests(unittest.TestCase):
         self.assertAlmostEqual(m['min_m'],.25);self.assertAlmostEqual(m['median_m'],.875,places=6)
     def test_known_apriltag_and_empty_image(self):
         dictionary=cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_APRILTAG_36h11)
-        marker=cv2.aruco.drawMarker(dictionary,1,120)
+        draw=cv2.aruco.generateImageMarker if hasattr(cv2.aruco,'generateImageMarker') else cv2.aruco.drawMarker
+        marker=draw(dictionary,1,120)
         image=np.full((300,300,3),255,dtype=np.uint8);image[90:210,90:210]=cv2.cvtColor(marker,cv2.COLOR_GRAY2BGR)
         result=tag_preview(image.copy(),None,'camera')
         self.assertEqual(result['detected_ids'],[1]);self.assertFalse(result['pose_valid'])

@@ -1,5 +1,26 @@
 # Decision Log
 
+## 2026-10-03 — Separate ESP32 mount and reinforce printed flange adapter
+
+User superseded the v1 side-on-flange electronics placement: mount ESP32 independently using the lower shell-seam pair opposite the camera bracket, retaining provisional 46.5 × 23.5 mm / Ø4.0 PCB holes. User requested rigidity over material saving and tentatively selected PLA, estimating gripper plus camera at about 700 g by heft, not a scale. [Backplate v2](../source_cad/backplate/v2/README.md) replaces the narrow bridge rails with a continuous thick annular body, 12 mm broad front plate, 14 mm flange end, enlarged root and 52 mm rear extension. Nominal UF850 flange pattern is unchanged. M6 screws are installed before attaching the gripper through dedicated axial access bores. [Independent ESP32 bracket](../source_cad/esp32_bracket/v1/README.md) uses inherited lower hole centres x=-33.7/-18.7, z=-65.725. Accepted scope is CAD revision direction only: PLA grade/printing, entire tool mass/CoM, original tab strength, stiffness, creep and dynamic capacity remain unvalidated.
+
+## 2026-10-03 — Open gripper backplate and separate ESP32 carrier review CAD
+
+User requested reuse of the four rear gripper holes, a partial/open backplate extending to the delivered UF850 flange, practical screw access and an ESP32 mounting location. Implement the requested review geometry in [backplate CAD v1](../source_cad/backplate/v1/README.md), retaining inherited assets and the independent camera bracket. The original STEP rear-hole pattern is Ø3.2 mm, 18 × 97 mm; these are CAD values. The official UF850 V2.3.0 manual p26 specifies ISO 9409-1-50-4-M6, Ø50 mm four-hole PCD, Ø63 mm flange, Ø31.50 H6 centre and Ø6 H7 locating hole. Adopt this nominal flange interface for CAD only; actual revision, pilot fit and fasteners remain unverified. User provisionally supplied ESP32 46.5 × 23.5 mm hole pitch and confirmed Ø4.0 mm after correcting an initial “40 mm” entry, while explicitly noting uncertainty. Put these holes on a removable side carrier; PCB outline and connector positions are placeholders. This records requested geometry and source selection, not manufacturing/material approval, validated load capacity or hardware calibration.
+
+## 2026-10-02 — Camera bracket CAD revision direction
+
+User requested two external mounting plates around the inherited two shell tabs (four-layer bolt stack), a narrower forward extension and a single front camera screw mounting hole, removing the v1 locating lips and ribs. Implement this review geometry in [CAD v2](../source_cad/camera_bracket/v2/README.md), preserving inherited assets and v1. The two original STEP hole axes are 15 mm apart with 3.2 mm diameters; these are CAD values, not physical measurements. The camera interface uses a clearance hole for a screw into the camera's existing 1/4-20 thread. D435 remains a tentative user recollection, with camera-hole coordinates, insertion depth, fit tolerances, fastener stack, stiffness and hardware calibration unverified. This records the requested geometry direction, not manufacturing approval or validated camera mounting capability.
+
+## D-017 - ESP32 sensor-only gripper bring-up over a ROS serial boundary
+
+- Date: 2026-10-02
+- Status: Accepted for initial sensor bring-up; hardware verification pending
+- Decision: Replace the inherited STM32 controller with the user's classic ESP32 DEVKIT V1 for staged redevelopment. Begin with one magnetic sensor over GPIO21/GPIO22 I2C and USB serial telemetry; add a read-only `atom_gripper_hardware` ROS bridge under the existing D-007 baseline. Motor control remains deferred.
+- Evidence: User requested the replacement and supplied photographs showing ESP32 DEVKIT V1 and CP2102; previous report printed p14 Figure 9 shows 3.3V sensor supply and I2C wiring. Melexis MLX90393 datasheet confirms 2.2-3.6V chip supply; complete sensor ordering code/address remains unconfirmed.
+- Node rationale: Existing description and simulation nodes do not own the physical sensor serial device; a separate lifecycle/fault boundary is required for device reconnect, parsing and magnetic-field units.
+- Boundary: No board flash, sensor measurement, ROS runtime, force calibration or motor actuation has been verified. See ESP32_GRIPPER_BRINGUP.md.
+
 ## D-012 - Use the vendor G1 gripper only as a temporary Gazebo test tool
 
 - Date: 2026-09-24
@@ -199,3 +220,36 @@ User-requested interface change on `refactor/modular-task-composition`: `/atom/p
 ## 2026-10-01 — Registered depth assists the existing RGB rack estimator
 
 Implement model-based point-to-plane plus RGB reprojection pose refinement inside the existing perception capability. Depth mode enables fusion, RGB retains its original estimate. Existing Gazebo scripts explicitly acknowledge registered optical-Z depth; direct node calls default that acknowledgment to false. Poor plane support falls back with a reported reason; depth/RGB inconsistency rejects the frame. Motion geometry limits are unchanged. Numeric fusion gates/weights are provisional simulation settings, not hardware accuracy or newly selected sensor/driver. [Method and validation](DEPTH_FUSION.md).
+
+## 2026-10-02 — Gated ESP32 motor commissioning
+
+Implement optional STS position-mode commissioning using the official FTServo Arduino SDK 2.0.0, pinned commit 64922cda46e56b21b8c1d9e830d936a1941645ae. Default motor support remains off until actual hardware and electrical compatibility are confirmed. No broadcast, EEPROM or wheel-mode writes; require configured limits/feedback/sensor before explicit ARM, bound JOG, latch faults, use best-effort position hold on watchdog events. No automatic torque release or boot motion commands. Magnetic delta is a provisional threshold, not calibrated force. Manual USB console precedes ROS actuator integration; ROS sensor bridge does not assert motor state. See GRIPPER_MOTOR_COMMISSIONING.md. Physical motor validation and stopping latency remain unresolved.
+
+## 2026-10-03 — URT-1 logic supply evidence
+
+Manufacturer URT-1 manual dated 2017-10-08, page 1, specifies logic 5V from USB or an external 5V supply; it does not establish a servo-power-to-5V output. Standalone supply design therefore uses a separate regulated 5V branch for ESP32 VIN and URT-1 logic, with servo-rated supply at the servo terminals and common ground. UART 3.3V selection is distinct from 5V supply. See source and revision limitations in GRIPPER_MOTOR_COMMISSIONING.md; actual board version remains unconfirmed.
+
+## 2026-10-03 — First bounded motor motion preparation
+
+User provided successful STS3215 PING: ID1, 1 Mbps, mode0, feedback valid; tight endpoint1917 and open endpoint2688 encoder counts, one observation each; earlier closed1944/1917 variation means endpoint repeatability remains unmeasured. User-reported adapter approximately7.5V; feedback raw voltage76–77, temperature19–21, load0. Actual rated voltage not independently confirmed. Positive encoder change opens.
+
+Provisional inward bounds1937–2668 (20counts margin) selected for first manual test. At open2688 ARM rejects; manually reposition torque-off into range (~2660) before arming. Speed20counts/s, raw load abort20, voltage raw72–82, temperature40 are conservative provisional test gates, not measured safe force or hardware protection. Default JOG_ONLY limits commands to +/-5counts and rejects OPEN/CLOSE. Magnetic close remains uncalibrated. Completion tolerance reduced from5 to1count so a 5count step cannot immediately report done without approaching target. Host heartbeat console required. No physical motion or new upload performed by agent; software stop is best effort, not emergency stop.
+
+### 2026-10-03 — Provisional jog load threshold adjustment
+
+User-operated ARM succeeded after restoring sensor validity. JOG -5 from2317 to2312 triggered LIMIT_ERROR at position2317, load_raw24>20, voltage_raw76 within72–82, temp21<40; flags0,1,0,0 confirm only load threshold exceeded. Motion completion was not established. User disconnected power and requested adjustment. Raise provisional software raw-load abort threshold from20 to50 for next +/-5count test; speed20counts/s, bounds1937–2668, fault latch and all other gates unchanged. 50 is a test setting without force calibration or established safety meaning. Do not infer percentage torque or newtons. No automatic commands/upload or physical retest performed by agent.
+
+### 2026-10-03 — User-authorized +/-100count manual jog
+
+User reports two completed -5count jogs: 2317→2313 (target2312, raw load-20), then2313→2309 (target2308, raw load0), voltage76–77/temp21. User could not visually resolve gripper displacement; no physical motion accuracy claim. User explicitly requests +/-100count jog. Firmware and console now accept nonzero increments within[-100,100], rejecting outside increments and endpoints beyond1937–2668. OPEN/CLOSE remain disabled. Speed20counts/s and raw load abort50 unchanged. Motion timeout increased2→7s because100counts at20counts/s nominally requires5s plus2s margin; real motion duration/stop latency unvalidated. Heartbeat750ms/sensor350ms gates unchanged. C++ state/boundary and Python console boundary tests pass. No upload or physical motion by agent.
+
+### 2026-10-03 — Lubricated-condition test preparation
+
+User reports WD-40 Multi-Use applied to metal slide rail and requests less restrictive load threshold. Previous sweep_20261003_145120_389807 stopped atpos2157/load52>50 during closing, with voltage77/temp24 healthy. Change provisional software absolute-load abort50→80; all position, speed-register20, +/-100,7s timeout, sensor/watchdog and fault latch gates unchanged. 80 is not validated safe force or servo torque setting. User-reported lubrication changes test condition; amount/application/wait time and material compatibility not measured. New runs must be labelled lubricated plus changed threshold; these two changed factors prevent attributing improvement to lubrication alone. No physical rerun by agent. Existing faults require explicitDISARM/RESET or cold boot, never auto-recovery.
+
+
+## 2026-10-03 — Shared gripper hardware boundary and operator control
+
+Reuse the existing operator gateway/UI and task executive. Implement one atom_gripper_hardware hardware_bridge replacing the sensor-only bridge for actuator deployments; independent serial/device lifecycle, continuous watchdog and action fault handling justify this hardware node. Both ROS and standalone local UI use the same GripperController, never two concurrent serial owners. Keep vendor arm planning separate, retain default simulation recipes, add only reusable gripper capability and opt-in recipes. No ROS distribution/driver/procurement change.
+
+Use successful physical sweep evidence (lubricated_load80, one run,3cycles/72segments) to restrict UI/Action position commands to nominal2000–2600counts, JOG<=100, encoder arrival tolerance3. This is position commissioning, not grasp validation. Force target/estimate extension points exist but force commands remain rejected until calibrated local control. ARM-to-STOP/DISARM ROS session lease prevents UI/task command competition; fault recovery is manual. Joint real-arm composition requires separate physical verification and is disabled by default. See GRIPPER_SYSTEM_INTEGRATION.md and //TODO G01–G09.

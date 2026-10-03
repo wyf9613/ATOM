@@ -160,3 +160,18 @@ A GUI-observed approach failure was reproduced: initial alignment passed against
 First depth-mode run after the change passed alignment and perpendicular approach: updated-ray lateral 0.0151 m; final estimated plane distance 0.1016 m, frozen-ray lateral approximately 0.0002 m. Conditions: nominal static rack, software rendering, N=1, uncalibrated simulator geometry; no uncertainty/reliability or physical grasp claim. Report `tmp/operator_gui/workflow/run_20260930_045125/approach_report.json`. This run needed zero corrective motions; retry exhaustion and correction execution still require separate validation. Three synthetic-image regression tests verify known board pose, subpixel noise/rigid spacing and inconsistent-corner rejection; 16 gateway/sensor/geometry tests passed in the Jazzy container.
 
 Final-code depth repeat also passed both approach segments and `tube_workflow_check.py --require-success`, with RGB/depth/Tag/joints and terminal heartbeat delivered to GUI. Report: `tmp/operator_gui/workflow/run_20260930_045345/approach_report.json`; final frozen-snapshot plane distance 0.101015 m and ray lateral 0.002645 m. Two nominal successful runs do not establish reliability.
+
+
+## ESP32 gripper controls (2026-10-03)
+
+现有页面新增 Gripper controls：Enable hold、Open/Close、目标位置、Stop、Release torque、Reset fault、磁场基线归零和原始遥测。力目标入口暂时禁用，服务端也拒绝请求，待测力标定和 ESP32 本地闭环验收。Open2600/Close2000 是空载扫测覆盖范围内的位置，不代表抓取完成。
+
+```powershell
+# 先退出 Arduino 串口监视器 / console / sweep；启动不会自动 ARM
+python tools/operator_gui/server.py --mode gripper --gripper-port COM4 --enable-gripper
+# http://127.0.0.1:8088
+```
+
+本地模式复用生产串口控制器，机械臂/导航保持未连接。ROS 部署改用 hardware_bridge + hardware.example.json，网关增加 --enable-gripper；bridge 和本地模式互斥。夹爪停止/释放允许只读连接请求，运动须显式启用；这与原机械臂只读权限独立。页面失联2s请求保持，固件主机看门狗仍独立生效；不自动释放扭矩。机械臂任务和手动夹爪请求互斥，ROS ARM 会话阻断其他所有者运动。操作员会话/网络部署仍需独立鉴权与实机安全监督。
+
+完整模块、ROS Action、运行方法与 //TODO G01–G09 清单见 [夹爪接入与校准](../../docs/GRIPPER_SYSTEM_INTEGRATION.md)。本轮软件测试不连接实物，ROS 构建与机械臂联合验收仍待进行。

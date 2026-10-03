@@ -66,3 +66,53 @@ Modular refactor boundary (2026-09-30): visual task composition is implemented w
 ### RGB visual approach intermittently fails endpoint IK (2026-10-01)
 
 On `refactor/modular-task-composition` at `7bbd038`, nominal static-rack RGB `visual_approach` completed joint Tag observation and 0.40 m alignment but failed the 0.10 m perpendicular endpoint IK gate: all seven yaw candidates returned MoveIt -31 / NO_IK_SOLUTION. A second run with the same seed (20260925) and scene parameters passed; Depth passed once. These three runs do not establish reliability or isolate the cause. The error alone does not distinguish collision, reachability, IK seed or observation variation. Limits were unchanged, the task stopped at the failed stage, and the GUI correctly exposed FAILED. Details and per-run evidence: [2026-10-01 Tag/rack test](TAG_RACK_TEST_20261001.md). Investigate sampled target/normal and IK seed/collision diagnostics before changing constraints.
+
+## 2026-10-03 — First user-operated jog and unresolved feedback fault
+
+User console reports ARM_OK; first JOG -5 returned MOVE_DONE; second JOG -5 caused servo_feedback_or_limit, followed by best-effort hold request and a latched fault. Physical displacement/direction was not reported; no force or motion accuracy result claimed. Existing message combined transport and limit failures, and stop handling could overwrite trigger values with newer feedback.
+
+Added FEEDBACK_ERROR with SDK result/error/servo status; LIMIT_ERROR with values, configured bounds and per-limit flags; FAULT_TRIGGER and state snapshot before hold reads feedback again. MOVE_DONE now includes actual/target encoder values and telemetry. Existing raw load limit20 and all other motion gates remain unchanged. Cause (communication, load, voltage, temperature or position) remains unresolved; do not increase thresholds to bypass it. Native regressions cover feedback failure and injected load-only limit classification. Await physical diagnostic data after explicit DISARM, new firmware and guarded retry.
+
+## 2026-10-03 — Directional jog debug instrumentation
+
+User transcript: -50 from2310 reached2260; -100 from2260 reached2161(target2160); +100 from2161(target2261) faulted at2161 with raw load-52>absolute50, voltage76/temp21 within bounds. User quit. Root cause of this stop is confirmed absolute-load threshold; physical reason for directional asymmetry remains unknown. Completion load0 for negative moves is not their peak. Official pinned SDK SMS_STS::ReadLoad uses bit10 for direction, consistent with signed readings; no signed-load conversion bug found.
+
+Added MOVE_START, approximately100ms MOTION samples, and MOTION_SUMMARY sampled absolute/signed peak, sample count, timing and encoder start/target/last position. Fault sample is included before stop feedback can overwrite it. Peaks are sampled, not guaranteed instantaneous maxima. Console saves commands and received lines to timestamped JSONL under tmp/gripper_bringup, with UTC arrival timestamps; no automatic movement. Threshold50, speed20, range1937–2668, +/-100 and heartbeat/fault gates unchanged. Native regression injects negative-load overlimit and verifies captured signed peak/fault summary; Python compilation passes. No real port opened or motion performed in this debug turn. QUIT sends best-effort STOP; it does not guarantee torque release—explicit DISARM or external power-off before uploading.
+
+## 2026-10-03 — User transcript confirms four bounded jog completions
+
+Source: user pasted attachment 4c83e827-d91a-4be2-a0b9-44c6978ce712/已粘贴的文本.txt; newest session references tmp/gripper_bringup/motor_20261003_143750_128786.jsonl. Older fault at-52 precedes new session, not a failure of these four motions. New session:
+
+| Encoder start→target | Last position | Duration ms | Samples | Sampled absolute load peak | Signed peak |
+|---|---:|---:|---:|---:|---:|
+|2161→2111|2112|1020|12|28|28|
+|2110→2010|2010|2111|22|48|48|
+|2010→2110|2109|2105|22|44|-44|
+|2109→2209|2208|2030|22|36|-36|
+
+All four report done, endpoint error0–1 encoder counts; no new-session fault appears in provided excerpt. N=1 per command, not repeatability/reliability verification. Close/open over approximately2010–2110 have sampled peaks48 and44 respectively, so this trace does not support generally higher opening load. Previous opening-start52 remains evidence of variability; software threshold50 has only2 raw units margin over observed closure48. Approx100ms sampling can miss instantaneous peaks; physical displacement/force/current not independently measured. Raw voltage76–77, temperature19–21 during these records. No torque release appears at excerpt end: user should DISARM explicitly.
+
+Important configuration discrepancy: speed register is set20, but measured100count movements take approximately2.0–2.1s, around47–49 encoder counts/s. Earlier comments interpreted speed20 as20counts/s; that interpretation is not established by this physical trace. SDK/model speed register units must be checked before claiming commanded physical velocity. Existing7s timeout remains conservative provisional bound, not measured stop latency.
+
+### 2026-10-03 — Sweep residual-chasing fix
+
+Physical run sweep_20261003_144358_789365 completed3segments then motion_timeout: after a100count move start2299/target2399, post-dwell encoder settled2398; host requested another2counts to waypoint2400. Feedback remained2398 for70samples over7096ms with sampled load peak24, raw voltage76–77/temp23, no load/electrical limit fault. End transcript confirms DISARM_OK; torque_release_confirmed=true. This is observed small-step non-response, consistent with servo deadband/friction; precise cause unmeasured.
+
+Host waypoint tolerance changed1→3counts to avoid chasing residual2counts, matching existing post-dwell drift gate. Firmware commanded-target tolerance and all fault limits unchanged. Physical run remains FAIL; no completed3cycle claim. Regression checks2398→2400 generates no new command, and error4 still requires movement. Five tests pass. New script requires no firmware upload; existing latched fault must be manually DISARM/RESET with healthy feedback before rerun.
+
+### 2026-10-03 — Firmware/host arrival tolerance alignment
+
+Second physical sweep_20261003_144533_722742 failed after3segments: full command start2300 target2400 stayed2398 through7014ms,70samples, peak36 (voltage76–77,temp23). Unlike previous run, no2count follow-up command caused this failure; firmware1count arrival gate itself timed out. Cleanup confirmed DISARM_OK. Host-only prior fix was incomplete.
+
+Firmware POSITION_TOLERANCE now3 encoder counts, host segment acceptance and waypoint/dwell tolerance all3; actual error remains in CSV. Timeout/load/position/voltage/temperature/watchdog gates unchanged. Native regression verifies error4 does not complete and error2 completes;6 host tests include accepting error2/rejecting4. Firmware upload required before physical rerun. Both physical sweeps remain failures, not repeatability passes; stable residual is observed, precise friction/deadband cause unproven.
+
+### 2026-10-03 — Sweep cached/live feedback race
+
+Physical sweep_20261003_144913_282840 stopped after10 recorded completions due host summary mismatch, not firmware fault. Host cached start2301 and sentJOG100; firmware MOVE_START and summary start2302/target2402, done2400 within3counts, peak44,2092ms. Cleanup DISARM_OK confirmed. Relative JOG is based on fresh firmware feedback, which may change between STATUS and command; strict equality to cached position was an incorrect host assumption.
+
+Use MOVE_START live start/target as transaction reference, still requiring cached-to-live start and expected target discrepancy<=3counts, requested-vs-live delta discrepancy<=3 and target within1937–2668. Summary and completion must match that live target exactly, final encoder error<=3. CSV start now reflects live firmware start. Seven regressions pass, including1count feedback change accepted and4count change rejected. Host-only correction, no upload required. Run remains incomplete, not3cyclePASS.
+
+
+## 2026-10-03 — UI / ROS gripper integration acceptance outstanding
+
+New shared serial controller, ROS ControlGripper interface, operator controls and task capability pass host protocol/HTTP checks; this machine currently lacks rclpy/Jazzy; Docker Desktop startup was attempted but daemon queries remained unresponsive, so generated Action/colcon/ROS process interoperability is unverified. No physical UI/arm joint run in this coding task. Combined recipe remains opt-in and additionally blocked until real-arm integration verification; existing executive retains simulation-specific inputs and task cancellation/supervision is incomplete. Fingertip force calibration/control, physical grasp verification, mount TF/covariance, endpoints/aperture, exact electrical/load limits and stopping/holding behavior remain //TODO G01–G09. See GRIPPER_SYSTEM_INTEGRATION.md.

@@ -6,11 +6,11 @@ const item=(tag,value,className)=>{const node=document.createElement(tag);node.t
 const fmt=value=>Number.isFinite(value)?value.toFixed(2):'—';
 function render(state){
  lastState=state;healthy=true;document.querySelectorAll('.offline').forEach(n=>n.classList.remove('offline'));
- text('mode',state.mode==='demo'?'DEMO · Synthetic data':'ROS 2 · Live telemetry');
+ text('mode',state.mode==='demo'?'DEMO · Synthetic data':state.mode==='gripper'?'ESP32 · Local gripper':'ROS 2 · Live telemetry');
  text('connection',`Gateway connected · ${latency??'—'} ms`);text('clock',new Date().toLocaleString('en-AU',{hour12:false}));
  const streams=state.streams,arm=streams.arm,base=streams.base,battery=streams.battery,task=streams.task,safety=streams.safety;
  const banner=el('banner');banner.classList.toggle('error',state.stop_latched);
- banner.textContent=state.stop_latched?'Software stop latched · Check stop feedback before reset. Use the physical E-stop for emergencies.':state.mode==='demo'?'Demo mode: telemetry is synthetic; commands simulate responses only.':state.commands_enabled?'ROS 2 commands enabled · Readiness and fresh feedback are required.':'ROS 2 read-only monitoring · Commands disabled.';
+ banner.textContent=state.stop_latched?'Software stop latched · Check stop feedback before reset. Use the physical E-stop for emergencies.':state.mode==='demo'?'Demo mode: telemetry is synthetic; commands simulate responses only.':state.mode==='gripper'?'Local ESP32 gripper · Arm and navigation interfaces are not connected.':state.commands_enabled?'ROS 2 commands enabled · Readiness and fresh feedback are required.':'ROS 2 read-only monitoring · Commands disabled.';
  text('arm-status',arm?(arm.fresh?'Receiving telemetry':'Stale data'):'Not connected');
  text('base-status',base?(base.fresh?'Receiving telemetry':'Stale data'):'Not connected');
  text('base-detail',base?`X ${fmt(base.value.x)} / Y ${fmt(base.value.y)} m · ${fmt(base.value.speed)} m/s`:'Waiting for /odom');
@@ -35,7 +35,7 @@ function render(state){
  text('health-count',`${diagnostics.length} diagnostics`);
  text('hardware-stop',safety?.fresh?({'released':'Released','pressed':'Pressed','unknown':'Unknown','not_applicable':'Not applicable (simulation)'}[safety.value.hardware_estop]||'Unknown'):'Unknown / Stale');
  text('stop-feedback',safety?.fresh&&safety.value.stop_confirmed?'Confirmed':'Not confirmed');
- renderReadiness(state);renderSensors(state);
+ renderReadiness(state);renderSensors(state);renderGripper(state);
  text('command-mode',state.mode==='demo'?'Demo only':state.commands_enabled?'Guarded commands':'Read-only');
  document.querySelectorAll('[data-command]').forEach(button=>{const command=button.dataset.command;button.disabled=!state.commands_enabled||!state.available[command]||state.pending.includes(command)||(state.stop_latched&&!['cancel','reset_stop'].includes(command));button.title=state.command_blocks?.[command]||(!state.available[command]?'Downstream interface not connected':'');if(state.command_blocks?.[command])button.disabled=true;});
  el('stop').disabled=!state.commands_enabled;
@@ -43,7 +43,7 @@ function render(state){
 }
 async function poll(){
  try{const started=performance.now();const response=await fetch('/api/v1/state',{signal:AbortSignal.timeout(2000)});if(!response.ok)throw Error('HTTP '+response.status);latency=Math.round(performance.now()-started);render(await response.json());}
- catch(error){healthy=false;document.querySelectorAll('.stats article,.workspace').forEach(n=>n.classList.add('offline'));text('connection','Gateway disconnected');el('banner').classList.add('error');text('banner','Disconnected · Feedback unavailable. Use on-site controls to stop equipment.');document.querySelectorAll('[data-command],#stop').forEach(b=>b.disabled=true);}
+ catch(error){healthy=false;document.querySelectorAll('.stats article,.workspace').forEach(n=>n.classList.add('offline'));text('connection','Gateway disconnected');el('banner').classList.add('error');text('banner','Disconnected · Feedback unavailable. Use on-site controls to stop equipment.');document.querySelectorAll('[data-command],[data-gripper],#stop').forEach(b=>b.disabled=true);}
  finally{setTimeout(poll,1000);}
 }
 async function command(name){
@@ -110,3 +110,20 @@ async function previewLoop(kind,id){
  }
 }
 previewLoop('camera','camera-image');previewLoop('depth','depth-image');
+
+function renderGripper(state){
+ const g=state.gripper_control||{};
+ text('gripper-state',g.available?(g.connected&&g.motor_fresh?(g.fault?'Fault latched':g.moving?'Moving':g.armed?'Holding':'Torque released'):'Waiting for hardware'):'Not connected');
+ el('gripper-metrics').replaceChildren();
+ [['Position (counts)',g.motor_fresh?g.position:'Unknown'],['Servo load (raw)',g.motor_fresh?g.load_raw:'Unknown'],['Force measured (N)',g.force_calibrated?fmt(g.force_n):'Uncalibrated'],['Fingertip sensor',g.sensor_valid&&g.sensor_fresh?'Valid magnetic samples':'Missing / invalid'],['Magnetic field (uT)',g.sensor_valid&&g.sensor_fresh?g.magnetic_uT?.map(fmt).join(' / '):'Unknown'],['Motor voltage / temperature (raw)',g.motor_fresh?`${g.voltage_raw} / ${g.temperature_raw}`:'Unknown'],['Operation',g.command_state||'Unknown'],['Fault',g.fault||'None reported'],['Transport',g.transport||'Not connected']].forEach(([k,v])=>el('gripper-metrics').append(item('span',k),item('b',String(v))));
+ document.querySelectorAll('[data-gripper]').forEach(b=>{const c=b.dataset.gripper;const blocked=g.blocks?.[c];b.disabled=!g.available||Boolean(blocked)||(!g.motion_enabled&&!['stop','disarm'].includes(c))||(state.stop_latched&&!['stop','disarm','reset'].includes(c));b.title=blocked||(!g.available?'Hardware interface not connected':'');});
+ //TODO G01: enable force input only after a calibrated local controller and verified force limits exist.
+ el('gripper-force').disabled=!g.force_calibrated;
+}
+async function gripperCommand(name){
+ if(!healthy)return;
+ const parameters=name==='move'?{position:Number(el('gripper-target').value)}:name==='force'?{force_n:Number(el('gripper-force').value)}:{};
+ try{const response=await fetch('/api/v1/gripper/commands',{method:'POST',headers:{'Content-Type':'application/json','X-ATOM-Token':token},body:JSON.stringify({command:name,parameters}),signal:AbortSignal.timeout(3000)});const value=await response.json();text('gripper-result',response.ok?`Request ${value.request_id} submitted. Check state and events for completion.`:value.error);}
+ catch(error){text('gripper-result','Outcome unknown: '+error.message+'; inspect feedback before retrying.');}
+}
+document.querySelectorAll('[data-gripper]').forEach(b=>b.addEventListener('click',()=>gripperCommand(b.dataset.gripper)));

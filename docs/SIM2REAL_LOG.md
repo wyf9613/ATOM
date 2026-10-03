@@ -1,5 +1,13 @@
 # Simulation-to-Real Log
 
+## 2026-10-03 — Reinforced adapter v2 geometry supersedes v1
+
+The review CAD now places the robot flange contact plane at inherited x=80.8 mm, 52 mm behind the gripper rear plane x=28.8 mm; the prior 64.2 mm v1 separation is historical. ESP32 moved to a separate lower-shell bracket opposite the camera. No robot-description transform, payload, inertia, TCP or collision model was updated: printed fit and measured transforms remain prerequisites. The provisional lowest electronics envelope is z=-97 mm and must enter future collision/clearance validation. See [CAD v2](../source_cad/backplate/v2/README.md).
+
+## 2026-10-03 — New mechanical adapter review CAD
+
+The open backplate v1 places its gripper rear contact plane at inherited-CAD x = 28.8 mm and nominal robot flange plane at x = 93.0 mm (64.2 mm separation). This is an unvalidated design transform, not a hardware measurement, and has not replaced the existing neutral/provisional simulation mounting transform. The camera bracket v2 and side-mounted ESP32 carrier also remain separate CAD assemblies without calibrated TF, mass/inertia or collision integration. After physical manufacture/fit validation, measure flange-to-gripper and camera/TCP transforms and mass/inertia, then update modular Xacro and simplified collision descriptions. Source/limits: [backplate CAD v1](../source_cad/backplate/v1/README.md).
+
 Record every material mismatch between the robot model/simulation and measured hardware.
 
 | Date | Subsystem | Simulated assumption | Real measurement | Correction | Validation |
@@ -62,3 +70,18 @@ Simulation-only change: rack tag-centre XY receives independent uniform ±0.025 
 ## 2026-10-01 — First depth-fused rack approach
 
 Nominal Gazebo static rack, software rendering, seed 20260925, XY noise ±0.025 m/axis, target tag1. Registered depth now constrains the RGB board distance/normal. Initial fused approach completed once. In 87 correlated paired frames within that run, mean position error relative to nominal scene truth decreased from 1.549 mm (RGB PnP) to 0.611 mm (fusion); this is not hardware accuracy, repeatability or an independent-trial uncertainty estimate. Real depth artifacts, bias, occlusion, registration/time offset and hand-eye/TCP error are not reproduced/validated. [Method](DEPTH_FUSION.md); generated evidence `tmp/operator_gui/workflow/run_20261001_133323/depth_fusion_comparison.json`. This supersedes the earlier depth-quality-only implementation note for current depth mode.
+
+## 2026-10-03 — First bounded motor motion preparation
+
+User provided successful STS3215 PING: ID1, 1 Mbps, mode0, feedback valid; tight endpoint1917 and open endpoint2688 encoder counts, one observation each; earlier closed1944/1917 variation means endpoint repeatability remains unmeasured. User-reported adapter approximately7.5V; feedback raw voltage76–77, temperature19–21, load0. Actual rated voltage not independently confirmed. Positive encoder change opens.
+
+Provisional inward bounds1937–2668 (20counts margin) selected for first manual test. At open2688 ARM rejects; manually reposition torque-off into range (~2660) before arming. Speed20counts/s, raw load abort20, voltage raw72–82, temperature40 are conservative provisional test gates, not measured safe force or hardware protection. Default JOG_ONLY limits commands to +/-5counts and rejects OPEN/CLOSE. Magnetic close remains uncalibrated. Completion tolerance reduced from5 to1count so a 5count step cannot immediately report done without approaching target. Host heartbeat console required. No physical motion or new upload performed by agent; software stop is best effort, not emergency stop.
+
+## 2026-10-03 — Lubricated three-cycle sweep PASS
+
+Evidence: tmp/gripper_bringup/sweep_20261003_150022_860815/. Condition label lubricated_load80; user reported WD-40 Multi-Use on metal slide rail, provisional firmware load threshold80. N=1 run with3cycles/72completed segments across nominal waypoints2000–2600; all segment verifications passed, no auto fault recovery, torque release confirmed at cleanup. Quantitative summary: {"summary": {"passed": true, "failure": null, "torque_release_confirmed": true, "condition": "lubricated_load80", "requested_cycles": 3, "completed_segments": 72, "waypoints": [2200, 2300, 2400, 2100, 2500, 2000, 2600, 2300], "sampled_peak_abs_load": 52, "notes": "Encoder-only verification. Sampled load is not calibrated force. No automatic fault reset."}, "max_abs_error_counts": 3, "durations_ms": [1501, 2132], "directions": {"open": {"segments": 36, "max_sampled_load": 44, "mean_segment_peak": 41.78}, "close": {"segments": 36, "max_sampled_load": 52, "mean_segment_peak": 41.78}}}. Peak values are approximately100ms-sampled raw servo loads, not force; encoder error is not measured physical displacement uncertainty. No matched unlubricated run at threshold80: lubricant effect cannot be isolated. Not full mechanical stroke/contact or calibrated force validation.
+
+
+## 2026-10-03 — Real gripper control boundary
+
+The ESP32 bridge emits real encoder/raw servo/magnetic telemetry with system clock. It does not publish synthetic gripper joint angles or replace existing Gazebo drive_joint feedback. Converting counts to jaw opening/joint position needs measured geometry (G02); force/grasp are unknown. Real gripper recipes reject simulation clock; combined visual/arm recipe also requires separate hardware verification, because current task executive contains simulation inputs. One successful empty-gripper sweep (N=1run,3cycles/72segments) is not simulated grasp success or physical transport acceptance. Protocol/HTTP simulation tests do not drive COM4. See GRIPPER_SYSTEM_INTEGRATION.md.

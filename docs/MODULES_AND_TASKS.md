@@ -106,3 +106,8 @@ GUI 状态新增 `executor`、`task_recipe`、`completed_capabilities`；观察�
 同进程能力当前共享宿主 node 的运行上下文。后续按需要为边界引入显式数据结构/跨 node 契约，但不得为了“原子化”增加大量只有函数转发作用的 node。
 
 验证结果和各测试命令见 [重构回归报告](REFACTOR_TEST_REPORT.md)。
+
+
+## ESP32 gripper integration (2026-10-03)
+
+Add reusable gripper/control.py capability in the existing task executive and the gripper_position_check / visual_approach_gripper_open recipes. The standalone position recipe has no arm motion. Both require explicit real-gripper opt-in/system clock; combined arm recipe additionally defaults to blocked pending physical arm/supervisor verification. The new hardware_bridge is a justified hardware runtime boundary replacing sensor-only serial ownership, not a task-specific node. ControlLease spans multiple Action goals, preventing manual UI/task competition; STOP/DISARM may interrupt. Force/grasp control remains a separate calibration/verification capability, never substituted by position completion. Architecture, startup and TODO acceptance: [GRIPPER_SYSTEM_INTEGRATION](GRIPPER_SYSTEM_INTEGRATION.md).

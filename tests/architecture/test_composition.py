@@ -8,6 +8,17 @@ sys.path.insert(0,str(ROOT/'ros2_ws/src/atom_xarm_sim'))
 from atom_xarm_sim.tasks.recipes import RECIPES, execute_recipe
 
 class CompositionTests(unittest.TestCase):
+    def test_gripper_prepare_failure_prevents_arm_and_gripper_motion(self):
+        called=[]
+        name='visual_approach_gripper_open'
+        capabilities={step:lambda s=step:called.append(s) for step in RECIPES[name]}
+        def blocked(): raise RuntimeError('Real arm integration not verified')
+        capabilities['prepare_gripper']=blocked
+        with self.assertRaises(RuntimeError): execute_recipe(name,capabilities)
+        self.assertEqual(called,[])
+
+    def test_position_recipe_has_no_arm_motion_or_grasp_assertion(self):
+        self.assertEqual(RECIPES['gripper_position_check'],('prepare_gripper','open_gripper','close_gripper','stop_gripper'))
     def test_observe_is_reused_prefix_of_approach(self):
         self.assertEqual(RECIPES['visual_approach'][:3],RECIPES['visual_observe'])
         called=[]
@@ -44,7 +55,7 @@ class CompositionTests(unittest.TestCase):
 
     def test_capability_modules_do_not_create_new_nodes(self):
         package=ROOT/'ros2_ws/src/atom_xarm_sim/atom_xarm_sim'
-        for module in ['perception/depth_fusion.py','perception/observer.py','planning/approach.py','planning/clients.py','simulation/inputs.py','telemetry/task_status.py','tasks/recipes.py']:
+        for module in ['perception/depth_fusion.py','perception/observer.py','planning/approach.py','planning/clients.py','simulation/inputs.py','telemetry/task_status.py','tasks/recipes.py','gripper/control.py']:
             tree=ast.parse((package/module).read_text())
             for node in ast.walk(tree):
                 if isinstance(node,ast.ClassDef):

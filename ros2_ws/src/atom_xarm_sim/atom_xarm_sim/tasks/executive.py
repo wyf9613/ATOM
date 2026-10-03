@@ -38,10 +38,12 @@ from atom_xarm_sim.planning.clients import MotionClients
 from atom_xarm_sim.simulation.inputs import SimulationInputs
 from atom_xarm_sim.telemetry.task_status import TaskTelemetry
 from atom_xarm_sim.tasks.recipes import CAPABILITY_STEPS, execute_recipe
+from atom_xarm_sim.gripper.control import GripperControl
 
-class TaskExecutive(RackObserver, ApproachMotion, SimulationInputs, TaskTelemetry, Node):
+class TaskExecutive(GripperControl, RackObserver, ApproachMotion, SimulationInputs, TaskTelemetry, Node):
     def __init__(self):
         super().__init__('atom_task_executive')
+        self.initialize_gripper_control()
         self.run_start_monotonic = time.monotonic()
         self.current_stage = 'initialization'
         self.planning_attempts = {}
@@ -414,6 +416,7 @@ def main():
         node._write_trial_summary(True)
         return_code = 0
     finally:
+        node.cleanup_gripper_control()
         try:
             if bool(node.get_parameter('keep_status_alive').value):
                 while rclpy.ok():
