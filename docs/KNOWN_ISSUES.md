@@ -116,3 +116,32 @@ Use MOVE_START live start/target as transaction reference, still requiring cache
 ## 2026-10-03 — UI / ROS gripper integration acceptance outstanding
 
 New shared serial controller, ROS ControlGripper interface, operator controls and task capability pass host protocol/HTTP checks; this machine currently lacks rclpy/Jazzy; Docker Desktop startup was attempted but daemon queries remained unresponsive, so generated Action/colcon/ROS process interoperability is unverified. No physical UI/arm joint run in this coding task. Combined recipe remains opt-in and additionally blocked until real-arm integration verification; existing executive retains simulation-specific inputs and task cancellation/supervision is incomplete. Fingertip force calibration/control, physical grasp verification, mount TF/covariance, endpoints/aperture, exact electrical/load limits and stopping/holding behavior remain //TODO G01–G09. See GRIPPER_SYSTEM_INTEGRATION.md.
+
+### 2026-10-03 — Gripper ROS environment blocker resolved on Linux
+
+Follow-up to UI / ROS gripper integration acceptance above: the existing native Jazzy environment now builds ControlGripper and atom_gripper_hardware with system Python 3.12. ROS UI/bridge Action communication, cancellation/fault recovery and caller-loss STOP passed against a fake serial device. Conda Python 3.13 caused import/rosidl failures; the dedicated gripper validation script selects system Python explicitly. The earlier Windows/Docker blockage is historical, not the current ROS software status. Physical UI/arm integration, G01–G09 measurement requirements and task-supervisor synchronized cancellation remain outstanding; combined hardware recipe stays disabled.
+
+
+### 2026-10-03 — USB boot race in gripper telemetry handshake
+
+Live local UI connection failed with Timeout waiting for # STREAM ON. The serial log contained ESP32 POWERON_RESET/boot/sensor-ready output after the first STREAM ON, followed by command_unknown_or_motor_disabled. Add at most three 2 s telemetry handshake attempts; retry only STREAM ON, without ARM, RESET or motion. A fake boot regression drops the first request and verifies recovery without actuation; all 22 protocol/serial tests pass. After restarting the local gateway, CP2102 /dev/ttyUSB0 returned fresh motor and valid magnetic telemetry with no fault, armed=false. Position1937 is outside the UI ARM range2000–2600; manual disarmed repositioning is required, not a relaxed software envelope.
+
+
+### 2026-10-03 — Motor replies continued after magnetic stream stopped
+
+Live UI at position2193 showed valid last sensor data but sensor_fresh=false; motor PING remained fresh. Log contained another ESP32 POWERON_RESET at host monotonic1472.13s, after which V1 output ceased. Root cause of the reboot is unconfirmed. Idle controller now retries only STREAM ON when telemetry is stale (2 s retry interval,0.5 s acknowledgment timeout), preserving all motion/fault gates. An armed/moving reboot latches a host fault and cancellation; telemetry recovery cannot re-arm or clear it. POSIX serial opens request exclusive ownership to reject another cooperating pyserial owner.24 protocol/serial tests and ROS Action smoke pass. Live gateway restarted disarmed; both streams fresh, position2193 and no fault; ARM gate cleared. No motor motion performed.
+
+
+### 2026-10-03 — Continuous firmware deployment pending user Arduino upload
+
+Host/firmware sources now implement a single MOVE target and same-session normal Stop/resume. Firmware advertises continuous_position=1; older firmware blocks motion with an update-required reason, not a silent segmented fallback. User elected to compile/upload in Arduino IDE; no agent upload, full Arduino cross-compile or continuous hardware run claimed. Current UI gateway is stopped and CP2102 serial is free. After upload, restart tools/operator_gui/server.py and verify firmware/feedback before a user-operated empty-gripper test. Protocol/ROS fake-device and native C++ tests do not establish physical stopping latency or load protection.
+
+
+### 2026-10-03 — Startup boot-text overflow recovery
+
+User-uploaded continuous firmware was confirmed by live continuous_position=1 and sensor_ready output. Failed gateway log contained repeated/concatenated ROM boot text and Oversized device record, not an oversized normal MOTOR line (diagnostic capture longest138bytes). During bounded initial STREAM ON synchronization only, discard oversized startup records and replace non-ASCII boot characters; retain strict framing/ASCII checks after handshake.28 protocol tests pass, including startup garbage recovery and rejection of oversized post-handshake records. Restarted local gateway reports connected,fresh motor/sensor,position2001,armed=false,fault=null. No ARM/motion by agent. Upload is now user-confirmed through device capability; physical continuous-motion acceptance remains pending.
+
+
+### 2026-10-03 — User confirms local gripper frontend integration
+
+After Arduino IDE firmware upload and gateway startup recovery, user explicitly reports no issue and successful frontend integration. This closes local UI connection/deployment acceptance on user confirmation; exact exercised command sequence, repetition count and quantitative stop/force measurements were not supplied. Force calibration, independent grasp verification and combined physical arm supervision remain open.

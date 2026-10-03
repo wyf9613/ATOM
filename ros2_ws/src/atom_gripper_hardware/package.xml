@@ -9,5 +9,6 @@
   <exec_depend>diagnostic_msgs</exec_depend><exec_depend>python3-serial</exec_depend>
   <exec_depend>launch</exec_depend><exec_depend>launch_ros</exec_depend>
   <exec_depend>std_msgs</exec_depend><exec_depend>atom_operator_interfaces</exec_depend>
+  <test_depend>action_msgs</test_depend>
   <export><build_type>ament_python</build_type></export>
 </package>

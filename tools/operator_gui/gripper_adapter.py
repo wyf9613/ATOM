@@ -28,7 +28,7 @@ class LocalGripper:
         def completed(value):
             if value.exception() is None:
                 if command=='arm': self.lease=True
-                if command in {'stop','disarm'}: self.lease=False
+                if command=='disarm': self.lease=False
         future.add_done_callback(completed)
         return future
     def watch(self):
@@ -101,12 +101,17 @@ class RosGripper:
                 def completed(value):
                     try:
                         result=value.result().result
-                        if not result.success: raise RuntimeError(result.message)
+                        interrupted=False
+                        if not result.success:
+                            try: interrupted=bool(json.loads(result.message).get('interrupted'))
+                            except (ValueError,TypeError,AttributeError): pass
+                            if not interrupted: raise RuntimeError(result.message)
                         if future.done(): return
                         if command=='arm': self.lease=True
-                        if command in {'stop','disarm'}: self.lease=False
+                        if command=='disarm': self.lease=False
                         future.set_result({'success':result.success,'message':result.message,'position':result.final_position,
-                                           'position_verified':result.position_verified,'grasp_verified':result.grasp_verified})
+                                           'position_verified':result.position_verified,'grasp_verified':result.grasp_verified,
+                                           'interrupted':interrupted})
                     except Exception as exc:
                         if not future.done(): future.set_exception(exc)
                 handle.get_result_async().add_done_callback(completed)

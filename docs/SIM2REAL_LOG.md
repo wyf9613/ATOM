@@ -85,3 +85,32 @@ Evidence: tmp/gripper_bringup/sweep_20261003_150022_860815/. Condition label lub
 ## 2026-10-03 — Real gripper control boundary
 
 The ESP32 bridge emits real encoder/raw servo/magnetic telemetry with system clock. It does not publish synthetic gripper joint angles or replace existing Gazebo drive_joint feedback. Converting counts to jaw opening/joint position needs measured geometry (G02); force/grasp are unknown. Real gripper recipes reject simulation clock; combined visual/arm recipe also requires separate hardware verification, because current task executive contains simulation inputs. One successful empty-gripper sweep (N=1run,3cycles/72segments) is not simulated grasp success or physical transport acceptance. Protocol/HTTP simulation tests do not drive COM4. See GRIPPER_SYSTEM_INTEGRATION.md.
+
+## 2026-10-03 — Gripper ROS software acceptance with fake serial
+
+Generated ControlGripper Action and native Jazzy bridge/UI adapter passed real ROS messaging with a protocol fake device. Covered SI magnetic telemetry, read-only ARM rejection, session exclusion, segmented position commands, uncalibrated-force rejection, in-motion cancellation with STOP/latched fault/manual recovery, and caller-heartbeat expiry with hold rather than torque release. Also passed 21 protocol/serial,14 HTTP gateway,7 sweep regression tests and native C++ motor state/policy checks. No hardware port opened, no firmware uploaded, no physical motion. Fake telemetry/elapsed times provide no physical force, stopping-distance, latency or reliability evidence. Grasp remains unverified; G01–G09 hardware requirements and joint arm safety acceptance remain open. Logs: tmp/gripper_integration/.
+
+
+## 2026-10-03 — Local UI live telemetry connection recovery
+
+N=1 observed reconnect after bounded STREAM ON startup retries, CP2102 USB serial at115200baud, local Linux UI gateway; log tmp/gripper_bringup/operator_hardware.jsonl. Fresh STS feedback and valid address0x14 magnetic samples reached the HTTP state API; armed=false,moving=false,fault=null. A snapshot reported position1937 encoder counts, voltage77raw,temp27raw,load0raw. These are device telemetry without independent measurement or uncertainty characterization. No ARM, RESET, JOG or torque-release request was issued in this check. Position lies outside2000–2600 UI enable range; no position/motion/force acceptance claim.
+
+
+### 2026-10-03 — Live disarmed telemetry restored after stream loss
+
+N=1 follow-up local USB connection: device position2193counts,armed=false,moving=false,fault=null, motor_fresh=true,sensor_valid=true,sensor_fresh=true at HTTP state API. Only startup/telemetry commands issued by the agent. Software regressions cover stream silence recovery without ARM/RESET and fault latching on an armed board reboot. No physical motion, stopped-load retention, force or stopping-latency result is established. Raw serial/HTTP evidence remains under tmp/gripper_bringup/ and tmp/gripper_integration/.
+
+
+## 2026-10-03 — Continuous motion software change, no physical acceptance
+
+Fake-device tests verify one absolute MOVE request, normal Stop/cancel without a fault or torque release, same-session resume without RESET/ARM, old-firmware rejection and actual-fault latching. Native firmware tests verify a single WritePosEx target,absolute2000–2600 request bounds,continuous completion,hold/resume and operation beyond former7s jog timeout while heartbeat/sensor gates are serviced. User confirmed empty gripper/motor power off and elected Arduino IDE upload. No agent firmware upload or real continuous movement; firmware20s whole-move timeout is provisional. Existing segmented sweep evidence remains evidence only for its original segmented conditions.
+
+
+### 2026-10-03 — User-uploaded continuous firmware telemetry confirmed
+
+Read-only live check after user Arduino upload: continuous_position=true,position2001counts,armed=false,moving=false,fault=null with fresh motor and valid/fresh magnetic samples. One startup raw capture saved to tmp/gripper_bringup/boot_diagnostic.bin showed successful firmware boot; current gateway uses startup garbage resynchronization. No agent ARM,continuous MOVE or force test. This confirms protocol deployment/telemetry, not physical motion/stop performance.
+
+
+### 2026-10-03 — User confirms local gripper frontend integration
+
+After Arduino IDE firmware upload and gateway startup recovery, user explicitly reports no issue and successful frontend integration. This closes local UI connection/deployment acceptance on user confirmation; exact exercised command sequence, repetition count and quantitative stop/force measurements were not supplied. Force calibration, independent grasp verification and combined physical arm supervision remain open.

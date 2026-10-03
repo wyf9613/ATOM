@@ -1,11 +1,13 @@
 """Explicit control-line policy for the current sensor-only ESP32 firmware."""
 import time
+import os
 import serial
 
 
 def open_sensor_port(port, timeout=0, reset=False):
     link = serial.Serial(port=None, baudrate=115200, timeout=timeout,
-                         xonxoff=False, rtscts=False, dsrdtr=False)
+                         xonxoff=False, rtscts=False, dsrdtr=False,
+                         **({'exclusive': True} if os.name == 'posix' else {}))
     link.dtr = False
     link.rts = False
     link.port = port

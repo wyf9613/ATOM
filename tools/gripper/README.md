@@ -37,7 +37,7 @@ ros2 topic hz /atom/gripper/magnetic_field
 ros2 topic echo /diagnostics
 ```
 
-ROS field units are tesla, not µT. Frame mount TF and covariance are unmeasured. Host receive timestamps are not synchronized with ESP32 clock. The package is a hardware sensor boundary, not a simulation gripper controller or a completed GripperCommand implementation. Serial reconnect is supported on the host; sensor initialization/read failure requires checking hardware and resetting ESP32 with EN.
+ROS field units are tesla, not µT. Frame mount TF and covariance are unmeasured. Host receive timestamps are not synchronized with ESP32 clock. The sensor_bridge entry point is read-only and supports serial reconnect; sensor initialization/read failure requires checking hardware and resetting ESP32 with EN. For guarded motor position control, use the separate hardware_bridge entry point, which replaces sensor_bridge for that serial port. See [system integration and software acceptance](../../docs/GRIPPER_SYSTEM_INTEGRATION.md).
 
 Tests without ROS:
 
@@ -46,7 +46,7 @@ $env:PYTHONPATH = Join-Path (Get-Location) 'ros2_ws/src/atom_gripper_hardware'
 python -m unittest discover -s ros2_ws/src/atom_gripper_hardware/test -v
 ```
 
-Motor commissioning commands and gated STS position-mode logic are implemented. See [first-power commissioning](../../docs/GRIPPER_MOTOR_COMMISSIONING.md). Default motor support is disabled; the enabled build requires FTServo and confirmed hardware, electrical compatibility, feedback and measured limits before ARM. No physical motor tests have been performed. USB/VIN is not an accepted servo-power supply. This ROS bridge remains read-only.
+Motor commissioning commands and gated STS position-mode logic are implemented. See [first-power commissioning](../../docs/GRIPPER_MOTOR_COMMISSIONING.md) and [recorded sweep evidence and limits](../../docs/GRIPPER_SYSTEM_INTEGRATION.md). Confirm the selected firmware build, FTServo, electrical compatibility, feedback and limits before ARM. USB/VIN is not an accepted servo-power supply. sensor_bridge remains read-only; hardware_bridge defaults to enable_motion=false.
 
 2026-10-03：为首次反馈测试启用 UART/FTServo（ATOM_MOTOR_ENABLED=1）；HARDWARE_CONFIRMED=0 且行程/负载/电压限制仍未填写，ARM 与运动保持拒绝。官方 SDK 2.0.0 已安装到用户 Arduino libraries/FTServo。首次仅执行 STATUS 和 PING；未验证实际供电及电平前不连接测试，不自动发送任何电机命令。
 

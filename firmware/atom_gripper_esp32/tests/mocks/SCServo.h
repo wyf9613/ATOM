@@ -12,7 +12,8 @@ struct SMS_STS {
   int ReadTemper(int) { return 25; }
   int Ping(int id) { return id; }
   int readByte(int,int reg) { return reg==40 ? torque : 0; }
-  int WritePosEx(int,int,int,int) { ++writes; return !fail; }
+  static int &lastTarget() { static int target=-1; return target; }
+  int WritePosEx(int,int target,int,int) { ++writes; lastTarget()=target; return !fail; }
   int EnableTorque(int,int value) { torque=value; ++writes; return !fail; }
 };
 #define SMS_STS_MODE 33

@@ -31,7 +31,7 @@ class ControlLease:
         return self.owner is not None and now-self.seen>1.5
 
     def complete(self, command, caller, success):
-        if success and command in {'stop', 'disarm'}:
+        if success and (command == 'disarm' or (command == 'stop' and caller != self.owner)):
             self.owner = None
         elif command == 'arm' and not success and self.owner == caller:
             self.owner = None

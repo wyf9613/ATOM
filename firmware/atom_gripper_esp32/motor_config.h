@@ -21,10 +21,10 @@
 #define ATOM_MOTOR_MAX_POSITION 2668 // Observed open=2688; provisional inward margin=20.
 #endif
 #ifndef ATOM_MOTOR_OPEN_POSITION
-#define ATOM_MOTOR_OPEN_POSITION 2668
+#define ATOM_MOTOR_OPEN_POSITION 2600
 #endif
 #ifndef ATOM_MOTOR_CLOSED_POSITION
-#define ATOM_MOTOR_CLOSED_POSITION 1937
+#define ATOM_MOTOR_CLOSED_POSITION 2000
 #endif
 #ifndef ATOM_MOTOR_SPEED
 //TODO G03: verify speed/acceleration register units and measure stopping distance/latency.
@@ -51,10 +51,10 @@
 #define ATOM_GRIP_DELTA_UT -1.0f // Magnetic change threshold needs calibration.
 #endif
 #ifndef ATOM_MOTOR_JOG_ONLY
-#define ATOM_MOTOR_JOG_ONLY 1 // Manual +/-100 counts only; no full opening/closing.
+#define ATOM_MOTOR_JOG_ONLY 0 // Continuous position mode within 2000..2600; JOG remains bounded.
 #endif
 #ifndef ATOM_MOTOR_MOTION_TIMEOUT_MS
-#define ATOM_MOTOR_MOTION_TIMEOUT_MS 7000UL // Provisional bound; measured100count moves ~2.1s, not stop-latency guarantee.
+#define ATOM_MOTOR_MOTION_TIMEOUT_MS 20000UL // Provisional full 600-count move bound; watchdogs unchanged.
 #endif
 #ifndef ATOM_MOTOR_POSITION_TOLERANCE
 #define ATOM_MOTOR_POSITION_TOLERANCE 3 // Observed stable 2-count residual; encoder tolerance, not physical accuracy.

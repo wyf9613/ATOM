@@ -87,7 +87,8 @@ class HardwareBridge(Node):
             result.grasp_verified=False
             result.final_position=self.controller.snapshot()['position'] or -1
             if handle.is_cancel_requested: handle.canceled(); result.success=False
-            else: handle.succeed()
+            elif result.success: handle.succeed()
+            else: handle.abort()
         except Exception as exc:
             result.success=False; result.message=str(exc)
             if handle.is_cancel_requested: handle.canceled()

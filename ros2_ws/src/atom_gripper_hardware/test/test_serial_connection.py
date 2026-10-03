@@ -1,4 +1,5 @@
 import unittest
+import os
 from unittest.mock import patch, MagicMock
 from atom_gripper_hardware.serial_connection import open_sensor_port
 
@@ -10,7 +11,8 @@ class ConnectionTests(unittest.TestCase):
                 patch('atom_gripper_hardware.serial_connection.time.sleep') as sleep:
             self.assertIs(open_sensor_port('COM4', reset=True), link)
         constructor.assert_called_once_with(port=None, baudrate=115200, timeout=0,
-                                            xonxoff=False, rtscts=False, dsrdtr=False)
+                                            xonxoff=False, rtscts=False, dsrdtr=False,
+                                            **({'exclusive': True} if os.name == 'posix' else {}))
         self.assertEqual(link.reset_input_buffer.call_count, 2)
         self.assertEqual([call.args[0] for call in sleep.call_args_list], [0.15, 0.3])
         link.write.assert_not_called()

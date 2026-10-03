@@ -16,7 +16,7 @@ public:
     servo.pSerial = &uart;
     servo.IOTimeOut = 15;
 #endif
-    Serial.println("# motor commands: STATUS PING ARM DISARM RESET STOP KEEPALIVE ZERO JOG <counts> OPEN CLOSE STREAM ON/OFF");
+    Serial.println("# motor commands: STATUS PING ARM DISARM RESET STOP KEEPALIVE ZERO JOG <counts> MOVE <position> OPEN CLOSE STREAM ON/OFF");
     status();
   }
   void sensorSample(bool valid, float x, float y, float z) {
@@ -123,9 +123,9 @@ private:
     traceActive=false;
   }
   void status() {
-    Serial.printf("# MOTOR enabled=%d configured=%d armed=%d moving=%d fault=%d id=%d baud=%lu pos=%d load_raw=%d voltage_raw=%d temp_raw=%d\n",
+    Serial.printf("# MOTOR enabled=%d configured=%d armed=%d moving=%d fault=%d id=%d baud=%lu pos=%d load_raw=%d voltage_raw=%d temp_raw=%d continuous_position=%d\n",
       ATOM_MOTOR_ENABLED,configurationOK(),armed,moving,latched,ATOM_MOTOR_ID,
-      (unsigned long)ATOM_MOTOR_BAUD,position,load,voltage,temperature);
+      (unsigned long)ATOM_MOTOR_BAUD,position,load,voltage,temperature,!ATOM_MOTOR_JOG_ONLY);
   }
   void stopMotion() {
     traceEnd("stop_requested");
@@ -213,13 +213,21 @@ private:
       zeroCount=20; baselineOK=false; zeroX=zeroY=zeroZ=0; return;
     }
     int delta; char extra;
+    int absolute;
+    if (sscanf(text,"MOVE %d %c",&absolute,&extra)==1) {
+      if (ATOM_MOTOR_JOG_ONLY || absolute < 2000 || absolute > 2600) {
+        Serial.println("# ERR continuous_position_limit_or_disabled"); return;
+      }
+      moveTo(absolute,false); return;
+    }
     if (sscanf(text,"JOG %d %c",&delta,&extra)==1) {
       int requested;
       if (!feedback() || !atom::jogTarget(position,delta,ATOM_MOTOR_MIN_POSITION,ATOM_MOTOR_MAX_POSITION,requested)) { Serial.println("# ERR jog_limit"); return; }
       moveTo(requested,false); return;
     }
     if (!strcmp(text,"OPEN")) { if (ATOM_MOTOR_JOG_ONLY) Serial.println("# ERR first_test_jog_only"); else moveTo(ATOM_MOTOR_OPEN_POSITION,false); return; }
-    if (!strcmp(text,"CLOSE")) { if (ATOM_MOTOR_JOG_ONLY) Serial.println("# ERR first_test_jog_only"); else moveTo(ATOM_MOTOR_CLOSED_POSITION,true); return; }
+    // Position-only closure. No contact/force/grasp success is implied.
+    if (!strcmp(text,"CLOSE")) { if (ATOM_MOTOR_JOG_ONLY) Serial.println("# ERR first_test_jog_only"); else moveTo(ATOM_MOTOR_CLOSED_POSITION,false); return; }
 #endif
     Serial.println("# ERR command_unknown_or_motor_disabled");
   }

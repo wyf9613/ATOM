@@ -22,10 +22,18 @@ struct HardwareSerial { HardwareSerial(int) {} void begin(int,int,int,int) {} };
 #define ATOM_MOTOR_ENABLED 1
 #define ATOM_MOTOR_JOG_ONLY 0
 #define ATOM_MOTOR_HARDWARE_CONFIRMED 1
+#ifndef ATOM_MOTOR_MIN_POSITION
 #define ATOM_MOTOR_MIN_POSITION 100
+#endif
+#ifndef ATOM_MOTOR_MAX_POSITION
 #define ATOM_MOTOR_MAX_POSITION 1000
+#endif
+#ifndef ATOM_MOTOR_OPEN_POSITION
 #define ATOM_MOTOR_OPEN_POSITION 200
+#endif
+#ifndef ATOM_MOTOR_CLOSED_POSITION
 #define ATOM_MOTOR_CLOSED_POSITION 900
+#endif
 #define ATOM_MOTOR_MAX_LOAD 100
 #define ATOM_MOTOR_MIN_VOLTAGE 60
 #define ATOM_MOTOR_MAX_VOLTAGE 84
@@ -43,7 +51,8 @@ int main() {
   m.sensorSample(true,0,0,0); command(m,"ARM"); assert(printed("ARM_OK"));
   int before=SMS_STS::writes;
   command(m,"JOG 101"); assert(SMS_STS::writes==before);
-  command(m,"CLOSE"); assert(SMS_STS::writes==before); // No baseline.
+  command(m,"CLOSE"); assert(SMS_STS::writes==before+1); // Position close needs no force baseline.
+  command(m,"STOP"); before=SMS_STS::writes;
   command(m,"JOG 5"); assert(SMS_STS::writes==before+1);
   clockMs=800; m.sensorSample(true,0,0,0); m.poll(); assert(printed("host_timeout"));
   before=SMS_STS::writes; command(m,"ARM"); assert(SMS_STS::writes==before); // Latched.
@@ -54,6 +63,7 @@ int main() {
   command(m,"ZERO"); for(int i=0;i<20;++i) m.sensorSample(true,0,0,0);
   assert(printed("ZERO_OK")); command(m,"ARM"); command(m,"CLOSE");
   clockMs=910; m.sensorSample(true,100,0,0); command(m,"KEEPALIVE"); m.poll();
+  command(m,"STOP");
   assert(printed("STOP position_hold"));
   SMS_STS::fail=true; command(m,"OPEN"); assert(printed("move_feedback_or_limit"));
   assert(printed("hold_unconfirmed_external_stop_required"));
@@ -74,4 +84,5 @@ int main() {
   clockMs+=110; SMS_STS::position=548; arrival.sensorSample(true,0,0,0); command(arrival,"KEEPALIVE");
   assert(printed("MOVE_DONE target=550 pos=548"));
   puts("motor state regression passed");
+  return 0;
 }

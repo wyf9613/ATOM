@@ -18,7 +18,7 @@ class FakeDevice:
 
     def status(self):
         return (f'# MOTOR enabled=1 configured=1 armed={int(self.armed)} moving=0 fault={int(self.fault)} '
-                f'id=1 baud=1000000 pos={self.position} load_raw=44 voltage_raw=77 temp_raw=22')
+                f'id=1 baud=1000000 pos={self.position} load_raw=44 voltage_raw=77 temp_raw=22 continuous_position=1')
 
     def write(self,data):
         with self.lock:
@@ -30,15 +30,15 @@ class FakeDevice:
             elif command=='DISARM': self.armed=False; self.emit('# DISARM_OK torque_off')
             elif command=='RESET': self.fault=False; self.emit('# RESET_OK')
             elif command=='STOP': self.emit('# STOP position_hold_requested_not_estop')
-            elif command.startswith('JOG '):
-                start=self.position; target=start+int(command.split()[1])
+            elif command.startswith(('JOG ', 'MOVE ')):
+                start=self.position; target=int(command.split()[1]) if command.startswith('MOVE ') else start+int(command.split()[1])
                 self.emit(f'# MOVE_START start={start} target={target}')
                 if self.fail_motion:
                     self.fault=True; self.emit('# FAULT servo_limit_exceeded latched')
                 elif not self.delay_motion:
                     self.position=target
                     self.emit(f'# MOTION_SUMMARY result=done start={start} target={target} last_pos={target} peak_abs_load=44',
-                              f'# MOVE_DONE target={target} pos={target} load_raw=0 voltage_raw=77 temp_raw=22')
+                              f'# MOVE_DONE target={target} pos={target} load_raw=0 voltage_raw=77 temp_raw=22 continuous_position=1')
         return len(data)
 
     def read(self,count):
@@ -72,10 +72,10 @@ class ControllerTests(unittest.TestCase):
         self.assertFalse(any(c in {'ARM','DISARM','RESET'} or c.startswith('JOG') for c in self.device.commands))
         self.assertAlmostEqual(self.controller.snapshot()['magnetic_uT'][0],52)
 
-    def test_position_is_segmented_without_grasp_claim(self):
+    def test_position_uses_one_absolute_target_without_grasp_claim(self):
         self.command('arm'); result=self.command('open')
-        jogs=[int(c.split()[1]) for c in self.device.commands if c.startswith('JOG')]
-        self.assertEqual(jogs,[100,100,100]); self.assertEqual(result['position'],2600)
+        moves=[c for c in self.device.commands if c.startswith(('JOG','MOVE '))]
+        self.assertEqual(moves,['MOVE 2600']); self.assertEqual(result['position'],2600)
         self.assertTrue(result['position_verified']); self.assertFalse(result['grasp_verified'])
 
     def test_invalid_and_force_commands_never_write(self):
@@ -97,6 +97,22 @@ class ControllerTests(unittest.TestCase):
             self.assertIn('arm',self.controller.blocks())
             with self.assertRaises(PermissionError): self.controller.submit('arm')
 
+    def test_old_firmware_blocks_continuous_motion(self):
+        self.command('arm')
+        with self.controller.lock:
+            self.controller.state['continuous_position']=False
+            with self.assertRaises(PermissionError): self.controller.submit('open')
+        self.assertFalse(any(c.startswith('MOVE ') for c in self.device.commands))
+
+    def test_unpowered_disarmed_feedback_is_unavailable_without_latched_fault(self):
+        with self.controller.lock:
+            self.controller._consume('# FEEDBACK_ERROR result=-1 sdk_error=1 servo_state=0')
+            self.assertFalse(self.controller.snapshot()['motor_fresh'])
+            self.assertIsNone(self.controller.snapshot()['fault'])
+            self.controller.state['armed']=True
+            self.controller._consume('# FEEDBACK_ERROR result=-1 sdk_error=1 servo_state=0')
+            self.assertIsNotNone(self.controller.snapshot()['fault'])
+
     def test_fault_latched_until_manual_disarm_reset(self):
         self.command('arm'); self.device.fail_motion=True
         with self.assertRaises(RuntimeError): self.command('move',{'position':2400})
@@ -110,11 +126,16 @@ class ControllerTests(unittest.TestCase):
     def test_stop_cancels_running_motion_without_automatic_release(self):
         self.command('arm'); self.device.delay_motion=True
         moving=self.controller.submit('open')
-        self.wait_for(lambda:any(c.startswith('JOG') for c in self.device.commands))
+        self.wait_for(lambda:any(c.startswith('MOVE ') for c in self.device.commands))
         stopped=self.controller.submit('stop')
-        with self.assertRaises(RuntimeError): moving.result(timeout=3)
+        self.assertTrue(moving.result(timeout=3)['interrupted'])
         self.assertTrue(stopped.result(timeout=3)['success'])
         self.assertTrue(self.device.armed); self.assertNotIn('DISARM',self.device.commands)
+        self.assertIsNone(self.controller.snapshot()['fault'])
+        self.device.delay_motion=False
+        self.assertTrue(self.command('close')['position_verified'])
+        self.assertEqual(self.device.commands.count('ARM'),1)
+        self.assertNotIn('RESET',self.device.commands)
 
     def test_readonly_and_busy_gate(self):
         self.controller.enable_motion=False
@@ -124,8 +145,64 @@ class ControllerTests(unittest.TestCase):
         self.controller.submit('open')
         with self.assertRaises(PermissionError): self.controller.submit('close')
 
+    def test_silent_stream_is_restored_without_arm_or_reset(self):
+        self.device.stream=False
+        with self.controller.lock:
+            self.controller.sensor_time=time.monotonic()-1
+            self.controller.last_stream_retry=time.monotonic()-3
+        self.wait_for(lambda:self.device.stream and self.controller.snapshot()['sensor_fresh'])
+        self.assertGreaterEqual(self.device.commands.count('STREAM ON'),2)
+        self.assertFalse(any(c in {'ARM','RESET','DISARM'} or c.startswith('JOG') for c in self.device.commands))
+
+    def test_oversized_record_after_handshake_still_disconnects(self):
+        self.device.emit('x'*300)
+        self.wait_for(lambda:not self.controller.snapshot()['connected'])
+        self.assertEqual(self.controller.snapshot()['fault'],'Oversized device record')
+
+    def test_armed_board_restart_latches_fault_without_automatic_rearm(self):
+        self.command('arm')
+        self.controller._consume('rst:0x1 (POWERON_RESET)')
+        self.assertIn('restarted',self.controller.snapshot()['fault'])
+        self.assertTrue(self.controller.cancel_motion.is_set())
+        self.assertFalse(self.controller.snapshot()['sensor_fresh'])
+        self.assertIn('open',self.controller.blocks())
+        self.assertEqual(self.device.commands.count('ARM'),1)
+
+
+class BootHandshakeTests(unittest.TestCase):
+    def test_boot_drops_first_handshake_then_recovers_without_motion(self):
+        class BootingDevice(FakeDevice):
+            def write(self, data):
+                if data == b'STREAM ON\n' and 'STREAM ON' not in self.commands:
+                    self.commands.append('STREAM ON')
+                    self.emit('x'*300, 'rst:0x1 (POWERON_RESET)', '# sensor_ready',
+                              '# ERR command_unknown_or_motor_disabled')
+                    return len(data)
+                return super().write(data)
+        device = BootingDevice()
+        controller = GripperController('fake', True, opener=lambda *a, **kw: device)
+        try:
+            deadline = time.monotonic()+4
+            while not controller.snapshot()['motor_fresh'] and time.monotonic()<deadline:
+                time.sleep(.01)
+            self.assertTrue(controller.snapshot()['motor_fresh'])
+            self.assertTrue(controller.snapshot()['sensor_fresh'])
+            self.assertIsNone(controller.snapshot()['fault'])
+            self.assertEqual(device.commands.count('STREAM ON'), 2)
+            self.assertFalse(any(c in {'ARM', 'RESET', 'DISARM'} or c.startswith('JOG')
+                                 for c in device.commands))
+        finally:
+            controller.close()
+
 
 class LeaseTests(unittest.TestCase):
+    def test_same_owner_stop_preserves_session_for_immediate_resume(self):
+        lease=ControlLease(); lease.reserve('arm','ui')
+        lease.complete('stop','ui',True)
+        self.assertEqual(lease.owner,'ui')
+        lease.reserve('close','ui')
+        with self.assertRaises(PermissionError): lease.reserve('open','other')
+
     def test_only_current_owner_heartbeat_prevents_expiry(self):
         lease=ControlLease(); lease.reserve('arm','task',now=10)
         lease.keepalive('other',now=11.4)
