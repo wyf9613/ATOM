@@ -1,0 +1,208 @@
+{
+  "date": "2026-10-07",
+  "files": [
+    {
+      "file": "stationary_20261007/console_records.jsonl",
+      "source": "tmp/gripper_force/stationary_20261007/console_records.jsonl",
+      "bytes": 116229,
+      "sha256": "674cf348d7c89dcb43cf53545faeed348f452d1f0f2c948697f3d2844134ec26"
+    },
+    {
+      "file": "stationary_20261007/group_01.csv",
+      "source": "tmp/gripper_force/stationary_20261007/group_01.csv",
+      "bytes": 33056,
+      "sha256": "74f5277c25157c2dfec7bac71ad1034064bcf6beaa523271eb2e7a017190f61e"
+    },
+    {
+      "file": "stationary_20261007/group_02.csv",
+      "source": "tmp/gripper_force/stationary_20261007/group_02.csv",
+      "bytes": 32539,
+      "sha256": "dcbae6efe848845af0c9e9973cde7bb90fc2b99c1a1d2100492b851d35a967f1"
+    },
+    {
+      "file": "stationary_20261007/group_03.csv",
+      "source": "tmp/gripper_force/stationary_20261007/group_03.csv",
+      "bytes": 32553,
+      "sha256": "7a8522fa9c92a3a20d1747e58d1fec71a6bc76de0498e30763c9d096f6ecd8fa"
+    },
+    {
+      "file": "stationary_20261007/summary.json",
+      "source": "tmp/gripper_force/stationary_20261007/summary.json",
+      "bytes": 5563,
+      "sha256": "466710b672aed9097f574d3f0ae924512dddf422855817c9294ccc265c05b612"
+    },
+    {
+      "file": "stationary_20261007/unloaded_baseline.json",
+      "source": "tmp/gripper_force/stationary_20261007/unloaded_baseline.json",
+      "bytes": 923,
+      "sha256": "de53419658a664f833046cc1fbb6cd893798eb3561f00c1e76c0bf98b83fa08e"
+    },
+    {
+      "file": "stationary_pose2_20261007/comparison.json",
+      "source": "tmp/gripper_force/stationary_pose2_20261007/comparison.json",
+      "bytes": 1203,
+      "sha256": "6d9d0afbbf4d7a26289d263865f5b4d0019a4861a8d784d1ee11208e05f813ca"
+    },
+    {
+      "file": "stationary_pose2_20261007/console_records.jsonl",
+      "source": "tmp/gripper_force/stationary_pose2_20261007/console_records.jsonl",
+      "bytes": 116229,
+      "sha256": "1e24733b45bdc9da60f167a0407aa3968aa9bf0b8916b274d4ca5755fa89707a"
+    },
+    {
+      "file": "stationary_pose2_20261007/group_01.csv",
+      "source": "tmp/gripper_force/stationary_pose2_20261007/group_01.csv",
+      "bytes": 33311,
+      "sha256": "2fb9e4e56ab4f0fa35349465a1c1a56223b51c720894ea1d8fba4f01274d48dc"
+    },
+    {
+      "file": "stationary_pose2_20261007/group_02.csv",
+      "source": "tmp/gripper_force/stationary_pose2_20261007/group_02.csv",
+      "bytes": 32900,
+      "sha256": "3c0e67ecbe0d7f299946fd7570805c8107c46454a8f842840f7b7de8c59134cb"
+    },
+    {
+      "file": "stationary_pose2_20261007/group_03.csv",
+      "source": "tmp/gripper_force/stationary_pose2_20261007/group_03.csv",
+      "bytes": 32903,
+      "sha256": "22d0d9023b6dd9628930858ebda51818cf8107b0b1f36ecdbdf5bf05d7dcea08"
+    },
+    {
+      "file": "stationary_pose2_20261007/summary.json",
+      "source": "tmp/gripper_force/stationary_pose2_20261007/summary.json",
+      "bytes": 5811,
+      "sha256": "7e8abf0dc62689cd725976da62cd4ad11ed86b8fd673543e238c9c22a0fa3c05"
+    },
+    {
+      "file": "stationary_pose3_20261007/comparison.json",
+      "source": "tmp/gripper_force/stationary_pose3_20261007/comparison.json",
+      "bytes": 1911,
+      "sha256": "428f447293a5055d7ae867fbd69800662f1d439a39d426092b924735756f18e6"
+    },
+    {
+      "file": "stationary_pose3_20261007/console_records.jsonl",
+      "source": "tmp/gripper_force/stationary_pose3_20261007/console_records.jsonl",
+      "bytes": 117436,
+      "sha256": "d39f2ad037bb7711de7ca6eafe3d20a7799c8e4a333eae01a7ec277386feb846"
+    },
+    {
+      "file": "stationary_pose3_20261007/group_01.csv",
+      "source": "tmp/gripper_force/stationary_pose3_20261007/group_01.csv",
+      "bytes": 31877,
+      "sha256": "46c36f63a47d0bf3e66ce8b805782ae855e6fc3df5e47fdfe2409d411c8c4b5c"
+    },
+    {
+      "file": "stationary_pose3_20261007/group_02.csv",
+      "source": "tmp/gripper_force/stationary_pose3_20261007/group_02.csv",
+      "bytes": 32116,
+      "sha256": "cc6d215e9b14c098cda08945614a4bce8c46b2af017bb88609639dbeba96a514"
+    },
+    {
+      "file": "stationary_pose3_20261007/group_03.csv",
+      "source": "tmp/gripper_force/stationary_pose3_20261007/group_03.csv",
+      "bytes": 32402,
+      "sha256": "f3a3bb7ebe29b463002dded20a1c89200011a807a9cbcef2ce1fa4a466aaed16"
+    },
+    {
+      "file": "stationary_pose3_20261007/summary.json",
+      "source": "tmp/gripper_force/stationary_pose3_20261007/summary.json",
+      "bytes": 5725,
+      "sha256": "1cd9ebe4e65ddeaa0b92cf1a295b98e50cbfaa8b5cafc493eed9f56b0cfda4ae"
+    },
+    {
+      "file": "direct_stationary_20261007/controller.jsonl",
+      "source": "tmp/gripper_force/direct_stationary_20261007/controller.jsonl",
+      "bytes": 205738,
+      "sha256": "163f2a22921ac77e519b80a3b28e083a9c7a7c5e06d21b42ffdb75235173eb12"
+    },
+    {
+      "file": "direct_stationary_20261007/group_01.csv",
+      "source": "tmp/gripper_force/direct_stationary_20261007/group_01.csv",
+      "bytes": 23040,
+      "sha256": "62948c2d945834ec6c0ed4e8d93140f62c88fe8a2b27650e8d60b8a8809637cd"
+    },
+    {
+      "file": "direct_stationary_20261007/group_02.csv",
+      "source": "tmp/gripper_force/direct_stationary_20261007/group_02.csv",
+      "bytes": 22166,
+      "sha256": "22693d32f707b463590a3485ebde65b86da025e94b5c5b95fdc69169ee131123"
+    },
+    {
+      "file": "direct_stationary_20261007/group_03.csv",
+      "source": "tmp/gripper_force/direct_stationary_20261007/group_03.csv",
+      "bytes": 21956,
+      "sha256": "a076fe1b08818dda5fd0a9bb159d33beea1435c4e920b91dec5882bb97f99bd7"
+    },
+    {
+      "file": "direct_stationary_20261007/snapshots.json",
+      "source": "tmp/gripper_force/direct_stationary_20261007/snapshots.json",
+      "bytes": 348750,
+      "sha256": "981d197ad8b58bb0235355388e00e3ec726c4c03f800bc7b2265874f0be5227b"
+    },
+    {
+      "file": "direct_stationary_20261007/summary.json",
+      "source": "tmp/gripper_force/direct_stationary_20261007/summary.json",
+      "bytes": 28861,
+      "sha256": "b25d92a6d1a5c73a201310aa211422073235f6f22b0bf6d6b5e8132c8b2cf09c"
+    },
+    {
+      "file": "empty_closure_20261007/baseline.csv",
+      "source": "tmp/gripper_force/empty_closure_20261007/baseline.csv",
+      "bytes": 7171,
+      "sha256": "7a25b90a5c56f1a2115c70211ce3b09e55ad3409f41d8ca5851b9a68d285ba7a"
+    },
+    {
+      "file": "empty_closure_20261007/close_1.csv",
+      "source": "tmp/gripper_force/empty_closure_20261007/close_1.csv",
+      "bytes": 7160,
+      "sha256": "ed032a182cb5abc4a7bd5f8d086020f48d530a71e49079e6df0d8b4bfc96258e"
+    },
+    {
+      "file": "empty_closure_20261007/close_2.csv",
+      "source": "tmp/gripper_force/empty_closure_20261007/close_2.csv",
+      "bytes": 7287,
+      "sha256": "5d6fadba5ba299964a8a9d7bf60e569d4dd7fbad46ce654bd7a15b3c21699db4"
+    },
+    {
+      "file": "empty_closure_20261007/close_3.csv",
+      "source": "tmp/gripper_force/empty_closure_20261007/close_3.csv",
+      "bytes": 7560,
+      "sha256": "6fd2b4455c88223b9322574405daa9bff7429a0e6fcdf2852e7140afb29154b6"
+    },
+    {
+      "file": "empty_closure_20261007/controller.jsonl",
+      "source": "tmp/gripper_force/empty_closure_20261007/controller.jsonl",
+      "bytes": 136017,
+      "sha256": "da4db55478db182a4f9c644f2090ee0ada0efb4e95a2320ad59cc5b2fa38bc23"
+    },
+    {
+      "file": "empty_closure_20261007/return.csv",
+      "source": "tmp/gripper_force/empty_closure_20261007/return.csv",
+      "bytes": 7081,
+      "sha256": "c2eb19faa6efbb11aacbf648c17ae3034e8ab0fc384de8a68fba13e5fcf4f2cb"
+    },
+    {
+      "file": "empty_closure_20261007/snapshots.json",
+      "source": "tmp/gripper_force/empty_closure_20261007/snapshots.json",
+      "bytes": 1291721,
+      "sha256": "e073e7cf1bcf19f5e0d4dc74eff9d036316538193db1116a4c4bd71794cf0989"
+    },
+    {
+      "file": "empty_closure_20261007/summary.json",
+      "source": "tmp/gripper_force/empty_closure_20261007/summary.json",
+      "bytes": 21441,
+      "sha256": "7729a508e043307a6b0fe7ffb720072d7cc0d3ec0c5b70febd4b03d9e3b2cf5d"
+    },
+    {
+      "file": "motor_20261007_144300_661483.jsonl",
+      "source": "tmp/gripper_bringup/motor_20261007_144300_661483.jsonl",
+      "bytes": 1145396,
+      "sha256": "bd31d6bf66598cf229d0e152aa179c50fed137b4604ad355e55f14ad07dfde0c"
+    }
+  ],
+  "notes": [
+    "Byte-for-byte copies; source tmp paths remain in captured metadata.",
+    "All records retained, including startup fragments and transients.",
+    "No calibrated force data. No runtime scripts or firmware included in this archive."
+  ]
+}

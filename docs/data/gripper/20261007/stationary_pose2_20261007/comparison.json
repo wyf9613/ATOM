@@ -1,0 +1,36 @@
+{
+  "units": "uT",
+  "reference_source": "tmp/gripper_force/stationary_20261007/summary.json",
+  "new_source": "tmp/gripper_force/stationary_pose2_20261007/summary.json",
+  "reference_mean_uT": [
+    -280.21584533333333,
+    -205.27384256333332,
+    7842.070448721111
+  ],
+  "new_mean_uT": [
+    -307.11201235333334,
+    -200.88900902333333,
+    7875.857142517777
+  ],
+  "new_minus_reference_uT": [
+    -26.896167020000007,
+    4.384833539999988,
+    33.78669379666644
+  ],
+  "vector_difference_norm_uT": 43.40704140172356,
+  "new_group3_minus_group1_mean_uT": [
+    0.4535210834564509,
+    0.2668778944766075,
+    -6.471467246280554
+  ],
+  "reference_samples": 900,
+  "new_samples": 900,
+  "force_calibrated": false,
+  "deployed_to_firmware": false,
+  "notes": [
+    "New session mean is an observation, not adopted as a fixed zero.",
+    "Arm pose, magnetic surroundings, gravity deformation, temperature, servo current and elapsed time are confounded; cause not identified.",
+    "Nearest metal distance about30cm is user estimate, not a known immunity distance.",
+    "No gripper motion or ZERO commands in console between the two captures; arm/jaw physical state not independently measured."
+  ]
+}

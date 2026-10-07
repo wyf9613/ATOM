@@ -1,0 +1,227 @@
+{
+  "source": "tmp/gripper_bringup/motor_20261007_144300_661483.jsonl",
+  "collection": "Passive tail of single-owner console log; no serial access or commands",
+  "conditions": "User reports no object; stationary requested. Servo previously armed and STOP acknowledged; position/temp not measured during these windows.",
+  "groups": [
+    {
+      "records": 301,
+      "valid": 301,
+      "invalid": 0,
+      "units": "uT",
+      "force_calibrated": false,
+      "x": {
+        "mean": -280.1790820066445,
+        "sample_std": 0.40306410560873634,
+        "min": -281.400024,
+        "max": -279.0
+      },
+      "y": {
+        "mean": -205.273265282392,
+        "sample_std": 0.44809698819787064,
+        "min": -206.550003,
+        "max": -204.15000899999998
+      },
+      "z": {
+        "mean": 7841.967340348837,
+        "sample_std": 1.2043079182205694,
+        "min": 7837.895996,
+        "max": 7845.640137000001
+      },
+      "sequence_gaps": 0,
+      "resets_or_reordering": 0,
+      "duplicates": 0,
+      "device_rate_hz": 10.000333344444815,
+      "group": 1,
+      "requested_window_s": 30,
+      "observed_host_span_s": 29.999119997024536,
+      "mean_uT": [
+        -280.1790820066445,
+        -205.273265282392,
+        7841.967340348837
+      ],
+      "sample_std_uT": [
+        0.40306410560873634,
+        0.44809698819787064,
+        1.2043079182205694
+      ],
+      "range_uT": [
+        [
+          -281.400024,
+          -279.0
+        ],
+        [
+          -206.550003,
+          -204.15000899999998
+        ],
+        [
+          7837.895996,
+          7845.640137000001
+        ]
+      ],
+      "last5_minus_first5_mean_uT": [
+        -0.21794082352943178,
+        0.10652993294115731,
+        -1.129711267059065
+      ]
+    },
+    {
+      "records": 299,
+      "valid": 299,
+      "invalid": 0,
+      "units": "uT",
+      "force_calibrated": false,
+      "x": {
+        "mean": -280.1874696923077,
+        "sample_std": 0.40429989569915503,
+        "min": -281.700012,
+        "max": -279.1500239999999
+      },
+      "y": {
+        "mean": -205.1493404147157,
+        "sample_std": 0.42647254508596744,
+        "min": -206.250015,
+        "max": -204.000015
+      },
+      "z": {
+        "mean": 7841.551040936454,
+        "sample_std": 1.2049436429857,
+        "min": 7838.62207,
+        "max": 7844.671874999999
+      },
+      "sequence_gaps": 0,
+      "resets_or_reordering": 0,
+      "duplicates": 0,
+      "device_rate_hz": 10.0,
+      "group": 2,
+      "requested_window_s": 30,
+      "observed_host_span_s": 29.800654888153076,
+      "mean_uT": [
+        -280.1874696923077,
+        -205.1493404147157,
+        7841.551040936454
+      ],
+      "sample_std_uT": [
+        0.40429989569915503,
+        0.42647254508596744,
+        1.2049436429857
+      ],
+      "range_uT": [
+        [
+          -281.700012,
+          -279.1500239999999
+        ],
+        [
+          -206.250015,
+          -204.000015
+        ],
+        [
+          7838.62207,
+          7844.671874999999
+        ]
+      ],
+      "last5_minus_first5_mean_uT": [
+        0.07499880000000303,
+        -0.12300108000002297,
+        0.5517675199998848
+      ]
+    },
+    {
+      "records": 300,
+      "valid": 300,
+      "invalid": 0,
+      "units": "uT",
+      "force_calibrated": false,
+      "x": {
+        "mean": -280.28101226,
+        "sample_std": 0.4162526181169657,
+        "min": -281.400024,
+        "max": -278.850006
+      },
+      "y": {
+        "mean": -205.39850891,
+        "sample_std": 0.5078704099070214,
+        "min": -207.000015,
+        "max": -203.850006
+      },
+      "z": {
+        "mean": 7842.691577213333,
+        "sample_std": 1.1998938448936065,
+        "min": 7839.348144999999,
+        "max": 7845.881836
+      },
+      "sequence_gaps": 0,
+      "resets_or_reordering": 0,
+      "duplicates": 0,
+      "device_rate_hz": 10.0,
+      "group": 3,
+      "requested_window_s": 30,
+      "observed_host_span_s": 29.90180993080139,
+      "mean_uT": [
+        -280.28101226,
+        -205.39850891,
+        7842.691577213333
+      ],
+      "sample_std_uT": [
+        0.4162526181169657,
+        0.5078704099070214,
+        1.1998938448936065
+      ],
+      "range_uT": [
+        [
+          -281.400024,
+          -278.850006
+        ],
+        [
+          -207.000015,
+          -203.850006
+        ],
+        [
+          7839.348144999999,
+          7845.881836
+        ]
+      ],
+      "last5_minus_first5_mean_uT": [
+        -0.039763174117695144,
+        0.22488206352940665,
+        0.7255930541177804
+      ]
+    }
+  ],
+  "combined": {
+    "records": 900,
+    "valid": 900,
+    "invalid": 0,
+    "units": "uT",
+    "force_calibrated": false,
+    "x": {
+      "mean": -280.21584533333333,
+      "sample_std": 0.4100747291612419,
+      "min": -281.700012,
+      "max": -278.850006
+    },
+    "y": {
+      "mean": -205.27384256333332,
+      "sample_std": 0.4726752526764746,
+      "min": -207.000015,
+      "max": -203.850006
+    },
+    "z": {
+      "mean": 7842.070448721111,
+      "sample_std": 1.2907904445090919,
+      "min": 7837.895996,
+      "max": 7845.881836
+    },
+    "sequence_gaps": 0,
+    "resets_or_reordering": 0,
+    "duplicates": 0,
+    "device_rate_hz": 10.000111235942558
+  },
+  "malformed_V1": 0,
+  "termination": "completed",
+  "calibrated_force": false,
+  "notes": [
+    "Three contiguous 30s windows, not independent remounts.",
+    "Sample SD and drift are observations, not total sensor or force uncertainty.",
+    "No physical zero-field truth; mean is unloaded magnetic baseline at this pose."
+  ]
+}

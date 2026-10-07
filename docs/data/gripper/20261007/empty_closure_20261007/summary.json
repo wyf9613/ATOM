@@ -1,0 +1,841 @@
+{
+  "protocol": "Explicit DISARM then ARM at current position; baseline,3x20count inward moves, return;2s settle+10s each. Fault abort, no reset/retry or return after fault. Final STOP then DISARM.",
+  "start_position": 2410,
+  "termination": "completed",
+  "platforms": [
+    {
+      "name": "baseline",
+      "target_counts": 2410,
+      "start": 20728.034591786,
+      "initial_state": {
+        "connected": true,
+        "fault": null,
+        "armed": true,
+        "moving": false,
+        "position": 2410,
+        "load_raw": 0,
+        "voltage_raw": 76,
+        "temperature_raw": 25,
+        "sensor_valid": true,
+        "magnetic_uT": [
+          -306.150024,
+          -210.90000899999998,
+          7748.839844
+        ],
+        "sensor_address": 20,
+        "configured": true,
+        "command_state": "idle",
+        "last_result": {
+          "position_verified": false,
+          "grasp_verified": false,
+          "message": "# ARM_OK",
+          "success": true,
+          "command": "arm"
+        },
+        "continuous_position": true,
+        "force_calibrated": false,
+        "force_n": null,
+        "grasp_verified": false,
+        "position_range": [
+          2000,
+          2600
+        ],
+        "open_position": 2600,
+        "close_position": 2000,
+        "source": "esp32_hardware",
+        "motion_enabled": true,
+        "force_uncertainty_n": null,
+        "force_status": "Fingertip force calibration pending",
+        "motor_fresh": true,
+        "sensor_fresh": true,
+        "busy": false
+      },
+      "end": 20738.088646288,
+      "final_state": {
+        "connected": true,
+        "fault": null,
+        "armed": true,
+        "moving": false,
+        "position": 2410,
+        "load_raw": 0,
+        "voltage_raw": 76,
+        "temperature_raw": 25,
+        "sensor_valid": true,
+        "magnetic_uT": [
+          -305.24999999999994,
+          -210.90000899999998,
+          7746.419922
+        ],
+        "sensor_address": 20,
+        "configured": true,
+        "command_state": "idle",
+        "last_result": {
+          "position_verified": false,
+          "grasp_verified": false,
+          "message": "# ARM_OK",
+          "success": true,
+          "command": "arm"
+        },
+        "continuous_position": true,
+        "force_calibrated": false,
+        "force_n": null,
+        "grasp_verified": false,
+        "position_range": [
+          2000,
+          2600
+        ],
+        "open_position": 2600,
+        "close_position": 2000,
+        "source": "esp32_hardware",
+        "motion_enabled": true,
+        "force_uncertainty_n": null,
+        "force_status": "Fingertip force calibration pending",
+        "motor_fresh": true,
+        "sensor_fresh": true,
+        "busy": false
+      },
+      "magnetic_statistics": {
+        "records": 100,
+        "valid": 100,
+        "invalid": 0,
+        "units": "uT",
+        "force_calibrated": false,
+        "x": {
+          "mean": -306.40801188,
+          "sample_std": 0.424843766878191,
+          "min": -307.650024,
+          "max": -305.24999999999994
+        },
+        "y": {
+          "mean": -210.59550873,
+          "sample_std": 0.4534988496730094,
+          "min": -211.500015,
+          "max": -209.250015
+        },
+        "z": {
+          "mean": 7748.78671393,
+          "sample_std": 1.2154045621101324,
+          "min": 7746.177734,
+          "max": 7751.744140999999
+        },
+        "sequence_gaps": 0,
+        "resets_or_reordering": 0,
+        "duplicates": 0,
+        "device_rate_hz": 9.989909182643794
+      },
+      "telemetry_ranges": {
+        "position": [
+          2410,
+          2410
+        ],
+        "load_raw": [
+          0,
+          0
+        ],
+        "voltage_raw": [
+          76,
+          77
+        ],
+        "temperature_raw": [
+          25,
+          25
+        ]
+      },
+      "delta_from_baseline_mean_uT": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "name": "close_1",
+      "target_counts": 2390,
+      "start": 20740.649088726,
+      "initial_state": {
+        "connected": true,
+        "fault": null,
+        "armed": true,
+        "moving": false,
+        "position": 2390,
+        "load_raw": 0,
+        "voltage_raw": 77,
+        "temperature_raw": 25,
+        "sensor_valid": true,
+        "magnetic_uT": [
+          -306.9000239999999,
+          -210.90000899999998,
+          7745.693848
+        ],
+        "sensor_address": 20,
+        "configured": true,
+        "command_state": "idle",
+        "last_result": {
+          "position_verified": true,
+          "position": 2391,
+          "grasp_verified": false,
+          "success": true,
+          "command": "move"
+        },
+        "continuous_position": true,
+        "force_calibrated": false,
+        "force_n": null,
+        "grasp_verified": false,
+        "position_range": [
+          2000,
+          2600
+        ],
+        "open_position": 2600,
+        "close_position": 2000,
+        "source": "esp32_hardware",
+        "motion_enabled": true,
+        "force_uncertainty_n": null,
+        "force_status": "Fingertip force calibration pending",
+        "motor_fresh": true,
+        "sensor_fresh": true,
+        "busy": false
+      },
+      "end": 20750.665124022,
+      "final_state": {
+        "connected": true,
+        "fault": null,
+        "armed": true,
+        "moving": false,
+        "position": 2390,
+        "load_raw": 0,
+        "voltage_raw": 77,
+        "temperature_raw": 25,
+        "sensor_valid": true,
+        "magnetic_uT": [
+          -306.75,
+          -209.700012,
+          7748.11377
+        ],
+        "sensor_address": 20,
+        "configured": true,
+        "command_state": "idle",
+        "last_result": {
+          "position_verified": true,
+          "position": 2391,
+          "grasp_verified": false,
+          "success": true,
+          "command": "move"
+        },
+        "continuous_position": true,
+        "force_calibrated": false,
+        "force_n": null,
+        "grasp_verified": false,
+        "position_range": [
+          2000,
+          2600
+        ],
+        "open_position": 2600,
+        "close_position": 2000,
+        "source": "esp32_hardware",
+        "motion_enabled": true,
+        "force_uncertainty_n": null,
+        "force_status": "Fingertip force calibration pending",
+        "motor_fresh": true,
+        "sensor_fresh": true,
+        "busy": false
+      },
+      "magnetic_statistics": {
+        "records": 100,
+        "valid": 100,
+        "invalid": 0,
+        "units": "uT",
+        "force_calibrated": false,
+        "x": {
+          "mean": -307.47600996,
+          "sample_std": 0.4546336099947776,
+          "min": -308.400024,
+          "max": -306.450012
+        },
+        "y": {
+          "mean": -210.67950882,
+          "sample_std": 0.44845967875745374,
+          "min": -211.80000299999998,
+          "max": -209.400009
+        },
+        "z": {
+          "mean": 7746.1803858,
+          "sample_std": 1.2803128192694744,
+          "min": 7743.516113,
+          "max": 7749.808104999999
+        },
+        "sequence_gaps": 0,
+        "resets_or_reordering": 0,
+        "duplicates": 0,
+        "device_rate_hz": 9.95675349492105
+      },
+      "telemetry_ranges": {
+        "position": [
+          2390,
+          2390
+        ],
+        "load_raw": [
+          0,
+          0
+        ],
+        "voltage_raw": [
+          76,
+          77
+        ],
+        "temperature_raw": [
+          25,
+          25
+        ]
+      },
+      "delta_from_baseline_mean_uT": [
+        -1.0679980799999953,
+        -0.08400008999998931,
+        -2.6063281299993832
+      ]
+    },
+    {
+      "name": "close_2",
+      "target_counts": 2370,
+      "start": 20753.199581955,
+      "initial_state": {
+        "connected": true,
+        "fault": null,
+        "armed": true,
+        "moving": false,
+        "position": 2371,
+        "load_raw": 0,
+        "voltage_raw": 76,
+        "temperature_raw": 25,
+        "sensor_valid": true,
+        "magnetic_uT": [
+          -307.05001799999997,
+          -210.150009,
+          7743.757812
+        ],
+        "sensor_address": 20,
+        "configured": true,
+        "command_state": "idle",
+        "last_result": {
+          "position_verified": true,
+          "position": 2371,
+          "grasp_verified": false,
+          "success": true,
+          "command": "move"
+        },
+        "continuous_position": true,
+        "force_calibrated": false,
+        "force_n": null,
+        "grasp_verified": false,
+        "position_range": [
+          2000,
+          2600
+        ],
+        "open_position": 2600,
+        "close_position": 2000,
+        "source": "esp32_hardware",
+        "motion_enabled": true,
+        "force_uncertainty_n": null,
+        "force_status": "Fingertip force calibration pending",
+        "motor_fresh": true,
+        "sensor_fresh": true,
+        "busy": false
+      },
+      "end": 20763.237269333,
+      "final_state": {
+        "connected": true,
+        "fault": null,
+        "armed": true,
+        "moving": false,
+        "position": 2371,
+        "load_raw": 0,
+        "voltage_raw": 76,
+        "temperature_raw": 25,
+        "sensor_valid": true,
+        "magnetic_uT": [
+          -308.25,
+          -211.200012,
+          7743.757812
+        ],
+        "sensor_address": 20,
+        "configured": true,
+        "command_state": "idle",
+        "last_result": {
+          "position_verified": true,
+          "position": 2371,
+          "grasp_verified": false,
+          "success": true,
+          "command": "move"
+        },
+        "continuous_position": true,
+        "force_calibrated": false,
+        "force_n": null,
+        "grasp_verified": false,
+        "position_range": [
+          2000,
+          2600
+        ],
+        "open_position": 2600,
+        "close_position": 2000,
+        "source": "esp32_hardware",
+        "motion_enabled": true,
+        "force_uncertainty_n": null,
+        "force_status": "Fingertip force calibration pending",
+        "motor_fresh": true,
+        "sensor_fresh": true,
+        "busy": false
+      },
+      "magnetic_statistics": {
+        "records": 100,
+        "valid": 100,
+        "invalid": 0,
+        "units": "uT",
+        "force_calibrated": false,
+        "x": {
+          "mean": -307.99051098,
+          "sample_std": 0.3953441445314636,
+          "min": -308.85000599999995,
+          "max": -307.05001799999997
+        },
+        "y": {
+          "mean": -210.96900864,
+          "sample_std": 0.4559800984714696,
+          "min": -212.250015,
+          "max": -210.00001499999996
+        },
+        "z": {
+          "mean": 7744.61705074,
+          "sample_std": 1.0955072321391548,
+          "min": 7741.821776999999,
+          "max": 7748.11377
+        },
+        "sequence_gaps": 0,
+        "resets_or_reordering": 0,
+        "duplicates": 0,
+        "device_rate_hz": 9.915865384615385
+      },
+      "telemetry_ranges": {
+        "position": [
+          2371,
+          2371
+        ],
+        "load_raw": [
+          0,
+          0
+        ],
+        "voltage_raw": [
+          76,
+          77
+        ],
+        "temperature_raw": [
+          25,
+          25
+        ]
+      },
+      "delta_from_baseline_mean_uT": [
+        -1.5824991000000068,
+        -0.3734999099999925,
+        -4.169663189999483
+      ]
+    },
+    {
+      "name": "close_3",
+      "target_counts": 2350,
+      "start": 20765.823731867,
+      "initial_state": {
+        "connected": true,
+        "fault": null,
+        "armed": true,
+        "moving": false,
+        "position": 2351,
+        "load_raw": 0,
+        "voltage_raw": 77,
+        "temperature_raw": 25,
+        "sensor_valid": true,
+        "magnetic_uT": [
+          -308.25,
+          -210.90000899999998,
+          7742.7900389999995
+        ],
+        "sensor_address": 20,
+        "configured": true,
+        "command_state": "idle",
+        "last_result": {
+          "position_verified": true,
+          "position": 2351,
+          "grasp_verified": false,
+          "success": true,
+          "command": "move"
+        },
+        "continuous_position": true,
+        "force_calibrated": false,
+        "force_n": null,
+        "grasp_verified": false,
+        "position_range": [
+          2000,
+          2600
+        ],
+        "open_position": 2600,
+        "close_position": 2000,
+        "source": "esp32_hardware",
+        "motion_enabled": true,
+        "force_uncertainty_n": null,
+        "force_status": "Fingertip force calibration pending",
+        "motor_fresh": true,
+        "sensor_fresh": true,
+        "busy": false
+      },
+      "end": 20775.836109351,
+      "final_state": {
+        "connected": true,
+        "fault": null,
+        "armed": true,
+        "moving": false,
+        "position": 2351,
+        "load_raw": 0,
+        "voltage_raw": 76,
+        "temperature_raw": 25,
+        "sensor_valid": true,
+        "magnetic_uT": [
+          -309.0,
+          -210.750015,
+          7741.821776999999
+        ],
+        "sensor_address": 20,
+        "configured": true,
+        "command_state": "idle",
+        "last_result": {
+          "position_verified": true,
+          "position": 2351,
+          "grasp_verified": false,
+          "success": true,
+          "command": "move"
+        },
+        "continuous_position": true,
+        "force_calibrated": false,
+        "force_n": null,
+        "grasp_verified": false,
+        "position_range": [
+          2000,
+          2600
+        ],
+        "open_position": 2600,
+        "close_position": 2000,
+        "source": "esp32_hardware",
+        "motion_enabled": true,
+        "force_uncertainty_n": null,
+        "force_status": "Fingertip force calibration pending",
+        "motor_fresh": true,
+        "sensor_fresh": true,
+        "busy": false
+      },
+      "magnetic_statistics": {
+        "records": 100,
+        "valid": 100,
+        "invalid": 0,
+        "units": "uT",
+        "force_calibrated": false,
+        "x": {
+          "mean": -308.42701122,
+          "sample_std": 0.4271362853394274,
+          "min": -309.74999999999994,
+          "max": -307.200012
+        },
+        "y": {
+          "mean": -211.03050947999998,
+          "sample_std": 0.464980518478065,
+          "min": -212.100006,
+          "max": -209.700012
+        },
+        "z": {
+          "mean": 7742.71010254,
+          "sample_std": 1.1319916514718482,
+          "min": 7739.8857419999995,
+          "max": 7745.693848
+        },
+        "sequence_gaps": 0,
+        "resets_or_reordering": 0,
+        "duplicates": 0,
+        "device_rate_hz": 9.968784613835465
+      },
+      "telemetry_ranges": {
+        "position": [
+          2351,
+          2351
+        ],
+        "load_raw": [
+          0,
+          0
+        ],
+        "voltage_raw": [
+          76,
+          77
+        ],
+        "temperature_raw": [
+          25,
+          25
+        ]
+      },
+      "delta_from_baseline_mean_uT": [
+        -2.0189993399999935,
+        -0.43500074999997196,
+        -6.0766113899999254
+      ]
+    },
+    {
+      "name": "return",
+      "target_counts": 2410,
+      "start": 20779.244715512,
+      "initial_state": {
+        "connected": true,
+        "fault": null,
+        "armed": true,
+        "moving": false,
+        "position": 2409,
+        "load_raw": 0,
+        "voltage_raw": 77,
+        "temperature_raw": 25,
+        "sensor_valid": true,
+        "magnetic_uT": [
+          -306.300018,
+          -210.45001199999996,
+          7743.516113
+        ],
+        "sensor_address": 20,
+        "configured": true,
+        "command_state": "idle",
+        "last_result": {
+          "position_verified": true,
+          "position": 2409,
+          "grasp_verified": false,
+          "success": true,
+          "command": "move"
+        },
+        "continuous_position": true,
+        "force_calibrated": false,
+        "force_n": null,
+        "grasp_verified": false,
+        "position_range": [
+          2000,
+          2600
+        ],
+        "open_position": 2600,
+        "close_position": 2000,
+        "source": "esp32_hardware",
+        "motion_enabled": true,
+        "force_uncertainty_n": null,
+        "force_status": "Fingertip force calibration pending",
+        "motor_fresh": true,
+        "sensor_fresh": true,
+        "busy": false
+      },
+      "end": 20789.272495938,
+      "final_state": {
+        "connected": true,
+        "fault": null,
+        "armed": true,
+        "moving": false,
+        "position": 2409,
+        "load_raw": 0,
+        "voltage_raw": 76,
+        "temperature_raw": 25,
+        "sensor_valid": true,
+        "magnetic_uT": [
+          -306.300018,
+          -210.600006,
+          7744.726074
+        ],
+        "sensor_address": 20,
+        "configured": true,
+        "command_state": "idle",
+        "last_result": {
+          "position_verified": true,
+          "position": 2409,
+          "grasp_verified": false,
+          "success": true,
+          "command": "move"
+        },
+        "continuous_position": true,
+        "force_calibrated": false,
+        "force_n": null,
+        "grasp_verified": false,
+        "position_range": [
+          2000,
+          2600
+        ],
+        "open_position": 2600,
+        "close_position": 2000,
+        "source": "esp32_hardware",
+        "motion_enabled": true,
+        "force_uncertainty_n": null,
+        "force_status": "Fingertip force calibration pending",
+        "motor_fresh": true,
+        "sensor_fresh": true,
+        "busy": false
+      },
+      "magnetic_statistics": {
+        "records": 100,
+        "valid": 100,
+        "invalid": 0,
+        "units": "uT",
+        "force_calibrated": false,
+        "x": {
+          "mean": -306.3300111,
+          "sample_std": 0.3630672115071036,
+          "min": -307.350006,
+          "max": -305.400024
+        },
+        "y": {
+          "mean": -211.03800858,
+          "sample_std": 0.4336316920829582,
+          "min": -212.100006,
+          "max": -209.850006
+        },
+        "z": {
+          "mean": 7744.9848925,
+          "sample_std": 1.175659413776677,
+          "min": 7741.096190999999,
+          "max": 7747.87207
+        },
+        "sequence_gaps": 0,
+        "resets_or_reordering": 0,
+        "duplicates": 0,
+        "device_rate_hz": 9.982857719068265
+      },
+      "telemetry_ranges": {
+        "position": [
+          2409,
+          2409
+        ],
+        "load_raw": [
+          0,
+          0
+        ],
+        "voltage_raw": [
+          76,
+          77
+        ],
+        "temperature_raw": [
+          25,
+          25
+        ]
+      },
+      "delta_from_baseline_mean_uT": [
+        0.07800078000002486,
+        -0.44249984999999015,
+        -3.801821430000018
+      ]
+    }
+  ],
+  "moves": [
+    {
+      "target": 2390,
+      "result": {
+        "position_verified": true,
+        "position": 2391,
+        "grasp_verified": false,
+        "success": true,
+        "command": "move"
+      }
+    },
+    {
+      "target": 2370,
+      "result": {
+        "position_verified": true,
+        "position": 2371,
+        "grasp_verified": false,
+        "success": true,
+        "command": "move"
+      }
+    },
+    {
+      "target": 2350,
+      "result": {
+        "position_verified": true,
+        "position": 2351,
+        "grasp_verified": false,
+        "success": true,
+        "command": "move"
+      }
+    },
+    {
+      "target": 2410,
+      "result": {
+        "position_verified": true,
+        "position": 2409,
+        "grasp_verified": false,
+        "success": true,
+        "command": "move"
+      }
+    }
+  ],
+  "cleanup": [
+    {
+      "command": "stop",
+      "result": {
+        "position_verified": false,
+        "grasp_verified": false,
+        "message": "# STOP",
+        "success": true,
+        "command": "stop"
+      }
+    },
+    {
+      "command": "disarm",
+      "result": {
+        "position_verified": false,
+        "grasp_verified": false,
+        "message": "# DISARM_OK",
+        "success": true,
+        "command": "disarm"
+      }
+    }
+  ],
+  "final_state": {
+    "connected": true,
+    "fault": null,
+    "armed": false,
+    "moving": false,
+    "position": 2409,
+    "load_raw": 0,
+    "voltage_raw": 76,
+    "temperature_raw": 25,
+    "sensor_valid": true,
+    "magnetic_uT": [
+      -306.450012,
+      -211.200012,
+      7745.936035
+    ],
+    "sensor_address": 20,
+    "configured": true,
+    "command_state": "idle",
+    "last_result": {
+      "position_verified": false,
+      "grasp_verified": false,
+      "message": "# DISARM_OK",
+      "success": true,
+      "command": "disarm"
+    },
+    "continuous_position": true,
+    "force_calibrated": false,
+    "force_n": null,
+    "grasp_verified": false,
+    "position_range": [
+      2000,
+      2600
+    ],
+    "open_position": 2600,
+    "close_position": 2000,
+    "source": "esp32_hardware",
+    "motion_enabled": true,
+    "force_uncertainty_n": null,
+    "force_status": "Fingertip force calibration pending",
+    "motor_fresh": true,
+    "sensor_fresh": true,
+    "busy": false
+  },
+  "force_calibrated": false,
+  "notes": [
+    "User reports no object and fixed arm pose; aperture/pose/temperature_C/current not independently measured.",
+    "Counts are encoder targets, not millimetres; raw load is not N.",
+    "Baseline sampled after ARM, retained unchanged through moves. No ZERO requested.",
+    "Single sequence, no time-matched hold-only control; motion-dependent signal and temporal drift not isolated."
+  ]
+}

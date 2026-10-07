@@ -27,6 +27,11 @@ UR3e 的已实现仿真、MoveIt 抓取和 Humble/Fortress 验证文档保留在
 | [第一阶段学习路线](PHASE1_MINIMUM_LEARNING_ROADMAP.md) | 仿真阶段的技术栈与学习材料 |
 | [夹爪设计与验证](GRIPPER_DESIGN.md) | 汇总上一组夹爪结构、实验结果、风险和首轮测试 |
 | [夹爪标准力标定](GRIPPER_FORCE_CALIBRATION.md) | 固定物体持有验收、标准力采集、验证和可调目标力解除条件 |
+| [夹爪接线与当前操作流程](GRIPPER_CONNECTION_AND_TEST_WORKFLOW.md) | 当前固件接线、供电、串口检查、带日志台架夹持与网页入口 |
+| [2026-10-07夹爪空载静止基线](GRIPPER_STATIONARY_BASELINE_20261007.md) | 三组实物磁场统计、暂定基线、漂移与力标定边界 |
+| [2026-10-07直接串口静止测量](GRIPPER_DIRECT_STATIONARY_20261007.md) | Agent直接连接后的状态、三组采集、启动现象与原始证据 |
+| [2026-10-07空载闭合测量](GRIPPER_EMPTY_CLOSURE_20261007.md) | 三次小步闭合/回程、磁场差值和位置/时间混杂影响 |
+| [夹爪后续测试与交接](GRIPPER_NEXT_TESTS.md) | 等时长对照、重复闭合、差值力标定及队友接机械臂前的夹爪事项 |
 | [新法兰与夹爪模型集成](GRIPPER_MOUNT_V2_INTEGRATION.md) | CAD 坐标恢复、模块化 URDF/SRDF、碰撞覆盖和实机接入边界 |
 | [CAD 资产清单](CAD_INVENTORY.md) | 记录收到的 CAD、校验信息和后续导出要求 |
 | [仿真到实机差异记录](SIM2REAL_LOG.md) | 持续记录模型假设、实测结果和修正验证 |

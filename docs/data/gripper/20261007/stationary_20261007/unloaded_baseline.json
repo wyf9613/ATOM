@@ -1,0 +1,28 @@
+{
+  "kind": "unloaded_magnetic_baseline",
+  "units": "uT",
+  "baseline_uT": [
+    -280.21584533333333,
+    -205.27384256333332,
+    7842.070448721111
+  ],
+  "sample_std_uT": [
+    0.4100747291612419,
+    0.4726752526764746,
+    1.2907904445090919
+  ],
+  "samples": 900,
+  "group_count": 3,
+  "nominal_duration_s": 90,
+  "source": "summary.json",
+  "force_calibrated": false,
+  "force_model": null,
+  "deployed_to_firmware": false,
+  "uncertainty_uT": null,
+  "conditions": "User reports no object; stationary requested. Servo previously armed and STOP acknowledged; position/temp not measured during these windows.",
+  "notes": [
+    "Subtract baseline_uT from field_uT only at the same unloaded jaw pose/assembly/environment.",
+    "Not a zero-field sensor-offset calibration or magnetic-to-newton conversion.",
+    "Servo holding current, temperature, ambient field and remount effects not independently measured."
+  ]
+}

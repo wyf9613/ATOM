@@ -1,0 +1,70 @@
+{
+  "units": "uT",
+  "captures": [
+    {
+      "source": "tmp/gripper_force/stationary_20261007/summary.json",
+      "valid_samples": 900,
+      "mean_uT": [
+        -280.21584533333333,
+        -205.27384256333332,
+        7842.070448721111
+      ],
+      "sample_std_uT": [
+        0.4100747291612419,
+        0.4726752526764746,
+        1.2907904445090919
+      ]
+    },
+    {
+      "source": "tmp/gripper_force/stationary_pose2_20261007/summary.json",
+      "valid_samples": 900,
+      "mean_uT": [
+        -307.11201235333334,
+        -200.88900902333333,
+        7875.857142517777
+      ],
+      "sample_std_uT": [
+        0.4843208935783679,
+        0.4417530892426757,
+        3.0612414184974757
+      ]
+    },
+    {
+      "source": "tmp/gripper_force/stationary_pose3_20261007/summary.json",
+      "valid_samples": 901,
+      "mean_uT": [
+        -342.6457943573807,
+        -209.12631286681463,
+        7774.136620627081
+      ],
+      "sample_std_uT": [
+        0.4568114544410137,
+        0.4362995826709015,
+        1.3901543562687462
+      ]
+    }
+  ],
+  "pose3_minus_pose1_uT": [
+    -62.429949024047346,
+    -3.8524703034813115,
+    -67.9338280940292
+  ],
+  "pose3_minus_pose2_uT": [
+    -35.53378200404734,
+    -8.2373038434813,
+    -101.72052189069564
+  ],
+  "pose3_group3_minus_group1_uT": [
+    0.2352162059800662,
+    0.1210956877076228,
+    -1.746264066445292
+  ],
+  "force_calibrated": false,
+  "deployed_to_firmware": false,
+  "user_requested_method": "Capture unloaded baseline immediately before closing; compute current magnetic field minus that baseline. User clarified difference method, not interpolation. Conversion to N remains uncalibrated.",
+  "limits": [
+    "Pose/metal/gravity/temperature/time effects not isolated.",
+    "No reference-force loading points collected.",
+    "Closure-induced unloaded magnetic changes and pose-dependent sensitivity remain unverified."
+  ]
+}

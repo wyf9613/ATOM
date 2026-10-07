@@ -1,0 +1,1068 @@
+{"host_monotonic_s": 20723.739974042, "kind": "device", "value": "-211.350006,7751.501953"}
+{"host_monotonic_s": 20723.741315143, "kind": "device", "value": "-211.350006,7751.501953"}
+{"host_monotonic_s": 20723.741490719, "kind": "command", "value": "STREAM ON"}
+{"host_monotonic_s": 20723.741944636, "kind": "device", "value": "-211.350006,7751.501953"}
+{"host_monotonic_s": 20723.742142835, "kind": "device", "value": "-211.350006,7751.501953"}
+{"host_monotonic_s": 20723.742271133, "kind": "device", "value": "-211.350006,7751.501953"}
+{"host_monotonic_s": 20723.742392336, "kind": "device", "value": "-211.350006,7751.501953"}
+{"host_monotonic_s": 20723.742501819, "kind": "device", "value": "-211.350006,7751.501953"}
+{"host_monotonic_s": 20723.742711279, "kind": "device", "value": "-211.350006,7751.501953"}
+{"host_monotonic_s": 20723.742856521, "kind": "device", "value": "-211.350006,7751.501953"}
+{"host_monotonic_s": 20723.743143231, "kind": "device", "value": "-211.350006,7751.501953"}
+{"host_monotonic_s": 20723.743347712, "kind": "device", "value": "-211.350006,7751.501953"}
+{"host_monotonic_s": 20723.755457143, "kind": "device", "value": "-211.350006,7751.501953"}
+{"host_monotonic_s": 20723.755705908, "kind": "device", "value": "-211.350006,7751.501953"}
+{"host_monotonic_s": 20723.755835888, "kind": "device", "value": "-211.350006,7751.501953"}
+{"host_monotonic_s": 20723.75594076, "kind": "device", "value": "-211.350006,7751.501953"}
+{"host_monotonic_s": 20723.756038148, "kind": "device", "value": "-211.350006,7751.501953"}
+{"host_monotonic_s": 20723.756133871, "kind": "device", "value": "-211.350006,7751.501953"}
+{"host_monotonic_s": 20723.75628912, "kind": "device", "value": "-211.35 29 2019 12:21:46"}
+{"host_monotonic_s": 20723.756392184, "kind": "device", "value": ""}
+{"host_monotonic_s": 20723.756619045, "kind": "device", "value": "rst:ets Jul 29 2019 12:21:46"}
+{"host_monotonic_s": 20723.756996063, "kind": "device", "value": ""}
+{"host_monotonic_s": 20723.757250284, "kind": "device", "value": "rst:ets Jul 29 2019 12:21:46"}
+{"host_monotonic_s": 20723.757390224, "kind": "device", "value": ""}
+{"host_monotonic_s": 20723.757558543, "kind": "device", "value": "rst:ets Jul 29 2019 12:21:46"}
+{"host_monotonic_s": 20723.757670013, "kind": "device", "value": ""}
+{"host_monotonic_s": 20723.757844913, "kind": "device", "value": "rst:ets Jul 29 2019 12:21:46"}
+{"host_monotonic_s": 20723.757949654, "kind": "device", "value": ""}
+{"host_monotonic_s": 20723.758199275, "kind": "device", "value": "rst:ets Jul 29 2019 12:21:46"}
+{"host_monotonic_s": 20723.758416575, "kind": "device", "value": ""}
+{"host_monotonic_s": 20723.758586484, "kind": "device", "value": "rst:ets Jul 29 2019 12:21:46"}
+{"host_monotonic_s": 20723.758813376, "kind": "device", "value": ""}
+{"host_monotonic_s": 20723.759048815, "kind": "device", "value": "rst:ets Jul 29 2019 12:21:46"}
+{"host_monotonic_s": 20723.759300863, "kind": "device", "value": ""}
+{"host_monotonic_s": 20723.759516521, "kind": "device", "value": "rst:ets Jul 29 2019 12:21:46"}
+{"host_monotonic_s": 20723.759844483, "kind": "device", "value": ""}
+{"host_monotonic_s": 20723.759981712, "kind": "device", "value": "rst:ets Jul 29 2019 12:21:46"}
+{"host_monotonic_s": 20723.760143935, "kind": "device", "value": ""}
+{"host_monotonic_s": 20723.760251078, "kind": "device", "value": "rst:ets Jul 29 2019 12:21:46"}
+{"host_monotonic_s": 20723.760505773, "kind": "device", "value": ""}
+{"host_monotonic_s": 20723.760672166, "kind": "device", "value": "rst:ets Jul 29 2019 12:21:46"}
+{"host_monotonic_s": 20723.760789289, "kind": "device", "value": ""}
+{"host_monotonic_s": 20723.761017667, "kind": "device", "value": "rst:ets Jul 29 2019 12:21:46"}
+{"host_monotonic_s": 20723.761162283, "kind": "device", "value": ""}
+{"host_monotonic_s": 20723.761405127, "kind": "device", "value": "rst:ets Jul 29 2019 12:21:46"}
+{"host_monotonic_s": 20723.761628458, "kind": "device", "value": ""}
+{"host_monotonic_s": 20723.761841142, "kind": "device", "value": "rst:ets Jul 29 2019 12:21:46"}
+{"host_monotonic_s": 20723.7620175, "kind": "device", "value": ""}
+{"host_monotonic_s": 20723.762245083, "kind": "device", "value": "rst:ets Jul 29 2019 12:21:46"}
+{"host_monotonic_s": 20723.762452072, "kind": "device", "value": ""}
+{"host_monotonic_s": 20723.762666547, "kind": "device", "value": "rst:ets Jul 29 2019 12:21:46"}
+{"host_monotonic_s": 20723.762790274, "kind": "device", "value": ""}
+{"host_monotonic_s": 20723.762891851, "kind": "device", "value": "rst:0x1 (POWERON_RESET),boot:0x13 (SPI_FAST_FLASH_BOOT)"}
+{"host_monotonic_s": 20723.763153912, "kind": "device", "value": "configsip: 0, SPIWP:0xee"}
+{"host_monotonic_s": 20723.775951578, "kind": "device", "value": "clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00"}
+{"host_monotonic_s": 20723.776308403, "kind": "device", "value": "mode:DIO, clock div:1"}
+{"host_monotonic_s": 20723.776500675, "kind": "device", "value": "load:0x3fff0030,len:4640"}
+{"host_monotonic_s": 20723.776656813, "kind": "device", "value": "load:0x40078000,len:15592"}
+{"host_monotonic_s": 20723.776834569, "kind": "device", "value": "load:0x40080400,len:3164"}
+{"host_monotonic_s": 20723.777009723, "kind": "device", "value": "entry 0x4008059c"}
+{"host_monotonic_s": 20723.946578825, "kind": "device", "value": "# motor commands: STATUS PING ARM DISARM RESET STOP KEEPALIVE ZERO JOG <counts> MOVE <position> OPEN CLOSE STREAM ON/OFF"}
+{"host_monotonic_s": 20723.958964782, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=0 moving=0 fault=0 id=1 baud=1000000 pos=-1 load_raw=0 voltage_raw=0 temp_raw=0 continuous_position=1"}
+{"host_monotonic_s": 20723.95921838, "kind": "device", "value": "# ATOM_MAG_V1 units=uT; motor_boot_disarmed"}
+{"host_monotonic_s": 20723.969668864, "kind": "device", "value": "# scan SDA=21 SCL=22; line_levels=1,1"}
+{"host_monotonic_s": 20723.969898492, "kind": "device", "value": "# i2c_ack=0x14"}
+{"host_monotonic_s": 20724.002858509, "kind": "device", "value": "# sensor_ready"}
+{"host_monotonic_s": 20724.013814297, "kind": "device", "value": "# ERR command_unknown_or_motor_disabled"}
+{"host_monotonic_s": 20725.752820074, "kind": "command", "value": "STREAM ON"}
+{"host_monotonic_s": 20725.778190089, "kind": "device", "value": "# STREAM ON"}
+{"host_monotonic_s": 20725.779134597, "kind": "command", "value": "PING"}
+{"host_monotonic_s": 20725.79184827, "kind": "device", "value": "# PING ok=1 mode=0 mode_read_ok=1 feedback_ok=1"}
+{"host_monotonic_s": 20725.805174106, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=0 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20725.876177551, "kind": "device", "value": "V1,18,1980,20,1,-306.900024,-210.900009,7749.082031"}
+{"host_monotonic_s": 20725.923398412, "kind": "command", "value": "DISARM"}
+{"host_monotonic_s": 20725.979531257, "kind": "device", "value": "V1,19,2080,20,1,-306.600006,-210.600006,7749.082031"}
+{"host_monotonic_s": 20725.980015792, "kind": "device", "value": "# DISARM_OK torque_off"}
+{"host_monotonic_s": 20725.992904367, "kind": "command", "value": "ARM"}
+{"host_monotonic_s": 20726.006132271, "kind": "device", "value": "# ARM_OK"}
+{"host_monotonic_s": 20726.07641612, "kind": "device", "value": "V1,20,2180,20,1,-306.750000,-210.450012,7749.565918"}
+{"host_monotonic_s": 20726.178196139, "kind": "device", "value": "V1,21,2280,20,1,-306.300018,-210.600006,7750.049805"}
+{"host_monotonic_s": 20726.18962779, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20726.212059492, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20726.273932372, "kind": "device", "value": "V1,22,2382,20,1,-306.150024,-210.300003,7750.775879"}
+{"host_monotonic_s": 20726.378604125, "kind": "device", "value": "V1,23,2482,20,1,-306.900024,-210.900009,7749.565918"}
+{"host_monotonic_s": 20726.48120497, "kind": "device", "value": "V1,24,2582,20,1,-306.750000,-211.200012,7749.082031"}
+{"host_monotonic_s": 20726.578249451, "kind": "device", "value": "V1,25,2682,20,1,-306.600006,-210.450012,7748.598145"}
+{"host_monotonic_s": 20726.602124286, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20726.684117158, "kind": "device", "value": "V1,26,2782,20,1,-307.050018,-211.050003,7750.291992"}
+{"host_monotonic_s": 20726.697033185, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20726.778044519, "kind": "device", "value": "V1,27,2882,20,1,-306.600006,-209.700012,7750.291992"}
+{"host_monotonic_s": 20726.880106419, "kind": "device", "value": "V1,28,2982,20,1,-307.050018,-209.850006,7751.744141"}
+{"host_monotonic_s": 20726.980572467, "kind": "device", "value": "V1,29,3082,20,1,-306.900024,-210.600006,7749.082031"}
+{"host_monotonic_s": 20727.003644168, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20727.080368402, "kind": "device", "value": "V1,30,3182,20,1,-306.600006,-211.050003,7749.565918"}
+{"host_monotonic_s": 20727.092736647, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20727.175647554, "kind": "device", "value": "V1,31,3282,20,1,-306.900024,-210.600006,7749.565918"}
+{"host_monotonic_s": 20727.281129564, "kind": "device", "value": "V1,32,3382,20,1,-306.450012,-211.350006,7750.291992"}
+{"host_monotonic_s": 20727.3746401, "kind": "device", "value": "V1,33,3482,20,1,-306.450012,-210.300003,7748.839844"}
+{"host_monotonic_s": 20727.411914688, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20727.482215382, "kind": "device", "value": "V1,34,3582,20,1,-306.600006,-210.750015,7750.291992"}
+{"host_monotonic_s": 20727.494090962, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20727.579335334, "kind": "device", "value": "V1,35,3682,20,1,-307.050018,-211.200012,7749.565918"}
+{"host_monotonic_s": 20727.682252075, "kind": "device", "value": "V1,36,3782,20,1,-306.900024,-211.200012,7750.049805"}
+{"host_monotonic_s": 20727.773293016, "kind": "device", "value": "V1,37,3882,20,1,-306.750000,-210.300003,7749.565918"}
+{"host_monotonic_s": 20727.822016331, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20727.88180882, "kind": "device", "value": "V1,38,3982,20,1,-307.050018,-210.450012,7749.082031"}
+{"host_monotonic_s": 20727.893385986, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20727.975661546, "kind": "device", "value": "V1,39,4082,20,1,-306.150024,-210.900009,7748.839844"}
+{"host_monotonic_s": 20728.078522657, "kind": "device", "value": "V1,40,4182,20,1,-306.600006,-210.000015,7750.775879"}
+{"host_monotonic_s": 20728.179276442, "kind": "device", "value": "V1,41,4282,20,1,-307.050018,-211.350006,7746.903809"}
+{"host_monotonic_s": 20728.22889476, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20728.273883384, "kind": "device", "value": "V1,42,4382,20,1,-306.600006,-210.750015,7749.082031"}
+{"host_monotonic_s": 20728.284884082, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20728.376698234, "kind": "device", "value": "V1,43,4482,20,1,-306.750000,-210.450012,7751.259766"}
+{"host_monotonic_s": 20728.4820295, "kind": "device", "value": "V1,44,4582,20,1,-306.450012,-211.050003,7748.598145"}
+{"host_monotonic_s": 20728.571573185, "kind": "device", "value": "V1,45,4682,20,1,-306.900024,-210.300003,7751.744141"}
+{"host_monotonic_s": 20728.630324771, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20728.675012873, "kind": "device", "value": "V1,46,4782,20,1,-306.150024,-210.300003,7749.565918"}
+{"host_monotonic_s": 20728.686001076, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20728.777790787, "kind": "device", "value": "V1,47,4882,20,1,-306.000000,-210.900009,7748.113770"}
+{"host_monotonic_s": 20728.871385613, "kind": "device", "value": "V1,48,4982,20,1,-306.600006,-210.000015,7749.323730"}
+{"host_monotonic_s": 20728.978007482, "kind": "device", "value": "V1,49,5082,20,1,-306.450012,-210.150009,7749.808105"}
+{"host_monotonic_s": 20729.035265395, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20729.083145632, "kind": "device", "value": "V1,50,5182,20,1,-306.750000,-210.900009,7749.565918"}
+{"host_monotonic_s": 20729.094754768, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20729.173399848, "kind": "device", "value": "V1,51,5282,20,1,-306.150024,-210.600006,7748.598145"}
+{"host_monotonic_s": 20729.285108497, "kind": "device", "value": "V1,52,5383,20,1,-306.600006,-210.900009,7750.534180"}
+{"host_monotonic_s": 20729.379944975, "kind": "device", "value": "V1,53,5482,20,1,-306.150024,-209.700012,7749.082031"}
+{"host_monotonic_s": 20729.437071063, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20729.483711751, "kind": "device", "value": "V1,54,5582,20,1,-306.150024,-210.450012,7746.903809"}
+{"host_monotonic_s": 20729.483966746, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20729.572599007, "kind": "device", "value": "V1,55,5682,20,1,-306.450012,-210.600006,7749.808105"}
+{"host_monotonic_s": 20729.6767762, "kind": "device", "value": "V1,56,5782,20,1,-306.000000,-209.850006,7746.903809"}
+{"host_monotonic_s": 20729.780599688, "kind": "device", "value": "V1,57,5882,20,1,-306.600006,-210.300003,7748.113770"}
+{"host_monotonic_s": 20729.838620639, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20729.884754953, "kind": "device", "value": "V1,58,5982,20,1,-306.150024,-210.750015,7750.049805"}
+{"host_monotonic_s": 20729.885084563, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20729.980468787, "kind": "device", "value": "V1,59,6082,20,1,-305.850006,-210.300003,7749.082031"}
+{"host_monotonic_s": 20730.07208639, "kind": "device", "value": "V1,60,6182,20,1,-307.200012,-209.850006,7751.744141"}
+{"host_monotonic_s": 20730.172177514, "kind": "device", "value": "V1,61,6282,20,1,-306.150024,-210.150009,7750.534180"}
+{"host_monotonic_s": 20730.239106683, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20730.276009306, "kind": "device", "value": "V1,62,6382,20,1,-305.850006,-210.000015,7749.808105"}
+{"host_monotonic_s": 20730.288773785, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20730.372928736, "kind": "device", "value": "V1,63,6482,20,1,-306.450012,-210.600006,7749.323730"}
+{"host_monotonic_s": 20730.471683807, "kind": "device", "value": "V1,64,6582,20,1,-306.000000,-210.600006,7748.839844"}
+{"host_monotonic_s": 20730.579291162, "kind": "device", "value": "V1,65,6682,20,1,-306.600006,-210.300003,7748.355957"}
+{"host_monotonic_s": 20730.646767689, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20730.680968204, "kind": "device", "value": "V1,66,6782,20,1,-306.450012,-211.050003,7749.323730"}
+{"host_monotonic_s": 20730.691832643, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20730.775121524, "kind": "device", "value": "V1,67,6882,20,1,-306.300018,-210.150009,7748.355957"}
+{"host_monotonic_s": 20730.877564028, "kind": "device", "value": "V1,68,6982,20,1,-306.450012,-210.750015,7748.839844"}
+{"host_monotonic_s": 20730.973519956, "kind": "device", "value": "V1,69,7082,20,1,-306.450012,-210.150009,7751.259766"}
+{"host_monotonic_s": 20731.050809627, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20731.072256209, "kind": "device", "value": "V1,70,7182,20,1,-306.900024,-210.750015,7748.355957"}
+{"host_monotonic_s": 20731.084710404, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20731.180167648, "kind": "device", "value": "V1,71,7282,20,1,-306.750000,-210.300003,7749.565918"}
+{"host_monotonic_s": 20731.273362984, "kind": "device", "value": "V1,72,7382,20,1,-306.150024,-211.500015,7747.872070"}
+{"host_monotonic_s": 20731.380396217, "kind": "device", "value": "V1,73,7482,20,1,-306.450012,-210.750015,7747.388184"}
+{"host_monotonic_s": 20731.460391643, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20731.482662489, "kind": "device", "value": "V1,74,7582,20,1,-305.400024,-210.750015,7751.259766"}
+{"host_monotonic_s": 20731.494948606, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20731.574422812, "kind": "device", "value": "V1,75,7682,20,1,-306.900024,-210.750015,7748.598145"}
+{"host_monotonic_s": 20731.677062259, "kind": "device", "value": "V1,76,7782,20,1,-306.000000,-210.600006,7749.082031"}
+{"host_monotonic_s": 20731.782380176, "kind": "device", "value": "V1,77,7882,20,1,-306.300018,-210.300003,7749.323730"}
+{"host_monotonic_s": 20731.861063487, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20731.883839138, "kind": "device", "value": "V1,78,7982,20,1,-306.600006,-209.850006,7750.291992"}
+{"host_monotonic_s": 20731.884131211, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20731.978042954, "kind": "device", "value": "V1,79,8082,20,1,-306.450012,-210.900009,7747.872070"}
+{"host_monotonic_s": 20732.080960674, "kind": "device", "value": "V1,80,8182,20,1,-306.450012,-210.750015,7747.388184"}
+{"host_monotonic_s": 20732.173503639, "kind": "device", "value": "V1,81,8282,20,1,-305.700012,-210.600006,7747.872070"}
+{"host_monotonic_s": 20732.26486791, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20732.276389183, "kind": "device", "value": "V1,82,8382,20,1,-305.850006,-210.600006,7747.388184"}
+{"host_monotonic_s": 20732.288050093, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20732.373780226, "kind": "device", "value": "V1,83,8482,20,1,-306.150024,-211.050003,7750.049805"}
+{"host_monotonic_s": 20732.476739604, "kind": "device", "value": "V1,84,8582,20,1,-306.150024,-210.450012,7747.872070"}
+{"host_monotonic_s": 20732.578457382, "kind": "device", "value": "V1,85,8682,20,1,-306.150024,-210.900009,7748.839844"}
+{"host_monotonic_s": 20732.672343574, "kind": "device", "value": "V1,86,8782,20,1,-306.000000,-210.150009,7750.534180"}
+{"host_monotonic_s": 20732.673033015, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20732.695347036, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20732.773276981, "kind": "device", "value": "V1,87,8882,20,1,-306.450012,-211.350006,7749.565918"}
+{"host_monotonic_s": 20732.881750467, "kind": "device", "value": "V1,88,8982,20,1,-306.450012,-210.750015,7747.629883"}
+{"host_monotonic_s": 20732.975480837, "kind": "device", "value": "V1,89,9082,20,1,-306.750000,-210.150009,7746.177734"}
+{"host_monotonic_s": 20733.078440828, "kind": "device", "value": "V1,90,9182,20,1,-307.050018,-211.200012,7747.388184"}
+{"host_monotonic_s": 20733.078895459, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20733.10027585, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20733.178942307, "kind": "device", "value": "V1,91,9282,20,1,-306.750000,-210.150009,7747.872070"}
+{"host_monotonic_s": 20733.282058436, "kind": "device", "value": "V1,92,9382,20,1,-306.600006,-210.600006,7746.177734"}
+{"host_monotonic_s": 20733.375457802, "kind": "device", "value": "V1,93,9482,20,1,-306.150024,-210.900009,7748.355957"}
+{"host_monotonic_s": 20733.482203705, "kind": "device", "value": "V1,94,9582,20,1,-306.750000,-210.600006,7748.113770"}
+{"host_monotonic_s": 20733.482600009, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20733.504865341, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20733.575943917, "kind": "device", "value": "V1,95,9682,20,1,-305.850006,-211.350006,7747.629883"}
+{"host_monotonic_s": 20733.671558285, "kind": "device", "value": "V1,96,9782,20,1,-307.050018,-210.300003,7748.113770"}
+{"host_monotonic_s": 20733.773674492, "kind": "device", "value": "V1,97,9882,20,1,-307.050018,-210.000015,7749.808105"}
+{"host_monotonic_s": 20733.879131395, "kind": "device", "value": "V1,98,9982,20,1,-306.750000,-211.200012,7747.872070"}
+{"host_monotonic_s": 20733.890161986, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20733.913367221, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20733.979330415, "kind": "device", "value": "V1,99,10083,20,1,-306.000000,-209.850006,7750.291992"}
+{"host_monotonic_s": 20734.072555328, "kind": "device", "value": "V1,100,10182,20,1,-305.850006,-211.050003,7747.872070"}
+{"host_monotonic_s": 20734.179039326, "kind": "device", "value": "V1,101,10282,20,1,-306.000000,-209.250015,7750.049805"}
+{"host_monotonic_s": 20734.279791141, "kind": "device", "value": "V1,102,10382,20,1,-306.300018,-210.000015,7747.872070"}
+{"host_monotonic_s": 20734.290682228, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20734.314873342, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20734.384231349, "kind": "device", "value": "V1,103,10482,20,1,-305.700012,-210.300003,7750.534180"}
+{"host_monotonic_s": 20734.483019631, "kind": "device", "value": "V1,104,10582,20,1,-306.600006,-210.600006,7749.565918"}
+{"host_monotonic_s": 20734.57787466, "kind": "device", "value": "V1,105,10682,20,1,-305.850006,-210.900009,7748.113770"}
+{"host_monotonic_s": 20734.676412239, "kind": "device", "value": "V1,106,10782,20,1,-306.450012,-209.850006,7748.355957"}
+{"host_monotonic_s": 20734.700274058, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20734.723760681, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20734.785661202, "kind": "device", "value": "V1,107,10892,20,1,-306.900024,-210.900009,7749.808105"}
+{"host_monotonic_s": 20734.889804641, "kind": "device", "value": "V1,108,10992,20,1,-306.450012,-210.450012,7747.388184"}
+{"host_monotonic_s": 20734.983549734, "kind": "device", "value": "V1,109,11092,20,1,-306.300018,-210.750015,7750.049805"}
+{"host_monotonic_s": 20735.087518609, "kind": "device", "value": "V1,110,11192,20,1,-306.750000,-210.150009,7747.872070"}
+{"host_monotonic_s": 20735.111564154, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20735.190391927, "kind": "device", "value": "V1,111,11292,20,1,-306.300018,-211.050003,7749.082031"}
+{"host_monotonic_s": 20735.201196499, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20735.284152778, "kind": "device", "value": "V1,112,11392,20,1,-306.600006,-211.050003,7748.355957"}
+{"host_monotonic_s": 20735.388672023, "kind": "device", "value": "V1,113,11492,20,1,-306.600006,-210.300003,7749.565918"}
+{"host_monotonic_s": 20735.492155716, "kind": "device", "value": "V1,114,11592,20,1,-306.450012,-210.900009,7748.839844"}
+{"host_monotonic_s": 20735.517453569, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20735.586295986, "kind": "device", "value": "V1,115,11692,20,1,-306.150024,-209.850006,7749.565918"}
+{"host_monotonic_s": 20735.599247249, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20735.691642371, "kind": "device", "value": "V1,116,11792,20,1,-306.300018,-211.200012,7747.388184"}
+{"host_monotonic_s": 20735.788606336, "kind": "device", "value": "V1,117,11892,20,1,-307.050018,-210.900009,7747.145996"}
+{"host_monotonic_s": 20735.892040153, "kind": "device", "value": "V1,118,11992,20,1,-306.900024,-210.900009,7747.388184"}
+{"host_monotonic_s": 20735.927894815, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20735.983994484, "kind": "device", "value": "V1,119,12092,20,1,-306.600006,-211.050003,7749.082031"}
+{"host_monotonic_s": 20735.995523504, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20736.088923295, "kind": "device", "value": "V1,120,12192,20,1,-306.450012,-210.300003,7747.872070"}
+{"host_monotonic_s": 20736.190736167, "kind": "device", "value": "V1,121,12292,20,1,-306.750000,-211.350006,7750.291992"}
+{"host_monotonic_s": 20736.28458533, "kind": "device", "value": "V1,122,12392,20,1,-306.900024,-211.500015,7747.145996"}
+{"host_monotonic_s": 20736.33144619, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20736.388617583, "kind": "device", "value": "V1,123,12492,20,1,-306.000000,-210.000015,7748.113770"}
+{"host_monotonic_s": 20736.39962796, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20736.488676481, "kind": "device", "value": "V1,124,12592,20,1,-306.000000,-210.900009,7748.355957"}
+{"host_monotonic_s": 20736.593492801, "kind": "device", "value": "V1,125,12692,20,1,-306.300018,-211.200012,7748.839844"}
+{"host_monotonic_s": 20736.687374865, "kind": "device", "value": "V1,126,12792,20,1,-307.050018,-210.900009,7748.113770"}
+{"host_monotonic_s": 20736.735469271, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20736.791607028, "kind": "device", "value": "V1,127,12892,20,1,-305.850006,-211.050003,7748.839844"}
+{"host_monotonic_s": 20736.80228339, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20736.882524144, "kind": "device", "value": "V1,128,12992,20,1,-306.300018,-211.050003,7747.872070"}
+{"host_monotonic_s": 20736.991504992, "kind": "device", "value": "V1,129,13092,20,1,-306.450012,-210.450012,7749.565918"}
+{"host_monotonic_s": 20737.090766246, "kind": "device", "value": "V1,130,13192,20,1,-306.000000,-210.600006,7748.839844"}
+{"host_monotonic_s": 20737.13611347, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20737.192188817, "kind": "device", "value": "V1,131,13292,20,1,-306.900024,-210.900009,7747.629883"}
+{"host_monotonic_s": 20737.204254832, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20737.284491442, "kind": "device", "value": "V1,132,13392,20,1,-307.050018,-210.450012,7750.049805"}
+{"host_monotonic_s": 20737.38890766, "kind": "device", "value": "V1,133,13492,20,1,-305.550018,-210.450012,7749.323730"}
+{"host_monotonic_s": 20737.489321362, "kind": "device", "value": "V1,134,13592,20,1,-307.650024,-210.300003,7748.839844"}
+{"host_monotonic_s": 20737.537890827, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20737.584498596, "kind": "device", "value": "V1,135,13692,20,1,-306.450012,-211.350006,7748.598145"}
+{"host_monotonic_s": 20737.595755508, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20737.689647837, "kind": "device", "value": "V1,136,13792,20,1,-307.050018,-210.450012,7748.355957"}
+{"host_monotonic_s": 20737.783073228, "kind": "device", "value": "V1,137,13892,20,1,-305.850006,-210.750015,7748.113770"}
+{"host_monotonic_s": 20737.888680021, "kind": "device", "value": "V1,138,13992,20,1,-306.600006,-210.750015,7748.839844"}
+{"host_monotonic_s": 20737.950340959, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20737.982820424, "kind": "device", "value": "V1,139,14092,20,1,-305.250000,-210.900009,7746.419922"}
+{"host_monotonic_s": 20738.005540831, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20738.090010273, "kind": "device", "value": "V1,140,14192,20,1,-306.900024,-210.150009,7746.903809"}
+{"host_monotonic_s": 20738.103488875, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20738.128682781, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20738.12955036, "kind": "command", "value": "MOVE 2390"}
+{"host_monotonic_s": 20738.197356941, "kind": "device", "value": "V1,141,14296,20,1,-306.900024,-210.150009,7749.082031"}
+{"host_monotonic_s": 20738.197631392, "kind": "device", "value": "# MOVE_START start=2410 target=2390 delta=-20 speed=20"}
+{"host_monotonic_s": 20738.209122553, "kind": "device", "value": "# MOTION ms=14298 elapsed_ms=0 start=2410 target=2390 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20738.209475153, "kind": "device", "value": "# MOTION ms=14310 elapsed_ms=12 start=2410 target=2390 pos=2410 load_raw=0 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20738.296482547, "kind": "device", "value": "V1,142,14395,20,1,-306.750000,-210.600006,7746.903809"}
+{"host_monotonic_s": 20738.308895698, "kind": "device", "value": "# MOTION ms=14410 elapsed_ms=112 start=2410 target=2390 pos=2406 load_raw=20 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20738.388793006, "kind": "device", "value": "V1,143,14495,20,1,-306.450012,-210.750015,7747.872070"}
+{"host_monotonic_s": 20738.411311551, "kind": "device", "value": "# MOTION ms=14511 elapsed_ms=213 start=2410 target=2390 pos=2401 load_raw=24 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20738.492878616, "kind": "device", "value": "V1,144,14595,20,1,-306.750000,-210.150009,7747.629883"}
+{"host_monotonic_s": 20738.518258265, "kind": "device", "value": "# MOTION ms=14612 elapsed_ms=314 start=2410 target=2390 pos=2396 load_raw=20 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20738.588243803, "kind": "device", "value": "V1,145,14695,20,1,-306.450012,-210.450012,7746.177734"}
+{"host_monotonic_s": 20738.611307091, "kind": "device", "value": "# MOTION ms=14713 elapsed_ms=415 start=2410 target=2390 pos=2391 load_raw=-24 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20738.623153815, "kind": "device", "value": "# MOTION_SUMMARY result=done start=2410 target=2390 last_pos=2391 samples=6 peak_abs_load=24 peak_signed_load=24 elapsed_ms=415"}
+{"host_monotonic_s": 20738.635206695, "kind": "device", "value": "# MOVE_DONE target=2390 pos=2391 load_raw=-24 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20738.636710417, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20738.695014889, "kind": "device", "value": "V1,146,14799,20,1,-306.600006,-210.450012,7744.000000"}
+{"host_monotonic_s": 20738.706635804, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2391 load_raw=-24 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20738.790884149, "kind": "device", "value": "V1,147,14899,20,1,-306.450012,-210.000015,7745.936035"}
+{"host_monotonic_s": 20738.889235211, "kind": "device", "value": "V1,148,14999,20,1,-306.900024,-210.600006,7747.145996"}
+{"host_monotonic_s": 20738.998226167, "kind": "device", "value": "V1,149,15099,20,1,-307.350006,-210.300003,7745.936035"}
+{"host_monotonic_s": 20739.048585512, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20739.094764606, "kind": "device", "value": "V1,150,15199,20,1,-307.350006,-210.600006,7745.693848"}
+{"host_monotonic_s": 20739.106506808, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20739.198349112, "kind": "device", "value": "V1,151,15299,20,1,-306.900024,-210.750015,7746.662109"}
+{"host_monotonic_s": 20739.292309928, "kind": "device", "value": "V1,152,15399,20,1,-307.950012,-210.900009,7747.629883"}
+{"host_monotonic_s": 20739.389734226, "kind": "device", "value": "V1,153,15499,20,1,-307.350006,-210.900009,7746.903809"}
+{"host_monotonic_s": 20739.457172515, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20739.490194912, "kind": "device", "value": "V1,154,15599,20,1,-307.500000,-210.600006,7746.662109"}
+{"host_monotonic_s": 20739.503243439, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20739.599755201, "kind": "device", "value": "V1,155,15699,20,1,-307.200012,-210.150009,7748.355957"}
+{"host_monotonic_s": 20739.694756555, "kind": "device", "value": "V1,156,15799,20,1,-307.800018,-210.150009,7746.419922"}
+{"host_monotonic_s": 20739.792311691, "kind": "device", "value": "V1,157,15899,20,1,-307.050018,-210.450012,7745.209961"}
+{"host_monotonic_s": 20739.861339806, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20739.896104978, "kind": "device", "value": "V1,158,15999,20,1,-307.650024,-210.300003,7745.452148"}
+{"host_monotonic_s": 20739.908857283, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20740.001702411, "kind": "device", "value": "V1,159,16099,20,1,-307.650024,-210.300003,7745.452148"}
+{"host_monotonic_s": 20740.098556555, "kind": "device", "value": "V1,160,16199,20,1,-307.950012,-210.600006,7746.662109"}
+{"host_monotonic_s": 20740.19316568, "kind": "device", "value": "V1,161,16299,20,1,-307.650024,-211.050003,7745.936035"}
+{"host_monotonic_s": 20740.261367307, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20740.297730646, "kind": "device", "value": "V1,162,16399,20,1,-308.100006,-210.450012,7746.177734"}
+{"host_monotonic_s": 20740.309334353, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20740.39301498, "kind": "device", "value": "V1,163,16499,20,1,-307.500000,-210.150009,7748.113770"}
+{"host_monotonic_s": 20740.49735426, "kind": "device", "value": "V1,164,16599,20,1,-307.500000,-209.700012,7748.113770"}
+{"host_monotonic_s": 20740.594143981, "kind": "device", "value": "V1,165,16699,20,1,-306.900024,-210.900009,7745.693848"}
+{"host_monotonic_s": 20740.663887573, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20740.697735615, "kind": "device", "value": "V1,166,16799,20,1,-306.750000,-211.200012,7744.726074"}
+{"host_monotonic_s": 20740.708906171, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20740.789006064, "kind": "device", "value": "V1,167,16899,20,1,-307.650024,-210.600006,7745.936035"}
+{"host_monotonic_s": 20740.889692613, "kind": "device", "value": "V1,168,16999,20,1,-306.750000,-210.750015,7748.839844"}
+{"host_monotonic_s": 20740.995953751, "kind": "device", "value": "V1,169,17100,20,1,-307.800018,-210.000015,7746.903809"}
+{"host_monotonic_s": 20741.06448852, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20741.10036827, "kind": "device", "value": "V1,170,17199,20,1,-307.200012,-210.450012,7744.242188"}
+{"host_monotonic_s": 20741.111247267, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20741.195522302, "kind": "device", "value": "V1,171,17299,20,1,-307.800018,-210.450012,7747.388184"}
+{"host_monotonic_s": 20741.295933959, "kind": "device", "value": "V1,172,17399,20,1,-307.350006,-210.450012,7746.177734"}
+{"host_monotonic_s": 20741.395903631, "kind": "device", "value": "V1,173,17499,20,1,-307.800018,-210.150009,7745.936035"}
+{"host_monotonic_s": 20741.474277019, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20741.495356024, "kind": "device", "value": "V1,174,17599,20,1,-307.350006,-210.450012,7746.662109"}
+{"host_monotonic_s": 20741.505962738, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20741.5970045, "kind": "device", "value": "V1,175,17699,20,1,-308.250000,-211.800003,7746.177734"}
+{"host_monotonic_s": 20741.697095932, "kind": "device", "value": "V1,176,17799,20,1,-308.400024,-210.300003,7746.177734"}
+{"host_monotonic_s": 20741.790268386, "kind": "device", "value": "V1,177,17899,20,1,-308.250000,-210.300003,7744.726074"}
+{"host_monotonic_s": 20741.880607546, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20741.892679633, "kind": "device", "value": "V1,178,17999,20,1,-308.100006,-209.400009,7744.967773"}
+{"host_monotonic_s": 20741.904263536, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20741.999009769, "kind": "device", "value": "V1,179,18099,20,1,-307.950012,-211.050003,7744.967773"}
+{"host_monotonic_s": 20742.09732683, "kind": "device", "value": "V1,180,18199,20,1,-308.250000,-210.300003,7746.903809"}
+{"host_monotonic_s": 20742.192173638, "kind": "device", "value": "V1,181,18299,20,1,-307.500000,-210.750015,7747.388184"}
+{"host_monotonic_s": 20742.288887303, "kind": "device", "value": "V1,182,18399,20,1,-307.350006,-210.450012,7746.419922"}
+{"host_monotonic_s": 20742.289171913, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20742.312736854, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20742.395717204, "kind": "device", "value": "V1,183,18499,20,1,-307.350006,-210.750015,7747.388184"}
+{"host_monotonic_s": 20742.501204691, "kind": "device", "value": "V1,184,18599,20,1,-307.950012,-211.050003,7747.388184"}
+{"host_monotonic_s": 20742.595635422, "kind": "device", "value": "V1,185,18699,20,1,-307.500000,-211.650009,7747.629883"}
+{"host_monotonic_s": 20742.698502375, "kind": "device", "value": "V1,186,18799,20,1,-308.400024,-210.450012,7745.452148"}
+{"host_monotonic_s": 20742.699544942, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20742.721528262, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20742.791078317, "kind": "device", "value": "V1,187,18899,20,1,-307.200012,-210.300003,7745.693848"}
+{"host_monotonic_s": 20742.897321379, "kind": "device", "value": "V1,188,18999,20,1,-307.050018,-210.750015,7747.388184"}
+{"host_monotonic_s": 20742.991843922, "kind": "device", "value": "V1,189,19099,20,1,-307.500000,-210.450012,7746.662109"}
+{"host_monotonic_s": 20743.094215111, "kind": "device", "value": "V1,190,19199,20,1,-307.350006,-211.200012,7745.209961"}
+{"host_monotonic_s": 20743.105052917, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20743.129148031, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20743.198328077, "kind": "device", "value": "V1,191,19299,20,1,-307.500000,-211.500015,7744.000000"}
+{"host_monotonic_s": 20743.290868716, "kind": "device", "value": "V1,192,19399,20,1,-306.900024,-210.750015,7744.000000"}
+{"host_monotonic_s": 20743.395628378, "kind": "device", "value": "V1,193,19500,20,1,-307.350006,-210.600006,7744.967773"}
+{"host_monotonic_s": 20743.496595306, "kind": "device", "value": "V1,194,19599,20,1,-307.200012,-210.900009,7747.145996"}
+{"host_monotonic_s": 20743.508757006, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20743.531724337, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20743.599557276, "kind": "device", "value": "V1,195,19701,20,1,-307.800018,-210.150009,7744.242188"}
+{"host_monotonic_s": 20743.695352532, "kind": "device", "value": "V1,196,19801,20,1,-307.650024,-210.300003,7745.936035"}
+{"host_monotonic_s": 20743.801827477, "kind": "device", "value": "V1,197,19901,20,1,-306.900024,-210.450012,7744.726074"}
+{"host_monotonic_s": 20743.896924894, "kind": "device", "value": "V1,198,20001,20,1,-308.400024,-210.450012,7747.145996"}
+{"host_monotonic_s": 20743.909812494, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20743.93401541, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20744.00140406, "kind": "device", "value": "V1,199,20101,20,1,-307.950012,-211.200012,7745.209961"}
+{"host_monotonic_s": 20744.091512019, "kind": "device", "value": "V1,200,20201,20,1,-307.200012,-211.350006,7745.209961"}
+{"host_monotonic_s": 20744.195409853, "kind": "device", "value": "V1,201,20301,20,1,-307.050018,-210.900009,7746.903809"}
+{"host_monotonic_s": 20744.299719668, "kind": "device", "value": "V1,202,20401,20,1,-307.800018,-210.750015,7744.483887"}
+{"host_monotonic_s": 20744.31133755, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20744.334673327, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20744.404058988, "kind": "device", "value": "V1,203,20503,20,1,-307.350006,-210.450012,7745.936035"}
+{"host_monotonic_s": 20744.49460163, "kind": "device", "value": "V1,204,20603,20,1,-307.350006,-210.750015,7748.113770"}
+{"host_monotonic_s": 20744.604959889, "kind": "device", "value": "V1,205,20703,20,1,-307.500000,-211.050003,7747.145996"}
+{"host_monotonic_s": 20744.697765739, "kind": "device", "value": "V1,206,20803,20,1,-307.500000,-210.600006,7744.242188"}
+{"host_monotonic_s": 20744.72152193, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20744.743823, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20744.813968545, "kind": "device", "value": "V1,207,20913,20,1,-307.350006,-210.900009,7746.419922"}
+{"host_monotonic_s": 20744.909728, "kind": "device", "value": "V1,208,21013,20,1,-307.950012,-210.300003,7746.419922"}
+{"host_monotonic_s": 20745.012799986, "kind": "device", "value": "V1,209,21113,20,1,-306.900024,-210.600006,7747.145996"}
+{"host_monotonic_s": 20745.104343796, "kind": "device", "value": "V1,210,21213,20,1,-307.350006,-210.150009,7748.113770"}
+{"host_monotonic_s": 20745.128462368, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20745.152545754, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20745.210451196, "kind": "device", "value": "V1,211,21320,20,1,-307.200012,-210.300003,7747.388184"}
+{"host_monotonic_s": 20745.313255138, "kind": "device", "value": "V1,212,21420,20,1,-307.350006,-211.200012,7745.936035"}
+{"host_monotonic_s": 20745.421518123, "kind": "device", "value": "V1,213,21520,20,1,-307.200012,-210.600006,7747.872070"}
+{"host_monotonic_s": 20745.514440897, "kind": "device", "value": "V1,214,21620,20,1,-307.500000,-210.450012,7744.967773"}
+{"host_monotonic_s": 20745.538122134, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20745.560346877, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20745.626389791, "kind": "device", "value": "V1,215,21730,20,1,-307.500000,-210.600006,7746.662109"}
+{"host_monotonic_s": 20745.731485635, "kind": "device", "value": "V1,216,21830,20,1,-308.100006,-210.300003,7745.209961"}
+{"host_monotonic_s": 20745.829157019, "kind": "device", "value": "V1,217,21930,20,1,-307.800018,-210.450012,7744.967773"}
+{"host_monotonic_s": 20745.930352811, "kind": "device", "value": "V1,218,22030,20,1,-307.350006,-210.750015,7744.483887"}
+{"host_monotonic_s": 20745.942089771, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20745.965673103, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20746.034060122, "kind": "device", "value": "V1,219,22134,20,1,-307.950012,-211.050003,7745.693848"}
+{"host_monotonic_s": 20746.129749513, "kind": "device", "value": "V1,220,22233,20,1,-307.350006,-211.050003,7745.936035"}
+{"host_monotonic_s": 20746.233152409, "kind": "device", "value": "V1,221,22333,20,1,-307.500000,-210.600006,7747.388184"}
+{"host_monotonic_s": 20746.327704388, "kind": "device", "value": "V1,222,22433,20,1,-308.100006,-211.050003,7748.113770"}
+{"host_monotonic_s": 20746.349993452, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20746.374318883, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20746.432158916, "kind": "device", "value": "V1,223,22542,20,1,-307.800018,-209.550003,7747.145996"}
+{"host_monotonic_s": 20746.538132333, "kind": "device", "value": "V1,224,22641,20,1,-307.200012,-210.750015,7749.082031"}
+{"host_monotonic_s": 20746.634336493, "kind": "device", "value": "V1,225,22741,20,1,-307.500000,-211.050003,7749.808105"}
+{"host_monotonic_s": 20746.738198446, "kind": "device", "value": "V1,226,22841,20,1,-307.950012,-210.900009,7744.242188"}
+{"host_monotonic_s": 20746.751060995, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20746.773238009, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20746.841695173, "kind": "device", "value": "V1,227,22943,20,1,-306.450012,-211.050003,7743.516113"}
+{"host_monotonic_s": 20746.937728389, "kind": "device", "value": "V1,228,23042,20,1,-307.950012,-211.200012,7745.209961"}
+{"host_monotonic_s": 20747.033025787, "kind": "device", "value": "V1,229,23142,20,1,-308.100006,-210.900009,7745.209961"}
+{"host_monotonic_s": 20747.138193751, "kind": "device", "value": "V1,230,23242,20,1,-307.950012,-211.200012,7746.903809"}
+{"host_monotonic_s": 20747.163768591, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20747.240890472, "kind": "device", "value": "V1,231,23342,20,1,-307.650024,-210.750015,7745.693848"}
+{"host_monotonic_s": 20747.251513872, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20747.331807661, "kind": "device", "value": "V1,232,23442,20,1,-306.750000,-210.900009,7747.629883"}
+{"host_monotonic_s": 20747.433723413, "kind": "device", "value": "V1,233,23542,20,1,-307.800018,-211.200012,7748.598145"}
+{"host_monotonic_s": 20747.539927045, "kind": "device", "value": "V1,234,23642,20,1,-307.800018,-211.050003,7746.419922"}
+{"host_monotonic_s": 20747.564400035, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20747.643112868, "kind": "device", "value": "V1,235,23742,20,1,-307.500000,-210.600006,7747.145996"}
+{"host_monotonic_s": 20747.655345619, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20747.735313707, "kind": "device", "value": "V1,236,23842,20,1,-307.200012,-210.600006,7746.662109"}
+{"host_monotonic_s": 20747.837282295, "kind": "device", "value": "V1,237,23942,20,1,-307.350006,-210.900009,7745.693848"}
+{"host_monotonic_s": 20747.940013748, "kind": "device", "value": "V1,238,24042,20,1,-306.900024,-211.200012,7746.903809"}
+{"host_monotonic_s": 20747.974153572, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20748.032547014, "kind": "device", "value": "V1,239,24142,20,1,-307.800018,-210.150009,7745.693848"}
+{"host_monotonic_s": 20748.055573951, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20748.139234803, "kind": "device", "value": "V1,240,24242,20,1,-307.800018,-210.450012,7745.936035"}
+{"host_monotonic_s": 20748.242406043, "kind": "device", "value": "V1,241,24342,20,1,-306.600006,-210.300003,7745.452148"}
+{"host_monotonic_s": 20748.338087711, "kind": "device", "value": "V1,242,24442,20,1,-307.350006,-210.600006,7745.693848"}
+{"host_monotonic_s": 20748.383694463, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20748.441482619, "kind": "device", "value": "V1,243,24542,20,1,-306.600006,-211.200012,7745.693848"}
+{"host_monotonic_s": 20748.452903339, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20748.53272618, "kind": "device", "value": "V1,244,24642,20,1,-307.200012,-211.350006,7745.936035"}
+{"host_monotonic_s": 20748.632507393, "kind": "device", "value": "V1,245,24742,20,1,-307.500000,-210.600006,7746.662109"}
+{"host_monotonic_s": 20748.736144039, "kind": "device", "value": "V1,246,24842,20,1,-307.950012,-211.200012,7745.209961"}
+{"host_monotonic_s": 20748.793381755, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20748.841984581, "kind": "device", "value": "V1,247,24942,20,1,-306.750000,-210.900009,7745.693848"}
+{"host_monotonic_s": 20748.853554499, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20748.93315841, "kind": "device", "value": "V1,248,25042,20,1,-306.750000,-210.900009,7745.209961"}
+{"host_monotonic_s": 20749.038158536, "kind": "device", "value": "V1,249,25142,20,1,-306.750000,-210.300003,7745.693848"}
+{"host_monotonic_s": 20749.138646483, "kind": "device", "value": "V1,250,25242,20,1,-307.350006,-210.150009,7747.145996"}
+{"host_monotonic_s": 20749.195926765, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20749.238954636, "kind": "device", "value": "V1,251,25342,20,1,-307.200012,-210.750015,7745.693848"}
+{"host_monotonic_s": 20749.251490576, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20749.340837624, "kind": "device", "value": "V1,252,25442,20,1,-308.250000,-210.600006,7746.903809"}
+{"host_monotonic_s": 20749.434865691, "kind": "device", "value": "V1,253,25542,20,1,-307.350006,-211.350006,7745.693848"}
+{"host_monotonic_s": 20749.535684484, "kind": "device", "value": "V1,254,25642,20,1,-307.350006,-211.200012,7746.662109"}
+{"host_monotonic_s": 20749.606386196, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20749.640794587, "kind": "device", "value": "V1,255,25742,20,1,-307.200012,-210.600006,7746.903809"}
+{"host_monotonic_s": 20749.652390014, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20749.732066673, "kind": "device", "value": "V1,256,25842,20,1,-306.900024,-210.150009,7744.967773"}
+{"host_monotonic_s": 20749.836061015, "kind": "device", "value": "V1,257,25942,20,1,-307.200012,-209.400009,7745.936035"}
+{"host_monotonic_s": 20749.940771375, "kind": "device", "value": "V1,258,26042,20,1,-308.250000,-210.900009,7746.903809"}
+{"host_monotonic_s": 20750.011822443, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20750.036414861, "kind": "device", "value": "V1,259,26142,20,1,-307.050018,-210.450012,7747.388184"}
+{"host_monotonic_s": 20750.048118701, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20750.138022943, "kind": "device", "value": "V1,260,26242,20,1,-307.200012,-210.150009,7747.629883"}
+{"host_monotonic_s": 20750.235041361, "kind": "device", "value": "V1,261,26342,20,1,-307.800018,-210.450012,7745.209961"}
+{"host_monotonic_s": 20750.341130184, "kind": "device", "value": "V1,262,26442,20,1,-307.650024,-210.150009,7743.757812"}
+{"host_monotonic_s": 20750.412127721, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20750.434875389, "kind": "device", "value": "V1,263,26542,20,1,-307.500000,-211.050003,7743.516113"}
+{"host_monotonic_s": 20750.446209, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20750.540470971, "kind": "device", "value": "V1,264,26642,20,1,-307.050018,-211.200012,7747.388184"}
+{"host_monotonic_s": 20750.638398294, "kind": "device", "value": "V1,265,26742,20,1,-306.750000,-209.700012,7748.113770"}
+{"host_monotonic_s": 20750.67257509, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20750.733968301, "kind": "device", "value": "V1,266,26842,20,1,-307.650024,-211.050003,7746.662109"}
+{"host_monotonic_s": 20750.745060632, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20750.745698537, "kind": "command", "value": "MOVE 2370"}
+{"host_monotonic_s": 20750.758186374, "kind": "device", "value": "# MOVE_START start=2390 target=2370 delta=-20 speed=20"}
+{"host_monotonic_s": 20750.769960038, "kind": "device", "value": "# MOTION ms=26865 elapsed_ms=1 start=2390 target=2370 pos=2390 load_raw=0 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20750.837051273, "kind": "device", "value": "V1,267,26942,20,1,-306.900024,-209.550003,7746.419922"}
+{"host_monotonic_s": 20750.861043419, "kind": "device", "value": "# MOTION ms=26962 elapsed_ms=98 start=2390 target=2370 pos=2387 load_raw=20 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20750.933109718, "kind": "device", "value": "V1,268,27042,20,1,-307.650024,-210.750015,7745.452148"}
+{"host_monotonic_s": 20750.969696861, "kind": "device", "value": "# MOTION ms=27063 elapsed_ms=199 start=2390 target=2370 pos=2382 load_raw=20 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20751.040615777, "kind": "device", "value": "V1,269,27142,20,1,-307.200012,-210.450012,7745.936035"}
+{"host_monotonic_s": 20751.064478879, "kind": "device", "value": "# MOTION ms=27164 elapsed_ms=300 start=2390 target=2370 pos=2376 load_raw=0 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20751.136441556, "kind": "device", "value": "V1,270,27242,20,1,-307.950012,-210.750015,7746.419922"}
+{"host_monotonic_s": 20751.172990631, "kind": "device", "value": "# MOTION ms=27265 elapsed_ms=401 start=2390 target=2370 pos=2371 load_raw=0 voltage_raw=77 temp_raw=25"}
+{"host_monotonic_s": 20751.173451859, "kind": "device", "value": "# MOTION_SUMMARY result=done start=2390 target=2370 last_pos=2371 samples=5 peak_abs_load=20 peak_signed_load=20 elapsed_ms=401"}
+{"host_monotonic_s": 20751.184106921, "kind": "device", "value": "# MOVE_DONE target=2370 pos=2371 load_raw=0 voltage_raw=77 temp_raw=25"}
+{"host_monotonic_s": 20751.18483516, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20751.250905377, "kind": "device", "value": "V1,271,27351,20,1,-307.800018,-210.900009,7745.209961"}
+{"host_monotonic_s": 20751.262377405, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20751.344103654, "kind": "device", "value": "V1,272,27451,20,1,-306.900024,-210.900009,7744.483887"}
+{"host_monotonic_s": 20751.448016207, "kind": "device", "value": "V1,273,27551,20,1,-308.100006,-210.900009,7744.242188"}
+{"host_monotonic_s": 20751.550509431, "kind": "device", "value": "V1,274,27651,20,1,-308.100006,-209.850006,7745.452148"}
+{"host_monotonic_s": 20751.594290394, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20751.64844866, "kind": "device", "value": "V1,275,27751,20,1,-308.400024,-210.450012,7745.452148"}
+{"host_monotonic_s": 20751.66142072, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20751.750942447, "kind": "device", "value": "V1,276,27851,20,1,-307.950012,-211.500015,7742.306152"}
+{"host_monotonic_s": 20751.846155395, "kind": "device", "value": "V1,277,27951,20,1,-307.950012,-211.050003,7746.903809"}
+{"host_monotonic_s": 20751.952841803, "kind": "device", "value": "V1,278,28051,20,1,-307.650024,-210.300003,7745.936035"}
+{"host_monotonic_s": 20752.003358495, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20752.052849291, "kind": "device", "value": "V1,279,28151,20,1,-307.200012,-210.750015,7744.483887"}
+{"host_monotonic_s": 20752.064374238, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20752.145065685, "kind": "device", "value": "V1,280,28251,20,1,-308.400024,-211.200012,7745.209961"}
+{"host_monotonic_s": 20752.251775453, "kind": "device", "value": "V1,281,28351,20,1,-307.500000,-210.600006,7744.726074"}
+{"host_monotonic_s": 20752.341093395, "kind": "device", "value": "V1,282,28451,20,1,-307.800018,-212.100006,7742.790039"}
+{"host_monotonic_s": 20752.413367448, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20752.448073523, "kind": "device", "value": "V1,283,28551,20,1,-308.100006,-210.600006,7745.452148"}
+{"host_monotonic_s": 20752.460575914, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20752.544259974, "kind": "device", "value": "V1,284,28651,20,1,-307.650024,-211.200012,7742.790039"}
+{"host_monotonic_s": 20752.648294253, "kind": "device", "value": "V1,285,28751,20,1,-307.650024,-211.050003,7745.936035"}
+{"host_monotonic_s": 20752.751374405, "kind": "device", "value": "V1,286,28851,20,1,-307.950012,-210.900009,7744.967773"}
+{"host_monotonic_s": 20752.819697835, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20752.850887935, "kind": "device", "value": "V1,287,28951,20,1,-307.950012,-210.900009,7745.693848"}
+{"host_monotonic_s": 20752.863731707, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20752.945089228, "kind": "device", "value": "V1,288,29051,20,1,-307.800018,-211.200012,7745.452148"}
+{"host_monotonic_s": 20753.051535377, "kind": "device", "value": "V1,289,29151,20,1,-307.800018,-211.200012,7744.242188"}
+{"host_monotonic_s": 20753.141920781, "kind": "device", "value": "V1,290,29251,20,1,-307.050018,-210.150009,7743.757812"}
+{"host_monotonic_s": 20753.222449234, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20753.246311343, "kind": "device", "value": "V1,291,29351,20,1,-307.950012,-210.750015,7744.483887"}
+{"host_monotonic_s": 20753.25788343, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20753.340981527, "kind": "device", "value": "V1,292,29451,20,1,-308.400024,-210.450012,7744.483887"}
+{"host_monotonic_s": 20753.441747024, "kind": "device", "value": "V1,293,29551,20,1,-308.400024,-210.900009,7744.726074"}
+{"host_monotonic_s": 20753.548558062, "kind": "device", "value": "V1,294,29652,20,1,-307.800018,-210.300003,7743.757812"}
+{"host_monotonic_s": 20753.627818162, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20753.652210677, "kind": "device", "value": "V1,295,29751,20,1,-307.800018,-210.900009,7745.452148"}
+{"host_monotonic_s": 20753.664663994, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20753.742298714, "kind": "device", "value": "V1,296,29851,20,1,-307.050018,-211.350006,7745.209961"}
+{"host_monotonic_s": 20753.850081512, "kind": "device", "value": "V1,297,29951,20,1,-307.800018,-211.050003,7743.273926"}
+{"host_monotonic_s": 20753.942852881, "kind": "device", "value": "V1,298,30051,20,1,-308.100006,-210.000015,7744.242188"}
+{"host_monotonic_s": 20754.03487412, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20754.046048431, "kind": "device", "value": "V1,299,30151,20,1,-308.100006,-211.650009,7744.967773"}
+{"host_monotonic_s": 20754.057731269, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20754.152291412, "kind": "device", "value": "V1,300,30251,20,1,-308.250000,-210.600006,7745.209961"}
+{"host_monotonic_s": 20754.24523205, "kind": "device", "value": "V1,301,30351,20,1,-307.950012,-211.050003,7745.452148"}
+{"host_monotonic_s": 20754.349212659, "kind": "device", "value": "V1,302,30451,20,1,-307.950012,-211.050003,7745.452148"}
+{"host_monotonic_s": 20754.445424869, "kind": "device", "value": "V1,303,30551,20,1,-307.950012,-210.600006,7746.419922"}
+{"host_monotonic_s": 20754.445916844, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20754.468455708, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20754.548554331, "kind": "device", "value": "V1,304,30651,20,1,-307.200012,-210.900009,7744.483887"}
+{"host_monotonic_s": 20754.642842828, "kind": "device", "value": "V1,305,30751,20,1,-307.800018,-210.300003,7744.000000"}
+{"host_monotonic_s": 20754.747141496, "kind": "device", "value": "V1,306,30851,20,1,-307.500000,-211.050003,7744.242188"}
+{"host_monotonic_s": 20754.852982664, "kind": "device", "value": "V1,307,30951,20,1,-308.100006,-211.350006,7745.452148"}
+{"host_monotonic_s": 20754.853484718, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20754.876234054, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20754.950173031, "kind": "device", "value": "V1,308,31051,20,1,-307.350006,-210.300003,7746.177734"}
+{"host_monotonic_s": 20755.046775442, "kind": "device", "value": "V1,309,31151,20,1,-308.250000,-211.050003,7744.242188"}
+{"host_monotonic_s": 20755.150136143, "kind": "device", "value": "V1,310,31251,20,1,-307.050018,-210.750015,7744.000000"}
+{"host_monotonic_s": 20755.243182463, "kind": "device", "value": "V1,311,31351,20,1,-307.650024,-210.450012,7744.726074"}
+{"host_monotonic_s": 20755.254845106, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20755.27866887, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20755.346560094, "kind": "device", "value": "V1,312,31451,20,1,-308.100006,-210.300003,7745.693848"}
+{"host_monotonic_s": 20755.449477715, "kind": "device", "value": "V1,313,31551,20,1,-308.100006,-210.900009,7744.726074"}
+{"host_monotonic_s": 20755.551401849, "kind": "device", "value": "V1,314,31652,20,1,-308.550018,-210.900009,7748.113770"}
+{"host_monotonic_s": 20755.643603682, "kind": "device", "value": "V1,315,31751,20,1,-307.350006,-210.750015,7744.483887"}
+{"host_monotonic_s": 20755.655211222, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20755.677929935, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20755.745036772, "kind": "device", "value": "V1,316,31851,20,1,-308.550018,-210.600006,7745.693848"}
+{"host_monotonic_s": 20755.849903997, "kind": "device", "value": "V1,317,31951,20,1,-307.350006,-210.300003,7743.516113"}
+{"host_monotonic_s": 20755.951443595, "kind": "device", "value": "V1,318,32051,20,1,-307.800018,-211.650009,7744.726074"}
+{"host_monotonic_s": 20756.048167548, "kind": "device", "value": "V1,319,32151,20,1,-307.800018,-210.600006,7744.483887"}
+{"host_monotonic_s": 20756.061101463, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20756.083647809, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20756.15348807, "kind": "device", "value": "V1,320,32253,20,1,-307.050018,-210.300003,7743.516113"}
+{"host_monotonic_s": 20756.245356087, "kind": "device", "value": "V1,321,32352,20,1,-307.800018,-211.050003,7745.693848"}
+{"host_monotonic_s": 20756.351904932, "kind": "device", "value": "V1,322,32452,20,1,-308.250000,-211.200012,7745.936035"}
+{"host_monotonic_s": 20756.453362997, "kind": "device", "value": "V1,323,32552,20,1,-307.500000,-211.050003,7746.419922"}
+{"host_monotonic_s": 20756.464158763, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20756.488338908, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20756.556503402, "kind": "device", "value": "V1,324,32656,20,1,-308.100006,-210.750015,7745.209961"}
+{"host_monotonic_s": 20756.653254621, "kind": "device", "value": "V1,325,32755,20,1,-307.650024,-210.900009,7744.967773"}
+{"host_monotonic_s": 20756.747788178, "kind": "device", "value": "V1,326,32855,20,1,-307.800018,-210.750015,7745.209961"}
+{"host_monotonic_s": 20756.850289516, "kind": "device", "value": "V1,327,32955,20,1,-308.100006,-211.350006,7742.547852"}
+{"host_monotonic_s": 20756.872798864, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20756.89441155, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20756.960839909, "kind": "device", "value": "V1,328,33064,20,1,-308.100006,-211.200012,7744.967773"}
+{"host_monotonic_s": 20757.060338888, "kind": "device", "value": "V1,329,33164,20,1,-307.500000,-210.900009,7744.483887"}
+{"host_monotonic_s": 20757.154378679, "kind": "device", "value": "V1,330,33264,20,1,-307.800018,-210.750015,7744.726074"}
+{"host_monotonic_s": 20757.258281349, "kind": "device", "value": "V1,331,33364,20,1,-307.650024,-211.050003,7743.031738"}
+{"host_monotonic_s": 20757.282231825, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20757.304642259, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20757.374473467, "kind": "device", "value": "V1,332,33474,20,1,-307.350006,-211.200012,7744.000000"}
+{"host_monotonic_s": 20757.47108282, "kind": "device", "value": "V1,333,33573,20,1,-308.100006,-211.050003,7747.388184"}
+{"host_monotonic_s": 20757.572638372, "kind": "device", "value": "V1,334,33673,20,1,-308.250000,-210.150009,7745.936035"}
+{"host_monotonic_s": 20757.672181341, "kind": "device", "value": "V1,335,33773,20,1,-308.400024,-211.350006,7743.757812"}
+{"host_monotonic_s": 20757.683062857, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20757.70484344, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20757.774623349, "kind": "device", "value": "V1,336,33875,20,1,-308.400024,-211.650009,7743.757812"}
+{"host_monotonic_s": 20757.866495065, "kind": "device", "value": "V1,337,33974,20,1,-308.250000,-211.800003,7744.967773"}
+{"host_monotonic_s": 20757.972581518, "kind": "device", "value": "V1,338,34074,20,1,-307.950012,-210.750015,7745.452148"}
+{"host_monotonic_s": 20758.065457963, "kind": "device", "value": "V1,339,34174,20,1,-308.550018,-210.600006,7741.821777"}
+{"host_monotonic_s": 20758.088276877, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20758.111466242, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20758.180725898, "kind": "device", "value": "V1,340,34280,20,1,-308.400024,-210.300003,7744.967773"}
+{"host_monotonic_s": 20758.272339576, "kind": "device", "value": "V1,341,34380,20,1,-308.250000,-210.900009,7744.483887"}
+{"host_monotonic_s": 20758.375771735, "kind": "device", "value": "V1,342,34480,20,1,-308.100006,-211.050003,7744.242188"}
+{"host_monotonic_s": 20758.478059987, "kind": "device", "value": "V1,343,34580,20,1,-307.950012,-211.350006,7745.209961"}
+{"host_monotonic_s": 20758.489318538, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20758.513476012, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20758.58096424, "kind": "device", "value": "V1,344,34681,20,1,-308.700012,-211.650009,7745.452148"}
+{"host_monotonic_s": 20758.673126112, "kind": "device", "value": "V1,345,34781,20,1,-307.950012,-211.800003,7745.209961"}
+{"host_monotonic_s": 20758.778919583, "kind": "device", "value": "V1,346,34881,20,1,-307.800018,-211.050003,7745.209961"}
+{"host_monotonic_s": 20758.882750352, "kind": "device", "value": "V1,347,34981,20,1,-308.250000,-210.150009,7744.967773"}
+{"host_monotonic_s": 20758.895209915, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20758.917931804, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20758.985849924, "kind": "device", "value": "V1,348,35087,20,1,-308.550018,-210.450012,7744.967773"}
+{"host_monotonic_s": 20759.087713604, "kind": "device", "value": "V1,349,35186,20,1,-308.400024,-211.050003,7744.967773"}
+{"host_monotonic_s": 20759.181524151, "kind": "device", "value": "V1,350,35286,20,1,-308.250000,-210.600006,7743.516113"}
+{"host_monotonic_s": 20759.285454466, "kind": "device", "value": "V1,351,35386,20,1,-308.550018,-210.900009,7744.000000"}
+{"host_monotonic_s": 20759.296573449, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20759.32067887, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20759.379904266, "kind": "device", "value": "V1,352,35488,20,1,-308.100006,-211.350006,7744.726074"}
+{"host_monotonic_s": 20759.483938791, "kind": "device", "value": "V1,353,35588,20,1,-308.100006,-211.350006,7744.242188"}
+{"host_monotonic_s": 20759.587627569, "kind": "device", "value": "V1,354,35688,20,1,-308.100006,-211.200012,7743.031738"}
+{"host_monotonic_s": 20759.679932846, "kind": "device", "value": "V1,355,35788,20,1,-308.250000,-211.650009,7745.693848"}
+{"host_monotonic_s": 20759.704779046, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20759.727016241, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20759.788889261, "kind": "device", "value": "V1,356,35896,20,1,-307.350006,-210.450012,7743.757812"}
+{"host_monotonic_s": 20759.8904357, "kind": "device", "value": "V1,357,35996,20,1,-307.650024,-211.350006,7746.177734"}
+{"host_monotonic_s": 20759.994704623, "kind": "device", "value": "V1,358,36096,20,1,-308.100006,-211.650009,7745.209961"}
+{"host_monotonic_s": 20760.086594498, "kind": "device", "value": "V1,359,36196,20,1,-307.950012,-210.750015,7744.000000"}
+{"host_monotonic_s": 20760.110424123, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20760.133202337, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20760.202104658, "kind": "device", "value": "V1,360,36302,20,1,-308.250000,-210.750015,7744.483887"}
+{"host_monotonic_s": 20760.295326636, "kind": "device", "value": "V1,361,36402,20,1,-308.100006,-211.050003,7743.757812"}
+{"host_monotonic_s": 20760.399205044, "kind": "device", "value": "V1,362,36502,20,1,-308.250000,-210.750015,7742.547852"}
+{"host_monotonic_s": 20760.493944015, "kind": "device", "value": "V1,363,36602,20,1,-307.650024,-211.800003,7744.000000"}
+{"host_monotonic_s": 20760.516826924, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20760.538566416, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20760.605273651, "kind": "device", "value": "V1,364,36708,20,1,-308.100006,-212.250015,7744.000000"}
+{"host_monotonic_s": 20760.706173889, "kind": "device", "value": "V1,365,36808,20,1,-307.950012,-210.900009,7746.662109"}
+{"host_monotonic_s": 20760.807011045, "kind": "device", "value": "V1,366,36908,20,1,-308.550018,-210.900009,7743.273926"}
+{"host_monotonic_s": 20760.898243254, "kind": "device", "value": "V1,367,37008,20,1,-307.500000,-211.500015,7743.273926"}
+{"host_monotonic_s": 20760.921348651, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20760.943489927, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20761.013951072, "kind": "device", "value": "V1,368,37113,20,1,-308.250000,-210.750015,7745.209961"}
+{"host_monotonic_s": 20761.112655639, "kind": "device", "value": "V1,369,37213,20,1,-307.650024,-211.200012,7745.452148"}
+{"host_monotonic_s": 20761.21176855, "kind": "device", "value": "V1,370,37313,20,1,-308.250000,-211.800003,7745.209961"}
+{"host_monotonic_s": 20761.314034927, "kind": "device", "value": "V1,371,37413,20,1,-308.250000,-211.350006,7744.483887"}
+{"host_monotonic_s": 20761.325587961, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20761.349058253, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20761.419483032, "kind": "device", "value": "V1,372,37517,20,1,-308.850006,-211.350006,7745.693848"}
+{"host_monotonic_s": 20761.516203574, "kind": "device", "value": "V1,373,37617,20,1,-308.700012,-210.750015,7742.547852"}
+{"host_monotonic_s": 20761.618003912, "kind": "device", "value": "V1,374,37717,20,1,-308.100006,-211.500015,7742.547852"}
+{"host_monotonic_s": 20761.711404603, "kind": "device", "value": "V1,375,37817,20,1,-308.250000,-211.050003,7744.000000"}
+{"host_monotonic_s": 20761.733708597, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20761.756965409, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20761.825332496, "kind": "device", "value": "V1,376,37925,20,1,-307.950012,-210.750015,7745.209961"}
+{"host_monotonic_s": 20761.92108797, "kind": "device", "value": "V1,377,38025,20,1,-307.650024,-211.350006,7743.516113"}
+{"host_monotonic_s": 20762.025041066, "kind": "device", "value": "V1,378,38125,20,1,-307.800018,-211.200012,7745.936035"}
+{"host_monotonic_s": 20762.11629038, "kind": "device", "value": "V1,379,38225,20,1,-308.700012,-210.300003,7744.483887"}
+{"host_monotonic_s": 20762.138482593, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20762.161781982, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20762.229943918, "kind": "device", "value": "V1,380,38330,20,1,-307.650024,-210.450012,7746.177734"}
+{"host_monotonic_s": 20762.325871767, "kind": "device", "value": "V1,381,38430,20,1,-307.950012,-211.500015,7743.273926"}
+{"host_monotonic_s": 20762.424934009, "kind": "device", "value": "V1,382,38530,20,1,-308.100006,-211.350006,7743.031738"}
+{"host_monotonic_s": 20762.529400219, "kind": "device", "value": "V1,383,38630,20,1,-308.250000,-210.000015,7744.967773"}
+{"host_monotonic_s": 20762.541112341, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20762.566340201, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20762.6274949, "kind": "device", "value": "V1,384,38733,20,1,-308.400024,-211.200012,7743.516113"}
+{"host_monotonic_s": 20762.733293205, "kind": "device", "value": "V1,385,38832,20,1,-308.250000,-210.900009,7744.483887"}
+{"host_monotonic_s": 20762.835570253, "kind": "device", "value": "V1,386,38932,20,1,-307.350006,-210.750015,7742.306152"}
+{"host_monotonic_s": 20762.931285509, "kind": "device", "value": "V1,387,39032,20,1,-307.800018,-210.450012,7744.726074"}
+{"host_monotonic_s": 20762.943187454, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20762.968694073, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20763.031118656, "kind": "device", "value": "V1,388,39135,20,1,-307.200012,-210.750015,7744.242188"}
+{"host_monotonic_s": 20763.125639336, "kind": "device", "value": "V1,389,39235,20,1,-307.800018,-211.500015,7745.209961"}
+{"host_monotonic_s": 20763.230293797, "kind": "device", "value": "V1,390,39335,20,1,-308.250000,-211.200012,7743.757812"}
+{"host_monotonic_s": 20763.243141513, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20763.266083693, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20763.266561843, "kind": "command", "value": "MOVE 2350"}
+{"host_monotonic_s": 20763.334047677, "kind": "device", "value": "V1,391,39435,20,1,-307.650024,-211.500015,7744.967773"}
+{"host_monotonic_s": 20763.33454131, "kind": "device", "value": "# MOVE_START start=2371 target=2350 delta=-21 speed=20"}
+{"host_monotonic_s": 20763.34772742, "kind": "device", "value": "# MOTION ms=39437 elapsed_ms=0 start=2371 target=2350 pos=2371 load_raw=0 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20763.360491993, "kind": "device", "value": "# MOTION ms=39449 elapsed_ms=12 start=2371 target=2350 pos=2371 load_raw=24 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20763.431263804, "kind": "device", "value": "V1,392,39535,20,1,-308.550018,-210.750015,7744.967773"}
+{"host_monotonic_s": 20763.454586691, "kind": "device", "value": "# MOTION ms=39549 elapsed_ms=112 start=2371 target=2350 pos=2366 load_raw=24 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20763.526250657, "kind": "device", "value": "V1,393,39635,20,1,-307.650024,-210.900009,7743.516113"}
+{"host_monotonic_s": 20763.548909182, "kind": "device", "value": "# MOTION ms=39650 elapsed_ms=213 start=2371 target=2350 pos=2361 load_raw=24 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20763.629745681, "kind": "device", "value": "V1,394,39735,20,1,-307.950012,-211.350006,7744.242188"}
+{"host_monotonic_s": 20763.655633891, "kind": "device", "value": "# MOTION ms=39751 elapsed_ms=314 start=2371 target=2350 pos=2356 load_raw=20 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20763.735976986, "kind": "device", "value": "V1,395,39835,20,1,-307.650024,-210.150009,7742.306152"}
+{"host_monotonic_s": 20763.759529431, "kind": "device", "value": "# MOTION ms=39852 elapsed_ms=415 start=2371 target=2350 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20763.759774915, "kind": "device", "value": "# MOTION_SUMMARY result=done start=2371 target=2350 last_pos=2351 samples=6 peak_abs_load=24 peak_signed_load=24 elapsed_ms=415"}
+{"host_monotonic_s": 20763.772607951, "kind": "device", "value": "# MOVE_DONE target=2350 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20763.773380726, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20763.8328468, "kind": "device", "value": "V1,396,39938,20,1,-307.950012,-210.300003,7743.273926"}
+{"host_monotonic_s": 20763.845435631, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20763.941776547, "kind": "device", "value": "V1,397,40038,20,1,-307.950012,-210.750015,7742.547852"}
+{"host_monotonic_s": 20764.029312165, "kind": "device", "value": "V1,398,40138,20,1,-307.950012,-210.600006,7742.306152"}
+{"host_monotonic_s": 20764.132710006, "kind": "device", "value": "V1,399,40238,20,1,-308.400024,-210.450012,7741.337891"}
+{"host_monotonic_s": 20764.181743051, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20764.236925533, "kind": "device", "value": "V1,400,40338,20,1,-308.250000,-210.750015,7739.885742"}
+{"host_monotonic_s": 20764.247826568, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20764.340077502, "kind": "device", "value": "V1,401,40438,20,1,-308.850006,-210.450012,7742.063965"}
+{"host_monotonic_s": 20764.432608021, "kind": "device", "value": "V1,402,40538,20,1,-307.950012,-209.850006,7745.209961"}
+{"host_monotonic_s": 20764.538564414, "kind": "device", "value": "V1,403,40638,20,1,-308.400024,-211.500015,7740.854004"}
+{"host_monotonic_s": 20764.584034262, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20764.631744317, "kind": "device", "value": "V1,404,40738,20,1,-308.250000,-211.050003,7743.273926"}
+{"host_monotonic_s": 20764.642966137, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20764.734282213, "kind": "device", "value": "V1,405,40838,20,1,-307.950012,-211.350006,7741.337891"}
+{"host_monotonic_s": 20764.832115533, "kind": "device", "value": "V1,406,40938,20,1,-309.000000,-210.300003,7742.306152"}
+{"host_monotonic_s": 20764.934296597, "kind": "device", "value": "V1,407,41038,20,1,-308.100006,-211.350006,7743.273926"}
+{"host_monotonic_s": 20764.994268641, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20765.030520483, "kind": "device", "value": "V1,408,41138,20,1,-308.400024,-210.750015,7741.821777"}
+{"host_monotonic_s": 20765.042062839, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20765.133132909, "kind": "device", "value": "V1,409,41238,20,1,-308.100006,-211.950012,7743.031738"}
+{"host_monotonic_s": 20765.230872542, "kind": "device", "value": "V1,410,41338,20,1,-308.700012,-211.200012,7742.547852"}
+{"host_monotonic_s": 20765.331258124, "kind": "device", "value": "V1,411,41438,20,1,-308.100006,-210.600006,7742.547852"}
+{"host_monotonic_s": 20765.402876199, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20765.437706587, "kind": "device", "value": "V1,412,41538,20,1,-309.150024,-210.750015,7743.757812"}
+{"host_monotonic_s": 20765.448625754, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20765.537330742, "kind": "device", "value": "V1,413,41638,20,1,-308.700012,-210.450012,7743.031738"}
+{"host_monotonic_s": 20765.631106945, "kind": "device", "value": "V1,414,41738,20,1,-308.400024,-211.050003,7744.483887"}
+{"host_monotonic_s": 20765.736582855, "kind": "device", "value": "V1,415,41838,20,1,-308.250000,-210.900009,7742.790039"}
+{"host_monotonic_s": 20765.806377452, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20765.830965805, "kind": "device", "value": "V1,416,41938,20,1,-308.550018,-210.750015,7743.757812"}
+{"host_monotonic_s": 20765.843761506, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20765.934853243, "kind": "device", "value": "V1,417,42038,20,1,-308.250000,-211.050003,7743.516113"}
+{"host_monotonic_s": 20766.028136619, "kind": "device", "value": "V1,418,42138,20,1,-308.550018,-210.900009,7744.000000"}
+{"host_monotonic_s": 20766.131536185, "kind": "device", "value": "V1,419,42239,20,1,-309.150024,-210.750015,7744.000000"}
+{"host_monotonic_s": 20766.210110579, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20766.234250981, "kind": "device", "value": "V1,420,42338,20,1,-308.250000,-210.900009,7743.757812"}
+{"host_monotonic_s": 20766.245426293, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20766.33018651, "kind": "device", "value": "V1,421,42438,20,1,-308.400024,-210.900009,7741.821777"}
+{"host_monotonic_s": 20766.432470752, "kind": "device", "value": "V1,422,42538,20,1,-308.550018,-210.150009,7744.000000"}
+{"host_monotonic_s": 20766.536516199, "kind": "device", "value": "V1,423,42638,20,1,-308.850006,-210.750015,7743.516113"}
+{"host_monotonic_s": 20766.615643235, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20766.638990995, "kind": "device", "value": "V1,424,42738,20,1,-309.000000,-211.500015,7742.063965"}
+{"host_monotonic_s": 20766.649729781, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20766.733222715, "kind": "device", "value": "V1,425,42838,20,1,-308.550018,-211.050003,7741.580078"}
+{"host_monotonic_s": 20766.834135843, "kind": "device", "value": "V1,426,42938,20,1,-308.100006,-211.200012,7742.790039"}
+{"host_monotonic_s": 20766.939855499, "kind": "device", "value": "V1,427,43038,20,1,-308.550018,-211.050003,7742.306152"}
+{"host_monotonic_s": 20767.01670525, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20767.037916329, "kind": "device", "value": "V1,428,43138,20,1,-308.550018,-210.900009,7741.337891"}
+{"host_monotonic_s": 20767.04921397, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20767.138564006, "kind": "device", "value": "V1,429,43238,20,1,-308.850006,-211.500015,7742.790039"}
+{"host_monotonic_s": 20767.233335195, "kind": "device", "value": "V1,430,43338,20,1,-308.250000,-211.200012,7742.547852"}
+{"host_monotonic_s": 20767.336713171, "kind": "device", "value": "V1,431,43438,20,1,-308.700012,-210.900009,7743.757812"}
+{"host_monotonic_s": 20767.418394704, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20767.429573343, "kind": "device", "value": "V1,432,43538,20,1,-308.100006,-210.300003,7743.273926"}
+{"host_monotonic_s": 20767.440757096, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20767.528333724, "kind": "device", "value": "V1,433,43638,20,1,-308.400024,-210.750015,7744.483887"}
+{"host_monotonic_s": 20767.639939896, "kind": "device", "value": "V1,434,43738,20,1,-307.950012,-211.500015,7742.306152"}
+{"host_monotonic_s": 20767.733221106, "kind": "device", "value": "V1,435,43838,20,1,-308.550018,-210.900009,7744.000000"}
+{"host_monotonic_s": 20767.823336541, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20767.834270771, "kind": "device", "value": "V1,436,43938,20,1,-308.250000,-210.150009,7742.790039"}
+{"host_monotonic_s": 20767.847414638, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20767.936806103, "kind": "device", "value": "V1,437,44038,20,1,-308.550018,-210.600006,7743.757812"}
+{"host_monotonic_s": 20768.03906535, "kind": "device", "value": "V1,438,44138,20,1,-308.700012,-211.350006,7741.096191"}
+{"host_monotonic_s": 20768.131340586, "kind": "device", "value": "V1,439,44238,20,1,-308.700012,-210.150009,7742.790039"}
+{"host_monotonic_s": 20768.233552768, "kind": "device", "value": "V1,440,44338,20,1,-308.550018,-211.800003,7744.242188"}
+{"host_monotonic_s": 20768.234227403, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20768.258929344, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20768.328631775, "kind": "device", "value": "V1,441,44438,20,1,-308.250000,-210.450012,7742.306152"}
+{"host_monotonic_s": 20768.436384054, "kind": "device", "value": "V1,442,44538,20,1,-308.850006,-211.350006,7739.885742"}
+{"host_monotonic_s": 20768.537794855, "kind": "device", "value": "V1,443,44638,20,1,-308.700012,-211.200012,7742.063965"}
+{"host_monotonic_s": 20768.631012388, "kind": "device", "value": "V1,444,44738,20,1,-308.250000,-210.750015,7742.547852"}
+{"host_monotonic_s": 20768.642109887, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20768.664857652, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20768.734014708, "kind": "device", "value": "V1,445,44838,20,1,-308.550018,-211.350006,7742.306152"}
+{"host_monotonic_s": 20768.837166672, "kind": "device", "value": "V1,446,44938,20,1,-308.400024,-210.750015,7739.885742"}
+{"host_monotonic_s": 20768.933262196, "kind": "device", "value": "V1,447,45038,20,1,-308.550018,-210.600006,7743.273926"}
+{"host_monotonic_s": 20769.028960147, "kind": "device", "value": "V1,448,45138,20,1,-308.550018,-210.300003,7742.063965"}
+{"host_monotonic_s": 20769.053718368, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20769.077214811, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20769.135191995, "kind": "device", "value": "V1,449,45245,20,1,-309.000000,-211.500015,7742.547852"}
+{"host_monotonic_s": 20769.246558306, "kind": "device", "value": "V1,450,45345,20,1,-308.400024,-211.050003,7743.031738"}
+{"host_monotonic_s": 20769.336729627, "kind": "device", "value": "V1,451,45445,20,1,-307.950012,-211.350006,7742.306152"}
+{"host_monotonic_s": 20769.442936859, "kind": "device", "value": "V1,452,45545,20,1,-308.400024,-210.750015,7744.242188"}
+{"host_monotonic_s": 20769.454001199, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20769.478197048, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20769.537236158, "kind": "device", "value": "V1,453,45645,20,1,-308.250000,-211.950012,7741.821777"}
+{"host_monotonic_s": 20769.641189596, "kind": "device", "value": "V1,454,45745,20,1,-308.250000,-211.350006,7744.726074"}
+{"host_monotonic_s": 20769.746795761, "kind": "device", "value": "V1,455,45845,20,1,-308.700012,-210.600006,7740.854004"}
+{"host_monotonic_s": 20769.837250217, "kind": "device", "value": "V1,456,45945,20,1,-308.400024,-211.200012,7744.000000"}
+{"host_monotonic_s": 20769.861025274, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20769.884608281, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20769.9422647, "kind": "device", "value": "V1,457,46052,20,1,-307.950012,-210.600006,7742.063965"}
+{"host_monotonic_s": 20770.050310744, "kind": "device", "value": "V1,458,46152,20,1,-308.550018,-210.900009,7744.483887"}
+{"host_monotonic_s": 20770.153874534, "kind": "device", "value": "V1,459,46252,20,1,-308.100006,-211.050003,7743.273926"}
+{"host_monotonic_s": 20770.251017189, "kind": "device", "value": "V1,460,46352,20,1,-308.100006,-211.200012,7742.306152"}
+{"host_monotonic_s": 20770.263416234, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20770.286406756, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20770.355250961, "kind": "device", "value": "V1,461,46455,20,1,-308.550018,-210.900009,7742.547852"}
+{"host_monotonic_s": 20770.451946916, "kind": "device", "value": "V1,462,46554,20,1,-308.100006,-210.900009,7742.063965"}
+{"host_monotonic_s": 20770.548408024, "kind": "device", "value": "V1,463,46654,20,1,-307.500000,-212.100006,7742.790039"}
+{"host_monotonic_s": 20770.652241753, "kind": "device", "value": "V1,464,46754,20,1,-308.700012,-211.950012,7742.063965"}
+{"host_monotonic_s": 20770.665083862, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20770.686709798, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20770.754931495, "kind": "device", "value": "V1,465,46856,20,1,-308.550018,-211.500015,7742.790039"}
+{"host_monotonic_s": 20770.847987023, "kind": "device", "value": "V1,466,46956,20,1,-307.200012,-211.350006,7742.306152"}
+{"host_monotonic_s": 20770.953893809, "kind": "device", "value": "V1,467,47056,20,1,-307.950012,-211.200012,7742.306152"}
+{"host_monotonic_s": 20771.055233881, "kind": "device", "value": "V1,468,47156,20,1,-307.950012,-211.350006,7742.547852"}
+{"host_monotonic_s": 20771.066965162, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20771.08873073, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20771.157448174, "kind": "device", "value": "V1,469,47258,20,1,-308.250000,-211.500015,7741.337891"}
+{"host_monotonic_s": 20771.260368523, "kind": "device", "value": "V1,470,47358,20,1,-308.700012,-211.350006,7743.031738"}
+{"host_monotonic_s": 20771.351565223, "kind": "device", "value": "V1,471,47458,20,1,-308.850006,-211.050003,7742.790039"}
+{"host_monotonic_s": 20771.455719961, "kind": "device", "value": "V1,472,47558,20,1,-309.300018,-211.500015,7743.273926"}
+{"host_monotonic_s": 20771.467370558, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20771.490996421, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20771.54943443, "kind": "device", "value": "V1,473,47659,20,1,-307.800018,-211.500015,7744.242188"}
+{"host_monotonic_s": 20771.653366173, "kind": "device", "value": "V1,474,47758,20,1,-309.450012,-211.500015,7743.031738"}
+{"host_monotonic_s": 20771.759447366, "kind": "device", "value": "V1,475,47858,20,1,-309.000000,-211.800003,7744.000000"}
+{"host_monotonic_s": 20771.850443485, "kind": "device", "value": "V1,476,47958,20,1,-309.300018,-210.750015,7741.821777"}
+{"host_monotonic_s": 20771.87202273, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20771.896773182, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20771.961863934, "kind": "device", "value": "V1,477,48063,20,1,-308.400024,-211.050003,7743.273926"}
+{"host_monotonic_s": 20772.056606621, "kind": "device", "value": "V1,478,48163,20,1,-309.750000,-211.200012,7743.031738"}
+{"host_monotonic_s": 20772.161622724, "kind": "device", "value": "V1,479,48263,20,1,-308.100006,-212.100006,7742.306152"}
+{"host_monotonic_s": 20772.25562663, "kind": "device", "value": "V1,480,48363,20,1,-308.850006,-210.750015,7741.821777"}
+{"host_monotonic_s": 20772.27804472, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20772.301889858, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20772.369813773, "kind": "device", "value": "V1,481,48469,20,1,-307.650024,-211.200012,7743.273926"}
+{"host_monotonic_s": 20772.467392593, "kind": "device", "value": "V1,482,48569,20,1,-307.650024,-210.600006,7741.821777"}
+{"host_monotonic_s": 20772.563345262, "kind": "device", "value": "V1,483,48669,20,1,-308.250000,-210.750015,7740.854004"}
+{"host_monotonic_s": 20772.666325246, "kind": "device", "value": "V1,484,48769,20,1,-308.100006,-211.200012,7742.790039"}
+{"host_monotonic_s": 20772.690185972, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20772.769985652, "kind": "device", "value": "V1,485,48869,20,1,-307.800018,-210.000015,7744.000000"}
+{"host_monotonic_s": 20772.782250716, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20772.862159854, "kind": "device", "value": "V1,486,48969,20,1,-308.400024,-210.600006,7741.337891"}
+{"host_monotonic_s": 20772.96798154, "kind": "device", "value": "V1,487,49069,20,1,-307.800018,-210.900009,7743.273926"}
+{"host_monotonic_s": 20773.070991638, "kind": "device", "value": "V1,488,49169,20,1,-308.550018,-211.650009,7743.273926"}
+{"host_monotonic_s": 20773.093881724, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20773.162789833, "kind": "device", "value": "V1,489,49269,20,1,-308.850006,-210.600006,7742.547852"}
+{"host_monotonic_s": 20773.173434307, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20773.260360475, "kind": "device", "value": "V1,490,49369,20,1,-308.250000,-210.300003,7744.242188"}
+{"host_monotonic_s": 20773.367309359, "kind": "device", "value": "V1,491,49469,20,1,-308.850006,-210.450012,7744.000000"}
+{"host_monotonic_s": 20773.469549959, "kind": "device", "value": "V1,492,49569,20,1,-308.850006,-211.650009,7743.273926"}
+{"host_monotonic_s": 20773.494516214, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20773.560845564, "kind": "device", "value": "V1,493,49669,20,1,-308.700012,-211.200012,7741.580078"}
+{"host_monotonic_s": 20773.582576474, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20773.661475304, "kind": "device", "value": "V1,494,49769,20,1,-307.500000,-211.350006,7742.547852"}
+{"host_monotonic_s": 20773.769302276, "kind": "device", "value": "V1,495,49869,20,1,-308.850006,-211.050003,7744.000000"}
+{"host_monotonic_s": 20773.863864802, "kind": "device", "value": "V1,496,49969,20,1,-308.100006,-210.750015,7741.821777"}
+{"host_monotonic_s": 20773.897402812, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20773.966575885, "kind": "device", "value": "V1,497,50069,20,1,-308.850006,-210.750015,7742.063965"}
+{"host_monotonic_s": 20773.978392494, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20774.060240757, "kind": "device", "value": "V1,498,50169,20,1,-308.400024,-211.200012,7744.000000"}
+{"host_monotonic_s": 20774.160283881, "kind": "device", "value": "V1,499,50269,20,1,-308.400024,-210.750015,7744.242188"}
+{"host_monotonic_s": 20774.268212758, "kind": "device", "value": "V1,500,50369,20,1,-308.250000,-211.650009,7741.580078"}
+{"host_monotonic_s": 20774.303675149, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20774.362830796, "kind": "device", "value": "V1,501,50469,20,1,-308.400024,-211.350006,7743.031738"}
+{"host_monotonic_s": 20774.37554929, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20774.466500194, "kind": "device", "value": "V1,502,50569,20,1,-308.400024,-210.900009,7744.483887"}
+{"host_monotonic_s": 20774.56146686, "kind": "device", "value": "V1,503,50669,20,1,-308.700012,-211.200012,7742.790039"}
+{"host_monotonic_s": 20774.65991796, "kind": "device", "value": "V1,504,50769,20,1,-308.100006,-209.700012,7741.821777"}
+{"host_monotonic_s": 20774.705845416, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20774.764124939, "kind": "device", "value": "V1,505,50869,20,1,-308.250000,-210.600006,7741.337891"}
+{"host_monotonic_s": 20774.775640278, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20774.859724022, "kind": "device", "value": "V1,506,50969,20,1,-308.400024,-211.650009,7742.063965"}
+{"host_monotonic_s": 20774.964539713, "kind": "device", "value": "V1,507,51069,20,1,-308.250000,-210.450012,7741.580078"}
+{"host_monotonic_s": 20775.060857908, "kind": "device", "value": "V1,508,51169,20,1,-307.800018,-211.050003,7744.483887"}
+{"host_monotonic_s": 20775.106644636, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20775.166590775, "kind": "device", "value": "V1,509,51269,20,1,-308.850006,-210.600006,7742.306152"}
+{"host_monotonic_s": 20775.178180943, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20775.261868081, "kind": "device", "value": "V1,510,51369,20,1,-308.250000,-211.500015,7740.854004"}
+{"host_monotonic_s": 20775.366776528, "kind": "device", "value": "V1,511,51470,20,1,-307.950012,-211.050003,7745.693848"}
+{"host_monotonic_s": 20775.462501787, "kind": "device", "value": "V1,512,51569,20,1,-308.250000,-210.600006,7740.370117"}
+{"host_monotonic_s": 20775.513297006, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20775.560397949, "kind": "device", "value": "V1,513,51669,20,1,-308.700012,-211.500015,7740.854004"}
+{"host_monotonic_s": 20775.582438902, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20775.661929741, "kind": "device", "value": "V1,514,51769,20,1,-308.100006,-211.050003,7741.337891"}
+{"host_monotonic_s": 20775.76795326, "kind": "device", "value": "V1,515,51869,20,1,-309.000000,-210.750015,7741.821777"}
+{"host_monotonic_s": 20775.840456075, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20775.864913323, "kind": "device", "value": "V1,516,51969,20,1,-308.400024,-211.350006,7740.370117"}
+{"host_monotonic_s": 20775.877114316, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20775.877731114, "kind": "command", "value": "MOVE 2410"}
+{"host_monotonic_s": 20775.890286464, "kind": "device", "value": "# MOVE_START start=2351 target=2410 delta=59 speed=20"}
+{"host_monotonic_s": 20775.903160207, "kind": "device", "value": "# MOTION ms=51996 elapsed_ms=0 start=2351 target=2410 pos=2351 load_raw=0 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20775.971894059, "kind": "device", "value": "V1,517,52071,20,1,-308.250000,-210.450012,7740.854004"}
+{"host_monotonic_s": 20775.985447347, "kind": "device", "value": "# MOTION ms=52085 elapsed_ms=89 start=2351 target=2410 pos=2351 load_raw=-36 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20776.063394474, "kind": "device", "value": "V1,518,52170,20,1,-308.400024,-210.750015,7741.096191"}
+{"host_monotonic_s": 20776.087256781, "kind": "device", "value": "# MOTION ms=52186 elapsed_ms=190 start=2351 target=2410 pos=2356 load_raw=-28 voltage_raw=77 temp_raw=25"}
+{"host_monotonic_s": 20776.166132488, "kind": "device", "value": "V1,519,52270,20,1,-308.250000,-210.600006,7743.516113"}
+{"host_monotonic_s": 20776.188514014, "kind": "device", "value": "# MOTION ms=52287 elapsed_ms=291 start=2351 target=2410 pos=2361 load_raw=-32 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20776.269513787, "kind": "device", "value": "V1,520,52370,20,1,-307.800018,-211.800003,7742.547852"}
+{"host_monotonic_s": 20776.294011024, "kind": "device", "value": "# MOTION ms=52388 elapsed_ms=392 start=2351 target=2410 pos=2367 load_raw=-24 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20776.370485423, "kind": "device", "value": "V1,521,52470,20,1,-308.850006,-211.500015,7742.790039"}
+{"host_monotonic_s": 20776.394368069, "kind": "device", "value": "# MOTION ms=52489 elapsed_ms=493 start=2351 target=2410 pos=2370 load_raw=-44 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20776.473233743, "kind": "device", "value": "V1,522,52570,20,1,-308.550018,-211.800003,7743.757812"}
+{"host_monotonic_s": 20776.494831797, "kind": "device", "value": "# MOTION ms=52590 elapsed_ms=594 start=2351 target=2410 pos=2377 load_raw=-28 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20776.56548723, "kind": "device", "value": "V1,523,52670,20,1,-307.650024,-211.200012,7744.242188"}
+{"host_monotonic_s": 20776.586727426, "kind": "device", "value": "# MOTION ms=52691 elapsed_ms=695 start=2351 target=2410 pos=2383 load_raw=0 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20776.667429959, "kind": "device", "value": "V1,524,52770,20,1,-307.500000,-210.900009,7744.000000"}
+{"host_monotonic_s": 20776.691225886, "kind": "device", "value": "# MOTION ms=52792 elapsed_ms=796 start=2351 target=2410 pos=2387 load_raw=-24 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20776.763580463, "kind": "device", "value": "V1,525,52870,20,1,-307.950012,-210.900009,7743.031738"}
+{"host_monotonic_s": 20776.798609079, "kind": "device", "value": "# MOTION ms=52893 elapsed_ms=897 start=2351 target=2410 pos=2393 load_raw=20 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20776.866249844, "kind": "device", "value": "V1,526,52970,20,1,-307.500000,-211.350006,7744.967773"}
+{"host_monotonic_s": 20776.889422506, "kind": "device", "value": "# MOTION ms=52994 elapsed_ms=998 start=2351 target=2410 pos=2398 load_raw=20 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20776.97005059, "kind": "device", "value": "V1,527,53070,20,1,-307.650024,-211.800003,7744.726074"}
+{"host_monotonic_s": 20776.993779584, "kind": "device", "value": "# MOTION ms=53095 elapsed_ms=1099 start=2351 target=2410 pos=2403 load_raw=20 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20777.065612525, "kind": "device", "value": "V1,528,53170,20,1,-307.350006,-211.050003,7744.726074"}
+{"host_monotonic_s": 20777.098615304, "kind": "device", "value": "# MOTION ms=53196 elapsed_ms=1200 start=2351 target=2410 pos=2406 load_raw=-44 voltage_raw=76 temp_raw=25"}
+{"host_monotonic_s": 20777.169831346, "kind": "device", "value": "V1,529,53270,20,1,-307.500000,-211.200012,7745.693848"}
+{"host_monotonic_s": 20777.203572064, "kind": "device", "value": "# MOTION ms=53297 elapsed_ms=1301 start=2351 target=2410 pos=2409 load_raw=0 voltage_raw=77 temp_raw=25"}
+{"host_monotonic_s": 20777.214910697, "kind": "device", "value": "# MOTION_SUMMARY result=done start=2351 target=2410 last_pos=2409 samples=14 peak_abs_load=44 peak_signed_load=-44 elapsed_ms=1301"}
+{"host_monotonic_s": 20777.215242645, "kind": "device", "value": "# MOVE_DONE target=2410 pos=2409 load_raw=0 voltage_raw=77 temp_raw=25"}
+{"host_monotonic_s": 20777.216249969, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20777.282540867, "kind": "device", "value": "V1,530,53383,20,1,-307.350006,-211.500015,7744.000000"}
+{"host_monotonic_s": 20777.293265481, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20777.376852765, "kind": "device", "value": "V1,531,53483,20,1,-307.650024,-211.050003,7747.145996"}
+{"host_monotonic_s": 20777.48147855, "kind": "device", "value": "V1,532,53583,20,1,-307.650024,-211.200012,7746.177734"}
+{"host_monotonic_s": 20777.584104094, "kind": "device", "value": "V1,533,53683,20,1,-306.600006,-211.650009,7744.483887"}
+{"host_monotonic_s": 20777.620951815, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20777.676600548, "kind": "device", "value": "V1,534,53783,20,1,-307.050018,-211.350006,7744.483887"}
+{"host_monotonic_s": 20777.687696085, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20777.781999805, "kind": "device", "value": "V1,535,53883,20,1,-306.450012,-211.200012,7745.452148"}
+{"host_monotonic_s": 20777.885998365, "kind": "device", "value": "V1,536,53983,20,1,-307.500000,-211.800003,7745.693848"}
+{"host_monotonic_s": 20777.977148407, "kind": "device", "value": "V1,537,54083,20,1,-306.600006,-211.050003,7745.693848"}
+{"host_monotonic_s": 20778.025499447, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20778.085048661, "kind": "device", "value": "V1,538,54183,20,1,-307.200012,-210.900009,7744.242188"}
+{"host_monotonic_s": 20778.096600422, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20778.175713842, "kind": "device", "value": "V1,539,54283,20,1,-306.150024,-211.200012,7744.967773"}
+{"host_monotonic_s": 20778.280386772, "kind": "device", "value": "V1,540,54383,20,1,-307.800018,-211.350006,7745.452148"}
+{"host_monotonic_s": 20778.374209565, "kind": "device", "value": "V1,541,54483,20,1,-307.050018,-211.350006,7744.967773"}
+{"host_monotonic_s": 20778.433679408, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20778.479771626, "kind": "device", "value": "V1,542,54583,20,1,-306.300018,-210.750015,7745.452148"}
+{"host_monotonic_s": 20778.491393517, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20778.584708847, "kind": "device", "value": "V1,543,54683,20,1,-306.600006,-211.500015,7744.726074"}
+{"host_monotonic_s": 20778.679460183, "kind": "device", "value": "V1,544,54783,20,1,-307.050018,-210.900009,7746.662109"}
+{"host_monotonic_s": 20778.785457898, "kind": "device", "value": "V1,545,54883,20,1,-306.150024,-210.300003,7747.872070"}
+{"host_monotonic_s": 20778.840930816, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20778.876758779, "kind": "device", "value": "V1,546,54983,20,1,-307.200012,-211.350006,7747.629883"}
+{"host_monotonic_s": 20778.889615827, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20778.980488952, "kind": "device", "value": "V1,547,55083,20,1,-306.450012,-211.500015,7745.693848"}
+{"host_monotonic_s": 20779.085323723, "kind": "device", "value": "V1,548,55183,20,1,-306.750000,-210.750015,7742.790039"}
+{"host_monotonic_s": 20779.177477631, "kind": "device", "value": "V1,549,55283,20,1,-306.300018,-210.450012,7743.516113"}
+{"host_monotonic_s": 20779.245354314, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20779.279501139, "kind": "device", "value": "V1,550,55383,20,1,-307.200012,-210.600006,7743.516113"}
+{"host_monotonic_s": 20779.292380026, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20779.382076726, "kind": "device", "value": "V1,551,55483,20,1,-305.850006,-210.450012,7747.145996"}
+{"host_monotonic_s": 20779.474912133, "kind": "device", "value": "V1,552,55583,20,1,-306.750000,-211.800003,7745.936035"}
+{"host_monotonic_s": 20779.579893872, "kind": "device", "value": "V1,553,55684,20,1,-307.050018,-211.500015,7744.000000"}
+{"host_monotonic_s": 20779.648866409, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20779.684934142, "kind": "device", "value": "V1,554,55783,20,1,-306.000000,-210.600006,7745.209961"}
+{"host_monotonic_s": 20779.696562864, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20779.776122979, "kind": "device", "value": "V1,555,55883,20,1,-307.350006,-210.900009,7744.000000"}
+{"host_monotonic_s": 20779.877512647, "kind": "device", "value": "V1,556,55983,20,1,-306.600006,-211.500015,7744.726074"}
+{"host_monotonic_s": 20779.983257678, "kind": "device", "value": "V1,557,56083,20,1,-307.050018,-211.950012,7744.726074"}
+{"host_monotonic_s": 20780.053631016, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20780.075073068, "kind": "device", "value": "V1,558,56183,20,1,-306.450012,-211.800003,7743.273926"}
+{"host_monotonic_s": 20780.087890475, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20780.182624611, "kind": "device", "value": "V1,559,56283,20,1,-306.450012,-210.900009,7745.693848"}
+{"host_monotonic_s": 20780.277508304, "kind": "device", "value": "V1,560,56383,20,1,-306.300018,-212.100006,7745.452148"}
+{"host_monotonic_s": 20780.383861231, "kind": "device", "value": "V1,561,56483,20,1,-306.600006,-211.050003,7745.693848"}
+{"host_monotonic_s": 20780.460664823, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20780.483876462, "kind": "device", "value": "V1,562,56583,20,1,-306.150024,-211.050003,7744.483887"}
+{"host_monotonic_s": 20780.494776429, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20780.584101078, "kind": "device", "value": "V1,563,56683,20,1,-306.600006,-211.050003,7745.693848"}
+{"host_monotonic_s": 20780.679730302, "kind": "device", "value": "V1,564,56783,20,1,-306.600006,-211.050003,7745.209961"}
+{"host_monotonic_s": 20780.783340364, "kind": "device", "value": "V1,565,56883,20,1,-306.300018,-210.900009,7745.209961"}
+{"host_monotonic_s": 20780.86407411, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20780.875592835, "kind": "device", "value": "V1,566,56983,20,1,-306.600006,-210.750015,7744.483887"}
+{"host_monotonic_s": 20780.888372384, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20780.977093801, "kind": "device", "value": "V1,567,57083,20,1,-306.000000,-210.900009,7744.242188"}
+{"host_monotonic_s": 20781.080857826, "kind": "device", "value": "V1,568,57183,20,1,-306.300018,-210.300003,7744.967773"}
+{"host_monotonic_s": 20781.186073818, "kind": "device", "value": "V1,569,57283,20,1,-306.000000,-210.600006,7744.726074"}
+{"host_monotonic_s": 20781.264880688, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20781.276608839, "kind": "device", "value": "V1,570,57383,20,1,-306.150024,-210.900009,7743.273926"}
+{"host_monotonic_s": 20781.287257813, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20781.384778749, "kind": "device", "value": "V1,571,57483,20,1,-306.150024,-211.200012,7742.547852"}
+{"host_monotonic_s": 20781.47715671, "kind": "device", "value": "V1,572,57583,20,1,-306.000000,-210.750015,7743.757812"}
+{"host_monotonic_s": 20781.580199054, "kind": "device", "value": "V1,573,57683,20,1,-306.600006,-211.650009,7745.936035"}
+{"host_monotonic_s": 20781.672905609, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20781.673382619, "kind": "device", "value": "V1,574,57783,20,1,-306.450012,-211.200012,7744.967773"}
+{"host_monotonic_s": 20781.695590857, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20781.778326729, "kind": "device", "value": "V1,575,57883,20,1,-306.150024,-211.350006,7744.483887"}
+{"host_monotonic_s": 20781.880978468, "kind": "device", "value": "V1,576,57983,20,1,-306.000000,-210.900009,7744.967773"}
+{"host_monotonic_s": 20781.984611983, "kind": "device", "value": "V1,577,58083,20,1,-306.450012,-211.800003,7745.209961"}
+{"host_monotonic_s": 20782.080596709, "kind": "device", "value": "V1,578,58183,20,1,-306.150024,-210.450012,7743.031738"}
+{"host_monotonic_s": 20782.081012521, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20782.104871849, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20782.185792025, "kind": "device", "value": "V1,579,58283,20,1,-306.750000,-210.750015,7744.967773"}
+{"host_monotonic_s": 20782.282838168, "kind": "device", "value": "V1,580,58383,20,1,-307.050018,-210.750015,7745.209961"}
+{"host_monotonic_s": 20782.376476231, "kind": "device", "value": "V1,581,58483,20,1,-306.300018,-210.600006,7745.693848"}
+{"host_monotonic_s": 20782.4831296, "kind": "device", "value": "V1,582,58583,20,1,-305.550018,-211.650009,7744.726074"}
+{"host_monotonic_s": 20782.483532944, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20782.504872256, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20782.575042054, "kind": "device", "value": "V1,583,58683,20,1,-306.000000,-211.200012,7745.209961"}
+{"host_monotonic_s": 20782.682510797, "kind": "device", "value": "V1,584,58783,20,1,-306.000000,-211.650009,7744.967773"}
+{"host_monotonic_s": 20782.773607892, "kind": "device", "value": "V1,585,58883,20,1,-307.050018,-210.900009,7745.693848"}
+{"host_monotonic_s": 20782.881067962, "kind": "device", "value": "V1,586,58983,20,1,-306.750000,-211.200012,7743.757812"}
+{"host_monotonic_s": 20782.89358463, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20782.916740637, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20782.980587022, "kind": "device", "value": "V1,587,59085,20,1,-306.000000,-211.350006,7745.452148"}
+{"host_monotonic_s": 20783.086706792, "kind": "device", "value": "V1,588,59184,20,1,-305.850006,-211.350006,7746.662109"}
+{"host_monotonic_s": 20783.177083657, "kind": "device", "value": "V1,589,59284,20,1,-306.600006,-211.500015,7745.693848"}
+{"host_monotonic_s": 20783.280906683, "kind": "device", "value": "V1,590,59384,20,1,-306.300018,-211.350006,7744.242188"}
+{"host_monotonic_s": 20783.303401918, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20783.327586513, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20783.388391311, "kind": "device", "value": "V1,591,59495,20,1,-306.150024,-211.200012,7746.177734"}
+{"host_monotonic_s": 20783.491584493, "kind": "device", "value": "V1,592,59594,20,1,-306.750000,-211.050003,7744.483887"}
+{"host_monotonic_s": 20783.592088381, "kind": "device", "value": "V1,593,59694,20,1,-306.300018,-211.350006,7746.177734"}
+{"host_monotonic_s": 20783.697350433, "kind": "device", "value": "V1,594,59794,20,1,-305.400024,-210.900009,7744.967773"}
+{"host_monotonic_s": 20783.709561445, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20783.734118518, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20783.792943533, "kind": "device", "value": "V1,595,59901,20,1,-306.300018,-211.200012,7744.242188"}
+{"host_monotonic_s": 20783.895702827, "kind": "device", "value": "V1,596,60000,20,1,-306.150024,-211.500015,7745.693848"}
+{"host_monotonic_s": 20784.001342605, "kind": "device", "value": "V1,597,60100,20,1,-306.300018,-211.500015,7744.483887"}
+{"host_monotonic_s": 20784.096962972, "kind": "device", "value": "V1,598,60200,20,1,-306.750000,-211.350006,7746.177734"}
+{"host_monotonic_s": 20784.120083649, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20784.199133963, "kind": "device", "value": "V1,599,60300,20,1,-306.750000,-211.200012,7744.000000"}
+{"host_monotonic_s": 20784.211842216, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20784.294180534, "kind": "device", "value": "V1,600,60400,20,1,-306.150024,-210.900009,7747.872070"}
+{"host_monotonic_s": 20784.398090749, "kind": "device", "value": "V1,601,60500,20,1,-306.000000,-211.200012,7744.967773"}
+{"host_monotonic_s": 20784.499696775, "kind": "device", "value": "V1,602,60600,20,1,-306.300018,-211.050003,7747.145996"}
+{"host_monotonic_s": 20784.521912816, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20784.599103133, "kind": "device", "value": "V1,603,60700,20,1,-306.450012,-211.200012,7744.967773"}
+{"host_monotonic_s": 20784.611905016, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20784.692810621, "kind": "device", "value": "V1,604,60800,20,1,-306.300018,-210.450012,7745.452148"}
+{"host_monotonic_s": 20784.797560998, "kind": "device", "value": "V1,605,60900,20,1,-306.300018,-210.450012,7745.936035"}
+{"host_monotonic_s": 20784.901495868, "kind": "device", "value": "V1,606,61000,20,1,-306.000000,-210.900009,7745.693848"}
+{"host_monotonic_s": 20784.926212687, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20784.992633118, "kind": "device", "value": "V1,607,61100,20,1,-306.450012,-210.900009,7746.177734"}
+{"host_monotonic_s": 20785.003339776, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20785.094983551, "kind": "device", "value": "V1,608,61200,20,1,-306.600006,-211.350006,7746.662109"}
+{"host_monotonic_s": 20785.198736088, "kind": "device", "value": "V1,609,61300,20,1,-306.450012,-212.100006,7747.388184"}
+{"host_monotonic_s": 20785.291507706, "kind": "device", "value": "V1,610,61400,20,1,-305.550018,-210.900009,7747.872070"}
+{"host_monotonic_s": 20785.338304791, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20785.393664313, "kind": "device", "value": "V1,611,61500,20,1,-306.900024,-211.050003,7745.209961"}
+{"host_monotonic_s": 20785.40431582, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20785.497151931, "kind": "device", "value": "V1,612,61600,20,1,-306.150024,-210.900009,7745.936035"}
+{"host_monotonic_s": 20785.599240411, "kind": "device", "value": "V1,613,61700,20,1,-306.750000,-210.900009,7743.516113"}
+{"host_monotonic_s": 20785.691634951, "kind": "device", "value": "V1,614,61800,20,1,-305.850006,-210.600006,7744.726074"}
+{"host_monotonic_s": 20785.745408721, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20785.802752496, "kind": "device", "value": "V1,615,61900,20,1,-306.600006,-210.900009,7746.177734"}
+{"host_monotonic_s": 20785.813334823, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=77 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20785.892562802, "kind": "device", "value": "V1,616,62000,20,1,-306.000000,-210.600006,7745.209961"}
+{"host_monotonic_s": 20786.0015213, "kind": "device", "value": "V1,617,62100,20,1,-306.300018,-211.200012,7746.177734"}
+{"host_monotonic_s": 20786.098842298, "kind": "device", "value": "V1,618,62200,20,1,-306.300018,-211.350006,7744.726074"}
+{"host_monotonic_s": 20786.154221037, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20786.199448905, "kind": "device", "value": "V1,619,62300,20,1,-305.850006,-211.350006,7745.693848"}
+{"host_monotonic_s": 20786.210916759, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20786.292505374, "kind": "device", "value": "V1,620,62400,20,1,-306.600006,-211.200012,7744.483887"}
+{"host_monotonic_s": 20786.396632135, "kind": "device", "value": "V1,621,62500,20,1,-306.750000,-210.150009,7745.693848"}
+{"host_monotonic_s": 20786.494762903, "kind": "device", "value": "V1,622,62600,20,1,-305.850006,-211.350006,7745.936035"}
+{"host_monotonic_s": 20786.563266773, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20786.599305977, "kind": "device", "value": "V1,623,62700,20,1,-305.850006,-210.600006,7745.452148"}
+{"host_monotonic_s": 20786.610782842, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20786.694311722, "kind": "device", "value": "V1,624,62800,20,1,-306.300018,-210.300003,7743.273926"}
+{"host_monotonic_s": 20786.791977922, "kind": "device", "value": "V1,625,62900,20,1,-306.600006,-210.900009,7743.031738"}
+{"host_monotonic_s": 20786.896904017, "kind": "device", "value": "V1,626,63000,20,1,-306.300018,-211.500015,7744.967773"}
+{"host_monotonic_s": 20786.966215893, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20787.001721167, "kind": "device", "value": "V1,627,63100,20,1,-306.450012,-210.450012,7745.209961"}
+{"host_monotonic_s": 20787.014180916, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20787.098098936, "kind": "device", "value": "V1,628,63200,20,1,-305.850006,-211.050003,7742.790039"}
+{"host_monotonic_s": 20787.19152617, "kind": "device", "value": "V1,629,63300,20,1,-306.450012,-210.150009,7745.452148"}
+{"host_monotonic_s": 20787.302861017, "kind": "device", "value": "V1,630,63400,20,1,-306.750000,-211.200012,7744.967773"}
+{"host_monotonic_s": 20787.377454795, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20787.403020161, "kind": "device", "value": "V1,631,63500,20,1,-305.850006,-211.800003,7742.790039"}
+{"host_monotonic_s": 20787.416054175, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20787.501448126, "kind": "device", "value": "V1,632,63600,20,1,-306.150024,-211.050003,7744.000000"}
+{"host_monotonic_s": 20787.594759558, "kind": "device", "value": "V1,633,63700,20,1,-306.450012,-210.750015,7744.726074"}
+{"host_monotonic_s": 20787.700919938, "kind": "device", "value": "V1,634,63800,20,1,-306.000000,-210.900009,7745.936035"}
+{"host_monotonic_s": 20787.786797212, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20787.798580339, "kind": "device", "value": "V1,635,63900,20,1,-306.450012,-210.900009,7743.273926"}
+{"host_monotonic_s": 20787.811255572, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20787.89113896, "kind": "device", "value": "V1,636,64000,20,1,-306.000000,-210.900009,7745.209961"}
+{"host_monotonic_s": 20787.996747625, "kind": "device", "value": "V1,637,64100,20,1,-306.750000,-211.050003,7743.031738"}
+{"host_monotonic_s": 20788.092918768, "kind": "device", "value": "V1,638,64200,20,1,-306.450012,-211.500015,7743.757812"}
+{"host_monotonic_s": 20788.195869805, "kind": "device", "value": "V1,639,64300,20,1,-306.300018,-211.500015,7744.726074"}
+{"host_monotonic_s": 20788.196551891, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20788.220425874, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20788.303818095, "kind": "device", "value": "V1,640,64400,20,1,-306.000000,-210.750015,7744.242188"}
+{"host_monotonic_s": 20788.395962552, "kind": "device", "value": "V1,641,64500,20,1,-306.450012,-210.600006,7741.096191"}
+{"host_monotonic_s": 20788.490488384, "kind": "device", "value": "V1,642,64600,20,1,-306.300018,-210.600006,7745.209961"}
+{"host_monotonic_s": 20788.598238781, "kind": "device", "value": "V1,643,64700,20,1,-306.150024,-211.350006,7745.209961"}
+{"host_monotonic_s": 20788.598653339, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20788.620679298, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20788.702480511, "kind": "device", "value": "V1,644,64800,20,1,-306.300018,-211.050003,7747.145996"}
+{"host_monotonic_s": 20788.79711195, "kind": "device", "value": "V1,645,64900,20,1,-305.850006,-209.850006,7744.726074"}
+{"host_monotonic_s": 20788.892084825, "kind": "device", "value": "V1,646,65000,20,1,-306.300018,-210.600006,7745.936035"}
+{"host_monotonic_s": 20788.993937528, "kind": "device", "value": "V1,647,65100,20,1,-306.150024,-210.600006,7743.516113"}
+{"host_monotonic_s": 20789.005694888, "kind": "command", "value": "STATUS"}
+{"host_monotonic_s": 20789.02729026, "kind": "device", "value": "# MOTOR enabled=1 configured=1 armed=1 moving=0 fault=0 id=1 baud=1000000 pos=2409 load_raw=0 voltage_raw=76 temp_raw=25 continuous_position=1"}
+{"host_monotonic_s": 20789.099107416, "kind": "device", "value": "V1,648,65200,20,1,-306.450012,-210.900009,7745.209961"}
+{"host_monotonic_s": 20789.199396764, "kind": "device", "value": "V1,649,65300,20,1,-306.300018,-210.600006,7744.726074"}
+{"host_monotonic_s": 20789.279995495, "kind": "command", "value": "STOP"}
+{"host_monotonic_s": 20789.303139218, "kind": "device", "value": "V1,650,65400,20,1,-306.450012,-211.200012,7745.936035"}
+{"host_monotonic_s": 20789.303569049, "kind": "device", "value": "# STOP position_hold_requested_not_estop"}
+{"host_monotonic_s": 20789.314660004, "kind": "command", "value": "DISARM"}
+{"host_monotonic_s": 20789.326196709, "kind": "device", "value": "# DISARM_OK torque_off"}

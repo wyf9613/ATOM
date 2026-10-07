@@ -135,3 +135,95 @@ vendor commit. Four offline geometry/semantics tests passed: six complete visual
 vertex envelopes, prefixed/unprefixed tree and semantic references, narrow arm/tool
 collision exclusions and CAD mounting values. No ROS/urdfdom/MoveIt/FCL runtime
 or physical acceptance claimed. Details in GRIPPER_MOUNT_V2_INTEGRATION.md.
+
+## 2026-10-07 — New Mac connection and user-operated position checks
+
+Mac detected CP2102 USB UART, serial0001, at /dev/cu.usbserial-0001. User
+launched motor_console with the Python environment containing pyserial3.5.
+Reported transcript path: tmp/gripper_bringup/motor_20261007_144300_661483.jsonl.
+User terminal output confirms sensor ACK0x14, sensor_ready, DISARM_OK and ZERO_OK
+(magnetic baseline only). Initial ARM rejected position2682counts above2668;
+load0raw, voltage76raw and temperature22raw did not exceed configured gates.
+Subsequent PING confirmed mode0, valid feedback, position2312counts and no fault;
+ARM then succeeded. Exact manual repositioning action was not reported.
+
+One user-operated sequence, N=3 commanded moves, nominal targets2317/2312/2413counts:
+
+| Command | Start / target / completion position (counts) | Completion elapsed (ms) | Sampled absolute peak load (raw) | Samples |
+|---|---|---|---|---|
+| JOG +5 | 2312 / 2317 / 2314 | 118 | 32 | 3 |
+| JOG -5 | 2317 / 2312 / 2314 | 117 | 20 | 3 |
+| JOG +100 | 2313 / 2413 / 2412 | 2094 | 44 | 22 |
+
+All returned MOVE_DONE within the existing3count encoder tolerance; this is
+threshold completion, not proof the servo had finished settling. Later start2317
+after first completion2314 confirms feedback subsequently progressed. Motion
+samples show voltage76–77raw, temperature23raw, no fault output. Final STOP
+acknowledged position_hold_requested_not_estop; actual physical holding/stop
+latency is not measured. Object/contact condition and visible motion direction
+were not explicitly confirmed; physical displacement, force and grasp success
+remain unverified. Sampled peaks are not guaranteed instantaneous maxima.
+No agent serial commands, firmware upload, wiring or gate changes in this check.
+
+### 2026-10-07 — Physical unloaded stationary magnetic baseline
+
+User confirms no object and enables STREAM ON in the existing console. Agent
+passively reads new JSONL records; no second serial owner, reset, ZERO or motor
+commands. Three contiguous30s windows produced301/299/300valid samples, total900,
+zero invalid/gaps/duplicates/resets/malformedV1; device rate10.0001Hz. Combined
+XYZ meanµT[-280.216,-205.274,7842.070], sample SDµT[0.410,0.473,1.291]; maximum
+group-mean spreadsµT[0.102,0.249,1.141]. These are observed baseline/waveform
+statistics, not established sensor uncertainty, force calibration or repeatability
+across remounts. Pose/temperature/current and force not independently measured.
+Saved unloaded_baseline.json for offline subtraction only; firmware baseline
+and force-control gates unchanged. Full conditions/evidence:
+[stationary baseline](GRIPPER_STATIONARY_BASELINE_20261007.md).
+
+### Second pose, 2026-10-07
+
+User changes arm pose and estimates nearest metal distance30cm. Three30s windows
+yield900valid samples, no invalid/gaps/duplicates/resets/malformedV1,10.0000Hz.
+Mean XYZµT[-307.112,-200.889,7875.857], sample SDµT[0.484,0.442,3.061].
+Difference from first captureµT[-26.896,+4.385,+33.787]; within second capture,
+group3-minus-group1 Z=-6.471µT. Thus the new mean is retained as an observation,
+not adopted as a fixed zero. Pose/environment/time effects are not isolated;
+exact pose/jaw opening/temperature/current not measured. No ZERO or gripper
+movement commands between captures; no agent hardware commands. Raw evidence:
+tmp/gripper_force/stationary_pose2_20261007/. Force calibration remains pending.
+
+### Third pose, 2026-10-07
+
+Third user-selected pose, three30s windows,901/901valid, no invalid/gaps/duplicates/
+resets/malformedV1,10.0000Hz. Mean XYZµT[-342.646,-209.126,7774.137], sample
+SDµT[0.457,0.436,1.390]; group3-minus-group1 Z=-1.746µT. Third-minus-first mean
+µT[-62.430,-3.852,-67.934]. Exact pose/metal distance/jaw state/temperature/current
+not measured. Data retained in tmp/gripper_force/stationary_pose3_20261007/.
+User requests per-closure unloaded baseline and explicitly clarifies the difference
+method (current magnetic field minus baseline), not interpolation; document as
+planned calibration method, pending reference-force points, unloaded closure,
+monotonicity/hysteresis and cross-pose validation. No deployed force model or
+hardware commands from agent. See GRIPPER_STATIONARY_BASELINE_20261007.md.
+
+### Agent direct connection, 2026-10-07
+
+After user exits console and authorizes direct acquisition, existing read-only
+GripperController opens /dev/cu.usbserial-0001 (USB access approval required).
+Startup text occurs despite no reset request. Firmware reports disarmed/not
+moving/no fault; no ARM/MOVE/JOG/ZERO/RESET/DISARM commands. Three30s windows,
+297/296/295valid samples,888total, no invalid/gaps/duplicates/window resets/V1
+parse errors,9.8712Hz. Combined meanXYZµT[-307.641,-210.917,7766.758], sample
+SDµT[1.746,0.918,1.962]. Early transient samples preserved; group3-minus-group1
+Z=-3.538µT. No force calibration or empty-closure test. Serial closed afterwards.
+Full conditions and evidence: [direct stationary measurement](GRIPPER_DIRECT_STATIONARY_20261007.md).
+
+### User-authorized empty closure, 2026-10-07
+
+Existing controller executes explicit empty-gripper DISARM/ARM, nominal targets
+2410→2390→2370→2350→2410counts,2s settle and10s measurement each. One sequence,
+five100sample platforms,500valid total, no invalid/per-platform gaps/duplicates/
+resets; no fault. Actual platform encoder positions2410/2390/2371/2351/2409.
+Closed60counts nominal: mean ΔXYZµT[-2.019,-0.435,-6.077]; return ΔXYZµT
+[+0.078,-0.442,-3.802]. Empty-gripper position/time effects not isolated; no
+force conversion or compensation coefficients inferred. STOP and DISARM confirmed,
+serial closed. No ZERO/RESET/firmware/gate changes. Full conditions:
+[empty closure](GRIPPER_EMPTY_CLOSURE_20261007.md).

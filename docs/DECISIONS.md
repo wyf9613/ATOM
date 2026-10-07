@@ -1,5 +1,21 @@
 # Decision Log
 
+## 2026-10-07 — Per-closure unloaded magnetic baseline and difference method
+
+User specifies acquiring the unloaded reference at the current pose immediately
+before gripper closure, treating it as zero contact force, and computing magnetic
+differences from that baseline instead of using a globally fixed magnetic zero.
+User explicitly corrected the method to subtraction, not interpolation. The
+magnetic-difference-to-force conversion remains unspecified pending measurements.
+Adopt as the next calibration experiment design, not a deployed force model.
+Three physical unloaded pose sessions show different magnetic background values;
+pose/environment/time causes are not isolated. Reference-force loading data,
+unloaded closure changes, monotonicity/hysteresis, drift limits and pose/aperture
+sensitivity must be independently verified before force commands are enabled.
+Baseline is frozen during loading, not continuously rezeroed; out-of-range force
+estimation must remain unknown/blocked. Current force gates and firmware remain
+unchanged. See GRIPPER_FORCE_CALIBRATION.md and GRIPPER_STATIONARY_BASELINE_20261007.md.
+
 ## 2026-10-07 — CAD v2 tool composition for collision review
 
 User requested a gripper-test branch, fixed-object holding/force-calibration

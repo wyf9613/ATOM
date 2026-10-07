@@ -1,0 +1,1357 @@
+{
+  "collection": "Existing GripperController with enable_motion=False, STREAM ON, PING/STATUS and KEEPALIVE; no ARM/MOVE/JOG/ZERO/RESET/DISARM requested. Existing controller requests shutdown STOP if armed.",
+  "port": "/dev/cu.usbserial-0001",
+  "termination": "completed",
+  "groups": [
+    {
+      "records": 297,
+      "valid": 297,
+      "invalid": 0,
+      "units": "uT",
+      "force_calibrated": false,
+      "x": {
+        "mean": -307.958092989899,
+        "sample_std": 2.833993429324867,
+        "min": -334.5,
+        "max": -297.300018
+      },
+      "y": {
+        "mean": -210.7161700909091,
+        "sample_std": 1.4008413558853148,
+        "min": -218.400009,
+        "max": -199.050003
+      },
+      "z": {
+        "mean": 7768.58618406734,
+        "sample_std": 1.3133132515425505,
+        "min": 7763.118164,
+        "max": 7773.040039
+      },
+      "sequence_gaps": 0,
+      "resets_or_reordering": 0,
+      "duplicates": 0,
+      "device_rate_hz": 9.890403635391607,
+      "group": 1,
+      "requested_window_s": 30,
+      "last5_minus_first5_mean_uT": [
+        -1.5839990400000374,
+        1.4700009000000023,
+        -0.5711328400002458
+      ]
+    },
+    {
+      "records": 296,
+      "valid": 296,
+      "invalid": 0,
+      "units": "uT",
+      "force_calibrated": false,
+      "x": {
+        "mean": -307.5491671216216,
+        "sample_std": 0.8592119983309949,
+        "min": -308.85000599999995,
+        "max": -296.550018
+      },
+      "y": {
+        "mean": -210.97095489527027,
+        "sample_std": 0.5310690244289396,
+        "min": -212.400009,
+        "max": -205.95001199999996
+      },
+      "z": {
+        "mean": 7766.626981131757,
+        "sample_std": 1.4746407637141619,
+        "min": 7760.939940999999,
+        "max": 7770.377929999999
+      },
+      "sequence_gaps": 0,
+      "resets_or_reordering": 0,
+      "duplicates": 0,
+      "device_rate_hz": 9.86292209963223,
+      "group": 2,
+      "requested_window_s": 30,
+      "last5_minus_first5_mean_uT": [
+        -0.4650011999999606,
+        0.11100156000000538,
+        -2.284511759999077
+      ]
+    },
+    {
+      "records": 295,
+      "valid": 295,
+      "invalid": 0,
+      "units": "uT",
+      "force_calibrated": false,
+      "x": {
+        "mean": -307.41407987796606,
+        "sample_std": 0.4520516254500882,
+        "min": -308.70001199999996,
+        "max": -306.0
+      },
+      "y": {
+        "mean": -211.06577164067795,
+        "sample_std": 0.4651976244400641,
+        "min": -212.250015,
+        "max": -209.850006
+      },
+      "z": {
+        "mean": 7765.048222322034,
+        "sample_std": 1.167506601016665,
+        "min": 7761.423827999999,
+        "max": 7768.684082
+      },
+      "sequence_gaps": 0,
+      "resets_or_reordering": 0,
+      "duplicates": 0,
+      "device_rate_hz": 9.85948556289614,
+      "group": 3,
+      "requested_window_s": 30,
+      "last5_minus_first5_mean_uT": [
+        0.22799927999994907,
+        -0.25500089999999886,
+        0.01931637999950908
+      ]
+    }
+  ],
+  "combined": {
+    "records": 888,
+    "valid": 888,
+    "invalid": 0,
+    "units": "uT",
+    "force_calibrated": false,
+    "x": {
+      "mean": -307.6410592905405,
+      "sample_std": 1.745582393992039,
+      "min": -334.5,
+      "max": -296.550018
+    },
+    "y": {
+      "mean": -210.9172385135135,
+      "sample_std": 0.9177269107493058,
+      "min": -218.400009,
+      "max": -199.050003
+    },
+    "z": {
+      "mean": 7766.757780031531,
+      "sample_std": 1.9615511697529668,
+      "min": 7760.939940999999,
+      "max": 7773.040039
+    },
+    "sequence_gaps": 0,
+    "resets_or_reordering": 0,
+    "duplicates": 0,
+    "device_rate_hz": 9.871239858886899
+  },
+  "parse_errors": [],
+  "pre_shutdown_state": {
+    "connected": true,
+    "fault": null,
+    "armed": false,
+    "moving": false,
+    "position": 2410,
+    "load_raw": 0,
+    "voltage_raw": 76,
+    "temperature_raw": 24,
+    "sensor_valid": true,
+    "magnetic_uT": [
+      -307.05001799999997,
+      -211.050003,
+      7765.779785
+    ],
+    "sensor_address": 20,
+    "configured": true,
+    "command_state": "idle",
+    "last_result": null,
+    "continuous_position": true,
+    "force_calibrated": false,
+    "force_n": null,
+    "grasp_verified": false,
+    "position_range": [
+      2000,
+      2600
+    ],
+    "open_position": 2600,
+    "close_position": 2000,
+    "source": "esp32_hardware",
+    "motion_enabled": false,
+    "force_uncertainty_n": null,
+    "force_status": "Fingertip force calibration pending",
+    "motor_fresh": true,
+    "sensor_fresh": true,
+    "busy": false
+  },
+  "commands": [
+    {
+      "host_monotonic_s": 20274.263697885,
+      "kind": "command",
+      "value": "STREAM ON"
+    },
+    {
+      "host_monotonic_s": 20274.53832875,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20274.940387599,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20275.34701422,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20275.748057852,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20276.149852484,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20276.561598981,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20276.963726407,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20277.365446621,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20277.765836497,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20278.174643159,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20278.583621059,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20278.993465415,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20279.395685873,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20279.799776727,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20280.202772322,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20280.607205912,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20281.012839977,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20281.420622319,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20281.823389087,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20282.223825834,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20282.628145177,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20283.029349023,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20283.434539808,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20283.841525136,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20284.246265662,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20284.655255977,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20285.064231598,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20285.471812263,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20285.875309786,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20286.286112062,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20286.688191827,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20287.093758235,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20287.49615783,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20287.899624769,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20288.307095371,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20288.717349015,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20289.12073841,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20289.531675626,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20289.936197635,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20290.341028561,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20290.74449408,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20291.145538757,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20291.549934998,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20291.956216444,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20292.363399665,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20292.768102269,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20293.17454772,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20293.584830259,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20293.990369207,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20294.391933127,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20294.799610791,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20295.206266876,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20295.617672042,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20296.027205692,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20296.427667369,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20296.83121902,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20297.240059378,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20297.640874486,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20298.048186819,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20298.454873152,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20298.855927763,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20299.266070822,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20299.667128781,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20300.067678329,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20300.475182531,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20300.885138599,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20301.2976289,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20301.703104405,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20302.107950843,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20302.509550083,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20302.912075045,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20303.316939285,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20303.726961156,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20304.13422124,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20304.538667362,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20304.944335103,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20305.348009733,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20305.74895353,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20306.155902614,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20306.563438884,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20306.968551711,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20307.378955685,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20307.790235472,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20308.197816674,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20308.605537357,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20309.005996903,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20309.41284874,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20309.813993647,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20310.223824389,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20310.627388223,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20311.031044656,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20311.436123211,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20311.84576277,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20312.252897555,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20312.659902822,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20313.06569983,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20313.466459595,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20313.876582981,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20314.280281263,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20314.683432956,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20315.08833888,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20315.493033383,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20315.893083128,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20316.299081819,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20316.705511149,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20317.109426649,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20317.510432552,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20317.91380004,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20318.318071133,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20318.730538382,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20319.138573892,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20319.547906129,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20319.954869885,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20320.365194483,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20320.766979361,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20321.173676626,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20321.5760368,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20321.97996959,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20322.386368146,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20322.793647523,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20323.196573651,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20323.608162807,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20324.018784774,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20324.423061267,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20324.825949153,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20325.232415992,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20325.633721393,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20326.03881605,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20326.439253235,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20326.84297789,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20327.247642048,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20327.652214343,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20328.056737642,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20328.45675197,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20328.857982253,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20329.268962451,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20329.673064997,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20330.079163553,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20330.479996316,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20330.882887554,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20331.284842048,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20331.694586506,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20332.105605166,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20332.516513081,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20332.920996139,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20333.326722946,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20333.734434504,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20334.139166286,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20334.549181794,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20334.956129297,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20335.366859122,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20335.773383322,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20336.177033396,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20336.579339051,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20336.985653002,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20337.393386372,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20337.797005448,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20338.205390006,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20338.609529095,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20339.017389423,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20339.423052147,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20339.82636603,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20340.236229064,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20340.640688443,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20341.048904611,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20341.454604828,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20341.856796782,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20342.262940727,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20342.670862073,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20343.071999949,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20343.482440326,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20343.892397036,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20344.300321228,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20344.704749468,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20345.109035557,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20345.509063143,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20345.920078285,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20346.323721917,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20346.730730807,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20347.137551518,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20347.541275139,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20347.946945351,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20348.346779971,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20348.753603216,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20349.162004511,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20349.57205889,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20349.975991005,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20350.387469273,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20350.790128199,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20351.199165334,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20351.606075625,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20352.010285373,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20352.410796961,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20352.817216947,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20353.221794616,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20353.624920758,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20354.026265582,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20354.427216046,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20354.832215771,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20355.239630371,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20355.644686422,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20356.050199773,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20356.460377107,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20356.866416876,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20357.275720196,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20357.681061721,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20358.081849535,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20358.492346703,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20358.892678094,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20359.294538595,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20359.701717245,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20360.111454456,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20360.51343053,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20360.921528929,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20361.332614288,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20361.736708712,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20362.140291485,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20362.550628398,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20362.955493779,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20363.358942837,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20363.763724483,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20364.169500156,
+      "kind": "command",
+      "value": "PING"
+    },
+    {
+      "host_monotonic_s": 20364.576584789,
+      "kind": "command",
+      "value": "PING"
+    }
+  ],
+  "force_calibrated": false,
+  "notes": [
+    "Current pose and nearby metal not independently recorded; user reports unloaded.",
+    "Firmware/controller fault status and holding mode are recorded, not silently reset.",
+    "Sample SD includes drift/environment/servo effects; not force uncertainty.",
+    "New host session may coincide with board startup despite no reset requested."
+  ],
+  "audit": {
+    "command_counts": {
+      "STREAM ON": 1,
+      "PING": 223
+    },
+    "unknown_device_lines_in_window": 0,
+    "boot_markers": [
+      {
+        "host_monotonic_s": 20274.48677778,
+        "kind": "device",
+        "value": "# ATOM_MAG_V1 units=uT; motor_boot_disarmed"
+      }
+    ],
+    "telemetry_ranges": {
+      "position": [
+        2410,
+        2412
+      ],
+      "load_raw": [
+        0,
+        20
+      ],
+      "voltage_raw": [
+        76,
+        77
+      ],
+      "temperature_raw": [
+        24,
+        25
+      ]
+    },
+    "state_faults": [
+      "None"
+    ],
+    "state_armed_values": [
+      false
+    ],
+    "state_moving_values": [
+      false
+    ]
+  },
+  "group3_minus_group1_mean_uT": [
+    0.5440131119329408,
+    -0.34960154976886315,
+    -3.537961745305438
+  ]
+}

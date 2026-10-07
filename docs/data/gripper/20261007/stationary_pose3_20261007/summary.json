@@ -1,0 +1,227 @@
+{
+  "source": "tmp/gripper_bringup/motor_20261007_144300_661483.jsonl",
+  "collection": "Passive tail of single-owner console log; no serial access or commands",
+  "conditions": "Third user-reported arm pose, unloaded as prior experiment; STREAM ON confirmed by user. Exact pose/jaw position/metal distance/temperature/current not measured; no ZERO requested.",
+  "groups": [
+    {
+      "records": 301,
+      "valid": 301,
+      "invalid": 0,
+      "units": "uT",
+      "force_calibrated": false,
+      "x": {
+        "mean": -342.74801888372093,
+        "sample_std": 0.4843512200031157,
+        "min": -343.80001799999997,
+        "max": -341.25
+      },
+      "y": {
+        "mean": -209.19917794684383,
+        "sample_std": 0.44272729348858963,
+        "min": -210.45001199999996,
+        "max": -207.75001499999996
+      },
+      "z": {
+        "mean": 7775.036267411961,
+        "sample_std": 1.1947686522359062,
+        "min": 7771.587890999999,
+        "max": 7778.122069999999
+      },
+      "sequence_gaps": 0,
+      "resets_or_reordering": 0,
+      "duplicates": 0,
+      "device_rate_hz": 10.0,
+      "group": 1,
+      "requested_window_s": 30,
+      "observed_host_span_s": 29.995919942855835,
+      "mean_uT": [
+        -342.74801888372093,
+        -209.19917794684383,
+        7775.036267411961
+      ],
+      "sample_std_uT": [
+        0.4843512200031157,
+        0.44272729348858963,
+        1.1947686522359062
+      ],
+      "range_uT": [
+        [
+          -343.80001799999997,
+          -341.25
+        ],
+        [
+          -210.45001199999996,
+          -207.75001499999996
+        ],
+        [
+          7771.587890999999,
+          7778.122069999999
+        ]
+      ],
+      "last5_minus_first5_mean_uT": [
+        0.5284716729411798,
+        0.3879994564705669,
+        -1.1022569643137103
+      ]
+    },
+    {
+      "records": 299,
+      "valid": 299,
+      "invalid": 0,
+      "units": "uT",
+      "force_calibrated": false,
+      "x": {
+        "mean": -342.67676731103677,
+        "sample_std": 0.42804783833763604,
+        "min": -343.80001799999997,
+        "max": -341.550018
+      },
+      "y": {
+        "mean": -209.10151361538462,
+        "sample_std": 0.4317586780493665,
+        "min": -210.300003,
+        "max": -207.75001499999996
+      },
+      "z": {
+        "mean": 7774.083236411371,
+        "sample_std": 1.1639993434887705,
+        "min": 7770.861815999999,
+        "max": 7777.395996
+      },
+      "sequence_gaps": 0,
+      "resets_or_reordering": 0,
+      "duplicates": 0,
+      "device_rate_hz": 10.0,
+      "group": 2,
+      "requested_window_s": 30,
+      "observed_host_span_s": 29.799979209899902,
+      "mean_uT": [
+        -342.67676731103677,
+        -209.10151361538462,
+        7774.083236411371
+      ],
+      "sample_std_uT": [
+        0.42804783833763604,
+        0.4317586780493665,
+        1.1639993434887705
+      ],
+      "range_uT": [
+        [
+          -343.80001799999997,
+          -341.550018
+        ],
+        [
+          -210.300003,
+          -207.75001499999996
+        ],
+        [
+          7770.861815999999,
+          7777.395996
+        ]
+      ],
+      "last5_minus_first5_mean_uT": [
+        -0.10299811529415592,
+        -0.08029441176472574,
+        -0.9821663745096885
+      ]
+    },
+    {
+      "records": 301,
+      "valid": 301,
+      "invalid": 0,
+      "units": "uT",
+      "force_calibrated": false,
+      "x": {
+        "mean": -342.51280267774086,
+        "sample_std": 0.42455153118067646,
+        "min": -343.6500239999999,
+        "max": -341.400024
+      },
+      "y": {
+        "mean": -209.0780822591362,
+        "sample_std": 0.42616642224400075,
+        "min": -210.300003,
+        "max": -207.900009
+      },
+      "z": {
+        "mean": 7773.290003345515,
+        "sample_std": 1.2207378141122085,
+        "min": 7769.167968999999,
+        "max": 7776.427734
+      },
+      "sequence_gaps": 0,
+      "resets_or_reordering": 0,
+      "duplicates": 0,
+      "device_rate_hz": 10.0,
+      "group": 3,
+      "requested_window_s": 30,
+      "observed_host_span_s": 29.99195909500122,
+      "mean_uT": [
+        -342.51280267774086,
+        -209.0780822591362,
+        7773.290003345515
+      ],
+      "sample_std_uT": [
+        0.42455153118067646,
+        0.42616642224400075,
+        1.2207378141122085
+      ],
+      "range_uT": [
+        [
+          -343.6500239999999,
+          -341.400024
+        ],
+        [
+          -210.300003,
+          -207.900009
+        ],
+        [
+          7769.167968999999,
+          7776.427734
+        ]
+      ],
+      "last5_minus_first5_mean_uT": [
+        0.026473058823512474,
+        -0.1029399999999896,
+        -0.32741649019590113
+      ]
+    }
+  ],
+  "combined": {
+    "records": 901,
+    "valid": 901,
+    "invalid": 0,
+    "units": "uT",
+    "force_calibrated": false,
+    "x": {
+      "mean": -342.6457943573807,
+      "sample_std": 0.4568114544410137,
+      "min": -343.80001799999997,
+      "max": -341.25
+    },
+    "y": {
+      "mean": -209.12631286681463,
+      "sample_std": 0.4362995826709015,
+      "min": -210.45001199999996,
+      "max": -207.75001499999996
+    },
+    "z": {
+      "mean": 7774.136620627081,
+      "sample_std": 1.3901543562687462,
+      "min": 7769.167968999999,
+      "max": 7778.122069999999
+    },
+    "sequence_gaps": 0,
+    "resets_or_reordering": 0,
+    "duplicates": 0,
+    "device_rate_hz": 10.0
+  },
+  "malformed_V1": 0,
+  "termination": "completed",
+  "calibrated_force": false,
+  "notes": [
+    "Three contiguous 30s windows, not independent remounts.",
+    "Sample SD and drift are observations, not total sensor or force uncertainty.",
+    "No physical zero-field truth; mean is unloaded magnetic baseline at this pose."
+  ]
+}
