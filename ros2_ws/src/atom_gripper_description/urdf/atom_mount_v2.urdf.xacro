@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <!-- CAD-only placement; no measured mass/CoM. Not a dynamics model. -->
+  <xacro:macro name="atom_mount_v2" params="parent gripper_base prefix:=''">
+    <link name="${prefix}camera_bracket">
+      <visual><origin xyz="-0.043494000 -0.022225000 0.028836000" rpy="1.5707963267948966 1.5707963267948966 0"/>
+        <geometry><mesh filename="package://atom_gripper_description/meshes/generated/mount_v2/camera_bracket.stl" scale="0.001 0.001 0.001"/></geometry>
+        <material name="atom_mount"><color rgba="0.25 0.45 0.65 1"/></material></visual>
+      <collision><origin xyz="0.000000000 -0.048550000 0.075036000"/><geometry><box size="0.019000000 0.018900000 0.071000000"/></geometry></collision>
+    </link>
+    <joint name="${prefix}camera_bracket_joint" type="fixed"><parent link="${gripper_base}"/><child link="${prefix}camera_bracket"/></joint>
+    <link name="${prefix}esp32_bracket">
+      <visual><origin xyz="-0.043494000 -0.022225000 0.028836000" rpy="1.5707963267948966 1.5707963267948966 0"/>
+        <geometry><mesh filename="package://atom_gripper_description/meshes/generated/mount_v2/esp32_bracket.stl" scale="0.001 0.001 0.001"/></geometry>
+        <material name="atom_mount"><color rgba="0.25 0.45 0.65 1"/></material></visual>
+      <collision><origin xyz="0.000000000 0.048550000 0.073536000"/><geometry><box size="0.043000000 0.018900000 0.068000000"/></geometry></collision>
+    </link>
+    <joint name="${prefix}esp32_bracket_joint" type="fixed"><parent link="${gripper_base}"/><child link="${prefix}esp32_bracket"/></joint>
+    <link name="${prefix}flange_adapter">
+      <visual><origin xyz="-0.043494000 -0.022225000 0.080800000" rpy="1.5707963267948966 1.5707963267948966 0"/>
+        <geometry><mesh filename="package://atom_gripper_description/meshes/generated/mount_v2/flange_adapter.stl" scale="0.001 0.001 0.001"/></geometry>
+        <material name="atom_mount"><color rgba="0.25 0.45 0.65 1"/></material></visual>
+      <collision><origin xyz="0.000000000 -0.000000000 0.025000000"/><geometry><box size="0.085000000 0.113000000 0.055000000"/></geometry></collision>
+    </link>
+    <joint name="${prefix}flange_adapter_joint" type="fixed"><parent link="${parent}"/><child link="${prefix}flange_adapter"/></joint>
+  </xacro:macro>
+</robot>

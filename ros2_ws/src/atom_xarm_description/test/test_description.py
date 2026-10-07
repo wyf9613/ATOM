@@ -23,10 +23,11 @@ def test_uf850_and_gripper_are_composed_at_explicit_mount_frame():
     assert {'world', 'link_base', 'link6', 'link_eef'} <= links
     assert {'gripper_mount', 'gripper_base', 'gripper_tcp'} <= links
     assert all(f'joint{index}' in joints for index in range(1, 7))
-    mount = joints['gripper_mount_joint']
+    mount = joints['tool_flange_joint']
     assert mount.find('parent').attrib['link'] == 'link_eef'
-    assert mount.find('child').attrib['link'] == 'gripper_mount'
+    assert mount.find('child').attrib['link'] == 'tool_flange'
     assert mount.find('origin').attrib == {'xyz': '0 0 0', 'rpy': '0 0 0'}
+    assert joints['gripper_mount_joint'].find('origin').attrib['xyz'] == '0 0 0.051964'
     assert 'ur3e' not in xml.lower()
     assert 'shoulder_pan_joint' not in joints
 
@@ -36,7 +37,7 @@ def test_mount_transform_is_overridable_without_modifying_vendor_model():
         'gripper_mount_xyz:=0.001 0.002 0.003',
         'gripper_mount_rpy:=0.1 0.2 0.3',
     )
-    origin = robot.find("joint[@name='gripper_mount_joint']/origin")
+    origin = robot.find("joint[@name='tool_flange_joint']/origin")
     assert origin.attrib == {
         'xyz': '0.001 0.002 0.003',
         'rpy': '0.1 0.2 0.3',

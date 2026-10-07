@@ -93,3 +93,14 @@ Optional motor commissioning code is implemented, but actual servo/driver model,
 ## 2026-10-03 — Provisional gripper integration envelope
 
 UI/ROS Open2600 and Close2000counts use the nominal span covered by the one successful72segment empty-gripper sweep; they are not full mechanical limits or contact targets. Positive counts open. ±3counts completion tolerance is an encoder criterion, not measured mm accuracy. Servo load80 is a provisional raw abort setting without force meaning. Force estimate is unknown and force control disabled. Physical arm/real TF, calibrated jaw aperture and object grasp remain unverified; see GRIPPER_SYSTEM_INTEGRATION.md.
+
+## 2026-10-07 — CAD v2 flange and calibration prerequisites
+
+The print archive restores bracket placement by reversing its recorded translations.
+Flange centre CAD [80.8,43.494,-22.225] mm and gripper +Z offset51.964mm
+are geometry-based inferences, N=1 CAD assembly; hardware flange clocking,
+fit, TCP, camera/PCB/cables, actual mass/CoM and finger encoder mapping remain
+unmeasured. Source STEP files named by the print manifest are not present locally.
+The fixed object's identity/mass/material, standard-force instrument, connected
+computer/serial port and printed/installed flange state remain unspecified.
+See GRIPPER_MOUNT_V2_INTEGRATION.md and GRIPPER_FORCE_CALIBRATION.md.

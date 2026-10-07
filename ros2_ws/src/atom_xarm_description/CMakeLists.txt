@@ -4,7 +4,7 @@ project(atom_xarm_description)
 find_package(ament_cmake REQUIRED)
 
 install(
-  DIRECTORY urdf
+  DIRECTORY urdf srdf
   DESTINATION share/${PROJECT_NAME}
 )
 

@@ -122,3 +122,16 @@ User reports WD-40 Multi-Use applied to metal slide rail and requests less restr
 ## 2026-10-03 — Lubricated three-cycle sweep PASS
 
 Evidence: tmp/gripper_bringup/sweep_20261003_150022_860815/. Condition label lubricated_load80; user reported WD-40 Multi-Use on metal slide rail, provisional firmware load threshold80. N=1 run with3cycles/72completed segments across nominal waypoints2000–2600; all segment verifications passed, no auto fault recovery, torque release confirmed at cleanup. Quantitative summary: {"summary": {"passed": true, "failure": null, "torque_release_confirmed": true, "condition": "lubricated_load80", "requested_cycles": 3, "completed_segments": 72, "waypoints": [2200, 2300, 2400, 2100, 2500, 2000, 2600, 2300], "sampled_peak_abs_load": 52, "notes": "Encoder-only verification. Sampled load is not calibrated force. No automatic fault reset."}, "max_abs_error_counts": 3, "durations_ms": [1501, 2132], "directions": {"open": {"segments": 36, "max_sampled_load": 44, "mean_segment_peak": 41.78}, "close": {"segments": 36, "max_sampled_load": 52, "mean_segment_peak": 41.78}}}. Peak values are approximately100ms-sampled raw servo loads, not force; encoder error is not measured physical displacement uncertainty. No matched unlubricated run at threshold80: lubricant effect cannot be isolated. Not full mechanical stroke/contact or calibrated force validation.
+
+## 2026-10-07 — Calibration preparation and tool-description checks
+
+Main at cf894b2 was already current; created test/gripper-force-calibration-20261007.
+No hardware port opened, firmware uploaded, motor commanded, or physical force
+data collected. Prepared fixed-object holding and independent force calibration
+procedure in GRIPPER_FORCE_CALIBRATION.md. Existing force model stays uncalibrated.
+Print archive member hashes match and three meshes are watertight. Combined UF850
+URDF, standalone v2 tool URDF and combined SRDF expanded using D-007's pinned
+vendor commit. Four offline geometry/semantics tests passed: six complete visual
+vertex envelopes, prefixed/unprefixed tree and semantic references, narrow arm/tool
+collision exclusions and CAD mounting values. No ROS/urdfdom/MoveIt/FCL runtime
+or physical acceptance claimed. Details in GRIPPER_MOUNT_V2_INTEGRATION.md.

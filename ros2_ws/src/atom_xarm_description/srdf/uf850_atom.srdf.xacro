@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="ATOM_UF850">
+  <xacro:arg name="prefix" default=""/>
+  <xacro:include filename="$(find xarm_moveit_config)/srdf/xarm_macro.srdf.xacro"/>
+  <xacro:xarm_macro_srdf prefix="$(arg prefix)" dof="6" robot_type="uf850"/>
+  <group name="$(arg prefix)atom_tool">
+    <link name="$(arg prefix)tool_flange"/>
+    <link name="$(arg prefix)gripper_mount"/>
+    <link name="$(arg prefix)gripper_base"/>
+    <link name="$(arg prefix)left_finger"/>
+    <link name="$(arg prefix)right_finger"/>
+    <link name="$(arg prefix)gripper_tcp"/>
+    <link name="$(arg prefix)flange_adapter"/>
+    <link name="$(arg prefix)camera_bracket"/>
+    <link name="$(arg prefix)esp32_bracket"/>
+  </group>
+  <end_effector name="$(arg prefix)atom_tool" parent_link="$(arg prefix)link_eef" group="$(arg prefix)atom_tool" parent_group="$(arg prefix)uf850"/>
+  <passive_joint name="$(arg prefix)left_finger_joint"/>
+  <passive_joint name="$(arg prefix)right_finger_joint"/>
+  <!-- Internal overlapping conservative envelopes: not a tool mechanics validator. -->
+  <disable_collisions link1="$(arg prefix)gripper_base" link2="$(arg prefix)left_finger" reason="ToolEnvelopeOverlap"/>
+  <disable_collisions link1="$(arg prefix)gripper_base" link2="$(arg prefix)right_finger" reason="ToolEnvelopeOverlap"/>
+  <disable_collisions link1="$(arg prefix)gripper_base" link2="$(arg prefix)flange_adapter" reason="ToolEnvelopeOverlap"/>
+  <disable_collisions link1="$(arg prefix)gripper_base" link2="$(arg prefix)camera_bracket" reason="ToolEnvelopeOverlap"/>
+  <disable_collisions link1="$(arg prefix)gripper_base" link2="$(arg prefix)esp32_bracket" reason="ToolEnvelopeOverlap"/>
+  <disable_collisions link1="$(arg prefix)left_finger" link2="$(arg prefix)right_finger" reason="ToolEnvelopeOverlap"/>
+  <disable_collisions link1="$(arg prefix)left_finger" link2="$(arg prefix)flange_adapter" reason="ToolEnvelopeOverlap"/>
+  <disable_collisions link1="$(arg prefix)left_finger" link2="$(arg prefix)camera_bracket" reason="ToolEnvelopeOverlap"/>
+  <disable_collisions link1="$(arg prefix)left_finger" link2="$(arg prefix)esp32_bracket" reason="ToolEnvelopeOverlap"/>
+  <disable_collisions link1="$(arg prefix)right_finger" link2="$(arg prefix)flange_adapter" reason="ToolEnvelopeOverlap"/>
+  <disable_collisions link1="$(arg prefix)right_finger" link2="$(arg prefix)camera_bracket" reason="ToolEnvelopeOverlap"/>
+  <disable_collisions link1="$(arg prefix)right_finger" link2="$(arg prefix)esp32_bracket" reason="ToolEnvelopeOverlap"/>
+  <disable_collisions link1="$(arg prefix)flange_adapter" link2="$(arg prefix)camera_bracket" reason="ToolEnvelopeOverlap"/>
+  <disable_collisions link1="$(arg prefix)flange_adapter" link2="$(arg prefix)esp32_bracket" reason="ToolEnvelopeOverlap"/>
+  <disable_collisions link1="$(arg prefix)camera_bracket" link2="$(arg prefix)esp32_bracket" reason="ToolEnvelopeOverlap"/>
+  <!-- Only adapter/flange mounting contact is excluded against the arm. -->
+  <disable_collisions link1="$(arg prefix)flange_adapter" link2="$(arg prefix)link6" reason="FlangeMountContact"/>
+</robot>

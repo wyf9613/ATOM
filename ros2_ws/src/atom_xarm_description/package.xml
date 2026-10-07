@@ -10,6 +10,7 @@
 
   <exec_depend>atom_gripper_description</exec_depend>
   <exec_depend>xarm_description</exec_depend>
+  <exec_depend>xarm_moveit_config</exec_depend>
   <exec_depend>xacro</exec_depend>
 
   <test_depend>ament_cmake_pytest</test_depend>

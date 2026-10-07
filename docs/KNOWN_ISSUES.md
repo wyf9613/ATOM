@@ -1,5 +1,22 @@
 # Known Issues
 
+## 2026-10-07 — v2 tool description is exported, deployment still pending
+
+P-007 now has a CAD-based v2 flange/bracket composition and explicit tool SRDF,
+with full inherited body/finger collision envelopes. The existing arm-only/G1
+launcher does not consume it. No runtime or physical self-collision result has
+been established; camera/PCB/cables/carried-object envelopes and measured flange
+clocking/TCP/inertials/finger-state mapping remain missing. The print manifest's
+source_cad/backplate/v2 and bracket STEP paths are absent locally, so original
+source verification of those revisions remains open. Details:
+[integration](GRIPPER_MOUNT_V2_INTEGRATION.md).
+
+G-002 remains open: force estimate is uncalibrated and force requests remain
+rejected. The fixed object's identity/mass/material, standard-force instrument,
+actual serial connection and installed flange status have not been supplied.
+No physical calibration data collected on 2026-10-07. Prepared procedure:
+[force calibration](GRIPPER_FORCE_CALIBRATION.md).
+
 ## Project blockers
 
 | ID | Issue | Impact | Next evidence/action |

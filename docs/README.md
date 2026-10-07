@@ -26,6 +26,8 @@ UR3e 的已实现仿真、MoveIt 抓取和 Humble/Fortress 验证文档保留在
 | [假设与待确认事项](ASSUMPTIONS.md) | 尚未获得实测证据的输入条件 |
 | [第一阶段学习路线](PHASE1_MINIMUM_LEARNING_ROADMAP.md) | 仿真阶段的技术栈与学习材料 |
 | [夹爪设计与验证](GRIPPER_DESIGN.md) | 汇总上一组夹爪结构、实验结果、风险和首轮测试 |
+| [夹爪标准力标定](GRIPPER_FORCE_CALIBRATION.md) | 固定物体持有验收、标准力采集、验证和可调目标力解除条件 |
+| [新法兰与夹爪模型集成](GRIPPER_MOUNT_V2_INTEGRATION.md) | CAD 坐标恢复、模块化 URDF/SRDF、碰撞覆盖和实机接入边界 |
 | [CAD 资产清单](CAD_INVENTORY.md) | 记录收到的 CAD、校验信息和后续导出要求 |
 | [仿真到实机差异记录](SIM2REAL_LOG.md) | 持续记录模型假设、实测结果和修正验证 |
 | [腕部相机与观察实验](CAMERA_EXPERIMENT.md) | 当前场景、预观察与两段接近的接口、运行命令及验证边界 |

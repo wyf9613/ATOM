@@ -114,3 +114,17 @@ Read-only live check after user Arduino upload: continuous_position=true,positio
 ### 2026-10-03 — User confirms local gripper frontend integration
 
 After Arduino IDE firmware upload and gateway startup recovery, user explicitly reports no issue and successful frontend integration. This closes local UI connection/deployment acceptance on user confirmation; exact exercised command sequence, repetition count and quantitative stop/force measurements were not supplied. Force calibration, independent grasp verification and combined physical arm supervision remain open.
+
+## 2026-10-07 — CAD v2 collision description, no hardware acceptance
+
+New model uses restored print-pack coordinates and nominal flange-to-gripper
++Z51.964mm; inherited TCP becomes nominal[-1.8,0,222.500]mm from flange.
+These are CAD values, not measured transforms. Complete per-link visual AABBs
+plus0.5mm per-side provisional margin replace partial gripper collisions.
+Tool-internal overlaps and adapter/link6 contact are excluded in the supplied
+SRDF; other tool/arm checks remain. Camera/PCB/cables/carried object and measured
+inertials/finger-state mapping remain absent. Four offline geometry regressions
+pass; no runtime MoveIt/FCL, physical collision clearance or arm deployment was
+verified. Existing arm-only/G1 launcher still uses its original vendor model.
+See GRIPPER_MOUNT_V2_INTEGRATION.md. Force calibration procedure is prepared
+but no new force/holding data collected; force requests remain blocked.

@@ -36,8 +36,9 @@
         <material name="atom_body"><color rgba="0.16 0.18 0.20 1"/></material>
       </visual>
       <collision>
-        <origin xyz="0 0 0.055"/>
-        <geometry><box size="0.120 0.105 0.110"/></geometry>
+        <!-- Full inherited mesh AABB + 0.5 mm per side; CAD-only envelope. -->
+        <origin xyz="-0.004999999 -0.000000002 0.051335998"/>
+        <geometry><box size="0.131000004 0.106000000 0.118399998"/></geometry>
       </collision>
     </link>
 
@@ -56,9 +57,9 @@
         <material name="atom_left_finger"><color rgba="0.72 0.76 0.78 1"/></material>
       </visual>
       <collision>
-        <!-- Box aligned to the visible terminal pad in the transformed CAD mesh. -->
-        <origin xyz="0.021 0.0005 0.154"/>
-        <geometry><box size="0.006 0.020 0.020"/></geometry>
+        <!-- Full inherited mesh AABB + 0.5 mm per side; CAD-only envelope. -->
+        <origin xyz="0.005528131 0.000499999 0.115035999"/>
+        <geometry><box size="0.073943745 0.062999999 0.106999996"/></geometry>
       </collision>
     </link>
     <joint name="${prefix}left_finger_joint" type="prismatic">
@@ -79,9 +80,9 @@
         <material name="atom_right_finger"><color rgba="0.72 0.76 0.78 1"/></material>
       </visual>
       <collision>
-        <!-- Box aligned to the visible terminal pad in the transformed CAD mesh. -->
-        <origin xyz="-0.024681 0.00045 0.154"/>
-        <geometry><box size="0.006 0.020 0.020"/></geometry>
+        <!-- Full inherited mesh AABB + 0.5 mm per side; CAD-only envelope. -->
+        <origin xyz="-0.009208677 0.000450000 0.115035999"/>
+        <geometry><box size="0.073943744 0.062999999 0.106999996"/></geometry>
       </collision>
     </link>
     <joint name="${prefix}right_finger_joint" type="prismatic">

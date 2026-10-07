@@ -1,0 +1,124 @@
+{
+  "source_archive": "hardware/end effector/ATOM_three_parts_20261005.zip",
+  "archive_sha256": "17f82205660264756519b7693bc003c0a05366d0942364561e804adff136503a",
+  "cad_to_gripper_R": [
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      -1
+    ],
+    [
+      -1,
+      0,
+      0
+    ]
+  ],
+  "cad_flange_centre_mm": [
+    80.8,
+    43.494,
+    -22.225
+  ],
+  "gripper_mount_z_m": 0.051964,
+  "parts": [
+    {
+      "name": "camera_bracket",
+      "zip_member": "camera_bracket_v2_mm.stl",
+      "source_sha256": "d25d464fe93b5157247c1d681ac71ccdf6455a58690eec5b6394158081339a42",
+      "restored_cad_bounds_mm": [
+        [
+          -81.2,
+          34.494,
+          17.375
+        ],
+        [
+          -11.200000000000003,
+          52.494,
+          35.27499961853027
+        ]
+      ],
+      "link_bounds_m": [
+        [
+          -0.009,
+          -0.05749999961853027,
+          0.040036
+        ],
+        [
+          0.009,
+          -0.0396,
+          0.110036
+        ]
+      ],
+      "collision_padding_per_side_m": 0.0005
+    },
+    {
+      "name": "esp32_bracket",
+      "zip_member": "esp32_bracket_v1_mm.stl",
+      "source_sha256": "afb48959ddca033ba5cb11c09dd324b81fdd5099c25669d7957e67d7a300e00a",
+      "restored_cad_bounds_mm": [
+        [
+          -78.2,
+          22.494,
+          -79.725
+        ],
+        [
+          -11.200000000000003,
+          64.494,
+          -61.82500038146972
+        ]
+      ],
+      "link_bounds_m": [
+        [
+          -0.021,
+          0.03960000038146972,
+          0.040036
+        ],
+        [
+          0.021,
+          0.057499999999999996,
+          0.107036
+        ]
+      ],
+      "collision_padding_per_side_m": 0.0005
+    },
+    {
+      "name": "flange_adapter",
+      "zip_member": "flange_adapter_v2_mm.stl",
+      "source_sha256": "83b213f46e48c40f3d2cf68131b8a365ca789b2d0b89455d6bec8d2bcef2cf30",
+      "restored_cad_bounds_mm": [
+        [
+          28.8,
+          1.494,
+          -78.225
+        ],
+        [
+          82.8,
+          85.494,
+          33.775000000000006
+        ]
+      ],
+      "link_bounds_m": [
+        [
+          -0.042,
+          -0.05600000000000001,
+          -0.002
+        ],
+        [
+          0.042,
+          0.055999999999999994,
+          0.052
+        ]
+      ],
+      "collision_padding_per_side_m": 0.0005
+    }
+  ],
+  "notes": [
+    "Restored CAD coordinates by subtracting export translation; no rotations in archive.",
+    "Flange face x=80.8 mm inferred from planar face and 31.45 mm pilot at x=82.8 mm.",
+    "CAD placement only; flange yaw, actual hardware fit, camera/PCB/cables and mass/TCP unmeasured."
+  ]
+}

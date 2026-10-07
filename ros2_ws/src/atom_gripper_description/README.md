@@ -20,6 +20,14 @@ an optional name prefix, an optional mimic-joint mode and a caller-provided
 mounting origin. `urdf/atom_gripper_standalone.urdf.xacro` exists only for
 description validation.
 
+`urdf/atom_gripper_v2.urdf.xacro` composes that gripper with the new flange,
+camera bracket and ESP32 bracket. The full base/finger visual-mesh AABBs replace
+the old short base and pad-only collision boxes, with 0.5 mm per-side padding
+(an unvalidated modelling margin). New bracket/adapter inertials are omitted
+until measured; this is a kinematic collision-review model, not a dynamics model.
+Camera, PCB, screws, wiring and carried objects are not included in the archive
+or this model. See `docs/GRIPPER_MOUNT_V2_INTEGRATION.md` in the repository.
+
 Regenerate the visual meshes from the source STEP with:
 
 ```bash

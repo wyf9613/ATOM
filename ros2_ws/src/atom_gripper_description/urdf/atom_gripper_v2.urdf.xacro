@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find atom_gripper_description)/urdf/atom_gripper.urdf.xacro"/>
+  <xacro:include filename="$(find atom_gripper_description)/urdf/atom_mount_v2.urdf.xacro"/>
+  <xacro:macro name="atom_gripper_v2" params="parent prefix:='' *origin">
+    <!-- Flange clocking is nominal only. 51.964 mm is CAD-derived, not measured. -->
+    <link name="${prefix}tool_flange"/>
+    <joint name="${prefix}tool_flange_joint" type="fixed">
+      <parent link="${parent}"/><child link="${prefix}tool_flange"/>
+      <xacro:insert_block name="origin"/>
+    </joint>
+    <xacro:atom_gripper parent="${prefix}tool_flange" prefix="${prefix}">
+      <origin xyz="0 0 0.051964" rpy="0 0 0"/>
+    </xacro:atom_gripper>
+    <xacro:atom_mount_v2 parent="${prefix}tool_flange" gripper_base="${prefix}gripper_base" prefix="${prefix}"/>
+  </xacro:macro>
+</robot>

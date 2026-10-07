@@ -20,8 +20,8 @@
     create_attach_link="true"
     load_gazebo_plugin="false"/>
 
-  <xacro:include filename="$(find atom_gripper_description)/urdf/atom_gripper.urdf.xacro"/>
-  <xacro:atom_gripper parent="$(arg prefix)link_eef" prefix="$(arg prefix)" use_mimic="true">
+  <xacro:include filename="$(find atom_gripper_description)/urdf/atom_gripper_v2.urdf.xacro"/>
+  <xacro:atom_gripper_v2 parent="$(arg prefix)link_eef" prefix="$(arg prefix)">
     <origin xyz="$(arg gripper_mount_xyz)" rpy="$(arg gripper_mount_rpy)"/>
-  </xacro:atom_gripper>
+  </xacro:atom_gripper_v2>
 </robot>

@@ -1,5 +1,23 @@
 # Decision Log
 
+## 2026-10-07 — CAD v2 tool composition for collision review
+
+User requested a gripper-test branch, fixed-object holding/force-calibration
+workflow, and integration of the new flange print archive with the existing arm.
+Compose the restored flange/camera/ESP32 bracket meshes in the independent
+gripper description and use the existing vendor UF850 wrapper. Replace incomplete
+body/pad collision geometry with complete per-link CAD AABBs and 0.5 mm per-side
+provisional padding. Supply matching SRDF preserving tool/arm checks except
+adapter/link6 mounting contact; overlapping tool-internal envelopes are excluded.
+Use D-007's pinned vendor revision without selecting a new driver/configuration.
+Evidence: archive hashes match, Xacro URDF/SRDF exports succeed, four offline
+geometry/semantics regressions pass. See GRIPPER_MOUNT_V2_INTEGRATION.md.
+Boundary: CAD-derived 51.964 mm offset and flange clocking are not measurements;
+camera/PCB/cables/carried object, measured inertials and physical TCP remain open.
+Existing arm-only launcher is not changed to load this tool. Runtime MoveIt/FCL,
+urdfdom and physical acceptance remain pending. Force requests stay blocked until
+independent calibration and local control validation; see GRIPPER_FORCE_CALIBRATION.md.
+
 ## 2026-10-03 — Separate ESP32 mount and reinforce printed flange adapter
 
 User superseded the v1 side-on-flange electronics placement: mount ESP32 independently using the lower shell-seam pair opposite the camera bracket, retaining provisional 46.5 × 23.5 mm / Ø4.0 PCB holes. User requested rigidity over material saving and tentatively selected PLA, estimating gripper plus camera at about 700 g by heft, not a scale. [Backplate v2](../source_cad/backplate/v2/README.md) replaces the narrow bridge rails with a continuous thick annular body, 12 mm broad front plate, 14 mm flange end, enlarged root and 52 mm rear extension. Nominal UF850 flange pattern is unchanged. M6 screws are installed before attaching the gripper through dedicated axial access bores. [Independent ESP32 bracket](../source_cad/esp32_bracket/v1/README.md) uses inherited lower hole centres x=-33.7/-18.7, z=-65.725. Accepted scope is CAD revision direction only: PLA grade/printing, entire tool mass/CoM, original tab strength, stiffness, creep and dynamic capacity remain unvalidated.
