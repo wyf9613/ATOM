@@ -7,7 +7,7 @@ usage() {
 Usage: ./scripts/atom.sh COMMAND [OPTIONS]
 
 Daily workflow:
-  sim       [--camera depth|rgb] [--restart] [--workflow approach|transfer] [--recipe visual_observe|visual_approach] [--tag-id 0|1|2|3]
+  sim       [--camera depth|rgb] [--restart] [--workflow approach|transfer] [--recipe visual_observe|visual_approach] [--tag-id 0|1|2|3] [--gui]
             Gazebo + English web GUI. Default: Tag-guided approach, not physical pick/place.
   attach    [--camera depth|rgb]       Monitor an existing simulation; no motion starts.
   observe   [--camera depth|rgb] [--control]
@@ -55,7 +55,7 @@ while (($#)); do
     --help|-h) usage; exit 0 ;;
     --dry-run) dry_run=true ;;
     --restart) [[ "${command_name}" == sim ]] || fail '--restart applies to sim'; restart=--restart ;;
-    --gui) [[ "${command_name}" == demo && "${demo}" =~ ^(arm|camera|approach)$ ]] || fail '--gui applies to demo arm/camera/approach'; gui=true ;;
+    --gui) [[ "${command_name}" == sim || ( "${command_name}" == demo && "${demo}" =~ ^(arm|camera|approach)$ ) ]] || fail '--gui applies to sim or demo arm/camera/approach'; gui=true ;;
     --control) [[ "${command_name}" == observe ]] || fail '--control applies to observe'; control=control ;;
     --tag-id|--recipe|--camera|--workflow|--session|--rack-dx|--rack-dy|--rack-yaw|--distance)
       (($#)) || fail "Missing value for ${option}"
@@ -91,7 +91,7 @@ except (ValueError,AssertionError):
     sys.exit('Invalid geometry: finite rack offsets <=0.05 m / yaw <=0.2 rad, positive distance required')
 PY
 case "${command_name}" in
-  sim) selected=(bash "${repo_root}/scripts/lib/operator.sh" workflow "${camera}" "${restart}" "${workflow}" "${recipe}" "${tag_id}") ;;
+  sim) selected=(bash "${repo_root}/scripts/lib/operator.sh" workflow "${camera}" "${restart}" "${workflow}" "${recipe}" "${tag_id}" "${gui}") ;;
   attach) selected=(bash "${repo_root}/scripts/lib/operator.sh" attach "${camera}") ;;
   observe) selected=(bash "${repo_root}/scripts/lib/operator.sh" observe "${camera}" "${control}") ;;
   build|shell) selected=(bash "${repo_root}/scripts/lib/runtime.sh" "${command_name}") ;;

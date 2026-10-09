@@ -11,6 +11,18 @@ restart="${2:-}"
 workflow="${3:-approach}"
 recipe="${4:-visual_approach}"
 tag_id="${5:-1}"
+gui="${6:-false}"
+[[ "${gui}" == true || "${gui}" == false ]] || { echo "Invalid GUI mode" >&2; exit 2; }
+graphic_args=()
+if [[ "${gui}" == true ]]; then
+  [[ -n "${DISPLAY:-}" ]] || { echo "DISPLAY is not set; run from a graphical desktop session." >&2; exit 1; }
+  xauthority_path="${XAUTHORITY:-${HOME}/.Xauthority}"
+  [[ -r "${xauthority_path}" ]] || { echo "No readable Xauthority file at ${xauthority_path}." >&2; exit 1; }
+  graphic_args=(-e "DISPLAY=${DISPLAY}" -e QT_X11_NO_MITSHM=1 -e QT_QPA_PLATFORM=xcb
+    -e XAUTHORITY=/tmp/atom-xauthority
+    -v /tmp/.X11-unix:/tmp/.X11-unix:rw
+    -v "${xauthority_path}:/tmp/atom-xauthority:ro")
+fi
 [[ "${tag_id}" =~ ^[0-3]$ ]] || { echo "Invalid rack tag ID" >&2; exit 2; }
 if [[ "${camera_mode}" != rgb && "${camera_mode}" != depth ]] || [[ -n "${restart}" && "${restart}" != --restart ]] || [[ "${workflow}" != transfer && "${workflow}" != approach ]]; then
   echo "Usage: $0 [rgb|depth] [--restart] [transfer|approach]" >&2
@@ -59,17 +71,18 @@ PORT_CHECK
 mkdir -p tmp/operator_gui/workflow
 # One scene, one original motion runner, and an independent monitor.
 docker compose -f docker-compose.jazzy.yaml run --rm -T --name atom-tube-workflow \
+  "${graphic_args[@]}" -e ATOM_GUI_DESKTOP="${gui}" \
   -e ATOM_GUI_TAG_ID="${tag_id}" -e ATOM_GUI_TASK_RECIPE="${recipe}" -e ATOM_GUI_WORKFLOW="${workflow}" -e ATOM_GUI_CAMERA_MODE="${camera_mode}" -e LIBGL_ALWAYS_SOFTWARE=1 atom-jazzy bash -lc '
     set -eo pipefail
     cd /jazzy_ws
-    colcon build --base-paths /workspace/ros2_ws/src/atom_xarm_sim --packages-select atom_xarm_sim --symlink-install \
+    colcon build --base-paths /workspace/ros2_ws/src/atom_camera_description /workspace/ros2_ws/src/atom_xarm_sim /workspace/ros2_ws/src/atom_gripper_description /workspace/ros2_ws/src/atom_xarm_description --packages-select atom_camera_description atom_gripper_description atom_xarm_description atom_xarm_sim --symlink-install \
       >/workspace/tmp/operator_gui/workflow/build.log 2>&1
     source /jazzy_ws/install/setup.bash
     cd /workspace
     log_dir="/workspace/tmp/operator_gui/workflow/run_$(date +%Y%m%d_%H%M%S)"
     mkdir -p "${log_dir}"
     echo "Run reports: ${log_dir}"
-    ros2 launch atom_xarm_sim uf850_arm_only.launch.py camera_mode:="${ATOM_GUI_CAMERA_MODE}" demo_gripper:=true gui:=false \
+    ros2 launch atom_xarm_sim uf850_arm_only.launch.py camera_mode:="${ATOM_GUI_CAMERA_MODE}" atom_tool:=v2 gui:="${ATOM_GUI_DESKTOP}" \
       >"${log_dir}/gazebo.log" 2>&1 &
     launch_pid=$!
     if [[ "${ATOM_GUI_WORKFLOW}" == transfer ]]; then

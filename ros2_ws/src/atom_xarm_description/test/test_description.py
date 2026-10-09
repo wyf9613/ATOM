@@ -26,7 +26,7 @@ def test_uf850_and_gripper_are_composed_at_explicit_mount_frame():
     mount = joints['tool_flange_joint']
     assert mount.find('parent').attrib['link'] == 'link_eef'
     assert mount.find('child').attrib['link'] == 'tool_flange'
-    assert mount.find('origin').attrib == {'xyz': '0 0 0', 'rpy': '0 0 0'}
+    assert mount.find('origin').attrib == {'xyz': '0 0 0', 'rpy': '0 0 -1.5707963267948966'}
     assert joints['gripper_mount_joint'].find('origin').attrib['xyz'] == '0 0 0.051964'
     assert 'ur3e' not in xml.lower()
     assert 'shoulder_pan_joint' not in joints

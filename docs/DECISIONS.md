@@ -280,3 +280,58 @@ Reuse D-007's existing Ubuntu 24.04/Jazzy baseline. Build only atom_operator_int
 ## 2026-10-03 — Continuous gripper position commands and resumable normal STOP
 
 User requests one continuous move to an absolute encoder target and continuous Open/Close with normal STOP/resume. Replace host 100-count JOG segments/dwell with one firmware MOVE target within2000–2600. Firmware Open2600/Close2000 are position-only; force commands remain unavailable. Keep speed20/acceleration10,raw-load80,raw voltage72–82,temp40,outer position1937–2668 and750ms/350ms watchdogs. Extend whole-move timeout7→20s provisionally based on prior ~2.1s/100count records; no continuous600count physical timing acceptance. Normal confirmed STOP/cancel keeps torque and the same caller session, returns interruption without latching a fault; actual faults and unconfirmed holds still latch. First startup/explicit DISARM still require ARM. User will compile/upload through Arduino IDE; agent did not upload or move the motor. Native firmware, protocol, HTTP and ROS fake-device tests cover the revised behavior.
+
+
+## 2026-10-07 — V2 tool in the GUI observation simulation
+
+The existing GUI workflow now selects `atom_tool:=v2`; bare-arm defaults and
+legacy fixed Observe remain unchanged. Expand the modular ATOM URDF/SRDF with
+the existing vendor Gazebo control configuration, and share the resulting model
+with MoveIt, robot_state_publisher and Gazebo. Resolve ATOM mesh URIs to installed
+file paths for Gazebo. For observation only, fix both fingers at CAD zero rather
+than implying calibrated servo control. No new task node or motion owner.
+Keep arm/tool collision checks including camera/arm pairs. The simulation camera
+uses provisional tool_flange xyz [0,-0.075,0.140] m and rpy [0,-pi/2,0] rad; this
+is an experiment configuration, not measured camera mounting or calibration.
+The existing deterministic visual_observe/visual_approach recipes are reused.
+
+
+## 2026-10-07 — User-selected tool clocking
+
+Set the combined-model default gripper_mount_rpy to [0,0,-pi/2] rad,
+rotating the complete V2 assembly about its pointing +Z axis. The simulation
+camera remains a child of tool_flange and rotates with the assembly; its
+[0,-0.075,0.140] m local offset becomes [-0.075,0,0.140] m in link_eef.
+This selects the -X side (below for the previous horizontal observation pose);
+world-down depends on arm attitude. This is user-requested nominal clocking,
+not physical mount or camera-extrinsic measurement. Explicit mount overrides
+remain supported.
+
+
+## 2026-10-07 — Forward-facing V2 simulation initial state
+
+User selected a simulation initial joint posture, not a changed tool mount or
+vendor zero definition. V2 Gazebo ros2_control initial position is
+[0,0,0,0,pi/2,0] rad. FK from the pinned description gives tool +Z approximately
+base +X (small residual from rounded vendor origins). Existing -90 degree tool
+clocking remains. No hardware motion or encoder-zero change is requested.
+
+
+## 2026-10-07 — Confirmed D435i and official camera stack
+
+User confirms Intel RealSense D435i. Reuse D-007; official realsense-ros documents
+Jazzy support. Select official ROS apt releases description/wrapper 4.58.4 and
+librealsense2 2.58.4 (full Debian versions and sources in
+D435I_BRINGUP_AND_CALIBRATION.md). Import the upstream model through a separate
+atom_camera_description mount wrapper. Gazebo uses its native RGB-D/ros_gz stack,
+not a hardware SDK emulation or Classic plugin. Physical driver publishes device
+internal TF; nominal internal TF is simulation-only. Keep hardware camera tests
+on domain43, with no arm/task launch. No new production perception node.
+
+
+2026-10-07: user requested landscape D435i mounting. Set camera mount rpy
+[pi/2,-pi/2,0] rad: rotate about camera forward +X by +90 degrees while
+retaining the reserved bottom-screw position and pointing direction. Official
+body and internal optical/IMU frames rotate together, not just the visual mesh.
+Landscape is relative to the current forward-facing arm posture; mount remains
+unmeasured. Previous observation acceptance used the preceding orientation.

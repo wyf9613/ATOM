@@ -21,6 +21,7 @@ docker compose -f docker-compose.jazzy.yaml run --rm atom-jazzy bash -lc '
     src/xarm_ros2/xarm_controller
     src/xarm_ros2/xarm_gazebo
     src/xarm_ros2/xarm_moveit_config
+    /workspace/ros2_ws/src/atom_camera_description
     /workspace/ros2_ws/src/atom_gripper_description
     /workspace/ros2_ws/src/atom_xarm_description
     /workspace/ros2_ws/src/atom_xarm_dynamics
@@ -38,6 +39,7 @@ docker compose -f docker-compose.jazzy.yaml run --rm atom-jazzy bash -lc '
     xarm_controller \
     xarm_gazebo \
     xarm_moveit_config \
+    atom_camera_description \
     atom_gripper_description \
     atom_xarm_description \
     atom_xarm_dynamics \

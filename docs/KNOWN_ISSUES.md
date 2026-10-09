@@ -162,3 +162,28 @@ User-uploaded continuous firmware was confirmed by live continuous_position=1 an
 ### 2026-10-03 — User confirms local gripper frontend integration
 
 After Arduino IDE firmware upload and gateway startup recovery, user explicitly reports no issue and successful frontend integration. This closes local UI connection/deployment acceptance on user confirmation; exact exercised command sequence, repetition count and quantitative stop/force measurements were not supplied. Force calibration, independent grasp verification and combined physical arm supervision remain open.
+
+
+## 2026-10-07 — V2 observation capture fails full-rack gate
+
+Run tmp/operator_gui/workflow/run_20261007_030817 (depth, visual_observe,
+Tag1, nominal scene, single trial): pre-observation motion passed, but capture
+timed out after the 90 s configured wall-time gate (220 processed frames, last
+IDs [0,1,2]). No coherent full [0,1,2,3] rack fit completed. GUI/API checks for
+fresh arm, RGB/depth previews, Tag detections, read-only ownership and terminal
+result passed; --require-success correctly failed. New camera pose is only an
+unmeasured simulation placement; investigate coverage/occlusion/coherent fit
+before approach or hardware deployment. Keep the full-rack quality gate.
+
+
+2026-10-07 D435i hardware readiness: model identity confirmed, but serial,
+firmware, USB transport, actual mounting and hand-eye remain unverified. Camera
+SDK installation and no-motion bringup do not commission the real arm. Existing
+visual observer accepts only 32FC1; real aligned 16UC1 requires tested conversion
+before any hardware visual recipe. Native Harmonic RGB-D is not D435i stereo/IMU
+emulation. Optical-offset changes can affect full-rack visibility.
+
+D435i nominal observation follow-up: run_20261007_034304 passed visual_observe
+once with the official model and current clocking/initial posture. This supersedes
+neither earlier failed trials nor missing hardware calibration; visibility
+repeatability and visual_approach under the D435i model remain untested.

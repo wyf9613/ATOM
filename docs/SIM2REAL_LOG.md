@@ -128,3 +128,57 @@ pass; no runtime MoveIt/FCL, physical collision clearance or arm deployment was
 verified. Existing arm-only/G1 launcher still uses its original vendor model.
 See GRIPPER_MOUNT_V2_INTEGRATION.md. Force calibration procedure is prepared
 but no new force/holding data collected; force requests remain blocked.
+
+
+## 2026-10-07 — V2 GUI observation runtime
+
+V2 GUI simulation uses CAD tool geometry with fixed fingers at zero. New bracket
+masses remain unspecified and inherited gripper inertials are provisional.
+Camera mount [0,-0.075,0.140] m relative to tool_flange is an unmeasured
+simulation offset, not a physical camera calibration. The previous G1 camera
+offset caused MoveIt START_STATE_IN_COLLISION (-10) at zero joints: service
+/check_state_validity reported wrist_camera_link/link1 and /link_base contacts
+in run_20261007_030658. The gate rejected motion; no arm collision exclusions
+were added. This is a runtime rejection example, not physical clearance evidence.
+Task front-reference remains 0.20 m from link_eef, distinct from CAD gripper_tcp.
+
+
+Second V2 trial run_20261007_030817 passed the observation motion (reported
+position error 0.00461 m, orientation error 0.08390 rad, ray error 0.06255 rad;
+N=1 simulation, no physical uncertainty measurement), then failed full-rack
+capture. GUI state/images/detections/terminal-result checks passed. This is not
+a successful visual_observe acceptance or visual_approach acceptance.
+
+
+2026-10-07: user requested -90 degree clocking about tool +Z. Updated the
+combined URDF default; all tool geometry and simulated camera rotate together.
+Physical fit/extrinsics remain unmeasured; camera is on link_eef -X, not
+guaranteed world-down at arbitrary arm attitudes. Previous V2 trial numbers
+refer to the prior zero-clocked model and do not validate this orientation.
+
+
+2026-10-07: V2 simulation initial posture is [0,0,0,0,pi/2,0] rad, using
+ros2_control position initial_value. This is a simulation startup configuration,
+not physical homing, calibration or a command to an actual arm.
+
+
+2026-10-07 D435i: import official case/optical/IMU frame model; virtual RGB-D
+uses nominal color frame and existing experiment intrinsics. No stereo/IR/IMU
+data or librealsense alignment/noise emulation. Hardware driver uses calibrated
+internal TF and aligned color depth (16UC1 mm); task observer still needs verified
+32FC1 m adaptation before physical use. Upstream inertials are unreliable;
+reserved mount remains unmeasured. See D435I_BRINGUP_AND_CALIBRATION.md.
+
+D435i verification: run_20261007_034304 depth visual_observe passed one nominal
+simulation trial, with Tags0..3 transformed to link_base. GUI/API and browser
+reported SUCCEEDED; runtime official mesh loaded and URDF tree parsed. Nine
+regressions passed. SDK physical USB enumeration found no device, so no physical
+camera/IMU/calibration acceptance. Detailed evidence in the commissioning guide.
+
+
+2026-10-07: user requested landscape D435i mounting. Set camera mount rpy
+[pi/2,-pi/2,0] rad: rotate about camera forward +X by +90 degrees while
+retaining the reserved bottom-screw position and pointing direction. Official
+body and internal optical/IMU frames rotate together, not just the visual mesh.
+Landscape is relative to the current forward-facing arm posture; mount remains
+unmeasured. Previous observation acceptance used the preceding orientation.

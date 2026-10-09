@@ -6,6 +6,8 @@ import os
 from pathlib import Path
 import tempfile
 import math
+import xacro
+import xml.etree.ElementTree as ET
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
@@ -37,7 +39,10 @@ def launch_setup(context):
     dof = '6'
     actuator_model = LaunchConfiguration('actuator_model').perform(context)
     camera_mode = LaunchConfiguration('camera_mode').perform(context)
+    atom_tool = LaunchConfiguration('atom_tool').perform(context) == 'v2'
     demo_gripper = LaunchConfiguration('demo_gripper').perform(context).lower() == 'true'
+    if atom_tool:
+        demo_gripper = False
     scene_fixtures = LaunchConfiguration('scene_fixtures').perform(context).lower() == 'true'
     fixture_group = LaunchConfiguration('fixture_group').perform(context)
     show_gui = LaunchConfiguration('gui').perform(context).lower() == 'true'
@@ -118,8 +123,43 @@ def launch_setup(context):
         geometry_mesh_tcp_rpy='"0 0 0"',
     ).to_moveit_configs()
     moveit_dict = moveit_config.to_dict()
+    if atom_tool:
+        description_share = Path(get_package_share_directory('atom_xarm_description'))
+        moveit_dict['robot_description'] = xacro.process_file(
+            str(description_share / 'urdf/uf850_atom.urdf.xacro'), mappings={
+                'ros2_control_plugin': 'gz_ros2_control/GazeboSimSystem',
+                'ros2_control_params': ros2_control_params,
+                'load_gazebo_plugin': 'true',
+                'camera_enabled': 'true' if camera_mode != 'none' else 'false',
+                'camera_nominal_extrinsics': 'true',
+            }).toxml()
+        moveit_dict['robot_description_semantic'] = xacro.process_file(
+            str(description_share / 'srdf/uf850_atom.srdf.xacro')).toxml()
+        robot = ET.fromstring(moveit_dict['robot_description'])
+        # V2 starts with the wrist pitched forward; vendor encoder zeros stay unchanged.
+        for joint in robot.findall('ros2_control/joint'):
+            position = joint.find("state_interface[@name='position']")
+            if position is not None:
+                initial = ET.SubElement(position, 'param', name='initial_value')
+                initial.text = str(math.pi / 2 if joint.get('name') == 'joint5' else 0.0)
+        # Observation-only simulation: hold uncalibrated fingers at CAD zero.
+        # This does not simulate servo control or physical grasping.
+        for name in ('left_finger_joint', 'right_finger_joint'):
+            joint = robot.find(f"joint[@name='{name}']")
+            joint.set('type', 'fixed')
+            for tag in ('axis', 'limit', 'dynamics', 'mimic'):
+                element = joint.find(tag)
+                if element is not None:
+                    joint.remove(element)
+        for mesh in robot.findall('.//mesh'):
+            uri = mesh.get('filename', '')
+            if uri.startswith('package://'):
+                package, relative = uri.removeprefix('package://').split('/', 1)
+                mesh.set('filename', 'file://' + str(Path(get_package_share_directory(package)) / relative))
+        moveit_dict['robot_description'] = ET.tostring(robot, encoding='unicode')
     moveit_dict['robot_description'] = add_wrist_camera(
-        moveit_dict['robot_description'], camera_mode
+        moveit_dict['robot_description'], camera_mode,
+        parent='tool_flange' if atom_tool else 'xarm_gripper_base_link'
     )
     if camera_mode != 'none':
         moveit_dict['robot_description_semantic'] = allow_wrist_camera_self_collisions(
@@ -312,6 +352,7 @@ def launch_setup(context):
 
 def generate_launch_description():
     return LaunchDescription([
+        DeclareLaunchArgument('atom_tool', default_value='none', choices=['none', 'v2']),
         DeclareLaunchArgument(
             'actuator_model',
             default_value='ideal',

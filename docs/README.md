@@ -56,3 +56,5 @@ UR3e 的已实现仿真、MoveIt 抓取和 Humble/Fortress 验证文档保留在
 - [重构回归报告](REFACTOR_TEST_REPORT.md)：构建、组合故障测试及实际 Gazebo 回归证据。
 
 - [RGB-D 架面融合实现与验证](DEPTH_FUSION.md)：配准深度与多 tag RGB 联合位姿估计、质量门限及同帧对照。
+
+- [D435i model, simulation and camera-only calibration preparation](D435I_BRINGUP_AND_CALIBRATION.md)

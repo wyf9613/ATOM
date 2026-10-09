@@ -175,3 +175,41 @@ python tools/operator_gui/server.py --mode gripper --gripper-port COM4 --enable-
 本地模式复用生产串口控制器，机械臂/导航保持未连接。ROS 部署改用 hardware_bridge + hardware.example.json，网关增加 --enable-gripper；bridge 和本地模式互斥。夹爪停止/释放允许只读连接请求，运动须显式启用；这与原机械臂只读权限独立。页面失联2s请求保持，固件主机看门狗仍独立生效；不自动释放扭矩。机械臂任务和手动夹爪请求互斥，ROS ARM 会话阻断其他所有者运动。操作员会话/网络部署仍需独立鉴权与实机安全监督。
 
 完整模块、ROS Action、运行方法与 //TODO G01–G09 清单见 [夹爪接入与校准](../../docs/GRIPPER_SYSTEM_INTEGRATION.md)。本轮软件测试不连接实物，ROS 构建与机械臂联合验收仍待进行。
+
+
+## V2 tool observation (2026-10-07)
+
+The `sim` web workflow now builds both ATOM description packages and selects the
+new modular flange/gripper model (`atom_tool:=v2`). Bare-arm and fixed Observe
+baselines retain their previous defaults. Observation-only run:
+
+```bash
+./scripts/atom.sh sim --camera depth --recipe visual_observe --restart
+python3 tests/operator_gui/tube_workflow_check.py --require-success
+```
+
+Fingers are fixed at CAD zero; camera mounting is provisional and unmeasured.
+This does not connect the real arm or validate grasping. See SIM2REAL_LOG.md.
+
+
+To show Gazebo and RViz alongside the web monitor on the local graphical desktop:
+
+```bash
+./scripts/atom.sh sim --camera depth --recipe visual_observe --gui --restart
+```
+
+`--gui` mounts the X11 socket and existing Xauthority read-only, uses Qt xcb and
+software rendering, and enables both windows in the same simulation launch.
+DISPLAY and a readable XAUTHORITY (or ~/.Xauthority) are required; validation
+runs before any existing session is stopped. Without --gui the web-only mode
+continues to run Gazebo server without desktop windows.
+2026-10-07 run_20261007_031824: both GUI processes started; RViz initialized
+OpenGL and loaded ATOM_UF850. This does not change the prior capture limitations.
+
+## Confirmed D435i (2026-10-07)
+
+V2 sim imports the official RealSense D435i body/optical/IMU-frame model via
+atom_camera_description. The reserved mount remains provisional. Native Gazebo
+RGB-D uses the color optical frame; no physical RealSense SDK emulator or IMU
+stream is implied. Camera-only hardware/SDK and calibration preparation:
+[guide](../../docs/D435I_BRINGUP_AND_CALIBRATION.md).

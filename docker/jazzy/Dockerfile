@@ -24,6 +24,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       ros-jazzy-ros-gz \
       ros-jazzy-ros2-controllers \
       ros-jazzy-ros2controlcli \
+      ros-jazzy-realsense2-description=4.58.4-1noble.20260921.000124 \
+      ros-jazzy-realsense2-camera=4.58.4-1noble.20260920.235447 \
+      ros-jazzy-librealsense2=2.58.4-1noble.20260831.015923 \
+      ros-jazzy-camera-calibration=5.0.13-1noble.20260912.164100 \
+      ros-jazzy-rosbag2 \
       ros-jazzy-rviz2 \
       ros-jazzy-tf2-tools \
       ros-jazzy-urdf \

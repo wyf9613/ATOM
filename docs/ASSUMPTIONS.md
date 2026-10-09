@@ -104,3 +104,9 @@ unmeasured. Source STEP files named by the print manifest are not present locall
 The fixed object's identity/mass/material, standard-force instrument, connected
 computer/serial port and printed/installed flange state remain unspecified.
 See GRIPPER_MOUNT_V2_INTEGRATION.md and GRIPPER_FORCE_CALIBRATION.md.
+
+
+2026-10-07: tentative D435 identification is superseded by user-confirmed D435i.
+Serial/firmware/USB3, measured bracket bottom-screw transform and screw depth,
+hand-eye/intrinsic verification and physical camera/cable collision envelope
+remain unresolved. Current reserved mount is provisional, not measured fit.

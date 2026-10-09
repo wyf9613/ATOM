@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find realsense2_description)/urdf/_d435i.urdf.xacro"/>
+  <xacro:macro name="atom_d435i" params="parent nominal:=false xyz:='0 -0.075 0.140' rpy:='1.5707963267948966 -1.5707963267948966 0'">
+    <!-- Provisional bottom screw mount pose; replace after mechanical/hand-eye calibration. -->
+    <xacro:sensor_d435i parent="${parent}" name="wrist_camera" use_nominal_extrinsics="${nominal}">
+      <origin xyz="${xyz}" rpy="${rpy}"/>
+    </xacro:sensor_d435i>
+    <xacro:if value="${nominal}">
+      <!-- Existing perception contract: registered RGB-D uses the color optical frame. -->
+      <link name="wrist_camera_optical_frame"/>
+      <joint name="wrist_camera_optical_alias" type="fixed">
+        <parent link="wrist_camera_color_optical_frame"/><child link="wrist_camera_optical_frame"/>
+      </joint>
+    </xacro:if>
+  </xacro:macro>
+</robot>

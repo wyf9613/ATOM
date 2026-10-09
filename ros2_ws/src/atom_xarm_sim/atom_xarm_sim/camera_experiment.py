@@ -14,53 +14,55 @@ DESTINATION_SLOT_INDEX = 2
 TAG_SIZE_M = 0.040
 
 
-def add_wrist_camera(robot_description: str, mode: str) -> str:
-    """Attach one provisional forward-looking camera below the demo gripper."""
+def add_wrist_camera(robot_description: str, mode: str, parent: str = 'xarm_gripper_base_link') -> str:
+    """Attach a provisional simulation sensor to the selected tool frame."""
     if mode not in CAMERA_MODES:
         raise ValueError(f'camera mode must be one of {CAMERA_MODES}')
     if mode == 'none':
         return robot_description
     root = ET.fromstring(robot_description)
     if root.tag != 'robot' or root.find(
-            ".//link[@name='xarm_gripper_base_link']") is None:
+            f".//link[@name='{parent}']") is None:
         raise ValueError(
-            'camera mode requires the G1 demo gripper and '
-            'xarm_gripper_base_link'
+            f'camera mode requires parent link {parent}'
         )
-    if root.find(".//link[@name='wrist_camera_link']") is not None:
+    d435i = root.find("link[@name='wrist_camera_bottom_screw_frame']") is not None
+    if root.find("link[@name='wrist_camera_link']") is not None and not d435i:
         raise ValueError('wrist camera already exists')
+    if not d435i:
+        camera_link = ET.SubElement(root, 'link', name='wrist_camera_link')
+        inertial = ET.SubElement(camera_link, 'inertial')
+        ET.SubElement(inertial, 'mass', value='0.10')
+        ET.SubElement(inertial, 'inertia', ixx='0.0001', ixy='0', ixz='0',
+                      iyy='0.0001', iyz='0', izz='0.0001')
+        visual = ET.SubElement(camera_link, 'visual')
+        geometry = ET.SubElement(visual, 'geometry')
+        ET.SubElement(geometry, 'box', size='0.045 0.035 0.025')
+        collision = ET.SubElement(camera_link, 'collision')
+        collision_geometry = ET.SubElement(collision, 'geometry')
+        ET.SubElement(collision_geometry, 'box', size='0.045 0.035 0.025')
+        material = ET.SubElement(visual, 'material', name='atom_camera_black')
+        ET.SubElement(material, 'color', rgba='0.08 0.09 0.11 1')
+        joint = ET.SubElement(root, 'joint', name='wrist_camera_mount', type='fixed')
+        ET.SubElement(joint, 'parent', link=parent)
+        ET.SubElement(joint, 'child', link='wrist_camera_link')
+        # The G1 points along gripper +Z while the Gazebo camera looks along its
+        # local +X. Ry(-pi/2) aligns those axes. The provisional offset places the
+        # camera below and forward of the gripper body without centring it between
+        # the fingers; replace it with the measured bracket transform later.
+        # V2 provisional sensor offset outside the full tool envelope; unmeasured.
+        ET.SubElement(joint, 'origin', xyz=('0 -0.075 0.140' if parent == 'tool_flange'
+                                             else '-0.080 0 0.060'),
+                      rpy='0 -1.57079632679 0')
 
-    camera_link = ET.SubElement(root, 'link', name='wrist_camera_link')
-    inertial = ET.SubElement(camera_link, 'inertial')
-    ET.SubElement(inertial, 'mass', value='0.10')
-    ET.SubElement(inertial, 'inertia', ixx='0.0001', ixy='0', ixz='0',
-                  iyy='0.0001', iyz='0', izz='0.0001')
-    visual = ET.SubElement(camera_link, 'visual')
-    geometry = ET.SubElement(visual, 'geometry')
-    ET.SubElement(geometry, 'box', size='0.045 0.035 0.025')
-    collision = ET.SubElement(camera_link, 'collision')
-    collision_geometry = ET.SubElement(collision, 'geometry')
-    ET.SubElement(collision_geometry, 'box', size='0.045 0.035 0.025')
-    material = ET.SubElement(visual, 'material', name='atom_camera_black')
-    ET.SubElement(material, 'color', rgba='0.08 0.09 0.11 1')
-    joint = ET.SubElement(root, 'joint', name='wrist_camera_mount', type='fixed')
-    ET.SubElement(joint, 'parent', link='xarm_gripper_base_link')
-    ET.SubElement(joint, 'child', link='wrist_camera_link')
-    # The G1 points along gripper +Z while the Gazebo camera looks along its
-    # local +X. Ry(-pi/2) aligns those axes. The provisional offset places the
-    # camera below and forward of the gripper body without centring it between
-    # the fingers; replace it with the measured bracket transform later.
-    ET.SubElement(joint, 'origin', xyz='-0.080 0 0.060',
-                  rpy='0 -1.57079632679 0')
+        optical = ET.SubElement(root, 'link', name='wrist_camera_optical_frame')
+        optical_joint = ET.SubElement(root, 'joint', name='wrist_camera_optical_joint', type='fixed')
+        ET.SubElement(optical_joint, 'parent', link='wrist_camera_link')
+        ET.SubElement(optical_joint, 'child', link='wrist_camera_optical_frame')
+        ET.SubElement(optical_joint, 'origin', xyz='0 0 0',
+                      rpy='-1.57079632679 0 -1.57079632679')
 
-    optical = ET.SubElement(root, 'link', name='wrist_camera_optical_frame')
-    optical_joint = ET.SubElement(root, 'joint', name='wrist_camera_optical_joint', type='fixed')
-    ET.SubElement(optical_joint, 'parent', link='wrist_camera_link')
-    ET.SubElement(optical_joint, 'child', link='wrist_camera_optical_frame')
-    ET.SubElement(optical_joint, 'origin', xyz='0 0 0',
-                  rpy='-1.57079632679 0 -1.57079632679')
-
-    gazebo = ET.SubElement(root, 'gazebo', reference='wrist_camera_link')
+    gazebo = ET.SubElement(root, 'gazebo', reference='wrist_camera_color_frame' if d435i else 'wrist_camera_link')
     sensor = ET.SubElement(gazebo, 'sensor', name='atom_wrist_camera',
                            type='camera' if mode == 'rgb' else 'rgbd_camera')
     ET.SubElement(sensor, 'always_on').text = 'true'
@@ -94,6 +96,10 @@ def allow_wrist_camera_self_collisions(semantic_description: str,
         for item in semantic_root.findall('disable_collisions')
     }
     for link_name in link_names:
+        # V2 keeps sensor/arm collision checks; only rigid tool overlaps allowed.
+        if robot_root.find("link[@name='tool_flange']") is not None and link_name in (
+                'world', 'link_base', 'link1', 'link2', 'link3', 'link4', 'link5', 'link6'):
+            continue
         if link_name == 'wrist_camera_link':
             continue
         pair = frozenset(('wrist_camera_link', link_name))
