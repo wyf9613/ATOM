@@ -1,0 +1,116 @@
+{
+  "parameters": {
+    "status": "REVIEW CAD: no physical fit/load validation",
+    "gripper_holes_y_mm": [
+      34.494,
+      52.494
+    ],
+    "gripper_holes_z_mm": [
+      -70.725,
+      26.275
+    ],
+    "gripper_hole_diameter_cad_mm": 3.2,
+    "gripper_mount_face_x_mm": 28.8,
+    "gripper_plate_thickness_mm": 6.0,
+    "gripper_clearance_mm": 3.4,
+    "robot_contact_face_x_mm": 93.0,
+    "flange_disc_thickness_mm": 8.0,
+    "flange_outer_diameter_mm": 63.0,
+    "flange_pcd_mm": 50.0,
+    "flange_thread_on_robot": "4 x M6, drawing depth 10 mm",
+    "flange_clearance_mm": 6.6,
+    "flange_angles_deg": [
+      45,
+      135,
+      225,
+      315
+    ],
+    "flange_dowel_diameter_nominal_mm": 6.0,
+    "flange_dowel_y_mm": 68.494,
+    "flange_pilot_bore_on_robot_mm": 31.5,
+    "adapter_pilot_od_provisional_mm": 31.45,
+    "adapter_pilot_height_provisional_mm": 2.0,
+    "central_passage_mm": 24.0,
+    "pcb_outline_provisional_mm": [
+      54.0,
+      30.0,
+      1.6
+    ],
+    "pcb_hole_pitch_provisional_mm": [
+      46.5,
+      23.5
+    ],
+    "pcb_holes_x_mm": [
+      43.25,
+      89.75
+    ],
+    "pcb_holes_z_mm": [
+      -46.75,
+      -23.25
+    ],
+    "pcb_clearance_provisional_mm": 4.0,
+    "pcb_standoff_height_mm": 8.0,
+    "pcb_status": "User-provisional pitch 46.5 x 23.5 and confirmed diameter 4.0 mm; board outline unverified",
+    "main_material": "UNSELECTED: load-bearing design not validated",
+    "carrier_material": "UNSELECTED: electrical insulation and antenna clearance require verification"
+  },
+  "source_step_sha256": "8ee4fd1c064210eab24cb10ba67623e497cab0866adbca86d5be9a0c63aaf351",
+  "flange_source": "https://www.ufactory.cc/wp-content/uploads/2024/01/UFactory-850-User-Manual-V2.3.0.pdf, printed page 26",
+  "flange_hole_centres_yz_mm": [
+    [
+      61.17166952966369,
+      -4.547330470336313
+    ],
+    [
+      25.816330470336315,
+      -4.547330470336313
+    ],
+    [
+      25.816330470336307,
+      -39.90266952966368
+    ],
+    [
+      61.17166952966369,
+      -39.9026695296637
+    ]
+  ],
+  "pcb_hole_centres_xz_mm_UNVERIFIED": [
+    [
+      43.25,
+      -46.75
+    ],
+    [
+      43.25,
+      -23.25
+    ],
+    [
+      89.75,
+      -46.75
+    ],
+    [
+      89.75,
+      -23.25
+    ]
+  ],
+  "checks": {
+    "main_valid_single_solid": true,
+    "carrier_valid_single_solid": true,
+    "step_roundtrip_valid": true,
+    "inherited_static_interference": [],
+    "main_carrier_overlap_mm3": 0.0,
+    "robot_reference_overlap_mm3": 0.0,
+    "axial_tool_corridor_hits": [],
+    "approximate_M3_nut_envelope_hits": []
+  },
+  "volume_mm3": {
+    "main": 51855.27764394856,
+    "carrier": 10814.598252624737
+  },
+  "limitations": [
+    "User-provisional PCB hole pitch/diameter; uncertainty unspecified; board outline is a placeholder.",
+    "No physical loads or fit verified.",
+    "Flange nominal geometry verified in manual, physical flange/revision and pilot fit unverified.",
+    "No wrist/connector full CAD, finger sweep, cable bend or dynamic tool access verification.",
+    "Material, structural design, bolt preload, fastener lengths and torque not finalized."
+  ]
+}

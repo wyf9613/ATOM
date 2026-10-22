@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-03",
+  "inputs": [
+    {
+      "path": "C:\\Users\\User\\Downloads\\ESP32 原理图 V2.pdf",
+      "sha256": "6be55017b60d758d1b5a9c92e919fb9d45a7649c08f697ac0b514b5f539185e0",
+      "bytes": 233780
+    },
+    {
+      "path": "C:\\Users\\User\\Downloads\\ESP32 原理图.pdf",
+      "sha256": "c83e0595336b1c6d4202bd01dfcfcec13a3af1928371bd6117d62fc9307e1f16",
+      "bytes": 42925
+    },
+    {
+      "path": "C:\\Users\\User\\Downloads\\ESP32 技术参考手册.pdf",
+      "sha256": "b3dc5e523b442b9b2b6affd55ca2e9f287ade3d758e51104ea3be2f5a538d5be",
+      "bytes": 9985090
+    },
+    {
+      "path": "C:\\Users\\User\\Downloads\\ESP-WROOM-32 技术规格书.pdf",
+      "sha256": "3f3b8518045301ce2a6c2c72c44613720cad1dbb7b73cebcc4a9031ae9001c48",
+      "bytes": 569836
+    },
+    {
+      "path": "C:\\Users\\User\\Desktop\\学习\\研究生\\capstone\\tmp\\backplate_review\\uf850_manual_v2_3.pdf",
+      "sha256": "4beeb99d3ef30057db5bab4ea7089cd6bc394fadc919c14d253148bec1e7daf0",
+      "bytes": 15950239
+    },
+    {
+      "path": "C:\\Users\\User\\Desktop\\学习\\研究生\\capstone\\hardware\\end effector\\End Effector Assembly V3.step",
+      "sha256": "8ee4fd1c064210eab24cb10ba67623e497cab0866adbca86d5be9a0c63aaf351",
+      "bytes": 4213475
+    }
+  ],
+  "user_provisional_pcb_pattern": {
+    "pitch_mm": [
+      46.5,
+      23.5
+    ],
+    "diameter_mm": 4.0,
+    "measurement_conditions": "not provided",
+    "uncertainty": "not provided",
+    "status": "User explicitly says not necessarily accurate"
+  },
+  "flange_source_url": "https://www.ufactory.cc/wp-content/uploads/2024/01/UFactory-850-User-Manual-V2.3.0.pdf",
+  "flange_page": 26
+}

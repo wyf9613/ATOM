@@ -19,7 +19,7 @@ None of these packages copies or modifies vendor robot-description files. The
 combined gripper description is not yet used by the dynamic MoveIt/Gazebo smoke
 test; that requires gripper control and collision semantics to be ported first.
 The current package layout and run commands are documented in
-[`docs/ARM_ONLY_SIMULATION.md`](../docs/ARM_ONLY_SIMULATION.md).
+[`docs/simulation/ARM_ONLY_SIMULATION.md`](../docs/simulation/ARM_ONLY_SIMULATION.md).
 
 Run the configurable post-grasp transfer regression from the repository root:
 

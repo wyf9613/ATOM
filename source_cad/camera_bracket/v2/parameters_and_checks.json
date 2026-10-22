@@ -1,0 +1,54 @@
+{
+  "parameters": {
+    "hole_x_mm": [
+      -33.7,
+      -18.7
+    ],
+    "hole_z_mm": 21.275,
+    "shell_outer_mount_y_mm": 45.494,
+    "shell_seam_y_mm": 43.494,
+    "shell_front_x_mm": -81.2,
+    "shell_hole_diameter_mm": 3.2,
+    "bracket_hole_diameter_mm": 3.4,
+    "thickness_mm": 4.0,
+    "deck_bottom_z_mm": 31.275,
+    "camera_clearance_hole_mm": 6.8,
+    "arm_width_mm": 12.0,
+    "front_pad_width_mm": 18.0,
+    "mount_slot_width_mm": 4.0,
+    "mount_stack_thickness_mm": 12.0,
+    "camera_envelope_mm": [
+      25.0,
+      90.0,
+      25.0
+    ],
+    "camera_hole_assumed_center_mm": [
+      -68.7,
+      43.494
+    ],
+    "camera_hole_location_status": "UNVERIFIED: envelope-centre placeholder; check vendor mechanical drawing",
+    "status": "REVIEW ONLY: not approved for manufacture or hardware use"
+  },
+  "source_sha256": "8ee4fd1c064210eab24cb10ba67623e497cab0866adbca86d5be9a0c63aaf351",
+  "checks": {
+    "valid_single_solid": true,
+    "step_roundtrip_valid_single_solid": true,
+    "static_inherited_cad_overlap": [],
+    "camera_envelope_overlap_mm3": 0.0
+  },
+  "bounds_mm": [
+    -81.2,
+    34.494,
+    17.375,
+    -11.2,
+    52.494,
+    35.275
+  ],
+  "volume_mm3": 7005.465511396013,
+  "limitations": [
+    "Static inherited pose only; finger sweep and cable not checked.",
+    "No physical fit, load, vibration or hand-eye validation.",
+    "Camera mounting hole position and insertion depth must be checked against actual model.",
+    "No anti-rotation lips or gussets, as requested. Four-layer mounting stack is nominal CAD geometry; fit tolerance and bolt length need physical verification."
+  ]
+}

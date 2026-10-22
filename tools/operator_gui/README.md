@@ -174,4 +174,4 @@ python tools/operator_gui/server.py --mode gripper --gripper-port COM4 --enable-
 
 本地模式复用生产串口控制器，机械臂/导航保持未连接。ROS 部署改用 hardware_bridge + hardware.example.json，网关增加 --enable-gripper；bridge 和本地模式互斥。夹爪停止/释放允许只读连接请求，运动须显式启用；这与原机械臂只读权限独立。页面失联2s请求保持，固件主机看门狗仍独立生效；不自动释放扭矩。机械臂任务和手动夹爪请求互斥，ROS ARM 会话阻断其他所有者运动。操作员会话/网络部署仍需独立鉴权与实机安全监督。
 
-完整模块、ROS Action、运行方法与 //TODO G01–G09 清单见 [夹爪接入与校准](../../docs/GRIPPER_SYSTEM_INTEGRATION.md)。本轮软件测试不连接实物，ROS 构建与机械臂联合验收仍待进行。
+完整模块、ROS Action、运行方法与 //TODO G01–G09 清单见 [夹爪接入与校准](../../docs/gripper/GRIPPER_SYSTEM_INTEGRATION.md)。本轮软件测试不连接实物，ROS 构建与机械臂联合验收仍待进行。

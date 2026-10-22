@@ -8,6 +8,7 @@
 *.mp4 filter=lfs diff=lfs merge=lfs -text
 *.webm filter=lfs diff=lfs merge=lfs -text
 "hardware/end effector/*.zip" filter=lfs diff=lfs merge=lfs -text
+"source_cad/print_pack/ATOM_handle_20261021.zip" filter=lfs diff=lfs merge=lfs -text
 
 *.md text eol=lf
 *.html text eol=lf

@@ -1,0 +1,38 @@
+[
+  {
+    "variant": "small",
+    "expected_ids": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "decoded_ids_from_exported_hatches": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "condition": "ideal white background, 5 px/mm, DXF raster polygons only"
+  },
+  {
+    "variant": "large",
+    "expected_ids": [
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "decoded_ids_from_exported_hatches": [
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "condition": "ideal white background, 5 px/mm, DXF raster polygons only"
+  }
+]

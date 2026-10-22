@@ -1,0 +1,178 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ATOM · Weekly update · 16 October 2026</title><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"><style>/* ===========================================
+   FIXED 16:9 STAGE: MANDATORY BASE STYLES
+   Include this ENTIRE file in every presentation.
+   Slides are authored at 1920×1080 and scaled as a whole.
+   =========================================== */
+
+/* 1. Lock the browser viewport */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 2. Full-window deck viewport */
+.deck-viewport {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    background: var(--stage-bg, #000);
+}
+
+/* 3. Fixed 16:9 design canvas.
+   JavaScript sets transform: translate(...) scale(...). */
+.deck-stage {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    transform-origin: 0 0;
+    background: var(--slide-bg, #fff);
+}
+
+/* 4. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+    position: absolute;
+    inset: 0;
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    display: block;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 1;
+}
+
+/* 5. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* 6. Presentation chrome stays outside the slide design system */
+.deck-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 22px;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+
+/* 7. Print one fixed-size slide per page */
+@media print {
+    html,
+    body {
+        width: 1920px;
+        height: auto;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-viewport {
+        position: static;
+        overflow: visible;
+        background: #fff;
+    }
+
+    .deck-stage {
+        position: static;
+        width: auto;
+        height: auto;
+        transform: none !important;
+        background: none;
+    }
+
+    .slide {
+        position: relative;
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        pointer-events: auto !important;
+        width: 1920px;
+        height: 1080px;
+        break-after: page;
+        page-break-after: always;
+    }
+
+    .slide:last-child {
+        break-after: auto;
+        page-break-after: auto;
+    }
+
+    .deck-controls {
+        display: none !important;
+    }
+}
+
+/* 8. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+}
+
+/* === THEME AND TYPOGRAPHY === */
+:root{--stage-bg:#182723;--slide-bg:#f7f5ee;--ink:#182c27;--accent:#ae4c2f;--muted:#65716b}*{box-sizing:border-box}body{font-family:'DM Sans',sans-serif;color:var(--ink)}.slide{padding:78px 110px 90px}.slide:before{content:'';position:absolute;left:0;top:0;width:18px;height:1080px;background:var(--accent)}.kicker{font-size:23px;letter-spacing:3px;font-weight:600;margin-bottom:34px;color:var(--muted)}h2{font-size:76px;line-height:1.08;font-weight:500;letter-spacing:-3px;margin:0 0 52px;max-width:1670px}h3{font-size:37px;font-weight:500;line-height:1.16;margin:26px 0 25px}p{font-size:30px;line-height:1.5;margin:0}a{color:inherit}.lead{font-size:38px;color:var(--muted);max-width:1500px;margin-bottom:45px}.band{border-top:2px solid var(--accent);padding-top:25px;margin-top:48px;font-size:30px;line-height:1.4}.smallprint{font-size:21px;color:var(--muted);margin-top:24px}.speaker-notes{display:none}.foot{position:absolute;bottom:35px;left:110px;right:110px;display:flex;justify-content:space-between;font-size:20px;color:var(--muted)}
+/* === LAYOUTS === */
+.cover{background:#182c27;color:#f7f5ee}.cover .kicker,.cover .lead,.cover .foot{color:#b7c8ba}.cover h2{font-size:124px;margin-top:55px;margin-bottom:35px}.cover .band{margin-top:70px}.agenda{font-size:32px;line-height:1.8}.agenda span{color:#ca7957;margin:0 14px}.columns{display:grid;grid-template-columns:repeat(3,1fr);gap:55px}.columns article{border-top:1px solid #a7b1a7;padding-top:30px}.num{color:var(--accent);font-size:30px}.columns p{color:var(--muted);font-size:31px}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:40px}.steps b{font-size:78px;font-weight:400;color:var(--accent)}.steps p{font-size:29px;color:var(--muted)}table{border-collapse:collapse;width:100%;font-size:27px;line-height:1.4}th{text-align:left;font-size:23px;color:var(--muted);font-weight:500;border-top:2px solid var(--ink)}th,td{padding:22px 22px;border-bottom:1px solid #bcc2b7;vertical-align:top}td:first-child{width:38%;font-weight:500}td:nth-child(2){width:9%}.compare td:first-child{width:23%}.compare td:nth-child(2){width:38%}.compare td{font-size:27px}.workflow{height:680px;background:white;padding:12px}.workflow svg{width:100%;height:100%}.map-slide h2{margin-bottom:24px}.testrows>div{display:grid;grid-template-columns:420px 1fr;gap:30px;padding:26px 0;border-top:1px solid #bcc2b7;font-size:30px;line-height:1.45}.testrows strong{font-weight:500}.testrows span{color:var(--muted)}.decision{display:flex;gap:35px;align-items:center;border-top:1px solid #bcc2b7;padding:24px 0}.decision span{font-size:24px;color:var(--accent)}.decision p{font-size:32px}
+/* === MOTION AND PRESENTER CONTROLS === */
+.slide .content{opacity:0;transform:translateY(12px);transition:opacity .3s,transform .3s}.slide.visible .content{opacity:1;transform:none}.deck-controls{background:#182c27;color:white;padding:9px 18px;border-radius:25px;font:14px 'DM Sans',sans-serif;opacity:.15;transition:opacity .2s}.deck-controls:hover{opacity:1}button{font:inherit;color:inherit;border:0;background:transparent;cursor:pointer;padding:5px 10px}#notes{position:fixed;right:20px;top:20px;max-width:590px;max-height:80vh;overflow:auto;padding:25px;background:#fff8e8;color:#182c27;font:19px/1.65 sans-serif;box-shadow:0 4px 40px #0004;z-index:1200;display:none}#notes.open{display:block}.edit-hotzone{position:fixed;left:0;top:0;width:70px;height:70px;z-index:1400}.edit-toggle{position:fixed;left:12px;top:12px;background:#182c27;color:white;z-index:1401;opacity:0;pointer-events:none}.edit-toggle.show,.edit-toggle.active{opacity:1;pointer-events:auto}[contenteditable=true]{outline:1px dashed #ae4c2f}@media print{#notes,.edit-hotzone,.edit-toggle{display:none!important}.slide .content{opacity:1;transform:none}@page{size:1920px 1080px;margin:0}}
+</style></head><body><div class="deck-viewport"><main class="deck-stage"><section class="slide cover"><div class="kicker">PROJECT ATOM · 16 OCTOBER 2026</div><h2>Semester scope.<br>Hardware next.</h2><div class="content"><p class="lead">Weekly discussion with Jon &amp; Ying</p><div class="agenda">Chemistry meeting <span> / </span> Roadmap <span> / </span> BOM<br>Onboard computer <span> / </span> Hardware tests</div><div class="band">Today: agree the scope, procurement direction and next test session.</div></div><aside class="speaker-notes">今天主要汇报五件事：和化学组的会议、本学期范围、BOM、车载电脑以及下周实机测试。最后确认11号oral的具体时间。</aside></section><section class="slide "><div class="kicker">01 · CHEMISTRY MEETING</div><h2>Arrange a meeting next week.</h2><div class="content"><div class="columns"><article><div class="num">01</div><h3>Contact established</h3><p>We now have Bo’s contact details.</p></article><article><div class="num">02</div><h3>Attendance to confirm</h3><p>Would Jon and Ying like to join, or should the two of us meet the chemistry team first?</p></article><article><div class="num">03</div><h3>Meeting outcome</h3><p>Confirm the target workflow, rack / tube geometry, access and acceptance criteria.</p></article></div><div class="band">Proposed timing: week of 19–25 October · exact slot to be agreed.</div></div><aside class="speaker-notes">我们已经加上Bo的联系方式，准备约下周和化学组见面。今天问Jon和Ying要不要参加，还是先由我们两个人去。建议带workflow图，确认具体操作、允许的标记或夹具、精度要求和实验室访问安排。会议尚未预约。</aside></section><section class="slide map-slide"><div class="kicker">02 · ROADMAP / PROPOSED WORKFLOW</div><h2>Where should this semester stop?</h2><div class="content"><div class="workflow"><svg viewBox="0 0 1380 650" role="img" aria-labelledby="title desc"><title id="title">ATOM single atomic task block diagram</title><desc id="desc">A global prior map and target rack command feed base navigation. Coarse rack coordinates and reference height calculated from known robot and target rack heights initialize wrist-camera observation. All rack markers are read, the target marker is aligned, and a precise target is calculated. One local localization correction precedes validated pick or place execution. Depth camera and calibration inputs feed perception and pose calculation.</desc>
+<style>.box{fill:white;stroke:#111;stroke-width:1.5}.source{fill:#f7f7f7;stroke:#111;stroke-width:1.5}.line{fill:none;stroke:#111;stroke-width:1.5;marker-end:url(#arrow)}svg text{fill:#111;font-family:serif;font-size:17px}.small{font-size:14px}.label{font-size:15px;font-style:italic}</style><defs><marker id="arrow" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto"><path d="M0 0 L9 3.5 L0 7 Z" fill="#111"/></marker></defs>
+<!-- Independent inputs -->
+<rect class="source" x="35" y="25" width="220" height="65"/><text x="145" y="52" text-anchor="middle">Global prior map</text><text class="small" x="145" y="75" text-anchor="middle">Workspace / nominal rack poses</text>
+<rect class="source" x="290" y="25" width="220" height="65"/><text x="400" y="52" text-anchor="middle">Task command</text><text class="small" x="400" y="75" text-anchor="middle">Rack ID / marker ID / operation</text>
+<rect class="source" x="640" y="25" width="245" height="65"/><text x="762" y="52" text-anchor="middle">End-effector depth camera</text><text class="small" x="762" y="75" text-anchor="middle">Images + depth measurements</text>
+<rect class="source" x="1050" y="25" width="275" height="65"/><text x="1187" y="52" text-anchor="middle">Calibrated transforms</text><text class="small" x="1187" y="75" text-anchor="middle">Camera extrinsics / robot TF / TCP</text>
+<!-- Semester goal: follow the workflow from initial localization to precise target calculation. -->
+<path d="M305 155 H1245 V530 H960 V300 H305 Z" fill="none" stroke="#c62828" stroke-width="2.5" stroke-dasharray="10 6" stroke-linejoin="round"/>
+<text x="320" y="145" style="fill:#c62828;font-size:20px;font-weight:bold">26s2 Goal</text>
+<!-- Main top chain -->
+<rect class="box" x="35" y="180" width="220" height="100"/><text x="145" y="211" text-anchor="middle">Mobile-base navigation</text><text x="145" y="238" text-anchor="middle">Approach target rack</text><text class="small" x="145" y="262" text-anchor="middle">Localize in map</text>
+<rect class="box" x="325" y="180" width="235" height="100"/><text x="442" y="211" text-anchor="middle">Initial rack localization</text><text x="442" y="238" text-anchor="middle">Coarse position + precise height</text><text class="small" x="442" y="262" text-anchor="middle">Expressed in base_link</text>
+<rect class="box" x="640" y="180" width="245" height="100"/><text x="762" y="211" text-anchor="middle">Rack observation</text><text x="762" y="238" text-anchor="middle">Read all rack markers</text><text class="small" x="762" y="262" text-anchor="middle">Select target marker</text>
+<rect class="box" x="980" y="180" width="245" height="100"/><text x="1102" y="211" text-anchor="middle">Target-marker alignment</text><text x="1102" y="238" text-anchor="middle">Refine camera viewpoint</text><text class="small" x="1102" y="262" text-anchor="middle">Acquire refined marker pose</text>
+<path class="line" d="M145 90 V180"/><path class="line" d="M400 90 V125 H210 V180"/><path class="line" d="M762 90 V180"/><path class="line" d="M820 90 V125 H1102 V180"/>
+<path class="line" d="M255 230 H325"/><path class="line" d="M560 230 H640"/><path class="line" d="M885 230 H980"/>
+<text class="label" x="595" y="211" text-anchor="middle">Initial pose</text><text class="label" x="931" y="211" text-anchor="middle">Target ID</text>
+<!-- Lower chain proceeds right to left -->
+<rect class="box" x="980" y="410" width="245" height="100"/><text x="1102" y="442" text-anchor="middle">Precise target calculation</text><text x="1102" y="470" text-anchor="middle">Camera frame → base_link</text><text class="small" x="1102" y="493" text-anchor="middle">Marker-to-operation offset</text>
+<rect class="box" x="640" y="410" width="245" height="100"/><text x="762" y="439" text-anchor="middle">One local localization correction</text><text x="762" y="467" text-anchor="middle">Robot-to-rack pose refinement</text><text class="small" x="762" y="493" text-anchor="middle">Update and validate target pose</text>
+<rect class="box" x="325" y="410" width="235" height="100"/><text x="442" y="442" text-anchor="middle">Manipulation planning</text><text x="442" y="470" text-anchor="middle">Approach / pick or place / retreat</text><text class="small" x="442" y="493" text-anchor="middle">Reachability + collision checks</text>
+<rect class="box" x="35" y="410" width="220" height="100"/><text x="145" y="442" text-anchor="middle">Execute and verify</text><text x="145" y="470" text-anchor="middle">Arm + gripper operation</text><text class="small" x="145" y="493" text-anchor="middle">Completion / fault result</text>
+<path class="line" d="M1102 280 V410"/><text class="label" x="1117" y="346">Refined observation</text>
+<path class="line" d="M1325 58 H1350 V460 H1225"/><text class="label" x="1336" y="320" text-anchor="middle" transform="rotate(-90 1336 320)">Transform inputs</text>
+<path class="line" d="M980 460 H885"/><path class="line" d="M640 460 H560"/><path class="line" d="M325 460 H255"/>
+<text class="label" x="600" y="439" text-anchor="middle">Valid pose</text>
+<!-- Height input is intentionally unspecified -->
+<rect class="source" x="325" y="315" width="235" height="55"/><text x="442" y="338" text-anchor="middle">Calculated rack reference height</text><text class="small" x="442" y="358" text-anchor="middle">From known robot and target rack heights</text><path class="line" d="M442 315 V280"/>
+<!-- Shared subsystem, not another sequential process -->
+<rect x="35" y="567" width="1190" height="55" rx="0" fill="white" stroke="#555" stroke-width="1" stroke-dasharray="6 4"/><text x="630" y="590" text-anchor="middle">Shared execution gates: valid calibration and TF · observation confidence · single motion ownership · fault handling</text><text class="small" x="630" y="612" text-anchor="middle">Failed validation → pause and recover before continuing</text>
+</svg></div><p class="smallprint">Original draft workflow. Red boundary: proposed 26 S2 goal; exact acceptance boundary remains to be agreed.</p></div><aside class="speaker-notes">这页保留原workflow，不把它当作已实现能力。红框目前覆盖粗定位、观察、标记对齐和精确目标计算。请导师确认本学期终点：目标位姿输出，还是进一步包含局部校正或固定底座取放。底盘导航和完整端到端流程不默认纳入本学期交付。</aside></section><section class="slide "><div class="kicker">02 · ROADMAP / SCOPE AGREEMENT</div><h2>A measurable target for 26 S2.</h2><div class="content"><div class="columns"><article><div class="num">01</div><h3>Minimum proposed target</h3><p>Coarse rack input → observation → marker alignment → validated target pose.</p></article><article><div class="num">02</div><h3>Work required</h3><p>Measure camera / TCP transforms, validate rack geometry and define pose-quality gates.</p></article><article><div class="num">03</div><h3>Evidence to deliver</h3><p>Repeatable hardware observations, target error and failure logs under stated test conditions.</p></article></div><div class="band">Scope decision: pose localisation only, or a fixed-base pick / place demonstration as well?</div></div><aside class="speaker-notes">现有架构roadmap把本学期目标写为集成操作子系统，包含夹爪；新workflow红框更聚焦定位。今天需要对齐这两者。建议先保证实机目标位姿链路，再决定取放是必做还是扩展。精度门槛、测试次数和工况需一起约定，不在这里编造指标。</aside></section><section class="slide "><div class="kicker">02 · ROADMAP / WORK ORDER</div><h2>From current baseline to hardware evidence.</h2><div class="content"><div class="steps"><div><b>1</b><h3>Freeze the setup</h3><p>Rack geometry, mounts, camera configuration and operation offsets.</p></div><div><b>2</b><h3>Calibrate &amp; observe</h3><p>Camera / TCP / TF checks; marker visibility and safe observation motion.</p></div><div><b>3</b><h3>Validate the target</h3><p>Repeated pose measurements; bounded refinement and explicit rejection.</p></div><div><b>4</b><h3>Integrate if agreed</h3><p>Gripper readiness, supervised pick / place, completion and fault checks.</p></div></div><div class="band">Navigation and docking remain a later integration stage. Reuse the same manipulation modules.</div></div><aside class="speaker-notes">已有仿真视觉接近基线，以及独立夹爪空载位置测试，不代表真实视觉抓取已验收。先固定装配和几何，再标定、观察、测误差。如确认本学期要取放，还需要传感器配置冻结、夹持验证、停止验证和联合任务。每个任务按配方复用模块，不一框一节点。</aside></section><section class="slide "><div class="kicker">03 · BOM / 15 OCTOBER DRAFT</div><h2>Five procurement items to review.</h2><div class="content"><table><thead><tr><th>Item</th><th>Qty.</th><th>Before ordering</th></tr></thead><tbody><tr><td>Tool I/O breakout cable</td><td>1</td><td>Check whether an original cable is already available.</td></tr><tr><td>24 V → 5 V DC/DC converter</td><td>1</td><td>ESP32 / URT-1 logic; verify current and USB power isolation.</td></tr><tr><td>24 V → 7.4 V DC/DC converter</td><td>1</td><td>Gripper servo; confirm rated voltage and peak current.</td></tr><tr><td>Power distribution & protection</td><td>1 set</td><td>Terminals, fuses, switch and filtering as required.</td></tr><tr><td>Arm onboard energy system</td><td>1 set</td><td>Battery, BMS, charger and conversion; check controller AC/DC version.</td></tr></tbody></table><div class="band">Computer discussed separately. Specifications and quotations are still pending.</div></div><aside class="speaker-notes">这页按10月15日收敛后的五项BOM，不把旧扩展清单重新加进来。先盘点原厂引出线。5V和7.4V用真正DC/DC模块，核输出电流、瞬态、热和供电隔离。机械臂能源系统先确认控制箱AC/DC版本，再拆分器件；作为一个预算项避免重复计价。</aside></section><section class="slide "><div class="kicker">04 · ONBOARD COMPUTER</div><h2>Prefer an x86 NUC / Mini PC.</h2><div class="content"><p class="lead">Reduce migration work while keeping the full runtime onboard.</p><table class="compare"><thead><tr><th>Consideration</th><th>Raspberry Pi 5 · ARM64</th><th>NUC / Mini PC · x86-64</th></tr></thead><tbody><tr><td>Deployment</td><td>ARM64 rebuilds and dependency checks</td><td>Closer to our current x86 development path</td></tr><tr><td>Workload</td><td>Benchmark RGB-D + planning + task execution</td><td>Choose CPU / RAM for the same measured workload</td></tr><tr><td>Total cost</td><td>Include storage, cooling, supply and mounting</td><td>Obtain a complete quote; potentially affordable</td></tr></tbody></table><div class="band">Proposal: compare actual x86 quotes before choosing the Pi solely on board price.</div></div><aside class="speaker-notes">我倾向NUC或x86小主机。树莓派是ARM架构，需要检查依赖、驱动和容器重建，可能增加迁移工作；这不等于不能跑ROS。用户认为NUC价格不贵，但目前没有具体报价，因此用potentially affordable。比较要含存储、散热、供电和安装的整套成本，不能只看裸板价格。</aside></section><section class="slide "><div class="kicker">04 · PURCHASE GATE</div><h2>Check compatibility before purchase.</h2><div class="content"><div class="columns"><article><div class="num">01</div><h3>Candidate specification</h3><p>At least 16 GB RAM; prefer 32 GB and SSD, subject to budget and workload.</p></article><article><div class="num">02</div><h3>Representative test</h3><p>RGB-D stream + perception + motion planning + logging; add navigation load when available.</p></article><article><div class="num">03</div><h3>Record the decision</h3><p>Compare latency, dropped frames, memory, temperature, power and total installed cost.</p></article></div><div class="band">No candidate has passed our full workload benchmark yet.</div><p class="smallprint">Pi 5 hardware: <a href="https://www.raspberrypi.com/products/raspberry-pi-5/">official specifications</a>. Project recommendation: BOM draft, 15 Oct 2026; final model remains open.</p></div><aside class="speaker-notes">16GB最低、32GB优先是已有BOM讨论稿的建议，不是实测得到的硬门槛。Pi5官方规格确认是ARM处理器，具备USB3；迁移风险要具体检查相机、SDK、容器和软件包。不要声称所有NUC都更快，也不默认有CUDA。最终选型及理由确认后记录DECISIONS。</aside></section><section class="slide "><div class="kicker">05 · NEXT WEEK / PROPOSED TESTS</div><h2>Start with a stationary hardware setup.</h2><div class="content"><div class="testrows"><div><strong>Setup &amp; interfaces</strong><span>Check mounting, cables, power, camera stream and device communication.</span></div><div><strong>Observation &amp; target pose</strong><span>Measure TF / TCP; repeat rack observations and compare with a measured reference.</span></div><div><strong>Gripper &amp; motion gates</strong><span>Verify position / feedback and stop behaviour before contact or combined motion.</span></div><div><strong>Supervised integration</strong><span>Proceed to low-speed approach or pick / place only after the relevant gates pass.</span></div></div><div class="band">Log setup, sample count, pose error, timing and failure reason. Agree numerical thresholds first.</div></div><aside class="speaker-notes">下周实机测试先约时间和设备。建议静态固定底座起步，用无危险替代样品。先验证装配、供电、通信、相机，再做标定和重复定位。接触、抓取和联合动作依赖前置门槛通过。区分软件停止和硬件急停，确认实际作用，不能用软件stop代替硬件急停。测试计划不是已完成结果。</aside></section><section class="slide "><div class="kicker">06 · TODAY / DECISIONS & FOLLOW-UP</div><h2>Confirm these before we leave.</h2><div class="content"><div class="decision"><span>01</span><p>Chemistry meeting: Jon / Ying joining, or the two of us first?</p></div><div class="decision"><span>02</span><p>Semester scope: target localisation, or integrated pick / place?</p></div><div class="decision"><span>03</span><p>BOM priorities and permission to shortlist x86 computer quotes.</p></div><div class="decision"><span>04</span><p>Next week’s hardware session: time, access and equipment.</p></div><div class="band">This afternoon: confirm the exact oral presentation time on “the 11th” with Jon and Ying.</div></div><aside class="speaker-notes">下午还要找Jon和Ying确认oral。上次只说11号，具体时间没有说；月份也没有在这次请求里明确，所以不擅自写11月11日。现场确认具体时段，最好也确认日期、地点、时长和形式。这里是待办提示，不表示已发出消息或安排了会议。</aside></section></main></div><nav class="deck-controls" aria-label="Slide navigation"><button id="prev" aria-label="Previous slide">←</button><span id="count"></span><button id="next" aria-label="Next slide">→</button><button id="nt">Notes · N</button><span>F fullscreen · E edit · Ctrl+S save</span></nav><aside id="notes" aria-label="Chinese speaker notes"></aside><div class="edit-hotzone"></div><button class="edit-toggle" id="editToggle">Edit (E)</button><script>
+/* === SLIDE CONTROLLER, NOTES AND LOCAL EDITING === */
+class SlidePresentation{constructor(){this.slides=[...document.querySelectorAll('.slide')];this.current=0;this.stage=document.querySelector('.deck-stage');this.edit=false;this.slides.forEach((s,i)=>{s.insertAdjacentHTML('beforeend',`<footer class="foot"><span>PROJECT ATOM · 16 OCT 2026</span><span>${String(i+1).padStart(2,'0')} / ${this.slides.length}</span></footer>`)});const scale=()=>{let f=Math.min(innerWidth/1920,innerHeight/1080);this.stage.style.transform=`translate(${(innerWidth-1920*f)/2}px,${(innerHeight-1080*f)/2}px) scale(${f})`};scale();addEventListener('resize',scale);this.show(Number(location.hash.slice(1)||1)-1);addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='s'){e.preventDefault();this.save();return}if(e.target.isContentEditable)return;if(e.key.toLowerCase()==='e'){this.toggle();return}if(e.key.toLowerCase()==='n'){document.querySelector('#notes').classList.toggle('open');return}if(e.key.toLowerCase()==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();return}let d=['ArrowRight','ArrowDown','PageDown',' '].includes(e.key)?1:['ArrowLeft','ArrowUp','PageUp'].includes(e.key)?-1:0;if(d){e.preventDefault();this.show(this.current+d)}});let last=0;addEventListener('wheel',e=>{if(e.target.closest('#notes')||this.edit)return;if(Date.now()-last>600){this.show(this.current+Math.sign(e.deltaY));last=Date.now()}},{passive:true});let x=0;addEventListener('touchstart',e=>x=e.touches[0].clientX,{passive:true});addEventListener('touchend',e=>{let d=x-e.changedTouches[0].clientX;if(Math.abs(d)>50&&!this.edit)this.show(this.current+Math.sign(d))});document.querySelector('#prev').onclick=()=>this.show(this.current-1);document.querySelector('#next').onclick=()=>this.show(this.current+1);document.querySelector('#nt').onclick=()=>document.querySelector('#notes').classList.toggle('open');document.querySelector('#editToggle').onclick=()=>this.toggle();let timer;for(let el of document.querySelectorAll('.edit-hotzone,.edit-toggle')){el.onmouseenter=()=>{clearTimeout(timer);document.querySelector('#editToggle').classList.add('show')};el.onmouseleave=()=>timer=setTimeout(()=>document.querySelector('#editToggle').classList.remove('show'),400)}document.querySelector('.edit-hotzone').onclick=()=>this.toggle()}
+show(i){this.current=Math.max(0,Math.min(this.slides.length-1,i));this.slides.forEach((s,n)=>{s.classList.toggle('active',n===this.current);s.classList.toggle('visible',n===this.current)});document.querySelector('#count').textContent=`${this.current+1} / ${this.slides.length}`;document.querySelector('#notes').textContent=this.slides[this.current].querySelector('.speaker-notes').textContent;history.replaceState(null,'','#'+(this.current+1))}
+toggle(){this.edit=!this.edit;document.querySelector('#editToggle').classList.toggle('active',this.edit);document.querySelector('#editToggle').textContent=this.edit?'Done (E)':'Edit (E)';document.querySelectorAll('h2,h3,.content p,.content td,.content th,.band,.agenda').forEach(el=>el.contentEditable=this.edit)}
+save(){document.querySelectorAll('[contenteditable]').forEach(el=>el.removeAttribute('contenteditable'));let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['<!doctype html>'+document.documentElement.outerHTML],{type:'text/html;charset=utf-8'}));a.download='ATOM_weekly_update_2026-10-16.html';a.click();URL.revokeObjectURL(a.href);if(this.edit)document.querySelectorAll('h2,h3,.content p,.content td,.content th,.band,.agenda').forEach(el=>el.contentEditable=true)}}window.deck=new SlidePresentation();
+</script></body></html>

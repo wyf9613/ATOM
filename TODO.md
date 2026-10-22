@@ -23,9 +23,9 @@
 - [x] 接近阶段已实现无环境障碍的两段运动：任务 topic 指定 Tag ID/动作，以 `link_eef` 前方 0.20 m 为前端参考点，先到距 Tag 平面 0.40 m 的对准位，再使用第一段最新有效观测沿法线射线接近到 0.10 m。MoveIt 规划、FK 逐点验收与执行中抽样检查高度/姿态/视线；以最高 5 Hz 发布并记录选定 Tag 观测，段内不重规划。RGB 与 RGB-D 名义场景各完成一次端到端仿真；仍未抓取或放置。
 - [ ] 后续再将搁板、试管架、试管等碰撞几何加入 MoveIt PlanningScene，验证环境避障；依据测试结果决定是否需要运动中重规划或连续视觉伺服。
 - [x] 使用默认 0.35 m 目标运行 `scripts/docker/jazzy_pre_observation_gui.sh rgb|depth`，完成预观察及两段接近的名义场景仿真验收；原 0.2 m 目标在当前高度/姿态下不可采样，暂不作为默认值。
-- [x] RGB、RGB-D 各保留一例完整成功运行，按独立仿真真值计算终点与逐帧 Tag 定位误差；已制作阶段性 [HTML 报告](output/slides/ATOM_observation_progress_2026-09-25.html)和 [观察视频](output/video/Observation.webm)。团队另完成 10 次 RGB 测试，报告其中 4 次因规划失败终止；逐次日志及条件待归档，不能与两例精度样本混算。详见 [单例对比](docs/RGB_VS_RGBD_SINGLE_RUN_COMPARISON_20260925.md)。
+- [x] RGB、RGB-D 各保留一例完整成功运行，按独立仿真真值计算终点与逐帧 Tag 定位误差；已制作阶段性 [HTML 报告](output/slides/ATOM_observation_progress_2026-09-25.html)和 [观察视频](output/video/Observation.webm)。团队另完成 10 次 RGB 测试，报告其中 4 次因规划失败终止；逐次日志及条件待归档，不能与两例精度样本混算。详见 [单例对比](docs/experiments/RGB_VS_RGBD_SINGLE_RUN_COMPARISON_20260925.md)。
 
-详情和启动方式见 [docs/CAMERA_EXPERIMENT.md](docs/CAMERA_EXPERIMENT.md)，总体感知设计见 [docs/EYE_IN_HAND_TUBE_PICK_PLAN.md](docs/EYE_IN_HAND_TUBE_PICK_PLAN.md)。
+详情和启动方式见 [docs/perception/CAMERA_EXPERIMENT.md](docs/perception/CAMERA_EXPERIMENT.md)，总体感知设计见 [docs/perception/EYE_IN_HAND_TUBE_PICK_PLAN.md](docs/perception/EYE_IN_HAND_TUBE_PICK_PLAN.md)。
 
 ## 必须完成：试管抓取与放置
 

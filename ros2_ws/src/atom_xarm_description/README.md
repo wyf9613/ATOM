@@ -43,4 +43,4 @@ adapter/link6 mounting contact only. All other tool/arm pairs remain checked.
 There is no camera-to-all-arm exemption in this composition. Tool-internal
 mechanical interference is outside this coarse envelope model.
 
-See [integration evidence](../../../docs/GRIPPER_MOUNT_V2_INTEGRATION.md).
+See [integration evidence](../../../docs/mechanical/GRIPPER_MOUNT_V2_INTEGRATION.md).

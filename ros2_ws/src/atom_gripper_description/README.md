@@ -26,7 +26,7 @@ the old short base and pad-only collision boxes, with 0.5 mm per-side padding
 (an unvalidated modelling margin). New bracket/adapter inertials are omitted
 until measured; this is a kinematic collision-review model, not a dynamics model.
 Camera, PCB, screws, wiring and carried objects are not included in the archive
-or this model. See `docs/GRIPPER_MOUNT_V2_INTEGRATION.md` in the repository.
+or this model. See `docs/mechanical/GRIPPER_MOUNT_V2_INTEGRATION.md` in the repository.
 
 Regenerate the visual meshes from the source STEP with:
 

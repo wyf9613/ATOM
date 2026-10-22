@@ -1,0 +1,23 @@
+{
+  "status": "illustration only; no structural validation",
+  "view": "along X tool axis; rear-face exterior envelope only, apertures ignored",
+  "nominal_units": "mm; CAD-derived, not physical measurements",
+  "target_outline_outside_exterior_envelope_area_mm2": 0.0,
+  "target_nominal_body_ellipse_width_height_mm": [
+    84,
+    73
+  ],
+  "target_ear_radius_mm": 3.8,
+  "target_hole_radius_mm": 1.7,
+  "target_ear_nominal_min_ligament_mm": 2.1,
+  "inherited_shell_hole_center_to_tab_edge_mm": 4,
+  "inherited_v2_root_od_mm": 84,
+  "shell_main_local_height_mm": 75,
+  "robot_flange_reference_od_mm": 63,
+  "limitations": [
+    "No strength equivalence claim",
+    "No real wrist model/clearance check",
+    "Drawing values are not manufacturing selections",
+    "All shoulder/body sections would also have to fit the target silhouette"
+  ]
+}

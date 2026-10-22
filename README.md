@@ -2,7 +2,7 @@
 
 **ATOM — Autonomous Transport & Object Manipulation for the Autonomous Chemical Laboratory** 是墨尔本大学 2026 S2--2027 S1 的机电一体化 Capstone 项目，目标是逐步构建一个用于自主化学实验室样品运输与物体操作的移动操作平台。
 
-当前处于 **Phase 0：接手、盘点与技术路线确认**。现有成果是上一组的夹爪原型、Fusion 360 装配文件和固定工位实验报告；完整自主实验室系统尚未实现。
+当前处于 **继承资产验证与架构定义阶段**。已有机械臂仿真与视觉接近基线、ESP32夹爪采集/空载位置测试和操作接口代码；末端传感器仍需调整，完整实物抓取、转运与自主实验室系统尚未验收。最新能力与证据见 [当前状态](docs/PROJECT_STATUS.md)。
 
 ## 当前事实
 
@@ -14,11 +14,11 @@
 
 ## 从这里开始
 
-日常开发先看以下三份即可：
+日常开发先看以下三个入口：
 
-1. [当前阶段、仿真用法与代码结构](docs/ARM_ONLY_SIMULATION.md)
-2. [当前项目状态](docs/PROJECT_STATUS.md)
-3. [Stage 0–4 项目范围](docs/PROJECT_SCOPE.md)
+1. [当前项目状态与下一步](docs/PROJECT_STATUS.md)
+2. [当前系统架构与代码入口](docs/SYSTEM_ARCHITECTURE.md)
+3. [文档导航与专题索引](docs/README.md)
 
 决策、风险、CAD 和论文等专题资料统一从[文档导航](docs/README.md)查找。
 项目的长期背景保留在 [ATOM_Project_Context.md](ATOM_Project_Context.md)。
@@ -47,7 +47,7 @@ git lfs install
 git lfs pull
 ```
 
-当前软件基线为 Docker 中的 Ubuntu 24.04、ROS 2 Jazzy、Gazebo Harmonic 和 UFactory 官方 `xarm_ros2` Jazzy 分支。xArm 850 已到货，但实机连接前仍需清点控制器、固件、标定与安全接口。当前开发说明见 [`docs/ARM_ONLY_SIMULATION.md`](docs/ARM_ONLY_SIMULATION.md)；底层环境和固定版本见 [`docker/jazzy/README.md`](docker/jazzy/README.md)。继承的 UR3e 仿真基线保留在 `ur3e` 分支。
+当前软件基线为 Docker 中的 Ubuntu 24.04、ROS 2 Jazzy、Gazebo Harmonic 和 UFactory 官方 `xarm_ros2` Jazzy 分支。xArm 850 已到货，但实机连接前仍需清点控制器、固件、标定与安全接口。当前开发说明见 [`docs/simulation/ARM_ONLY_SIMULATION.md`](docs/simulation/ARM_ONLY_SIMULATION.md)；底层环境和固定版本见 [`docker/jazzy/README.md`](docker/jazzy/README.md)。继承的 UR3e 仿真基线保留在 `ur3e` 分支。
 
 准备好构建时，从仓库根目录运行：
 

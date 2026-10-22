@@ -1,0 +1,111 @@
+{
+  "parameters": {
+    "status": "REVIEW ONLY: printed strength unverified",
+    "gripper_face_x_mm": 28.8,
+    "robot_contact_x_mm": 80.8,
+    "rear_extension_mm": 52.0,
+    "front_plate_mm": 12.0,
+    "front_plate_yz_mm": [
+      84.0,
+      112.0
+    ],
+    "body_od_mm": 76.0,
+    "root_od_mm": 84.0,
+    "central_passage_mm": 24.0,
+    "flange_plate_total_mm": 14.0,
+    "flange_mating_pad_od_mm": 63.0,
+    "pcd_mm": 50.0,
+    "m6_clearance_mm": 6.6,
+    "m6_access_bore_mm": 13.0,
+    "pilot_od_provisional_mm": 31.45,
+    "pilot_height_provisional_mm": 2.0,
+    "gripper_holes_y_mm": [
+      34.494,
+      52.494
+    ],
+    "gripper_holes_z_mm": [
+      -70.725,
+      26.275
+    ],
+    "esp_mount_holes_x_mm": [
+      -33.7,
+      -18.7
+    ],
+    "esp_mount_holes_z_mm": -65.725,
+    "esp_mount_gap_mm": 4.0,
+    "esp_clip_cheek_mm": 4.0,
+    "esp_pcb_hole_pitch_user_provisional_mm": [
+      46.5,
+      23.5
+    ],
+    "esp_pcb_hole_diameter_user_provisional_mm": 4.0,
+    "esp_pcb_outline_placeholder_mm": [
+      54.0,
+      30.0,
+      1.6
+    ],
+    "esp_standoff_mm": 8.0,
+    "printing": "No infill, layer adhesion, material or orientation qualification assumed",
+    "structural_bottleneck": "Inherited four 3.2 mm holes and shell tabs are also unverified load paths",
+    "material_user_tentative": "PLA; brand and print settings unconfirmed",
+    "gripper_camera_mass_user_estimate_kg": 0.7,
+    "mass_evidence": "User heft estimate, not a scale measurement; sample count and uncertainty not supplied"
+  },
+  "source_sha256": "8ee4fd1c064210eab24cb10ba67623e497cab0866adbca86d5be9a0c63aaf351",
+  "flange_reference": "UF850 V2.3.0 p26; same nominal pattern as v1",
+  "flange_hole_centres_yz_mm": [
+    [
+      61.17166952966369,
+      -4.547330470336313
+    ],
+    [
+      25.816330470336315,
+      -4.547330470336313
+    ],
+    [
+      25.816330470336307,
+      -39.90266952966368
+    ],
+    [
+      61.17166952966369,
+      -39.9026695296637
+    ]
+  ],
+  "pcb_hole_centres_xy_mm": [
+    [
+      -69.45,
+      31.744
+    ],
+    [
+      -69.45,
+      55.244
+    ],
+    [
+      -22.95,
+      31.744
+    ],
+    [
+      -22.95,
+      55.244
+    ]
+  ],
+  "checks": {
+    "main_valid_single_solid": true,
+    "esp_valid_single_solid": true,
+    "step_roundtrip_valid": true,
+    "inherited_intersections": [],
+    "pair_intersections": [],
+    "tool_corridor_intersections": []
+  },
+  "volume_mm3": {
+    "reinforced_adapter": 248660.84151374333,
+    "esp_bracket": 14245.67082586826
+  },
+  "limitations": [
+    "Geometry review only, no deflection, stress, fatigue, creep or printed-layer qualification.",
+    "Inherited M3 tabs can remain the structural bottleneck.",
+    "PCB hole pattern user-provisional; PCB/USB/header envelopes unverified.",
+    "M6 screws accessible before gripper is attached; full wrist/connectors/cables and wrench sweep unverified.",
+    "Board now below inherited case; lowest envelope z=-97 mm needs workcell clearance check."
+  ]
+}

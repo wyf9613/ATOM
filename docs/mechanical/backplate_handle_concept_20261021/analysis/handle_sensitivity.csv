@@ -1,0 +1,10 @@
+﻿force_N,hand_radius_mm,root_radius_mm,root_width_mm,root_axial_thickness_mm,ideal_root_section,root_bending_moment_Nm,flange_bending_moment_Nm,nominal_root_stress_MPa,nominal_root_in_plane_bending_stress_MPa,nominal_root_axial_stress_MPa,ideal_flange_max_normal_reaction_N
+20,100,31.5,24,8,"solid ellipse; no local Kt, no pores/threads/contact",1.37,2.0,9.085094668162359,3.028364889387453,0.1326291192432461,33.28427124746191
+20,100,31.5,24,12,"solid ellipse; no local Kt, no pores/threads/contact",1.37,2.0,4.037819852516604,2.018909926258302,0.08841941282883074,33.28427124746191
+20,100,31.5,24,16,"solid ellipse; no local Kt, no pores/threads/contact",1.37,2.0,2.2712736670405897,1.5141824446937264,0.06631455962162305,33.28427124746191
+50,100,31.5,24,8,"solid ellipse; no local Kt, no pores/threads/contact",3.425,5.0,22.7127366704059,7.570912223468633,0.3315727981081153,83.21067811865477
+50,100,31.5,24,12,"solid ellipse; no local Kt, no pores/threads/contact",3.425,5.0,10.09454963129151,5.047274815645755,0.22104853207207686,83.21067811865477
+50,100,31.5,24,16,"solid ellipse; no local Kt, no pores/threads/contact",3.425,5.0,5.678184167601475,3.7854561117343164,0.16578639905405765,83.21067811865477
+100,100,31.5,24,8,"solid ellipse; no local Kt, no pores/threads/contact",6.85,10.0,45.4254733408118,15.141824446937266,0.6631455962162306,166.42135623730954
+100,100,31.5,24,12,"solid ellipse; no local Kt, no pores/threads/contact",6.85,10.0,20.18909926258302,10.09454963129151,0.44209706414415373,166.42135623730954
+100,100,31.5,24,16,"solid ellipse; no local Kt, no pores/threads/contact",6.85,10.0,11.35636833520295,7.570912223468633,0.3315727981081153,166.42135623730954

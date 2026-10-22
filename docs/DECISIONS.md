@@ -1,5 +1,39 @@
 # Decision Log
 
+## 2026-10-21 — Laser-cut MDF five-position cuvette-rack prototype
+
+The user confirms 3 mm nominal MDF, two separate five-position racks for Ø15 × 50 mm and Ø25 × 75 mm vessels, and one 40 mm AprilTag per position. Use six planar panels with friction-fit tab/slot assembly, and reserve front-panel space below the vessel seats. Continue the existing 36h11 family for this prototype; IDs 0–9 are proposed allocations, not an approved lab inventory. DXF/SVG masters and a fit/tag coupon are under `source_cad/cuvette_rack/v1/`. TCS final file format, measured sheet thickness, kerf, fit, loads and camera contrast remain unconfirmed. No physical capability, runtime scene update or final manufacturing release is implied. See [design and source evidence](mechanical/CUVETTE_RACK_LASER_V1.md).
+
+## 2026-10-19 — Expand finished-station comparison with DJI and EcoFlow
+
+User requests adding DJI or comparable finished power stations. Rev06 adds DJI Power 1000 V2, Power 2000 and Power 1000 Mini, plus EcoFlow DELTA 3 Plus alongside the existing Classic. These are alternatives for one source, not additive purchases. BLUETTI Elite 100 V2 remains the user's preferred budget baseline; team electrical/Pi AUD602.96 and proposed Chemical Engineering AUD1,099 are unchanged. Public D1 AU standalone prices are AUD999 / 1,999 / 699 for the DJI models, checked 19 October 2026; formal stock/GST/PO quotes are outstanding. Mini is a lower-power reference because its 800 W continuous battery output is below the arm's published 1000 W maximum before computer demand. Manufacturer output ratings do not establish robot compatibility or two-hour runtime. See [dated comparison](research/POWER_STATION_COMPARISON_20261019.md). No purchase or external message has been made.
+
+## 2026-10-19 — Prioritise the integrated BLUETTI proposal
+
+User explicitly prefers returning to the BLUETTI Elite 100 V2 integrated-station route and reducing repetitive emphasis on the mobile-use issue in outward-facing material. Rev05 prioritises that candidate for shared arm/computer power; team budget remains AUD602.96 and the proposed Chemical Engineering request remains AUD1,099. The modular battery/inverter study is retained as a backup, not the default procurement proposal. Keep the manufacturer's operation/movement restriction once as a concise purchase condition; this preference does not establish compatibility or waive the manual, electrical review, school approval or commissioning. The two-hour target remains unmeasured and depends on combined average load. No order is authorised or placed.
+
+## 2026-10-19 — Two-hour shared onboard energy requirement
+
+User requests researching a source shared by the AC arm controller and onboard computer, and confirms approximately two hours per charge. Screen a separate 24V-class battery and vehicle-suitable inverter; Enerdrive EN1120S-X-24V is the preferred quotation candidate and Victron Smart 24/2000 is a comparison. This is a research recommendation, not hardware selection, purchase approval or demonstrated integration. See [shared energy research](research/SHARED_MOBILE_POWER_OPTIONS_20261019.md). Its new cost estimates supersede use of the old AUD1,099 placeholder as a realistic cost for these modular routes; the earlier BOM remains an unapproved draft pending a coordinated quotation. The Pi stays in the team budget. No OS/ROS/driver changes selected.
+
+## 2026-10-19 — Withdraw mobile battery recommendation pending evidence
+
+Review of the manual linked by BLUETTI's AU support site found a restriction on moving the product during operation (PDF p5). Hold selection/purchase of Elite 100 V2 for powered mobile use; no alternative station is automatically approved. Retain AUD 1,099 only as a provisional external funding request for an unresolved mobile energy solution. This supersedes any interpretation of earlier price shortlists as a supported mobile deployment. No physical compatibility or safety test has been performed. See [evidence audit](research/BATTERY_COMPATIBILITY_AUDIT_20261019.md).
+
+## 2026-10-19 — Include Pi kit in the team purchase budget
+
+User explicitly requests including one Raspberry Pi 5 8GB starter kit in the main BOM, replacing its earlier optional status. Team electrical allowance plus Pi totals AUD 602.96; AUD 197.04 remains before prior spending or additional vehicle power/mounting costs. The AUD 1,099 mobile-arm energy request stays separate and is proposed for Chemical Engineering funding, which remains unapproved. This is a budget scope decision, not purchase approval or validated computing performance. No OS, ROS distribution or driver change is selected.
+
+## 2026-10-19 — Funding proposal and installed AC control box
+
+User confirms UF850 runs from a wall AC outlet, GRA is approved and the budget has not been submitted. User requests seeking Chemical Engineering funding for the costly mobile-arm battery while prioritising borrowed or team project-funded computing. This is a funding proposal, not a sponsor commitment or purchase approval. Compare complete AU AC-output power stations feeding the original control box; no battery model is selected. Retain five power procurement items and separate computer evaluation. School files require GST-inclusive supplier-grouped budgets, supporting BOM/quotes, the prepurchase checklist and formal submission before staff place eMarket orders. See [procurement actions](research/PROCUREMENT_ACTIONS_20261019.md).
+
+## 2026-10-07 — Future Tracer2.0 and onboard operation requirement
+
+User specifies 松灵 Tracer2.0 as the future mobile-base model and requires onboard execution without carrying a laptop; compute budget is approximately AUD500–1,000. Record the model as the user-specified target, not procurement/arrival or integrated capability. Compare single x86 Mini PC and Orin Nano Super8GB candidates; neither is selected. Retain D-007's existing ROS/Ubuntu baseline pending hardware compatibility validation. Arm/base/gripper descriptions remain modular. See [candidate architecture and power boundary](research/TRACER2_ONBOARD_COMPUTE_20261007.md).
+
+阅读入口（2026-10-06）：当前能力与限制汇总于 [PROJECT_STATUS](PROJECT_STATUS.md)，专题见 [文档导航](README.md)。本文件保留确认选择及其历史依据；阈值、安装几何、接口和验证边界以明确的后续修正为准，早期临时配置不自动构成当前实物能力。此次文档分组没有选择新的硬件、ROS/驱动或控制配置。
+
 ## 2026-10-07 — CAD v2 tool composition for collision review
 
 User requested a gripper-test branch, fixed-object holding/force-calibration
@@ -233,11 +267,11 @@ User-confirmed rule: organize nodes by module responsibilities; reuse existing n
 
 ## 2026-10-01 — Coarse rack XY and target identity before observation
 
-User-requested interface change on `refactor/modular-task-composition`: `/atom/pre_observation_target` now carries noisy rack-centre XY in metres and unchanged exact simulation TCP z, with identity orientation. `atom_pre_observation_target_pose` derives bearing from XY; its observation radius remains 0.35 m. Existing `/atom/approach_task` publishes selected tag/action before observation, with transient-local delivery. Both RGB and RGB-D use the same multi-tag rack observer, requiring all configured rack IDs including the target in one coherent pre-observation fit. No new ROS node/package, distribution, driver or hardware choice. This supersedes yaw-only coarse input and the hard-coded tag1/tag2 selection. Default XY noise ±0.025 m per axis is a provisional simulation setting, not measured localization uncertainty. See [interface and sequence](CAMERA_EXPERIMENT.md).
+User-requested interface change on `refactor/modular-task-composition`: `/atom/pre_observation_target` now carries noisy rack-centre XY in metres and unchanged exact simulation TCP z, with identity orientation. `atom_pre_observation_target_pose` derives bearing from XY; its observation radius remains 0.35 m. Existing `/atom/approach_task` publishes selected tag/action before observation, with transient-local delivery. Both RGB and RGB-D use the same multi-tag rack observer, requiring all configured rack IDs including the target in one coherent pre-observation fit. No new ROS node/package, distribution, driver or hardware choice. This supersedes yaw-only coarse input and the hard-coded tag1/tag2 selection. Default XY noise ±0.025 m per axis is a provisional simulation setting, not measured localization uncertainty. See [interface and sequence](perception/CAMERA_EXPERIMENT.md).
 
 ## 2026-10-01 — Registered depth assists the existing RGB rack estimator
 
-Implement model-based point-to-plane plus RGB reprojection pose refinement inside the existing perception capability. Depth mode enables fusion, RGB retains its original estimate. Existing Gazebo scripts explicitly acknowledge registered optical-Z depth; direct node calls default that acknowledgment to false. Poor plane support falls back with a reported reason; depth/RGB inconsistency rejects the frame. Motion geometry limits are unchanged. Numeric fusion gates/weights are provisional simulation settings, not hardware accuracy or newly selected sensor/driver. [Method and validation](DEPTH_FUSION.md).
+Implement model-based point-to-plane plus RGB reprojection pose refinement inside the existing perception capability. Depth mode enables fusion, RGB retains its original estimate. Existing Gazebo scripts explicitly acknowledge registered optical-Z depth; direct node calls default that acknowledgment to false. Poor plane support falls back with a reported reason; depth/RGB inconsistency rejects the frame. Motion geometry limits are unchanged. Numeric fusion gates/weights are provisional simulation settings, not hardware accuracy or newly selected sensor/driver. [Method and validation](perception/DEPTH_FUSION.md).
 
 ## 2026-10-02 — Gated ESP32 motor commissioning
 
@@ -280,3 +314,11 @@ Reuse D-007's existing Ubuntu 24.04/Jazzy baseline. Build only atom_operator_int
 ## 2026-10-03 — Continuous gripper position commands and resumable normal STOP
 
 User requests one continuous move to an absolute encoder target and continuous Open/Close with normal STOP/resume. Replace host 100-count JOG segments/dwell with one firmware MOVE target within2000–2600. Firmware Open2600/Close2000 are position-only; force commands remain unavailable. Keep speed20/acceleration10,raw-load80,raw voltage72–82,temp40,outer position1937–2668 and750ms/350ms watchdogs. Extend whole-move timeout7→20s provisionally based on prior ~2.1s/100count records; no continuous600count physical timing acceptance. Normal confirmed STOP/cancel keeps torque and the same caller session, returns interruption without latching a fault; actual faults and unconfirmed holds still latch. First startup/explicit DISARM still require ARM. User will compile/upload through Arduino IDE; agent did not upload or move the motor. Native firmware, protocol, HTTP and ROS fake-device tests cover the revised behavior.
+
+## 2026-10-21 — Backplate/handle review constraints
+
+User requests maximum contour refinement subject to strength, two separate backplate/handle components, and all printed structural parts. The handle is to extend directly radially from the flange, its axis pointing through the flange center, replacing the earlier 90-degree support concept. Material was corrected from PLA to probably PETG; this is tentative identification, not a qualified grade or print process. These are review requirements only: shared flange fasteners, final geometry/thickness, printing and allowable loads are not approved or validated. [Revision 03 and analysis](mechanical/backplate_handle_concept_20261021/README.md).
+
+## 2026-10-21 — Radial handle print prototype; backplate revision deferred
+
+User authorizes an STL handle for printing on 2026-10-22 and explicitly defers backplate work. Generate the separate radial handle and an optional interface fit coupon, preserving the current v2 backplate byte-for-byte. The prototype uses the existing nominal flange pattern, a 16 mm independent mounting ring with inherited pilot dimensions carried through to the robot, a continuous core and a rounded palm surface. Material remains provisionally PETG, all printed structural parts. Authorization is for prototype CAD/STL and printing preparation, not validated load capacity or hardware commissioning. Shared flange screws require revised grip-length selection; real fit, wrist clearance, preload and PETG performance remain unverified. See [print guide](mechanical/TEACHING_HANDLE_V1_PRINT_GUIDE.md).

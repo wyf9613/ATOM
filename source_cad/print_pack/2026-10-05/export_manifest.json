@@ -1,0 +1,105 @@
+{
+  "date": "2026-10-05",
+  "units": "mm (STL is unitless; import as millimetres at 100% scale)",
+  "tessellation_linear_tolerance_mm": 0.02,
+  "tessellation_angular_tolerance_rad": 0.08,
+  "cadquery_version": "2.6.1",
+  "parts": [
+    {
+      "triangles": 3232,
+      "vertices": 1608,
+      "connected_components": 1,
+      "closed_two_manifold": true,
+      "consistent_winding": true,
+      "dimensions_xyz_mm": [
+        70.0,
+        18.0,
+        17.9
+      ],
+      "mesh_volume_mm3": 7005.541991252576,
+      "volume_relative_error": 1.0917169797022763e-05,
+      "sha256": "d25d464fe93b5157247c1d681ac71ccdf6455a58690eec5b6394158081339a42",
+      "bytes": 161684,
+      "filename": "camera_bracket_v2_mm.stl",
+      "source_step": "source_cad/camera_bracket/v2/camera_bracket_v2.step",
+      "source_sha256": "ddd541c318ffe1b7a02739d0787485f6a8ee7ccc57ba0e17a84f21210970f63c",
+      "source_valid_single_solid": true,
+      "source_dimensions_xyz_mm": [
+        70.0,
+        18.0,
+        17.9
+      ],
+      "translation_xyz_mm": [
+        81.2,
+        -34.494,
+        -17.375
+      ],
+      "rotation": "none; source orientation retained",
+      "source_volume_mm3": 7005.465511396081
+    },
+    {
+      "triangles": 5132,
+      "vertices": 2552,
+      "connected_components": 1,
+      "closed_two_manifold": true,
+      "consistent_winding": true,
+      "dimensions_xyz_mm": [
+        67.0,
+        42.0,
+        17.9
+      ],
+      "mesh_volume_mm3": 14245.762007305459,
+      "volume_relative_error": 6.400641871757714e-06,
+      "sha256": "afb48959ddca033ba5cb11c09dd324b81fdd5099c25669d7957e67d7a300e00a",
+      "bytes": 256684,
+      "filename": "esp32_bracket_v1_mm.stl",
+      "source_step": "source_cad/esp32_bracket/v1/esp32_bracket_v1.step",
+      "source_sha256": "d67beb0eebbf9f4a84a163aa3f6a0109243b82b79d6f5037699f9c8e23638f62",
+      "source_valid_single_solid": true,
+      "source_dimensions_xyz_mm": [
+        67.0,
+        42.0,
+        17.89999999999999
+      ],
+      "translation_xyz_mm": [
+        78.2,
+        -22.494,
+        79.725
+      ],
+      "rotation": "none; source orientation retained",
+      "source_volume_mm3": 14245.67082586828
+    },
+    {
+      "triangles": 11518,
+      "vertices": 5743,
+      "connected_components": 1,
+      "closed_two_manifold": true,
+      "consistent_winding": true,
+      "dimensions_xyz_mm": [
+        54.0,
+        84.0,
+        112.0
+      ],
+      "mesh_volume_mm3": 248619.16131696012,
+      "volume_relative_error": 0.00016761865891074565,
+      "sha256": "83b213f46e48c40f3d2cf68131b8a365ca789b2d0b89455d6bec8d2bcef2cf30",
+      "bytes": 575984,
+      "filename": "flange_adapter_v2_mm.stl",
+      "source_step": "source_cad/backplate/v2/reinforced_backplate_v2.step",
+      "source_sha256": "3ce57fe88a33fa95fe8eac8d41291dc162f6e5c696a8b453db554f6428f8db0a",
+      "source_valid_single_solid": true,
+      "source_dimensions_xyz_mm": [
+        54.0,
+        84.0,
+        112.0
+      ],
+      "translation_xyz_mm": [
+        -28.8,
+        -1.4939999999999998,
+        78.225
+      ],
+      "rotation": "none; source orientation retained",
+      "source_volume_mm3": 248660.84151373827
+    }
+  ]
+}
