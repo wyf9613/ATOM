@@ -8,6 +8,7 @@
 *.mp4 filter=lfs diff=lfs merge=lfs -text
 *.webm filter=lfs diff=lfs merge=lfs -text
 "hardware/end effector/*.zip" filter=lfs diff=lfs merge=lfs -text
+basement/*.zip filter=lfs diff=lfs merge=lfs -text
 
 *.md text eol=lf
 *.html text eol=lf

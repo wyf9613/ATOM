@@ -1,0 +1,162 @@
+{
+  "date": "2026-10-22",
+  "branch": "integrate/mobile-base-gripper-jazzy",
+  "environment": {
+    "os": "Ubuntu 24.04 container",
+    "ros": "Jazzy",
+    "nav2": "1.3.13",
+    "check_image": "atom-mobile-jazzy-check:20261022",
+    "base_image_digest": "sha256:066420e07f60aa18262f2479981def87ebcfcec42eefb0c0c57c4a46098348ca",
+    "production_image_rebuilt": false,
+    "note": "Targeted 11-package source build against installed Jazzy dependencies; existing whole arm Gazebo regression was not rerun."
+  },
+  "built_packages": [
+    "xarm_description",
+    "xarm_moveit_config",
+    "atom_gripper_description",
+    "atom_xarm_description",
+    "atom_mobile_description",
+    "atom_operator_interfaces",
+    "atom_gripper_hardware",
+    "atom_base",
+    "tracer_msgs",
+    "tracer_base",
+    "ugv_sdk"
+  ],
+  "source_pins": {
+    "xarm_ros2": "3dc2b5e8294758d96b54b15fa5920d581b7cbb3d",
+    "tracer_ros2": "832ea9a48fe725d47d766a099d358062ea2f0f31",
+    "ugv_sdk": "f2704eacdc90357078cd93ec60aae08bb4baab35"
+  },
+  "tests": {
+    "atom_base_tests.xml": {
+      "tests": 6,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "atom_gripper_description_tests.xml": {
+      "tests": 2,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "atom_gripper_hardware_tests.xml": {
+      "tests": 29,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "atom_mobile_description_tests.xml": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "atom_xarm_description_tests.xml": {
+      "tests": 4,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    }
+  },
+  "urdfdom": "passed; one base_link root",
+  "runtime_checks": {
+    "runtime": {
+      "scope": "ideal kinematic interface fixture; no hardware or physics",
+      "checks": {
+        "startup_and_reset_disabled": true,
+        "json_mission_action_and_gated_motion": true,
+        "runtime_mount_805mm": true,
+        "inactive_nav_publisher_excluded": true,
+        "fine_owner_can_move_fixture": true,
+        "command_expiry_zeroes_output": true,
+        "stop_blocks_both_publishers": true,
+        "reset_does_not_resume": true,
+        "web_status_and_installed_map": true
+      },
+      "events": [
+        {
+          "state": "idle"
+        },
+        {
+          "state": "navigating",
+          "label": "check",
+          "index": 0,
+          "total": 1,
+          "target": {
+            "x": 0.06,
+            "y": 0.0,
+            "yaw": 0.0
+          }
+        },
+        {
+          "state": "navigating",
+          "label": "check",
+          "index": 0,
+          "total": 1,
+          "target": {
+            "x": 0.06,
+            "y": 0.0,
+            "yaw": 0.0
+          },
+          "distance_remaining": 0.06
+        },
+        {
+          "state": "navigating",
+          "label": "check",
+          "index": 0,
+          "total": 1,
+          "target": {
+            "x": 0.06,
+            "y": 0.0,
+            "yaw": 0.0
+          },
+          "distance_remaining": 0.02
+        },
+        {
+          "state": "arrived",
+          "label": "check"
+        },
+        {
+          "state": "idle"
+        }
+      ]
+    },
+    "nav2": {
+      "scope": "Nav2 plugin/BT startup with synthetic sensors, current-pose target, base gate stopped",
+      "nodes": {
+        "smoother_server": "active",
+        "behavior_server": "active",
+        "velocity_smoother": "active",
+        "collision_monitor": "active",
+        "bt_navigator": "active",
+        "amcl": "active",
+        "controller_server": "active",
+        "map_server": "active",
+        "planner_server": "active",
+        "waypoint_follower": "active"
+      },
+      "current_pose_goal_status": 4
+    },
+    "fine_adjust": {
+      "scope": "production fine-adjust action; synthetic corrections and ideal base fixture only",
+      "checks": {
+        "stopped_goal_rejected": true,
+        "exclusive_action_and_closed_loop_success": true,
+        "software_stop_aborts_action_and_zeroes_base": true,
+        "action_cancellation": true,
+        "stale_correction_aborts_without_motion": true
+      }
+    }
+  },
+  "raw_archive_sha256": {
+    "basement/amr_nav_2026-10-22.zip": "d489e57155a15ed3639739785401945916ce8769e40cecf38652e1d0c12b009c",
+    "basement/labbot_visual_servo_2026-10-22.zip": "0cb8affa682859d18890d0b135fd806576adcf993cd1525f41efb4e302cb9459"
+  },
+  "scope": "Single final successful run per runtime check, ideal kinematics/synthetic sensors and fake serial only; no hardware, physical precision/stop measurements or whole-robot dynamics evidence.",
+  "additional_checks": [
+    "Python AST for all migrated sources and shell syntax",
+    "Original ZIP SHA-256 unchanged"
+  ]
+}

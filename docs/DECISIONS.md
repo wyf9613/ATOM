@@ -1,5 +1,46 @@
 # Decision Log
 
+## 2026-10-22 — Mobile integration branch, Jazzy migration and explicit mount datums
+
+- User requests a new base/gripper integration branch and the arm's existing
+  software version. Work is on `integrate/mobile-base-gripper-jazzy`, retaining
+  D-007 Ubuntu 24.04 / ROS 2 Jazzy / Gazebo Harmonic and the pinned UF850 source.
+- User supplies horizontal coincidence of base and arm mounting centres and
+  805 mm from chassis top plane to arm mounting plane. Compose that fixed
+  0.805 m transform through explicit `base_top` / `arm_mount` links. User leaves
+  yaw unconfirmed; expose it as a parameter, with neutral zero for review only.
+  Measurement method, uncertainty and sample count were not supplied. Ground to
+  chassis top remains a nominal 0.15 m handover simulation value, independently
+  parameterised; support cross-section, wheel dimensions and inertials are not
+  accepted physical data.
+- For source migration/build verification, pin the received base team's
+  `tracer_ros2` 832ea9a48fe725d47d766a099d358062ea2f0f31 and `ugv_sdk`
+  f2704eacdc90357078cd93ec60aae08bb4baab35 in `atom_mobile_jazzy.repos`, retain
+  their odometry/TF patch and add a downstream 300 ms command-loss watchdog.
+  Adapt UGV's package metadata from catkin to its existing standalone CMake
+  build for colcon; install libasio-dev explicitly. Targeted Jazzy source
+  compilation verifies these choices (not physical compatibility).
+  Evidence is the received `drivers/VERSIONS.txt`, patch and source inspection;
+  this is a development selection, not confirmation of firmware/CAN compatibility.
+- Migrate existing navigation/fine-adjust capabilities into `atom_base`; retain
+  the existing ESP32 gripper owner. A separate velocity-gate node is justified by
+  the independent final command interface, exclusive Nav2/fine-adjust ownership,
+  input expiry and software-stop boundary. A kinematic fixture is test-only,
+  consumes that gated output and never substitutes for hardware/Gazebo evidence.
+  No new task-specific node or parallel SDK arm controller is selected.
+- Nav2 Jazzy uses `::` plugin identifiers, progress-checker lists and explicit
+  unstamped Twist configuration at the base boundary; paths resolve from installed
+  package shares. References: [Nav2 Iron→Jazzy migration](https://docs.nav2.org/rolling/configuration_and_development/migration_guides/iron/Iron/),
+  [Gazebo Harmonic migration](https://gazebosim.org/docs/harmonic/migrating_gazebo_classic_ros2_packages/).
+  Classic Gazebo plugins are not loaded by the new runtime. Existing bare-arm
+  simulation remains separate; whole-robot dynamics are not inferred from URDF.
+- Integration startup is review-only by default, base motion stopped/disabled,
+  and physical gripper absent unless explicitly selected. Hardware base/arm
+  commissioning, external lidar/IMU dependencies, current camera/TCP calibration,
+  measured support collision geometry and system-wide physical stop acceptance
+  remain separate validation work. See `MOBILE_BASE_INTEGRATION.md` for final
+  implementation and test evidence.
+
 ## 2026-10-07 — Per-closure unloaded magnetic baseline and difference method
 
 User specifies acquiring the unloaded reference at the current pose immediately
@@ -296,3 +337,56 @@ Reuse D-007's existing Ubuntu 24.04/Jazzy baseline. Build only atom_operator_int
 ## 2026-10-03 — Continuous gripper position commands and resumable normal STOP
 
 User requests one continuous move to an absolute encoder target and continuous Open/Close with normal STOP/resume. Replace host 100-count JOG segments/dwell with one firmware MOVE target within2000–2600. Firmware Open2600/Close2000 are position-only; force commands remain unavailable. Keep speed20/acceleration10,raw-load80,raw voltage72–82,temp40,outer position1937–2668 and750ms/350ms watchdogs. Extend whole-move timeout7→20s provisionally based on prior ~2.1s/100count records; no continuous600count physical timing acceptance. Normal confirmed STOP/cancel keeps torque and the same caller session, returns interruption without latching a fault; actual faults and unconfirmed holds still latch. First startup/explicit DISARM still require ARM. User will compile/upload through Arduino IDE; agent did not upload or move the motor. Native firmware, protocol, HTTP and ROS fake-device tests cover the revised behavior.
+
+## 2026-10-07 — D435i camera bracket V3 prototype interface
+
+User confirms D435i, rear two M3 mounting points, and total clip opening increase
+of 2 mm (each wall outward 1 mm). V2 mesh opening 4 mm becomes 6 mm, retaining
+4 mm walls and existing clamp-hole axes. Rear pattern 45 mm / maximum insertion
+3 mm follows official D400 datasheet 337029-008 Figure 10-8 p108. New geometry
+uses a 5 mm rear plate, 6 mm bridge and two 4 mm ribs with root fillets as prototype
+choices, not validated load ratings. Raw archive and current ROS geometry remain
+unchanged. See hardware/end effector/README.md for files and verification boundaries.
+
+
+## 2026-10-08 — Analytic reconstruction of October print-pack CAD
+
+Reconstruct missing flange V2, ESP32 bracket V1 and historical camera V2 neutral
+CAD from verified STL using plane/cylinder/cone primitives and explicit JSON
+parameters. Keep reconstructed files under hardware/derived/reconstructed_mount_v2
+with provenance, separate coordinate variants and geometry checks; do not label
+them original Fusion source. Preserve old dimensions for traceability and keep
+new D435i V3 design separate. No ROS substitution, complete assembly, physical
+fit or load validation is implied. See hardware/end effector/README.md.
+
+
+## 2026-10-08 — Consolidated CAD and corrected review description
+
+User requests only flange V2, ESP32 V1, camera V3 with the original end-effector
+assembly, retaining necessary files. Consolidate STEP (in inherited CAD frame),
+print STL, parameters, provenance and README under hardware/end effector; move
+obsolete outputs to ignored local tmp backup, retaining hashes/history. One CAD
+build script reproduces the three active parts without the old ZIP dependency.
+
+Replace the URDF's old camera V2 mesh with V3; regenerate full collision AABB and
+add a nominal D435i housing box without optical/driver TF or invented inertia.
+Keep camera-arm/finger checks; exclude only housing/bracket mounting contact.
+The combined review Xacro previously defaulted to the real vendor plugin with no
+IP. Default to the existing fake_components/GenericSystem interface and expose
+ros2_control_plugin/robot_ip as explicit overrides; no controller or hardware
+motion was started. Retain D-007 vendor revision and runtime launchers unchanged.
+Nominal CAD offsets, 0.5 mm collision padding and inherited inertia/joint limits
+remain unvalidated. See GRIPPER_MOUNT_V2_INTEGRATION.md.
+
+## 2026-10-08 — Tracer 2.0 full-robot measurement scope
+
+User confirms AgileX Tracer 2.0 and an installed arm described as “xarm850”,
+connected through aluminium extrusion with no drawing. This confirms the user's
+hardware report, not independent nameplate verification of the existing `uf850`
+vendor model. Prepare FULL_ROBOT_URDF_MEASUREMENTS.md before full composition.
+Keep vendor base/arm and custom support/tool descriptions modular; measure the
+base-to-arm mounting transform and support collision geometry. Do not select a
+base driver or reuse older Tracer geometry without version verification. Honour
+the user's deletion of source_cad; remove its current directory listing rather
+than restoring empty scaffolding. No full mobile URDF or hardware control is
+claimed by this preparation.

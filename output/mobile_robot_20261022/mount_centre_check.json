@@ -1,0 +1,36 @@
+{
+  "condition": "source URDF visual geometry at zero joints; no physical measurements",
+  "base_link_world_m": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "base_top_world_m": [
+    0.0,
+    0.0,
+    0.15
+  ],
+  "arm_base_world_m": [
+    0.0,
+    0.0,
+    0.9550000000000001
+  ],
+  "arm_minus_base_xy_m": [
+    0.0,
+    0.0
+  ],
+  "top_to_arm_height_m": 0.805,
+  "vendor_arm_base_visual_local_bounds_m": [
+    [
+      -0.0949999988079071,
+      -0.0949999988079071,
+      -3.3306844263476386e-17
+    ],
+    [
+      0.0949999988079071,
+      0.0949999988079071,
+      0.1850000023841858
+    ]
+  ],
+  "rendering": "front/side orthographic projection of original visual triangles; no convex hull replacement"
+}

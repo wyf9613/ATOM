@@ -1,82 +1,85 @@
-# 新法兰与原夹爪的模块化集成
+# 当前末端的模块化 URDF 检查
 
-2026-10-07。本轮为源码、CAD 网格和描述结构检查；没有实机运动或
-MoveIt/FCL 运行时碰撞检查，不是实机防碰撞验收。
+2026-10-08。当前组合为原夹爪 + 法兰 V2 + ESP32 支架 V1 + 相机支架 V3。
+文件名中的 `v2` 沿用法兰组合接口，不表示相机仍是 V2。
+[硬件文件、坐标与打印说明](<../hardware/end effector/README.md>)。
 
-## 来源与坐标
+## 修复与保留边界
 
-只读输入：`hardware/end effector/ATOM_three_parts_20261005.zip`。
-三个 STL 的 SHA-256 均与包内 export_manifest.json 一致，网格闭合。
-原 STEP 夹爪视觉网格继续使用已有文件，没有修改原始 CAD。
-包内指向的 `source_cad/backplate/v2` 等源 STEP 在本工作区不存在；
-本次能验证的是 STL、导出清单及原夹爪网格，不能复核缺失的源 CAD。
+昨天的组合仍加载相机支架 V2，且没有相机本体碰撞包络；现已替换为
+V3，并按同一装配坐标加入 90×25×25.05 mm 的名义 D435i 外壳盒。
+夹爪、法兰、两个支架及相机分别为独立 link，机械臂仍由供应商宏提供。
+没有合并机械臂 CAD，也没有增加控制节点或新的运动所有者。
 
-打印导出只做平移。减去清单 translation_xyz_mm 后恢复原装配坐标。
-夹爪视觉变换 R=Ry(π/2)Rx(π/2)，即
-`x_g=y_cad−43.494; y_g=−z_cad−22.225; z_g=28.836−x_cad`（mm）。
-法兰 STL 的 x=80.8 mm 平面及 x=82.8 mm 的 Ø31.45 mm 定位凸台
-支持安装面中心 CAD [80.8,43.494,−22.225] mm 的推导。
-因此夹爪基准位于名义法兰 +Z 51.964 mm；名义 TCP 为
-[-1.8,0,222.500] mm。采样数是单套 CAD/网格，不具有实测不确定度。
-法兰绕轴安装角度、原基准微小偏移、打印件尺寸和 TCP 尚未实测。
+组合文件原来默认真实厂商驱动而没有 robot_ip；离线检查现在默认
+`fake_components/GenericSystem`。真实配置必须显式提供已验证的
+`ros2_control_plugin` / `robot_ip`，并完成相应运行时接入；本轮未启动
+任何控制器、连接机械臂或发出运动命令。现有 arm-only/G1/Gazebo 入口
+仍未改为使用本组合，不能把本次静态检查当作运行时迁移完成。
 
-衍生网格与来源清单：`atom_gripper_description/meshes/generated/mount_v2/`。
-各部件保持独立固定 link，与供应商机械臂 Xacro 组合；没有从 CAD
-导出整个机械臂加夹爪的单体网格或 URDF。
+视觉网格在 `atom_gripper_description/meshes/generated/mount/`，由硬件
+打印 STL 及 manifest 变换生成。所有碰撞包络为覆盖完整视觉外形的
+简化箱体，每侧 0.5 mm 建模余量；这个余量没有经过物理验证。
+相机盒只是名义壳体，不创建 `camera_link` 或 optical TF，避免把 CAD
+推断外参当作已标定驱动帧。PCB、螺钉、USB/线缆和被夹物仍缺包络。
 
-## 碰撞模型与范围
+## 名义坐标，单位 mm
 
-原 base 碰撞箱未覆盖完整视觉外形，两个 finger 仅有接触垫碰撞箱。
-已替换为各自完整视觉网格在 link 坐标系的包围盒，并为新三个部件加箱体。
-各盒每侧加 0.5 mm，是拟定建模余量，不是已证明足够的安全距离。
-手指箱体随各自关节运动，但继承的轴、行程和编码器→关节映射仍未实测。
-粗包络会误报碰撞；后续可用经覆盖检查的分块包络减小误报，不能简单
-禁用工具与机械臂碰撞来消除报错。
+由原 CAD 推断，样本 N=1；没有实测不确定度：
 
-新 SRDF 保留供应商原机械臂组及碰撞排除；工具内部重叠包络两两排除，
-仅新增 flange_adapter/link6 安装接触排除。夹爪本体、手指、两个支架与
-link_base/link1…link6 的检查保留；法兰与其余机械臂 link 也保留。
-它不检查工具内部机械干涉。相机本体、ESP32 PCB、螺丝、电缆及被夹物
-未在压缩包中，尚无它们的包络；有这些实物时必须补充后再验收。
-新部件未虚构质量/惯量；继承夹爪惯量仍为历史临时值，不可用于真实负载配置。
+- CAD 法兰面中心 `[80.8,43.494,−22.225]`；夹爪转换
+  `x_g=y_cad−43.494; y_g=−z_cad−22.225; z_g=28.836−x_cad`。
+- `tool_flange → gripper_mount`：`[0,0,51.964]`。
+- `tool_flange → gripper_tcp`：`[−1.8,0,222.500]`。
+- `gripper_base → d435i_body`：`[0,−73.000,97.561]`；相机长轴沿 X_g，
+  镜头暂定朝 +Z_g。`tool_flange → d435i_body` 的 Z 为 149.525。
+- `gripper_mount_xyz/rpy` 校正整个工具，包括法兰和所有附属部件。
+  法兰绕轴安装角度、相机朝向和 TCP 仍需实测。
 
-## 生成与验证
+原夹爪 0.58 kg 分配、关节 −15…+5 mm、轴向、摩擦系数和 TCP 是历史
+临时值。新支架/相机没有虚构惯量；本模型不是完整动力学或实际负载模型。
+机械臂仍是名义 UF850 描述，不能据此断言采购型号或实物配置已确认。
 
-在仓库根目录使用独立 Python 环境：
+## 碰撞排除
+
+继承的工具内部 15 对保守包络排除保留，因此本 SRDF **不验证工具内部
+机械干涉**。新增相机仅排除其与相机支架的安装接触；相机对手指、
+夹爪本体、法兰、ESP32 支架和各机械臂 link 的检查保留。
+工具对机械臂只排除法兰适配件 / link6 安装接触，未批量关闭工具-机械臂
+碰撞。粗包络可能误报，不应直接扩展排除列表掩盖错误。
+
+## 生成与检查
+
+使用 D-007 固定的供应商 checkout：
+`3dc2b5e8294758d96b54b15fa5920d581b7cbb3d`。
 
 ```bash
+# CAD 模型生成环境另见 hardware/end effector/README.md
 python3 -m venv tmp/gripper_model_env
 tmp/gripper_model_env/bin/pip install -r tools/gripper/requirements-model.txt
-# 仅首次准备供应商源码；沿用 D-007 的版本
-git clone https://github.com/xArm-Developer/xarm_ros2.git tmp/xarm_ros2
-git -C tmp/xarm_ros2 checkout 3dc2b5e8294758d96b54b15fa5920d581b7cbb3d
 tmp/gripper_model_env/bin/python ros2_ws/src/atom_gripper_description/scripts/import_mount_v2.py
 tmp/gripper_model_env/bin/python tools/gripper/export_description.py \
-  --vendor-root tmp/xarm_ros2 --output tmp/gripper_integration/export
+  --vendor-root tmp/xarm_ros2 --output tmp/current_tool_export
 tmp/gripper_model_env/bin/python -m pytest -q tools/gripper/test_description_geometry.py
 ```
 
-export 的输出目录须不存在，以免覆盖已有验收文件。输出：
-`atom_gripper_v2.urdf`（独立工具）、`uf850_atom.urdf`（组合）、
-`uf850_atom.srdf`。网格 URI 需相应 ROS 包可见，不能只拷贝 URDF。
-离线 export 使用明确的本地包路径解析 Xacro，不需要 ROS，不启动控制器。
+输出目录需不存在。源 Xacro 在两个描述包中；展开的 URDF/SRDF 是临时
+产物，不作为第二份维护源码。网格 package URI 需相应 ROS 包可见。
 
-本轮验证：三个模型/语义文件成功展开；4 项几何回归通过，检查六个
-部件的所有视觉顶点被碰撞盒覆盖、空/非空前缀结构、SRDF 引用以及
-工具与机械臂碰撞排除范围。使用项目固定供应商源码；Python/Xacro
-版本见 requirements-model.txt。没有 urdfdom、Jazzy/MoveIt/FCL 运行时，
-没有宣称实际姿态可达或碰撞安全。既有 ROS 包测试需在 Jazzy 构建后运行。
+本轮 11 项离线回归通过：完整视觉顶点覆盖、当前三版本与 SHA/坐标
+来源、相机包络、空/非空前缀、唯一名称/完整树、网格 URI、mimic/控制
+边界、SRDF 引用与排除范围，以及法兰/夹爪/TCP/相机的坐标一致性。
+三份当前 CAD 再生成比对通过，最大采样偏差法兰约 0.01601 mm；这只是
+数字模型之间的检查，不是打印精度。两份展开 URDF 在本机
+`ros:jazzy-ros-base` 容器中由 urdfdom `check_urdf` 解析通过。
+两个项目描述包及固定版本的两个供应商描述包已构建安装；两个项目包的
+6 项 pytest 用例通过（colcon/CTest 汇总含测试包装器共 8 tests，0 errors /
+0 failures）。基础容器缺少 xacro CLI，本轮使用项目固定 xacro 2.1.1 的
+纯 Python 模块提供临时 CLI；测试源码和已安装包均未因此改写。
+昨天的 `tmp/gripper_integration/export/` 已更新为通过检查的当前
+URDF/SRDF，旧导出保留在本轮临时备份中。
 
-## 接入原机械臂前的验收
-
-原 `uf850_arm_only.launch.py` 构建供应商裸臂或 G1 模型，未加载本组合。
-先在既有 Jazzy 环境将同一套 URDF/SRDF 接入 MoveIt 和 TF 发布者，
-用静态关节状态检查 RViz 外形、法兰朝向、指间开口和末端 TCP。
-记录实际 payload/CoM、相机/PCB/线缆包络与手指状态映射。
-机械臂运动组仍以 link_eef 为末端；不能把未标定 gripper_tcp 当作已验证 IK 目标。
-
-以真实起始关节状态和测量后的模型，检查目标与整条路径；分别验证
-夹爪开/闭、法兰/支架对各机械臂 link、携物包络和工作台障碍。
-需要一个已知碰撞姿态被拒绝的反例，确认碰撞检查确实启用，且没有
-ACM、SRDF 或驱动参数把工具相关碰撞全部忽略。再进行低速人工监督验收。
-规划碰撞检查不替代机械臂硬件保护或硬件急停，也不覆盖未经监督的直接驱动命令。
+未执行实际 MoveIt/FCL 路径碰撞、Gazebo 动力学或实机运动。部署前需要
+实测装配、完整线缆/PCB 包络、惯量与 TF，在规划器中验证一个已知碰撞
+反例被拒绝，确认整条轨迹及不同手指状态的碰撞检查，再做受监督的低速
+验收。规划/软件停止不替代硬件急停或机械臂硬件保护。

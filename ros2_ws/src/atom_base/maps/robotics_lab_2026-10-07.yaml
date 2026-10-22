@@ -1,0 +1,8 @@
+# Robotics lab (our lab), best map as of 2026-10-07. Mapped with start_real_slam.sh, run 2026-10-07_1415_lab_map. NOT the chemistry lab (that is real_lab*).
+image: robotics_lab_2026-10-07.pgm
+mode: trinary
+resolution: 0.05
+origin: [-1.97, -1.46, 0]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.25

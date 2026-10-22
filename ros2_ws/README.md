@@ -14,6 +14,14 @@ ATOM-owned packages currently present are:
   plan-and-execute trajectory demo, plus configurable pick/place target
   publication and a checked lift/constrained-transfer/descent baseline;
 - `atom_xarm_dynamics`: ATOM-owned nominal actuator layer and tracking reports.
+- `atom_mobile_description`: modular base review envelope, 805 mm pedestal,
+  pinned UF850 and current ATOM tool; mounting yaw is configurable/unconfirmed.
+- `atom_base`: Jazzy migration of the received navigation/fine-adjust stack,
+  exclusive velocity gate and opt-in connection to the existing gripper bridge.
+
+Whole-robot review and fake-base entry points, current verification and hardware
+limits are documented in [MOBILE_BASE_INTEGRATION](../docs/MOBILE_BASE_INTEGRATION.md).
+They do not replace the independently verified bare-arm simulation baseline.
 
 None of these packages copies or modifies vendor robot-description files. The
 combined gripper description is not yet used by the dynamic MoveIt/Gazebo smoke

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- Height/centering user supplied 2026-10-22; section and footprint are review
+       placeholders. One solid collision envelope intentionally fills the stand. -->
+  <xacro:macro name="atom_pedestal" params="height:=0.805 width:=0.36 depth:=0.32">
+    <joint name="pedestal_joint" type="fixed">
+      <parent link="base_top"/><child link="arm_pedestal"/>
+      <origin xyz="0 0 ${height/2}"/>
+    </joint>
+    <link name="arm_pedestal">
+      <xacro:macro name="extrusion" params="x y">
+        <visual><origin xyz="${x} ${y} 0"/><geometry><box size="0.04 0.04 ${height}"/></geometry>
+          <material name="aluminium"><color rgba="0.68 0.71 0.74 1"/></material></visual>
+      </xacro:macro>
+      <xacro:extrusion x="${width/2-0.02}" y="${depth/2-0.02}"/>
+      <xacro:extrusion x="${width/2-0.02}" y="${-depth/2+0.02}"/>
+      <xacro:extrusion x="${-width/2+0.02}" y="${depth/2-0.02}"/>
+      <xacro:extrusion x="${-width/2+0.02}" y="${-depth/2+0.02}"/>
+      <visual><origin xyz="0 0 ${height/2-0.02}"/>
+        <geometry><box size="${width} ${depth} 0.04"/></geometry>
+        <material name="aluminium"/></visual>
+      <collision><geometry><box size="${width} ${depth} ${height}"/></geometry></collision>
+    </link>
+    <joint name="arm_mount_joint" type="fixed">
+      <parent link="arm_pedestal"/><child link="arm_mount"/>
+      <origin xyz="0 0 ${height/2}"/>
+    </joint>
+    <link name="arm_mount"/>
+  </xacro:macro>
+</robot>

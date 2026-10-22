@@ -1,0 +1,47 @@
+{
+  "sections": [
+    {
+      "section": "1. Project and significance",
+      "maximum": 100,
+      "words": 88,
+      "conservative_words": 90
+    },
+    {
+      "section": "2. Three stakeholder groups at scale",
+      "maximum": 50,
+      "words": 46,
+      "conservative_words": 46
+    },
+    {
+      "section": "3. Purpose",
+      "maximum": 50,
+      "words": 40,
+      "conservative_words": 40
+    },
+    {
+      "section": "4. Three values and three principles",
+      "maximum": 200,
+      "words": 189,
+      "conservative_words": 190
+    },
+    {
+      "section": "5. Goals, means and ends",
+      "maximum": 300,
+      "words": 288,
+      "conservative_words": 296
+    },
+    {
+      "section": "6. Two relevant professional-code tenets",
+      "maximum": 150,
+      "words": 117,
+      "conservative_words": 120
+    }
+  ],
+  "ai_declaration_words": 14,
+  "total_including_ai": 782,
+  "conservative_total_including_ai": 797,
+  "excluded": "Section headings and bibliography; no footnotes are used",
+  "count_method": "Whitespace-delimited; conservative check additionally splits compounds",
+  "oral_script_words": 323,
+  "slide_count": 2
+}

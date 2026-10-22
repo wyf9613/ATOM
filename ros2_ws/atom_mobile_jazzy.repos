@@ -1,0 +1,11 @@
+# Additional sources for the base; xArm remains pinned by atom_xarm_jazzy.repos.
+# Apply patches in tools/base/patches after import, before building.
+repositories:
+  tracer_ros2:
+    type: git
+    url: https://github.com/agilexrobotics/tracer_ros2.git
+    version: 832ea9a48fe725d47d766a099d358062ea2f0f31
+  ugv_sdk:
+    type: git
+    url: https://github.com/agilexrobotics/ugv_sdk.git
+    version: f2704eacdc90357078cd93ec60aae08bb4baab35

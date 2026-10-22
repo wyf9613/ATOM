@@ -8,7 +8,8 @@ from rclpy.action import ActionServer, GoalResponse, CancelResponse
 from rclpy.callback_groups import ReentrantCallbackGroup
 from rclpy.executors import MultiThreadedExecutor
 from sensor_msgs.msg import MagneticField
-from std_msgs.msg import String
+from std_msgs.msg import Bool, String
+from rclpy.qos import QoSProfile, DurabilityPolicy
 from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus
 from atom_operator_interfaces.action import ControlGripper
 from .controller import GripperController, validate
@@ -22,6 +23,11 @@ class HardwareBridge(Node):
             raise RuntimeError('Physical gripper bridge requires system clock')
         self.declare_parameter('port', '/dev/ttyUSB0')
         self.declare_parameter('enable_motion', False)
+        self.declare_parameter('require_system_stop_state', False)
+        self.require_system_stop_state = self.get_parameter('require_system_stop_state').value
+        self.system_stopped = self.require_system_stop_state
+        self.system_state_seen = 0.0
+        self.system_stop_future = None
         self.declare_parameter('frame_id', 'gripper_magnetic_sensor')
         self.declare_parameter('log_path', '/tmp/atom_gripper_hardware.jsonl')
         self.controller = GripperController(self.get_parameter('port').value,
@@ -40,6 +46,32 @@ class HardwareBridge(Node):
         self.lease = ControlLease()
         self.lease_stop = None
         self.create_subscription(String,'/atom/gripper/control_heartbeat',self.caller_heartbeat,10)
+        self.create_subscription(Bool, '/atom/safety/stopped', self.system_stop,
+                                 QoSProfile(depth=1, durability=DurabilityPolicy.TRANSIENT_LOCAL))
+
+    def system_stop(self, message):
+        self.system_state_seen = time.monotonic()
+        self.system_stopped = bool(message.data)
+        if self.system_stopped:
+            self.request_system_hold()
+
+    def request_system_hold(self):
+        state = self.controller.snapshot()
+        # An idle, disarmed startup has no motion to cancel. Leaving a cancel
+        # flag set there would incorrectly reject the first ARM after reset.
+        if not (state.get('armed') or state.get('busy') or state.get('moving')):
+            return
+        self.controller.cancel()
+        if self.system_stop_future is None or self.system_stop_future.done():
+            if state.get('connected'):
+                try:
+                    self.system_stop_future = self.controller.submit('stop')
+                except PermissionError:
+                    pass
+
+    def system_motion_blocked(self):
+        return self.system_stopped or (self.require_system_stop_state and
+                                      time.monotonic()-self.system_state_seen > 0.5)
 
     def caller_heartbeat(self, message):
         with self.owner_lock:
@@ -48,6 +80,8 @@ class HardwareBridge(Node):
     def goal(self, goal):
         try:
             validate(goal.command, {'position':goal.position, 'force_n':goal.force_n})
+            if goal.command not in {'stop', 'disarm'} and self.system_motion_blocked():
+                return GoalResponse.REJECT
             if goal.command in self.controller.blocks(): return GoalResponse.REJECT
             with self.owner_lock:
                 if self.owner is not None and goal.command not in {'stop','disarm'}: return GoalResponse.REJECT
@@ -69,9 +103,13 @@ class HardwareBridge(Node):
             with self.owner_lock: self.owner = handle
         result = ControlGripper.Result()
         try:
+            if command not in {'stop', 'disarm'} and self.system_motion_blocked():
+                raise PermissionError('System software stop active or supervisor state stale')
             future = self.controller.submit(command, {'position':handle.request.position,'force_n':handle.request.force_n})
             deadline = time.monotonic()+70
             while not future.done():
+                if command not in {'stop', 'disarm'} and self.system_motion_blocked():
+                    self.request_system_hold()
                 if handle.is_cancel_requested: self.controller.cancel()
                 if time.monotonic()>deadline:
                     self.controller.cancel(); raise RuntimeError('Action timeout; stop requested')
@@ -83,6 +121,9 @@ class HardwareBridge(Node):
                 time.sleep(0.1)
             value=future.result()
             result.success=bool(value['success']); result.message=json.dumps(value)
+            if owns and self.system_motion_blocked():
+                result.success=False
+                result.message='System software stop or supervisor loss interrupted the request'
             result.position_verified=value.get('position_verified',False)
             result.grasp_verified=False
             result.final_position=self.controller.snapshot()['position'] or -1
@@ -100,6 +141,8 @@ class HardwareBridge(Node):
         return result
 
     def publish_state(self):
+        if self.system_motion_blocked():
+            self.request_system_hold()
         # Caller loss requests hold; never silently release an object.
         new_stop=None
         with self.owner_lock:
@@ -116,6 +159,10 @@ class HardwareBridge(Node):
             new_stop.add_done_callback(stopped)
         state=self.controller.snapshot()
         state['blocks']=self.controller.blocks()
+        if self.system_motion_blocked():
+            for command in ('arm', 'open', 'close', 'move', 'zero', 'reset'):
+                state['blocks'][command] = 'System software stop active or supervisor state stale'
+        state['system_stopped'] = self.system_motion_blocked()
         with self.owner_lock: state['control_owner']=self.lease.owner
         self.status.publish(String(data=json.dumps(state)))
         if state['sensor_valid'] and state['sensor_fresh']:

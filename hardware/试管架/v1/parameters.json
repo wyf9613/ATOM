@@ -1,0 +1,24 @@
+{
+  "status": "REVIEW PROTOTYPE - fit, material and camera validation required",
+  "units": "mm",
+  "material": "MDF",
+  "thickness": 3.0,
+  "kerf": 0.15,
+  "interference": 0.05,
+  "tab_length_clearance": 0.20,
+  "width": 320.0,
+  "depth": 90.0,
+  "front_y": 6.0,
+  "base_bottom": 60.0,
+  "hole_clearance_diameter": 0.60,
+  "slot_x": [40.0, 100.0, 160.0, 220.0, 280.0],
+  "slot_y": 45.0,
+  "shelf_tab_y": [[22.0, 34.0], [56.0, 68.0]],
+  "apron_tab_z": [[12.0, 24.0], [40.0, 52.0]],
+  "tag_family": "DICT_APRILTAG_36h11",
+  "tag_black_border_size": 40.0,
+  "variants": {
+    "small": {"vessel_diameter": 15.0, "vessel_height": 50.0, "guide_above_seat": 25.0, "tag_ids": [0, 1, 2, 3, 4]},
+    "large": {"vessel_diameter": 25.0, "vessel_height": 75.0, "guide_above_seat": 40.0, "tag_ids": [5, 6, 7, 8, 9]}
+  }
+}

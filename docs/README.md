@@ -34,6 +34,9 @@ UR3e 的已实现仿真、MoveIt 抓取和 Humble/Fortress 验证文档保留在
 | [夹爪后续测试与交接](GRIPPER_NEXT_TESTS.md) | 等时长对照、重复闭合、差值力标定及队友接机械臂前的夹爪事项 |
 | [新法兰与夹爪模型集成](GRIPPER_MOUNT_V2_INTEGRATION.md) | CAD 坐标恢复、模块化 URDF/SRDF、碰撞覆盖和实机接入边界 |
 | [CAD 资产清单](CAD_INVENTORY.md) | 记录收到的 CAD、校验信息和后续导出要求 |
+| [整机 URDF 测量表](FULL_ROBOT_URDF_MEASUREMENTS.md) | Tracer 2.0、铝型材架和已安装机械臂的基准、尺寸与整合要求 |
+| [底盘与视觉伺服交接审阅](BASE_HANDOVER_REVIEW_20261022.md) | 2026-10-22 收到的导航/微调代码、接口、缺失依赖、控制权与离线检查 |
+| [移动底盘与夹爪集成](MOBILE_BASE_INTEGRATION.md) | Jazzy 迁移、805 mm 安装基准、整机 URDF、速度控制权与验证入口 |
 | [仿真到实机差异记录](SIM2REAL_LOG.md) | 持续记录模型假设、实测结果和修正验证 |
 | [腕部相机与观察实验](CAMERA_EXPERIMENT.md) | 当前场景、预观察与两段接近的接口、运行命令及验证边界 |
 | [RGB 与 RGB-D 单例精度对比](RGB_VS_RGBD_SINGLE_RUN_COMPARISON_20260925.md) | 两例成功运行的终点误差和逐帧定位误差；与独立重复试验区分 |

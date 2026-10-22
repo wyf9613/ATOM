@@ -21,7 +21,7 @@ def test_uf850_and_gripper_are_composed_at_explicit_mount_frame():
     joints = {joint.attrib['name']: joint for joint in robot.findall('joint')}
 
     assert {'world', 'link_base', 'link6', 'link_eef'} <= links
-    assert {'gripper_mount', 'gripper_base', 'gripper_tcp'} <= links
+    assert {'gripper_mount', 'gripper_base', 'gripper_tcp', 'camera_bracket', 'd435i_body'} <= links
     assert all(f'joint{index}' in joints for index in range(1, 7))
     mount = joints['tool_flange_joint']
     assert mount.find('parent').attrib['link'] == 'link_eef'
@@ -59,3 +59,14 @@ def test_combined_model_is_accepted_by_urdfdom():
         text=True,
     )
     assert checked.returncode == 0, checked.stderr
+
+
+def test_current_camera_and_fake_review_defaults_are_installed():
+    _, robot = expanded_robot()
+    assert robot.find('ros2_control/hardware/plugin').text == 'fake_components/GenericSystem'
+    body = robot.find("link[@name='d435i_body']")
+    assert body.find('visual/geometry/box').attrib['size'] == '0.090000000 0.025000000 0.025050000'
+    for mesh in robot.findall('.//mesh'):
+        package, relative = mesh.attrib['filename'][len('package://'):].split('/', 1)
+        from pathlib import Path
+        assert (Path(get_package_share_directory(package)) / relative).is_file()

@@ -34,7 +34,6 @@
 |-- hardware/                      # 当前收到的硬件资料
 |-- previous report/               # 上一组原始报告
 |-- reference/                     # 外部参考资料索引
-|-- source_cad/                    # CAD 来源与导出约定
 `-- ros2_ws/                       # ROS 2 Jazzy 工作区与 ATOM 自有软件包
 ```
 

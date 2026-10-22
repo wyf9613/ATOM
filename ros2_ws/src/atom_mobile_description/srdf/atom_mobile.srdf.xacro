@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="ATOM_MOBILE_UF850">
+  <xacro:arg name="prefix" default=""/>
+  <xacro:include filename="$(find atom_xarm_description)/srdf/uf850_atom.srdf.xacro"/>
+  <!-- map/odom are provided by localisation, never a URDF fixed world joint. -->
+  <virtual_joint name="mobile_world" type="planar" parent_frame="map" child_link="base_link"/>
+  <passive_joint name="left_wheel_joint"/><passive_joint name="right_wheel_joint"/>
+  <disable_collisions link1="base_body" link2="left_wheel" reason="WheelMount"/>
+  <disable_collisions link1="base_body" link2="right_wheel" reason="WheelMount"/>
+  <disable_collisions link1="base_body" link2="arm_pedestal" reason="PedestalMount"/>
+  <disable_collisions link1="arm_pedestal" link2="$(arg prefix)link_base" reason="ArmMount"/>
+</robot>

@@ -1,0 +1,73 @@
+{
+  "source": "../small_tags_PRINT_100percent.svg",
+  "source_sha256": "cb083cd630f939cc340a615c31f148909945d598d05f1cdbc10c4f5c1cd8e530",
+  "page_size_mm": [
+    210,
+    297
+  ],
+  "family": "tag36h11",
+  "tags": [
+    {
+      "id": 0,
+      "black_square_top_left_mm": [
+        25,
+        60
+      ],
+      "black_square_size_mm": [
+        40,
+        40
+      ],
+      "white_margin_per_side_mm": 5
+    },
+    {
+      "id": 1,
+      "black_square_top_left_mm": [
+        85,
+        60
+      ],
+      "black_square_size_mm": [
+        40,
+        40
+      ],
+      "white_margin_per_side_mm": 5
+    },
+    {
+      "id": 2,
+      "black_square_top_left_mm": [
+        145,
+        60
+      ],
+      "black_square_size_mm": [
+        40,
+        40
+      ],
+      "white_margin_per_side_mm": 5
+    },
+    {
+      "id": 3,
+      "black_square_top_left_mm": [
+        25,
+        130
+      ],
+      "black_square_size_mm": [
+        40,
+        40
+      ],
+      "white_margin_per_side_mm": 5
+    },
+    {
+      "id": 4,
+      "black_square_top_left_mm": [
+        85,
+        130
+      ],
+      "black_square_size_mm": [
+        40,
+        40
+      ],
+      "white_margin_per_side_mm": 5
+    }
+  ],
+  "artwork": "Original polygons, translation only; no scaling or rotation",
+  "validation_scope": "Digital layout only; printed size requires ruler measurement"
+}

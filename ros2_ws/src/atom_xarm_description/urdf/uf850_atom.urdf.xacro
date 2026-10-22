@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="ATOM_UF850">
   <xacro:arg name="prefix" default=""/>
+  <!-- Offline review uses fake hardware; deployment must explicitly select a verified driver/IP. -->
+  <xacro:arg name="ros2_control_plugin" default="fake_components/GenericSystem"/>
+  <xacro:arg name="robot_ip" default=""/>
   <xacro:arg name="gripper_mount_xyz" default="0 0 0"/>
   <xacro:arg name="gripper_mount_rpy" default="0 0 0"/>
 
@@ -8,6 +11,8 @@
   <xacro:xarm_device
     prefix="$(arg prefix)"
     hw_ns="ufactory"
+    ros2_control_plugin="$(arg ros2_control_plugin)"
+    robot_ip="$(arg robot_ip)"
     limited="true"
     dof="6"
     robot_type="uf850"

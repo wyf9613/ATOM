@@ -1,0 +1,280 @@
+{
+  "date": "2026-10-08",
+  "units": "mm",
+  "step_coordinates": "Inherited End Effector Assembly V3 CAD frame",
+  "print_stl_coordinates": "Print frame; transform per part restores STEP/CAD frame",
+  "inherited_assembly": {
+    "step": "End Effector Assembly V3.step",
+    "fusion": "End Effector Assembly V3.f3z"
+  },
+  "original_print_archive_sha256": "17f82205660264756519b7693bc003c0a05366d0942364561e804adff136503a",
+  "source_archive_note": "Removed from active files at user request; original hash and member hashes retained. Local backup in ignored tmp/hardware_cleanup_20261008.",
+  "cad_to_gripper_R": [
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      -1
+    ],
+    [
+      -1,
+      0,
+      0
+    ]
+  ],
+  "cad_to_gripper_translation_mm": [
+    -43.494,
+    -22.225,
+    28.836
+  ],
+  "cad_flange_centre_mm": [
+    80.8,
+    43.494,
+    -22.225
+  ],
+  "gripper_mount_z_mm": 51.964,
+  "camera_body_note": "Nominal 90x25x25.05 mm envelope; CAD placement only, not measured camera/optical TF",
+  "parts": [
+    {
+      "name": "flange_adapter_v2",
+      "role": "flange_adapter",
+      "step": "flange_adapter_v2.step",
+      "print_stl": "flange_adapter_v2_print_mm.stl",
+      "print_to_cad_translation_mm": [
+        28.8,
+        1.4939999999999998,
+        -78.225
+      ],
+      "print_to_cad_rotation_deg_xyz": [
+        0,
+        0,
+        0
+      ],
+      "origin": "Analytic reconstruction from October 5 STL; original Fusion history unavailable",
+      "source_member": "flange_adapter_v2_mm.stl",
+      "source_member_sha256": "83b213f46e48c40f3d2cf68131b8a365ca789b2d0b89455d6bec8d2bcef2cf30",
+      "solid_volume_mm3": 248660.8415137433,
+      "reconstruction_check": {
+        "surface_types": [
+          "CONE",
+          "CYLINDER",
+          "PLANE"
+        ],
+        "brep_face_count": 33,
+        "bounds_max_difference_mm": 2.220446049250313e-16,
+        "volume_relative_difference": 2.0248313479373284e-14,
+        "surface_distance_sampling": {
+          "source_to_rebuilt": {
+            "vertex_count": 5743,
+            "triangle_centroid_count": 11518,
+            "random_surface_count": 8000,
+            "total_sample_count": 25261,
+            "seed": 20261008,
+            "max_mm": 0.015653891658359034,
+            "rms_mm": 0.0020936175001836158,
+            "percentile_99_mm": 0.009027746422050398
+          },
+          "rebuilt_to_source": {
+            "vertex_count": 11350,
+            "triangle_centroid_count": 22732,
+            "random_surface_count": 8000,
+            "total_sample_count": 42082,
+            "seed": 20261008,
+            "max_mm": 0.016005074118472157,
+            "rms_mm": 0.001950918365005422,
+            "percentile_99_mm": 0.007856528606528324
+          }
+        }
+      },
+      "physical_validation": false,
+      "files_sha256": {
+        "flange_adapter_v2.step": "2a89fef7d40e9dc73d5bce80cf358dd89f1fb42346bf58a0c466c7427192349f",
+        "flange_adapter_v2_print_mm.stl": "83b213f46e48c40f3d2cf68131b8a365ca789b2d0b89455d6bec8d2bcef2cf30"
+      },
+      "print_to_cad_transform_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          28.8
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          1.4939999999999998
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          -78.225
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "esp32_bracket_v1",
+      "role": "esp32_bracket",
+      "step": "esp32_bracket_v1.step",
+      "print_stl": "esp32_bracket_v1_print_mm.stl",
+      "print_to_cad_translation_mm": [
+        -78.2,
+        22.494,
+        -79.725
+      ],
+      "print_to_cad_rotation_deg_xyz": [
+        0,
+        0,
+        0
+      ],
+      "origin": "Analytic reconstruction from October 5 STL; original Fusion history unavailable",
+      "source_member": "esp32_bracket_v1_mm.stl",
+      "source_member_sha256": "afb48959ddca033ba5cb11c09dd324b81fdd5099c25669d7957e67d7a300e00a",
+      "solid_volume_mm3": 14245.670825868267,
+      "reconstruction_check": {
+        "surface_types": [
+          "CYLINDER",
+          "PLANE"
+        ],
+        "brep_face_count": 22,
+        "bounds_max_difference_mm": 3.8146972514141453e-07,
+        "volume_relative_difference": 8.938101954243997e-16,
+        "surface_distance_sampling": {
+          "source_to_rebuilt": {
+            "vertex_count": 2552,
+            "triangle_centroid_count": 5132,
+            "random_surface_count": 8000,
+            "total_sample_count": 15684,
+            "seed": 20261008,
+            "max_mm": 0.00037159340581852855,
+            "rms_mm": 0.00011165376158327486,
+            "percentile_99_mm": 0.0003309225689032202
+          },
+          "rebuilt_to_source": {
+            "vertex_count": 5064,
+            "triangle_centroid_count": 10156,
+            "random_surface_count": 8000,
+            "total_sample_count": 23220,
+            "seed": 20261008,
+            "max_mm": 0.0003924853808184006,
+            "rms_mm": 9.526544300104312e-05,
+            "percentile_99_mm": 0.00030421926436571773
+          }
+        }
+      },
+      "physical_validation": false,
+      "files_sha256": {
+        "esp32_bracket_v1.step": "afe6abd21f770fdb749c1233c63b0da389fbe2d446770e90583e10db6712c990",
+        "esp32_bracket_v1_print_mm.stl": "afb48959ddca033ba5cb11c09dd324b81fdd5099c25669d7957e67d7a300e00a"
+      },
+      "print_to_cad_transform_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -78.2
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          22.494
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          -79.725
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "camera_bracket_v3",
+      "role": "camera_bracket",
+      "step": "camera_bracket_v3.step",
+      "print_stl": "camera_bracket_v3_print_mm.stl",
+      "print_to_cad_rotation_deg_xyz": [
+        -90,
+        0,
+        0
+      ],
+      "print_to_cad_note": "p_cad = Rx(-90deg) @ (p_print - post_rotation_translation_mm) + assembly_to_cad_translation_mm",
+      "post_rotation_translation_mm": [
+        -25.0,
+        48.9,
+        23.499999999999996
+      ],
+      "assembly_to_cad_translation_mm": [
+        -81.2,
+        34.494,
+        17.375
+      ],
+      "origin": "New D435i rear M3 design; geometry checked, fit/load unvalidated",
+      "rear_camera_envelope_assembly_mm": [
+        [
+          -0.05,
+          -36,
+          20.9
+        ],
+        [
+          25,
+          54,
+          45.9
+        ]
+      ],
+      "source_member": "camera_bracket_v2_mm.stl",
+      "source_member_sha256": "d25d464fe93b5157247c1d681ac71ccdf6455a58690eec5b6394158081339a42",
+      "physical_validation": false,
+      "files_sha256": {
+        "camera_bracket_v3.step": "7debd4a1990d709afc0ed6410ec631f7e65d820cbfb696e606a154373adfe31e",
+        "camera_bracket_v3_print_mm.stl": "5e18540d5635c0b1f858e531a53ce221cfb22c378c0c73acf4de5acf46d4380f"
+      },
+      "print_to_cad_transform_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -56.2
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          10.994000000000003
+        ],
+        [
+          0.0,
+          -1.0,
+          0.0,
+          66.275
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "inherited_assembly_sha256": {
+    "End Effector Assembly V3.step": "8ee4fd1c064210eab24cb10ba67623e497cab0866adbca86d5be9a0c63aaf351",
+    "End Effector Assembly V3.f3z": "9e27b636ee18203d0501dda5fddbf83745068a4c52f6580ee69b1a690c6e5581"
+  }
+}

@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="230mm" height="145mm" viewBox="0 0 230 145">
+<title>ATOM review prototype; red=CUT; black fill=RASTER; mm; compensation already applied</title>
+<g transform="translate(0,145) scale(1,-1)">
+<polygon data-part="SLOTS left-to-right [2.8, 2.85, 2.9, 2.95, 3.0, 3.05, 3.1]" data-layer="CUT_OUTER" points="165.07500,42.07500 165.07500,9.92500 9.92500,9.92500 9.92500,42.07500" fill="none" stroke="red" stroke-width="0.01"/>
+<polygon data-part="SLOTS left-to-right [2.8, 2.85, 2.9, 2.95, 3.0, 3.05, 3.1]" data-layer="CUT_INNER" points="154.02500,23.47500 141.97500,23.47500 141.97500,20.52500 154.02500,20.52500" fill="none" stroke="red" stroke-width="0.01"/>
+<polygon data-part="SLOTS left-to-right [2.8, 2.85, 2.9, 2.95, 3.0, 3.05, 3.1]" data-layer="CUT_INNER" points="120.97500,23.45000 120.97500,20.55000 133.02500,20.55000 133.02500,23.45000" fill="none" stroke="red" stroke-width="0.01"/>
+<polygon data-part="SLOTS left-to-right [2.8, 2.85, 2.9, 2.95, 3.0, 3.05, 3.1]" data-layer="CUT_INNER" points="99.97500,20.57500 112.02500,20.57500 112.02500,23.42500 99.97500,23.42500" fill="none" stroke="red" stroke-width="0.01"/>
+<polygon data-part="SLOTS left-to-right [2.8, 2.85, 2.9, 2.95, 3.0, 3.05, 3.1]" data-layer="CUT_INNER" points="91.02500,20.60000 91.02500,23.40000 78.97500,23.40000 78.97500,20.60000" fill="none" stroke="red" stroke-width="0.01"/>
+<polygon data-part="SLOTS left-to-right [2.8, 2.85, 2.9, 2.95, 3.0, 3.05, 3.1]" data-layer="CUT_INNER" points="70.02500,23.37500 57.97500,23.37500 57.97500,20.62500 70.02500,20.62500" fill="none" stroke="red" stroke-width="0.01"/>
+<polygon data-part="SLOTS left-to-right [2.8, 2.85, 2.9, 2.95, 3.0, 3.05, 3.1]" data-layer="CUT_INNER" points="36.97500,23.35000 36.97500,20.65000 49.02500,20.65000 49.02500,23.35000" fill="none" stroke="red" stroke-width="0.01"/>
+<polygon data-part="SLOTS left-to-right [2.8, 2.85, 2.9, 2.95, 3.0, 3.05, 3.1]" data-layer="CUT_INNER" points="15.97500,20.67500 28.02500,20.67500 28.02500,23.32500 15.97500,23.32500" fill="none" stroke="red" stroke-width="0.01"/>
+<polygon data-part="INSERT 12 mm tab" data-layer="CUT_OUTER" points="204.07500,28.07500 204.07500,9.92500 179.92500,9.92500 179.92500,28.07500 185.92500,28.07500 185.92500,31.07500 198.07500,31.07500 198.07500,28.07500" fill="none" stroke="red" stroke-width="0.01"/>
+<polygon data-part="TAG 10 | 40 mm border" data-layer="CUT_OUTER" points="70.07500,64.92500 9.92500,64.92500 9.92500,125.07500 70.07500,125.07500" fill="none" stroke="red" stroke-width="0.01"/>
+<polygon data-layer="RASTER" points="60.00000,110.00000 60.00000,115.00000 20.00000,115.00000 20.00000,110.00000" fill="#000000" stroke="#000000" stroke-width="0.01" opacity="1" fill-opacity="1" stroke-opacity="1"/>
+<polygon data-layer="RASTER" points="35.00000,105.00000 35.00000,110.00000 20.00000,110.00000 20.00000,105.00000" fill="#000000" stroke="#000000" stroke-width="0.01" opacity="1" fill-opacity="1" stroke-opacity="1"/>
+<polygon data-layer="RASTER" points="50.00000,105.00000 50.00000,110.00000 45.00000,110.00000 45.00000,105.00000" fill="#000000" stroke="#000000" stroke-width="0.01" opacity="1" fill-opacity="1" stroke-opacity="1"/>
+<polygon data-layer="RASTER" points="60.00000,105.00000 60.00000,110.00000 55.00000,110.00000 55.00000,105.00000" fill="#000000" stroke="#000000" stroke-width="0.01" opacity="1" fill-opacity="1" stroke-opacity="1"/>
+<polygon data-layer="RASTER" points="35.00000,100.00000 35.00000,105.00000 20.00000,105.00000 20.00000,100.00000" fill="#000000" stroke="#000000" stroke-width="0.01" opacity="1" fill-opacity="1" stroke-opacity="1"/>
+<polygon data-layer="RASTER" points="60.00000,100.00000 60.00000,105.00000 55.00000,105.00000 55.00000,100.00000" fill="#000000" stroke="#000000" stroke-width="0.01" opacity="1" fill-opacity="1" stroke-opacity="1"/>
+<polygon data-layer="RASTER" points="25.00000,95.00000 25.00000,100.00000 20.00000,100.00000 20.00000,95.00000" fill="#000000" stroke="#000000" stroke-width="0.01" opacity="1" fill-opacity="1" stroke-opacity="1"/>
+<polygon data-layer="RASTER" points="45.00000,95.00000 45.00000,100.00000 40.00000,100.00000 40.00000,95.00000" fill="#000000" stroke="#000000" stroke-width="0.01" opacity="1" fill-opacity="1" stroke-opacity="1"/>
+<polygon data-layer="RASTER" points="60.00000,95.00000 60.00000,100.00000 50.00000,100.00000 50.00000,95.00000" fill="#000000" stroke="#000000" stroke-width="0.01" opacity="1" fill-opacity="1" stroke-opacity="1"/>
+<polygon data-layer="RASTER" points="30.00000,90.00000 30.00000,95.00000 20.00000,95.00000 20.00000,90.00000" fill="#000000" stroke="#000000" stroke-width="0.01" opacity="1" fill-opacity="1" stroke-opacity="1"/>
+<polygon data-layer="RASTER" points="50.00000,90.00000 50.00000,95.00000 35.00000,95.00000 35.00000,90.00000" fill="#000000" stroke="#000000" stroke-width="0.01" opacity="1" fill-opacity="1" stroke-opacity="1"/>
+<polygon data-layer="RASTER" points="60.00000,90.00000 60.00000,95.00000 55.00000,95.00000 55.00000,90.00000" fill="#000000" stroke="#000000" stroke-width="0.01" opacity="1" fill-opacity="1" stroke-opacity="1"/>
+<polygon data-layer="RASTER" points="25.00000,85.00000 25.00000,90.00000 20.00000,90.00000 20.00000,85.00000" fill="#000000" stroke="#000000" stroke-width="0.01" opacity="1" fill-opacity="1" stroke-opacity="1"/>
+<polygon data-layer="RASTER" points="35.00000,85.00000 35.00000,90.00000 30.00000,90.00000 30.00000,85.00000" fill="#000000" stroke="#000000" stroke-width="0.01" opacity="1" fill-opacity="1" stroke-opacity="1"/>
+<polygon data-layer="RASTER" points="60.00000,85.00000 60.00000,90.00000 50.00000,90.00000 50.00000,85.00000" fill="#000000" stroke="#000000" stroke-width="0.01" opacity="1" fill-opacity="1" stroke-opacity="1"/>
+<polygon data-layer="RASTER" points="40.00000,80.00000 40.00000,85.00000 20.00000,85.00000 20.00000,80.00000" fill="#000000" stroke="#000000" stroke-width="0.01" opacity="1" fill-opacity="1" stroke-opacity="1"/>
+<polygon data-layer="RASTER" points="60.00000,80.00000 60.00000,85.00000 50.00000,85.00000 50.00000,80.00000" fill="#000000" stroke="#000000" stroke-width="0.01" opacity="1" fill-opacity="1" stroke-opacity="1"/>
+<polygon data-layer="RASTER" points="60.00000,75.00000 60.00000,80.00000 20.00000,80.00000 20.00000,75.00000" fill="#000000" stroke="#000000" stroke-width="0.01" opacity="1" fill-opacity="1" stroke-opacity="1"/>
+</g></svg>

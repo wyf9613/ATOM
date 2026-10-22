@@ -1,5 +1,33 @@
 # Simulation-to-Real Log
 
+## 2026-10-22 — Modular mobile description and Jazzy interface verification
+
+User-supplied XY centering and chassis-top-to-arm height 0.805 m are composed
+through `base_top` / `arm_mount`. Nominal 0.15 m top height gives a calculated
+0.955 m ground-to-arm mounting plane; top height and support envelope are not
+measured. Mount yaw is an explicitly unconfirmed parameter. The chassis model
+is a simplified review envelope, without accepted mass/inertia data or a
+whole-body physics/control claim.
+
+Targeted Ubuntu 24.04 / Jazzy container build: 11 packages pass, including the
+pinned TRACER/UGV sources and odometry, CMake and command-watchdog patches.
+45 regression checks pass, including one ROS/fake-serial supervisor integration
+check; urdfdom accepts the single-root mobile model. Nine ideal-base interface
+checks pass; runtime TF resolves 0.805 m from base_top to link_base. Ten actual
+Nav2/localisation nodes activate with synthetic scan/odom, and one current-pose
+goal succeeds with the base gate stopped. Five production fine-adjust action
+checks pass with synthetic corrections: rejection while stopped, exclusive
+goal/success, stop/zero, cancel and stale-target abort.
+
+These are final single-run functional checks, not physical accuracy or
+stopping-time samples. No CAN, real arm/gripper/camera/IMU, force data or
+whole-robot dynamics were exercised. Full production Docker build and the
+original arm Gazebo trajectory baseline were not rerun. The 300 ms downstream
+timeout/50 ms polling period, 0.5 s input/state freshness bounds and velocity
+limits are software settings, not measured stop performance. Machine-readable
+evidence and exact environment/pins are in
+[validation_summary.json](data/mobile/20261022/validation_summary.json).
+
 ## 2026-10-03 — Reinforced adapter v2 geometry supersedes v1
 
 The review CAD now places the robot flange contact plane at inherited x=80.8 mm, 52 mm behind the gripper rear plane x=28.8 mm; the prior 64.2 mm v1 separation is historical. ESP32 moved to a separate lower-shell bracket opposite the camera. No robot-description transform, payload, inertia, TCP or collision model was updated: printed fit and measured transforms remain prerequisites. The provisional lowest electronics envelope is z=-97 mm and must enter future collision/clearance validation. See [CAD v2](../source_cad/backplate/v2/README.md).
@@ -128,3 +156,33 @@ pass; no runtime MoveIt/FCL, physical collision clearance or arm deployment was
 verified. Existing arm-only/G1 launcher still uses its original vendor model.
 See GRIPPER_MOUNT_V2_INTEGRATION.md. Force calibration procedure is prepared
 but no new force/holding data collected; force requests remain blocked.
+
+
+## 2026-10-08 — Current CAD review vs runtime/hardware
+
+Offline Xacro now composes flange V2, ESP32 V1, camera V3 and nominal D435i body,
+with inherited CAD transforms. Camera-body centre is [0,-73,97.561] mm from
+nominal gripper_base, not measured optical TF. Arm-only/G1/Gazebo runtime launchers
+are not migrated, and inherited dynamics/limits are unmeasured. Review defaults to
+fake hardware; changing driver/IP is not deployment validation. Static structure,
+collision-envelope coverage, installed description-package tests and urdfdom checks pass; no MoveIt/FCL trajectory or
+physical fit/load/motion/stop validation is claimed. Details and conditions:
+GRIPPER_MOUNT_V2_INTEGRATION.md.
+
+## 2026-10-22 — Received base code: offline replay only
+
+Reviewed two unchanged ZIP handovers in `basement/`; extracted copies and check
+outputs are under `tmp/base_handover_20261022/`. All 71 Python files parsed and
+31 shell files passed `bash -n`; no ROS build, hardware connection or motion was
+performed. Replayed the original six fine-adjust example starts with the original
+`control.py` defaults, ideal unicycle Euler integration at 0.05 s and a 120 s
+limit per case: 6/6 reached their configured 0.02 m / 2 degree termination bounds.
+Maximum final position/yaw errors were approximately 0.01968 m / 1.991 degrees;
+command peaks were 0.050 m/s / 0.250 rad/s. These are deterministic model results,
+without slip, noise, obstacles, server acceleration limits or communication delay;
+they neither test the real YAML (0.12 rad/s angular limit) nor measure docking
+accuracy. Hardware uncertainty is unknown. Supplied hand-eye fit residuals
+(N=25, RMS 2.3847 mm / 0.9935 degrees) need current-mount verification. The supplied
+kinematics fit (600 fitting/200 test queries) compares against controller FK,
+not independent physical measurements. See
+[handover review](BASE_HANDOVER_REVIEW_20261022.md) for provenance and limitations.

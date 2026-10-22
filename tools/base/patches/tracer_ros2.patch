@@ -1,0 +1,75 @@
+diff --git a/tracer_base/include/tracer_base/tracer_messenger.hpp b/tracer_base/include/tracer_base/tracer_messenger.hpp
+index 94937cd..ef5384c 100644
+--- a/tracer_base/include/tracer_base/tracer_messenger.hpp
++++ b/tracer_base/include/tracer_base/tracer_messenger.hpp
+@@ -35,6 +35,9 @@ class TracerMessenger {
+       : tracer_(tracer), node_(node) {}
+ 
+   void SetOdometryFrame(std::string frame) { odom_frame_ = frame; }
++  // calibration multipliers applied to chassis-reported velocities before integration
++  void SetOdomScale(double linear, double angular) { odom_linear_scale_ = linear; odom_angular_scale_ = angular; }
++  void SetPublishOdomTf(bool on) { publish_odom_tf_ = on; }
+   void SetBaseFrame(std::string frame) { base_frame_ = frame; }
+   void SetOdometryTopicName(std::string name) { odom_topic_name_ = name; }
+ 
+@@ -153,6 +156,9 @@ class TracerMessenger {
+   rclcpp::Node *node_;
+ 
+   std::string odom_frame_;
++  double odom_linear_scale_ = 1.0;
++  bool publish_odom_tf_ = true;
++  double odom_angular_scale_ = 1.0;
+   std::string base_frame_;
+   std::string odom_topic_name_;
+ 
+@@ -264,8 +270,8 @@ class TracerMessenger {
+ 
+   void PublishOdometryToROS(const MotionStateMessage &msg, double dt) {
+     // perform numerical integration to get an estimation of pose
+-    double linear_speed = msg.linear_velocity;
+-    double angular_speed = msg.angular_velocity;
++    double linear_speed = msg.linear_velocity * odom_linear_scale_;
++    double angular_speed = msg.angular_velocity * odom_angular_scale_;
+ 
+     // if (std::is_base_of<TracerMiniOmniRobot, TracerType>::value) {
+     //   lateral_speed = msg.lateral_velocity;
+@@ -295,7 +301,7 @@ class TracerMessenger {
+     tf_msg.transform.translation.z = 0.0;
+     tf_msg.transform.rotation = odom_quat;
+ 
+-    tf_broadcaster_->sendTransform(tf_msg);
++    if (publish_odom_tf_) tf_broadcaster_->sendTransform(tf_msg);
+ 
+     // publish odometry and tf messages
+     nav_msgs::msg::Odometry odom_msg;
+diff --git a/tracer_base/src/tracer_base_ros.cpp b/tracer_base/src/tracer_base_ros.cpp
+index 12ff0bd..60dfc40 100644
+--- a/tracer_base/src/tracer_base_ros.cpp
++++ b/tracer_base/src/tracer_base_ros.cpp
+@@ -20,6 +20,9 @@ TracerBaseRos::TracerBaseRos(std::string node_name)
+   this->declare_parameter("port_name", rclcpp::ParameterValue("can0"));   //声明参数
+ 
+   this->declare_parameter("odom_frame", rclcpp::ParameterValue("odom"));
++  this->declare_parameter("odom_linear_scale", rclcpp::ParameterValue(1.0));
++  this->declare_parameter("publish_odom_tf", rclcpp::ParameterValue(true));
++  this->declare_parameter("odom_angular_scale", rclcpp::ParameterValue(1.0));
+   this->declare_parameter("base_frame", rclcpp::ParameterValue("base_link"));
+   this->declare_parameter("odom_topic_name", rclcpp::ParameterValue("odom"));
+ 
+@@ -94,6 +97,16 @@ void TracerBaseRos::Run() {
+       std::unique_ptr<TracerMessenger<TracerRobot>>(new TracerMessenger<TracerRobot>(robot_,this));
+ 
+   messenger->SetOdometryFrame(odom_frame_);
++  {
++    double ls = 1.0, as = 1.0;
++    this->get_parameter_or<double>("odom_linear_scale", ls, 1.0);
++    this->get_parameter_or<double>("odom_angular_scale", as, 1.0);
++    std::cout << "- odom scale linear/angular: " << ls << " / " << as << std::endl;
++    messenger->SetOdomScale(ls, as);
++    bool ptf = true; this->get_parameter_or<bool>("publish_odom_tf", ptf, true);
++    std::cout << "- publish odom tf: " << ptf << std::endl;
++    messenger->SetPublishOdomTf(ptf);
++  }
+   messenger->SetBaseFrame(base_frame_);
+   messenger->SetOdometryTopicName(odom_topic_name_);
+   if (simulated_robot_) messenger->SetSimulationMode(sim_control_rate_);

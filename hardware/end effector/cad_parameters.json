@@ -1,0 +1,168 @@
+{
+  "units": "mm",
+  "esp32_bracket_v1": {
+    "base_size_xyz_mm": [
+      67.0,
+      42.0,
+      4.0
+    ],
+    "board_holes_xy_mm": [
+      [
+        8.75,
+        9.25
+      ],
+      [
+        8.75,
+        32.75
+      ],
+      [
+        55.25,
+        9.25
+      ],
+      [
+        55.25,
+        32.75
+      ]
+    ],
+    "board_hole_diameter_mm": 4.0,
+    "clip_x_limits_mm": [
+      37.0,
+      67.0
+    ],
+    "clip_y_intervals_mm": [
+      [
+        15.0,
+        19.0
+      ],
+      [
+        23.0,
+        27.0
+      ]
+    ],
+    "clip_z_limits_mm": [
+      4.0,
+      17.9
+    ],
+    "clamp_hole_x_mm": [
+      44.5,
+      59.5
+    ],
+    "clamp_hole_z_mm": 14.0,
+    "clamp_hole_diameter_mm": 3.4
+  },
+  "flange_adapter_v2": {
+    "backplate_size_xyz_mm": [
+      12.0,
+      84.0,
+      112.0
+    ],
+    "axis_yz_mm": [
+      42.0,
+      56.0
+    ],
+    "taper_x_limits_mm": [
+      12.0,
+      18.0
+    ],
+    "taper_radii_mm": [
+      42.0,
+      38.0
+    ],
+    "barrel_x_limits_mm": [
+      18.0,
+      50.0
+    ],
+    "barrel_radius_mm": 38.0,
+    "face_x_limits_mm": [
+      50.0,
+      52.0
+    ],
+    "face_radius_mm": 31.5,
+    "pilot_x_limits_mm": [
+      52.0,
+      54.0
+    ],
+    "pilot_radius_mm": 15.725,
+    "centre_bore_diameter_mm": 24.0,
+    "bolt_circle_radius_mm": 25.0,
+    "bolt_angles_deg": [
+      45.0,
+      135.0,
+      225.0,
+      315.0
+    ],
+    "bolt_hole_diameter_mm": 6.6,
+    "counterbore_diameter_mm": 13.0,
+    "counterbore_x_limits_mm": [
+      0.0,
+      38.0
+    ],
+    "plate_holes_yz_mm": [
+      [
+        33.0,
+        7.5
+      ],
+      [
+        51.0,
+        7.5
+      ],
+      [
+        33.0,
+        104.5
+      ],
+      [
+        51.0,
+        104.5
+      ]
+    ],
+    "plate_hole_diameter_mm": 3.4,
+    "pin_hole_yz_mm": [
+      67.0,
+      56.0
+    ],
+    "pin_hole_diameter_mm": 6.0,
+    "pin_hole_x_limits_mm": [
+      37.2,
+      52.0
+    ]
+  },
+  "camera_bracket_v3": {
+    "beam_x_limits_mm": [
+      25,
+      70
+    ],
+    "clip_x_limits_mm": [
+      40,
+      70
+    ],
+    "clip_centre_y_mm": 9,
+    "clip_gap_mm": 6,
+    "clip_wall_mm": 4,
+    "clip_height_mm": 13.9,
+    "beam_thickness_mm": 6,
+    "beam_side_overhang_mm": 2,
+    "rear_plate_thickness_mm": 5,
+    "rear_plate_width_mm": 65,
+    "rear_plate_height_mm": 31,
+    "rear_plate_overlap_mm": 2,
+    "rear_plate_corner_radius_mm": 2,
+    "rear_hole_spacing_mm": 45,
+    "rear_hole_diameter_mm": 3.4,
+    "clamp_hole_x_mm": [
+      47.5,
+      62.5
+    ],
+    "clamp_hole_z_mm": 3.9,
+    "clamp_hole_diameter_mm": 3.4,
+    "rib_thickness_mm": 4,
+    "rib_run_mm": 16,
+    "rib_height_mm": 16,
+    "root_fillet_mm": 1.5,
+    "camera_size_width_height_depth_mm": [
+      90,
+      25,
+      25.05
+    ],
+    "camera_bottom_clearance_mm": 1
+  }
+}

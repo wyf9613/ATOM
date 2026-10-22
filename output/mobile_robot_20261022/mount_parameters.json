@@ -1,0 +1,16 @@
+{
+  "base_top_height_m": 0.15,
+  "pedestal_height_m": 0.805,
+  "arm_mount_yaw_rad": 0.0,
+  "arm_base_xy_m": [
+    0.0,
+    0.0
+  ],
+  "vendor_commit": "3dc2b5e8294758d96b54b15fa5920d581b7cbb3d",
+  "evidence": {
+    "pedestal_height": "user supplied 2026-10-22; measurement uncertainty not supplied",
+    "base_top_height": "nominal inherited simulation value, unmeasured",
+    "yaw": "review setting only; user left physical direction unconfirmed"
+  },
+  "scope": "geometry review only; no measured base/stand inertia, calibrated optical TF or hardware acceptance"
+}

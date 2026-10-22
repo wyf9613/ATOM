@@ -1,0 +1,96 @@
+{
+  "family": "DICT_APRILTAG_36h11",
+  "source": "small_tags_PRINT_100percent.svg",
+  "source_sha256": "cb083cd630f939cc340a615c31f148909945d598d05f1cdbc10c4f5c1cd8e530",
+  "dpi": 508,
+  "pixels_per_mm": 20,
+  "sheet": {
+    "file": "small_tags_ID0-4_508dpi.png",
+    "size_px": [
+      6400,
+      1260
+    ],
+    "size_mm": [
+      320,
+      63
+    ]
+  },
+  "tags": [
+    {
+      "id": 0,
+      "file": "apriltag_36h11_ID0_40mm_508dpi.png",
+      "size_px": [
+        1000,
+        1000
+      ],
+      "canvas_mm": [
+        50,
+        50
+      ],
+      "black_border_size_mm": 40,
+      "white_margin_per_side_mm": 5,
+      "sha256": "a6d25cad3c57690c24c073a63242a8e167b3460328d96c8ad325cf2de6a9cbf5"
+    },
+    {
+      "id": 1,
+      "file": "apriltag_36h11_ID1_40mm_508dpi.png",
+      "size_px": [
+        1000,
+        1000
+      ],
+      "canvas_mm": [
+        50,
+        50
+      ],
+      "black_border_size_mm": 40,
+      "white_margin_per_side_mm": 5,
+      "sha256": "72a0e19ed3f380d745833e292ef7bcd75767561b25e0e5ef3bda311fd43651be"
+    },
+    {
+      "id": 2,
+      "file": "apriltag_36h11_ID2_40mm_508dpi.png",
+      "size_px": [
+        1000,
+        1000
+      ],
+      "canvas_mm": [
+        50,
+        50
+      ],
+      "black_border_size_mm": 40,
+      "white_margin_per_side_mm": 5,
+      "sha256": "bdf2ebabd61b53da182c5a47b88d1f6ef8ef1abc65967600ce4bc4e3c8a2f567"
+    },
+    {
+      "id": 3,
+      "file": "apriltag_36h11_ID3_40mm_508dpi.png",
+      "size_px": [
+        1000,
+        1000
+      ],
+      "canvas_mm": [
+        50,
+        50
+      ],
+      "black_border_size_mm": 40,
+      "white_margin_per_side_mm": 5,
+      "sha256": "57daf61c908dfd42157dcf3d615b9661b7cd5a2d1a79eeef4af7ab55f3631b7b"
+    },
+    {
+      "id": 4,
+      "file": "apriltag_36h11_ID4_40mm_508dpi.png",
+      "size_px": [
+        1000,
+        1000
+      ],
+      "canvas_mm": [
+        50,
+        50
+      ],
+      "black_border_size_mm": 40,
+      "white_margin_per_side_mm": 5,
+      "sha256": "ec7c961bb75252722e148155ac9aa06c19ab380af8568a23185444d46237b069"
+    }
+  ],
+  "checks": "exact black/white pixels; all 8x8 marker modules uniform; 5 mm white margins verified; no new physical camera detection test"
+}

@@ -4,9 +4,9 @@ This package is the top-level composition layer for the official six-axis
 UFactory 850 model and the robot-independent ATOM gripper model. It includes
 both upstream macros and does not copy or modify the vendor arm description.
 
-The composition now includes the CAD v2 flange adapter, camera bracket and
-ESP32 bracket recovered from the 2026-10-05 print archive. The flange correction
-transform is explicitly provisional:
+The current composition includes flange V2, camera bracket V3, ESP32 bracket V1
+and a nominal D435i housing envelope. The reusable hardware files are consolidated
+under `hardware/end effector/`. The flange correction transform is provisional:
 
 ```text
 parent: link_eef
@@ -39,8 +39,17 @@ MoveIt collision-state/path acceptance remain required.
 
 The SRDF preserves vendor arm semantics, marks finger joints passive and adds a
 tool group. It excludes overlapping tool-internal conservative envelopes and
-adapter/link6 mounting contact only. All other tool/arm pairs remain checked.
+adapter/link6 mounting contact, plus camera housing/bracket contact. All other
+tool/arm pairs remain checked.
 There is no camera-to-all-arm exemption in this composition. Tool-internal
 mechanical interference is outside this coarse envelope model.
 
 See [integration evidence](../../../docs/GRIPPER_MOUNT_V2_INTEGRATION.md).
+
+The combined Xacro defaults to `fake_components/GenericSystem` for offline review.
+`ros2_control_plugin` and `robot_ip` are explicit override arguments for a verified
+hardware configuration. This change does not integrate the description into the
+existing Gazebo or arm-only launchers. The nominal `d435i_body` housing frame is
+not a calibrated camera driver/optical frame; its offset from tool_flange is
+[0, -0.073, 0.149525] m. See `docs/GRIPPER_MOUNT_V2_INTEGRATION.md` for checks and
+remaining calibration, inertia and runtime collision limitations.

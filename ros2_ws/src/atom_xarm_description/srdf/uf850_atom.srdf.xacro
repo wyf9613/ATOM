@@ -13,6 +13,7 @@
     <link name="$(arg prefix)flange_adapter"/>
     <link name="$(arg prefix)camera_bracket"/>
     <link name="$(arg prefix)esp32_bracket"/>
+    <link name="$(arg prefix)d435i_body"/>
   </group>
   <end_effector name="$(arg prefix)atom_tool" parent_link="$(arg prefix)link_eef" group="$(arg prefix)atom_tool" parent_group="$(arg prefix)uf850"/>
   <passive_joint name="$(arg prefix)left_finger_joint"/>
@@ -33,6 +34,8 @@
   <disable_collisions link1="$(arg prefix)flange_adapter" link2="$(arg prefix)camera_bracket" reason="ToolEnvelopeOverlap"/>
   <disable_collisions link1="$(arg prefix)flange_adapter" link2="$(arg prefix)esp32_bracket" reason="ToolEnvelopeOverlap"/>
   <disable_collisions link1="$(arg prefix)camera_bracket" link2="$(arg prefix)esp32_bracket" reason="ToolEnvelopeOverlap"/>
+  <!-- Camera housing/bracket mounting contact only; camera vs fingers/arm stays checked. -->
+  <disable_collisions link1="$(arg prefix)d435i_body" link2="$(arg prefix)camera_bracket" reason="CameraMountContact"/>
   <!-- Only adapter/flange mounting contact is excluded against the arm. -->
   <disable_collisions link1="$(arg prefix)flange_adapter" link2="$(arg prefix)link6" reason="FlangeMountContact"/>
 </robot>

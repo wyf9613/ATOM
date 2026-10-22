@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-22",
+  "note": "Imported sources are subsequently adapted for ATOM/Jazzy; original ZIPs unchanged. amr_task_bridge/amr_imu declare Apache-2.0; base_fine_adjust declares MIT. Original maintainer: zheming. SDK arm control intentionally not imported.",
+  "files": [
+    {
+      "source": "amr_nav_2026-10-22/projects/ros2_ws/src/amr_task_bridge/amr_task_bridge/mission_manager.py",
+      "target": "ros2_ws/src/atom_base/atom_base/mission_manager.py",
+      "source_sha256": "68c2c978c6e5720ab85f65360d6002f241d1bbee397a6eae8d49ccb048a14e76"
+    },
+    {
+      "source": "amr_nav_2026-10-22/projects/ros2_ws/src/amr_task_bridge/amr_task_bridge/map_utils.py",
+      "target": "ros2_ws/src/atom_base/atom_base/map_utils.py",
+      "source_sha256": "c1ad870d8c7b8ec52b32033108c4ed76daaaa0292b1ab66e75617592fb846f99"
+    },
+    {
+      "source": "amr_nav_2026-10-22/projects/ros2_ws/src/amr_task_bridge/amr_task_bridge/task_bridge.py",
+      "target": "ros2_ws/src/atom_base/atom_base/task_bridge.py",
+      "source_sha256": "743f339bee88692c1d13b8fcf9dabc65f2fcefe4114ba48d461cb1de5fce8375"
+    },
+    {
+      "source": "amr_nav_2026-10-22/projects/ros2_ws/src/amr_imu/amr_imu/imu_brick_node.py",
+      "target": "ros2_ws/src/atom_base/atom_base/imu_brick_node.py",
+      "source_sha256": "2782ba9ceff5966c4d824b1480b17da275271bf46e97b4d022fc21da71e7d5af"
+    },
+    {
+      "source": "projects/combine/src/base_fine_adjust/base_fine_adjust/control.py",
+      "target": "ros2_ws/src/atom_base/atom_base/control.py",
+      "source_sha256": "2c020440d1f0f5b1165c23ab129b9df3b93313a2a06aba6776f6730e7e8d3e51"
+    },
+    {
+      "source": "projects/combine/src/base_fine_adjust/base_fine_adjust/geom.py",
+      "target": "ros2_ws/src/atom_base/atom_base/geom.py",
+      "source_sha256": "df02d635a6fdbf41f1725e784622d6035fcea4d4b9f0f69298606aa63e9f01f3"
+    },
+    {
+      "source": "projects/combine/src/base_fine_adjust/base_fine_adjust/tag_goal_publisher.py",
+      "target": "ros2_ws/src/atom_base/atom_base/tag_goal_publisher.py",
+      "source_sha256": "66e161d2fad129f3b3a795be0d2381c2d8500cc072a22f8e7ec9b626569d0499"
+    },
+    {
+      "source": "projects/combine/src/base_fine_adjust/base_fine_adjust/fine_adjust_server.py",
+      "target": "ros2_ws/src/atom_base/atom_base/fine_adjust_server.py",
+      "source_sha256": "ec53ca78390090bf43f7e9a2e51a641b9176fd61a97112db5e26ffb00963db33"
+    },
+    {
+      "source": "projects/combine/src/base_fine_adjust/base_fine_adjust/send_goal.py",
+      "target": "ros2_ws/src/atom_base/atom_base/send_goal.py",
+      "source_sha256": "4eb757ead75515b814bbb76e3449a64c80a015b21cc2da8fd5a85547d320850f"
+    }
+  ]
+}

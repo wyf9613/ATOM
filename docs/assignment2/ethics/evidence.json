@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-07",
+  "experimental_unit": "One reported empty-gripper closure-and-return sequence",
+  "contact_condition": "User-reported empty; no independent contact-force reference",
+  "platform_nominal_duration_s": 10,
+  "magnetic_field_unit": "microtesla",
+  "uncertainty": "Total physical uncertainty not quantified; sample SD is descriptive only",
+  "limits": [
+    "Not five independent experiments",
+    "Pose and physical opening were not independently measured",
+    "No matched fixed-opening time control; cause of changes not isolated",
+    "No force calibration or safe-grip conclusion"
+  ],
+  "platforms": [
+    {
+      "name": "baseline",
+      "label": "Baseline",
+      "source": "docs/data/gripper/20261007/empty_closure_20261007/baseline.csv",
+      "sha256": "7a25b90a5c56f1a2115c70211ce3b09e55ad3409f41d8ca5851b9a68d285ba7a",
+      "n": 100,
+      "bz_mean_uT": 7748.78671393,
+      "bz_sample_sd_uT": 1.2154045621101324,
+      "delta_bz_mean_uT": 0.0
+    },
+    {
+      "name": "close_1",
+      "label": "Close 1",
+      "source": "docs/data/gripper/20261007/empty_closure_20261007/close_1.csv",
+      "sha256": "ed032a182cb5abc4a7bd5f8d086020f48d530a71e49079e6df0d8b4bfc96258e",
+      "n": 100,
+      "bz_mean_uT": 7746.1803858,
+      "bz_sample_sd_uT": 1.2803128192694744,
+      "delta_bz_mean_uT": -2.6063281299993832
+    },
+    {
+      "name": "close_2",
+      "label": "Close 2",
+      "source": "docs/data/gripper/20261007/empty_closure_20261007/close_2.csv",
+      "sha256": "5d6fadba5ba299964a8a9d7bf60e569d4dd7fbad46ce654bd7a15b3c21699db4",
+      "n": 100,
+      "bz_mean_uT": 7744.61705074,
+      "bz_sample_sd_uT": 1.0955072321391548,
+      "delta_bz_mean_uT": -4.169663189999483
+    },
+    {
+      "name": "close_3",
+      "label": "Close 3",
+      "source": "docs/data/gripper/20261007/empty_closure_20261007/close_3.csv",
+      "sha256": "6fd2b4455c88223b9322574405daa9bff7429a0e6fcdf2852e7140afb29154b6",
+      "n": 100,
+      "bz_mean_uT": 7742.71010254,
+      "bz_sample_sd_uT": 1.1319916514718482,
+      "delta_bz_mean_uT": -6.0766113899999254
+    },
+    {
+      "name": "return",
+      "label": "Return",
+      "source": "docs/data/gripper/20261007/empty_closure_20261007/return.csv",
+      "sha256": "c2eb19faa6efbb11aacbf648c17ae3034e8ab0fc384de8a68fba13e5fcf4f2cb",
+      "n": 100,
+      "bz_mean_uT": 7744.9848925,
+      "bz_sample_sd_uT": 1.175659413776677,
+      "delta_bz_mean_uT": -3.801821430000018
+    }
+  ]
+}

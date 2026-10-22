@@ -1,5 +1,17 @@
 # Assumptions and Open Questions
 
+## 2026-10-22 — User-supplied mobile mount, remaining geometry/calibration
+
+User supplies coincident horizontal base/arm centres and 805 mm from chassis
+top to arm mounting plane. This supersedes the inherited visual-servo YAML's
+0.812 m pedestal value for the new composition. Measurement method, sample
+count and uncertainty were not supplied. User explicitly leaves arm yaw
+unconfirmed; neutral zero is a review parameter, not a physical measurement.
+Ground-to-top 0.15 m, support footprint/sections, wheel geometry, sensor mounting
+and inertials remain nominal handover/review inputs. Existing hand-eye results
+cannot be assumed to match the current flange/camera bracket installation.
+See [mobile integration](MOBILE_BASE_INTEGRATION.md) and the measurement sheet.
+
 ## 2026-10-03 reinforced adapter update
 
 - User tentatively selected PLA and estimates gripper plus camera at roughly 0.7 kg by heft; no scale, CoM, uncertainty, print parameters or motion/load history supplied. Include the new adapter, fasteners, ESP32 and cables in future weighed tool payload.
@@ -104,3 +116,33 @@ unmeasured. Source STEP files named by the print manifest are not present locall
 The fixed object's identity/mass/material, standard-force instrument, connected
 computer/serial port and printed/installed flange state remain unspecified.
 See GRIPPER_MOUNT_V2_INTEGRATION.md and GRIPPER_FORCE_CALIBRATION.md.
+
+## 2026-10-07 — D435i bracket V3 physical verification pending
+
+Rear mounting orientation (camera long axis Y, optics −X in archive STL frame),
+back-face flatness, USB/ventilation clearance, actual mating-part thickness,
+clamp-screw length after widening and print shrinkage remain unmeasured.
+5 mm plate / 6 mm bridge / twin ribs are trial geometry without FEA or physical
+load validation. Nominal M3×8 plus 0.5 mm washer gives 2.5 mm insertion; actual
+stack must be measured against the manufacturer's 3 mm maximum. Clip root
+fillets reinforce the outside; nominal slot remains 6 mm to its roof. New camera placement needs fresh TF,
+collision envelope and extrinsic calibration before runtime integration.
+See hardware/end effector/README.md; source STEP cited by the old archive is unavailable.
+
+
+2026-10-08 correction: active CAD is consolidated under hardware/end effector;
+URDF now has camera bracket V3 and a nominal D435i housing box. The original
+Fusion history remains unavailable for reconstructed flange/ESP32 parts. Camera
+TF is still uncalibrated; no driver/optical frame is created. Runtime launcher
+migration, actual print fit, fasteners/PCB/cables, measured inertia and real
+collision/stop behavior remain pending; see GRIPPER_MOUNT_V2_INTEGRATION.md.
+
+## 2026-10-08 — Full mobile robot geometry pending
+
+User reports Tracer 2.0 and an installed “xarm850” on aluminium extrusion.
+Verify the arm nameplate against the existing `uf850` description. The support
+has no drawing: base measurement datum, mounting-plane height, arm base centre
+X/Y/Z and orientation, profile/plate arrangement, peripheral envelopes and
+mass/CoM are not measured. Vendor Tracer 2.0 geometry/revision remains to be
+verified before import. See FULL_ROBOT_URDF_MEASUREMENTS.md for the collection
+sheet. Existing arm `world` attachment is not yet a mobile composition.

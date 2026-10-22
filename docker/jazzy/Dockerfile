@@ -11,6 +11,7 @@ ENV LC_ALL=en_US.UTF-8
 RUN apt-get update && apt-get install -y --no-install-recommends \
       ca-certificates \
       git \
+      libasio-dev \
       liburdfdom-tools \
       locales \
       python3-colcon-common-extensions \
@@ -19,6 +20,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
       python3-vcstool \
       ros-jazzy-gz-ros2-control \
       ros-jazzy-joint-state-publisher \
+      ros-jazzy-nav2-bringup \
+      ros-jazzy-robot-localization \
+      ros-jazzy-pointcloud-to-laserscan \
+      ros-jazzy-cv-bridge \
+      python3-opencv \
       ros-jazzy-moveit \
       ros-jazzy-robot-state-publisher \
       ros-jazzy-ros-gz \
@@ -49,10 +55,14 @@ RUN existing_user="$(getent passwd "${USER_ID}" | cut -d: -f1 || true)" \
     fi
 
 COPY ros2_ws/atom_xarm_jazzy.repos /tmp/atom_xarm_jazzy.repos
+COPY ros2_ws/atom_mobile_jazzy.repos /tmp/atom_mobile_jazzy.repos
+COPY tools/base /tmp/atom-base-tools
 RUN mkdir -p /jazzy_ws/src \
     && vcs import /jazzy_ws/src < /tmp/atom_xarm_jazzy.repos \
+    && vcs import /jazzy_ws/src < /tmp/atom_mobile_jazzy.repos \
+    && python3 /tmp/atom-base-tools/prepare_drivers.py /jazzy_ws/src \
     && git -C /jazzy_ws/src/xarm_ros2 submodule update --init --recursive \
-    && rm /tmp/atom_xarm_jazzy.repos \
+    && rm /tmp/atom_xarm_jazzy.repos /tmp/atom_mobile_jazzy.repos \
     && chown -R atom:"${GROUP_ID}" /jazzy_ws /home/atom
 
 ENV ROS_HOME=/home/atom/.ros

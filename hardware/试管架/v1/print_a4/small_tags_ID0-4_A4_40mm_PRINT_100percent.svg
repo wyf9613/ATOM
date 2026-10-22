@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
+<rect width="210" height="297" fill="white"/>
+<text x="20" y="22" font-family="Helvetica,Arial,sans-serif" font-size="4.2" fill="black">ATOM | Small rack | AprilTag 36h11 | IDs 0-4</text>
+<text x="20" y="31" font-family="Helvetica,Arial,sans-serif" font-size="3.3" fill="black">A4 (210 x 297 mm) | Print at ACTUAL SIZE / 100%</text>
+<text x="20" y="38" font-family="Helvetica,Arial,sans-serif" font-size="3.3" fill="black">Disable Fit / Shrink. Black square: 40 x 40 mm.</text>
+<text x="20" y="45" font-family="Helvetica,Arial,sans-serif" font-size="3.3" fill="black">Keep 5 mm white margin on each side (cut size: 50 x 50 mm).</text>
+<polygon fill="black" points="65,65 65,60 25,60 25,65"/>
+<polygon fill="black" points="30,70 30,65 25,65 25,70"/>
+<polygon fill="black" points="45,70 45,65 40,65 40,70"/>
+<polygon fill="black" points="55,70 55,65 50,65 50,70"/>
+<polygon fill="black" points="65,70 65,65 60,65 60,70"/>
+<polygon fill="black" points="35,75 35,70 25,70 25,75"/>
+<polygon fill="black" points="55,75 55,70 50,70 50,75"/>
+<polygon fill="black" points="65,75 65,70 60,70 60,75"/>
+<polygon fill="black" points="35,80 35,75 25,75 25,80"/>
+<polygon fill="black" points="65,80 65,75 45,75 45,80"/>
+<polygon fill="black" points="30,85 30,80 25,80 25,85"/>
+<polygon fill="black" points="40,85 40,80 35,80 35,85"/>
+<polygon fill="black" points="65,85 65,80 45,80 45,85"/>
+<polygon fill="black" points="35,90 35,85 25,85 25,90"/>
+<polygon fill="black" points="45,90 45,85 40,85 40,90"/>
+<polygon fill="black" points="65,90 65,85 55,85 55,90"/>
+<polygon fill="black" points="45,95 45,90 25,90 25,95"/>
+<polygon fill="black" points="65,95 65,90 50,90 50,95"/>
+<polygon fill="black" points="65,100 65,95 25,95 25,100"/>
+<path d="M19,55 L17,55" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M20,54 L20,52" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M19,105 L17,105" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M20,106 L20,108" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M71,55 L73,55" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M70,54 L70,52" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M71,105 L73,105" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M70,106 L70,108" fill="none" stroke="black" stroke-width="0.15"/>
+<text x="39" y="113" font-family="Helvetica,Arial,sans-serif" font-size="3.3" fill="black">ID 0</text>
+<polygon fill="black" points="125,65 125,60 85,60 85,65"/>
+<polygon fill="black" points="90,70 90,65 85,65 85,70"/>
+<polygon fill="black" points="105,70 105,65 100,65 100,70"/>
+<polygon fill="black" points="125,70 125,65 115,65 115,70"/>
+<polygon fill="black" points="95,75 95,70 85,70 85,75"/>
+<polygon fill="black" points="105,75 105,70 100,70 100,75"/>
+<polygon fill="black" points="125,75 125,70 120,70 120,75"/>
+<polygon fill="black" points="90,80 90,75 85,75 85,80"/>
+<polygon fill="black" points="125,80 125,75 110,75 110,80"/>
+<polygon fill="black" points="95,85 95,80 85,80 85,85"/>
+<polygon fill="black" points="125,85 125,80 105,80 105,85"/>
+<polygon fill="black" points="90,90 90,85 85,85 85,90"/>
+<polygon fill="black" points="100,90 100,85 95,85 95,90"/>
+<polygon fill="black" points="115,90 115,85 110,85 110,90"/>
+<polygon fill="black" points="125,90 125,85 120,85 120,90"/>
+<polygon fill="black" points="100,95 100,90 85,90 85,95"/>
+<polygon fill="black" points="115,95 115,90 105,90 105,95"/>
+<polygon fill="black" points="125,95 125,90 120,90 120,95"/>
+<polygon fill="black" points="125,100 125,95 85,95 85,100"/>
+<path d="M79,55 L77,55" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M80,54 L80,52" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M79,105 L77,105" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M80,106 L80,108" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M131,55 L133,55" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M130,54 L130,52" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M131,105 L133,105" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M130,106 L130,108" fill="none" stroke="black" stroke-width="0.15"/>
+<text x="99" y="113" font-family="Helvetica,Arial,sans-serif" font-size="3.3" fill="black">ID 1</text>
+<polygon fill="black" points="185,65 185,60 145,60 145,65"/>
+<polygon fill="black" points="150,70 150,65 145,65 145,70"/>
+<polygon fill="black" points="165,70 165,65 160,65 160,70"/>
+<polygon fill="black" points="185,70 185,65 180,65 180,70"/>
+<polygon fill="black" points="155,75 155,70 145,70 145,75"/>
+<polygon fill="black" points="170,75 170,70 160,70 160,75"/>
+<polygon fill="black" points="185,75 185,70 175,70 175,75"/>
+<polygon fill="black" points="150,80 150,75 145,75 145,80"/>
+<polygon fill="black" points="185,80 185,75 155,75 155,80"/>
+<polygon fill="black" points="160,85 160,80 145,80 145,85"/>
+<polygon fill="black" points="175,85 175,80 165,80 165,85"/>
+<polygon fill="black" points="185,85 185,80 180,80 180,85"/>
+<polygon fill="black" points="165,90 165,85 145,85 145,90"/>
+<polygon fill="black" points="185,90 185,85 170,85 170,90"/>
+<polygon fill="black" points="160,95 160,90 145,90 145,95"/>
+<polygon fill="black" points="185,95 185,90 175,90 175,95"/>
+<polygon fill="black" points="185,100 185,95 145,95 145,100"/>
+<path d="M139,55 L137,55" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M140,54 L140,52" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M139,105 L137,105" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M140,106 L140,108" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M191,55 L193,55" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M190,54 L190,52" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M191,105 L193,105" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M190,106 L190,108" fill="none" stroke="black" stroke-width="0.15"/>
+<text x="159" y="113" font-family="Helvetica,Arial,sans-serif" font-size="3.3" fill="black">ID 2</text>
+<polygon fill="black" points="65,135 65,130 25,130 25,135"/>
+<polygon fill="black" points="30,140 30,135 25,135 25,140"/>
+<polygon fill="black" points="55,140 55,135 45,135 45,140"/>
+<polygon fill="black" points="65,140 65,135 60,135 60,140"/>
+<polygon fill="black" points="45,145 45,140 25,140 25,145"/>
+<polygon fill="black" points="65,145 65,140 60,140 60,145"/>
+<polygon fill="black" points="30,150 30,145 25,145 25,150"/>
+<polygon fill="black" points="45,150 45,145 35,145 35,150"/>
+<polygon fill="black" points="65,150 65,145 60,145 60,150"/>
+<polygon fill="black" points="30,155 30,150 25,150 25,155"/>
+<polygon fill="black" points="40,155 40,150 35,150 35,155"/>
+<polygon fill="black" points="55,155 55,150 45,150 45,155"/>
+<polygon fill="black" points="65,155 65,150 60,150 60,155"/>
+<polygon fill="black" points="30,160 30,155 25,155 25,160"/>
+<polygon fill="black" points="50,160 50,155 40,155 40,160"/>
+<polygon fill="black" points="65,160 65,155 55,155 55,160"/>
+<polygon fill="black" points="35,165 35,160 25,160 25,165"/>
+<polygon fill="black" points="65,165 65,160 45,160 45,165"/>
+<polygon fill="black" points="65,170 65,165 25,165 25,170"/>
+<path d="M19,125 L17,125" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M20,124 L20,122" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M19,175 L17,175" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M20,176 L20,178" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M71,125 L73,125" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M70,124 L70,122" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M71,175 L73,175" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M70,176 L70,178" fill="none" stroke="black" stroke-width="0.15"/>
+<text x="39" y="183" font-family="Helvetica,Arial,sans-serif" font-size="3.3" fill="black">ID 3</text>
+<polygon fill="black" points="125,135 125,130 85,130 85,135"/>
+<polygon fill="black" points="90,140 90,135 85,135 85,140"/>
+<polygon fill="black" points="110,140 110,135 105,135 105,140"/>
+<polygon fill="black" points="125,140 125,135 115,135 115,140"/>
+<polygon fill="black" points="90,145 90,140 85,140 85,145"/>
+<polygon fill="black" points="125,145 125,140 110,140 110,145"/>
+<polygon fill="black" points="90,150 90,145 85,145 85,150"/>
+<polygon fill="black" points="100,150 100,145 95,145 95,150"/>
+<polygon fill="black" points="125,150 125,145 120,145 120,150"/>
+<polygon fill="black" points="100,155 100,150 85,150 85,155"/>
+<polygon fill="black" points="110,155 110,150 105,150 105,155"/>
+<polygon fill="black" points="125,155 125,150 115,150 115,155"/>
+<polygon fill="black" points="90,160 90,155 85,155 85,160"/>
+<polygon fill="black" points="125,160 125,155 95,155 95,160"/>
+<polygon fill="black" points="90,165 90,160 85,160 85,165"/>
+<polygon fill="black" points="110,165 110,160 95,160 95,165"/>
+<polygon fill="black" points="125,165 125,160 115,160 115,165"/>
+<polygon fill="black" points="125,170 125,165 85,165 85,170"/>
+<path d="M79,125 L77,125" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M80,124 L80,122" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M79,175 L77,175" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M80,176 L80,178" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M131,125 L133,125" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M130,124 L130,122" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M131,175 L133,175" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M130,176 L130,178" fill="none" stroke="black" stroke-width="0.15"/>
+<text x="99" y="183" font-family="Helvetica,Arial,sans-serif" font-size="3.3" fill="black">ID 4</text>
+<text x="25" y="203" font-family="Helvetica,Arial,sans-serif" font-size="3.3" fill="black">Scale check: end ticks must be 100 mm apart.</text>
+<path d="M25,211 L125,211" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M25,209 L25,213" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M35,210 L35,213" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M45,210 L45,213" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M55,210 L55,213" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M65,210 L65,213" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M75,210 L75,213" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M85,210 L85,213" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M95,210 L95,213" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M105,210 L105,213" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M115,210 L115,213" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M125,209 L125,213" fill="none" stroke="black" stroke-width="0.15"/>
+<text x="25" y="220" font-family="Helvetica,Arial,sans-serif" font-size="3.3" fill="black">0</text>
+<text x="114" y="220" font-family="Helvetica,Arial,sans-serif" font-size="3.3" fill="black">100 mm</text>
+<text x="20" y="240" font-family="Helvetica,Arial,sans-serif" font-size="3.3" fill="black">Cut each tag separately; keep IDs 0-4 in rack slot order.</text>
+<text x="20" y="247" font-family="Helvetica,Arial,sans-serif" font-size="3.3" fill="black">After printing, measure both sides of a black square: 40 mm.</text>
+</svg>

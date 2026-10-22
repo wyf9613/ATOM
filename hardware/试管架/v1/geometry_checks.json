@@ -1,0 +1,491 @@
+{
+  "parameters": {
+    "status": "REVIEW PROTOTYPE - fit, material and camera validation required",
+    "units": "mm",
+    "material": "MDF",
+    "thickness": 3.0,
+    "kerf": 0.15,
+    "interference": 0.05,
+    "tab_length_clearance": 0.2,
+    "width": 320.0,
+    "depth": 90.0,
+    "front_y": 6.0,
+    "base_bottom": 60.0,
+    "hole_clearance_diameter": 0.6,
+    "slot_x": [
+      40.0,
+      100.0,
+      160.0,
+      220.0,
+      280.0
+    ],
+    "slot_y": 45.0,
+    "shelf_tab_y": [
+      [
+        22.0,
+        34.0
+      ],
+      [
+        56.0,
+        68.0
+      ]
+    ],
+    "apron_tab_z": [
+      [
+        12.0,
+        24.0
+      ],
+      [
+        40.0,
+        52.0
+      ]
+    ],
+    "tag_family": "DICT_APRILTAG_36h11",
+    "tag_black_border_size": 40.0,
+    "variants": {
+      "small": {
+        "vessel_diameter": 15.0,
+        "vessel_height": 50.0,
+        "guide_above_seat": 25.0,
+        "tag_ids": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      "large": {
+        "vessel_diameter": 25.0,
+        "vessel_height": 75.0,
+        "guide_above_seat": 40.0,
+        "tag_ids": [
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      }
+    }
+  },
+  "variants": {
+    "small": {
+      "dxf_closed_cut_paths": 27,
+      "dxf_audit_errors": 0,
+      "sheet_mm": [
+        600,
+        450
+      ],
+      "hole_count": 5,
+      "hole_diameter": 15.6,
+      "rack_external_mm": [
+        320.0,
+        90.0,
+        99.0
+      ],
+      "vessel_seat_z": 63.0,
+      "vessel_exposed_above_guide_mm": 22.0,
+      "parts": {
+        "BASE": {
+          "bounds_mm": [
+            0.0,
+            9.0,
+            320.0,
+            81.0
+          ],
+          "area_mm2": 22752.0
+        },
+        "GUIDE": {
+          "bounds_mm": [
+            0.0,
+            9.0,
+            320.0,
+            81.0
+          ],
+          "area_mm2": 21796.370157930764
+        },
+        "LEFT": {
+          "bounds_mm": [
+            0.0,
+            0.0,
+            90.0,
+            99.0
+          ],
+          "area_mm2": 8622.080000000002
+        },
+        "RIGHT": {
+          "bounds_mm": [
+            0.0,
+            0.0,
+            90.0,
+            99.0
+          ],
+          "area_mm2": 8622.080000000002
+        },
+        "FRONT": {
+          "bounds_mm": [
+            0.0,
+            0.0,
+            320.0,
+            63.0
+          ],
+          "area_mm2": 19926.0
+        },
+        "BACK": {
+          "bounds_mm": [
+            0.0,
+            0.0,
+            320.0,
+            63.0
+          ],
+          "area_mm2": 19926.0
+        }
+      },
+      "slots": [
+        {
+          "slot": 1,
+          "tag_id": 0,
+          "vessel_bottom_mm": [
+            40.0,
+            45.0,
+            63.0
+          ],
+          "tag_center_mm": [
+            40.0,
+            6.0,
+            31.5
+          ],
+          "tag_to_seat_translation_rack_axes_mm": [
+            0,
+            39.0,
+            31.5
+          ]
+        },
+        {
+          "slot": 2,
+          "tag_id": 1,
+          "vessel_bottom_mm": [
+            100.0,
+            45.0,
+            63.0
+          ],
+          "tag_center_mm": [
+            100.0,
+            6.0,
+            31.5
+          ],
+          "tag_to_seat_translation_rack_axes_mm": [
+            0,
+            39.0,
+            31.5
+          ]
+        },
+        {
+          "slot": 3,
+          "tag_id": 2,
+          "vessel_bottom_mm": [
+            160.0,
+            45.0,
+            63.0
+          ],
+          "tag_center_mm": [
+            160.0,
+            6.0,
+            31.5
+          ],
+          "tag_to_seat_translation_rack_axes_mm": [
+            0,
+            39.0,
+            31.5
+          ]
+        },
+        {
+          "slot": 4,
+          "tag_id": 3,
+          "vessel_bottom_mm": [
+            220.0,
+            45.0,
+            63.0
+          ],
+          "tag_center_mm": [
+            220.0,
+            6.0,
+            31.5
+          ],
+          "tag_to_seat_translation_rack_axes_mm": [
+            0,
+            39.0,
+            31.5
+          ]
+        },
+        {
+          "slot": 5,
+          "tag_id": 4,
+          "vessel_bottom_mm": [
+            280.0,
+            45.0,
+            63.0
+          ],
+          "tag_center_mm": [
+            280.0,
+            6.0,
+            31.5
+          ],
+          "tag_to_seat_translation_rack_axes_mm": [
+            0,
+            39.0,
+            31.5
+          ]
+        }
+      ]
+    },
+    "large": {
+      "dxf_closed_cut_paths": 27,
+      "dxf_audit_errors": 0,
+      "sheet_mm": [
+        600,
+        450
+      ],
+      "hole_count": 5,
+      "hole_diameter": 25.6,
+      "rack_external_mm": [
+        320.0,
+        90.0,
+        114.0
+      ],
+      "vessel_seat_z": 63.0,
+      "vessel_exposed_above_guide_mm": 32.0,
+      "parts": {
+        "BASE": {
+          "bounds_mm": [
+            0.0,
+            9.0,
+            320.0,
+            81.0
+          ],
+          "area_mm2": 22752.0
+        },
+        "GUIDE": {
+          "bounds_mm": [
+            0.0,
+            9.0,
+            320.0,
+            81.0
+          ],
+          "area_mm2": 20178.522134703755
+        },
+        "LEFT": {
+          "bounds_mm": [
+            0.0,
+            0.0,
+            90.0,
+            114.0
+          ],
+          "area_mm2": 9972.080000000002
+        },
+        "RIGHT": {
+          "bounds_mm": [
+            0.0,
+            0.0,
+            90.0,
+            114.0
+          ],
+          "area_mm2": 9972.080000000002
+        },
+        "FRONT": {
+          "bounds_mm": [
+            0.0,
+            0.0,
+            320.0,
+            63.0
+          ],
+          "area_mm2": 19926.0
+        },
+        "BACK": {
+          "bounds_mm": [
+            0.0,
+            0.0,
+            320.0,
+            63.0
+          ],
+          "area_mm2": 19926.0
+        }
+      },
+      "slots": [
+        {
+          "slot": 1,
+          "tag_id": 5,
+          "vessel_bottom_mm": [
+            40.0,
+            45.0,
+            63.0
+          ],
+          "tag_center_mm": [
+            40.0,
+            6.0,
+            31.5
+          ],
+          "tag_to_seat_translation_rack_axes_mm": [
+            0,
+            39.0,
+            31.5
+          ]
+        },
+        {
+          "slot": 2,
+          "tag_id": 6,
+          "vessel_bottom_mm": [
+            100.0,
+            45.0,
+            63.0
+          ],
+          "tag_center_mm": [
+            100.0,
+            6.0,
+            31.5
+          ],
+          "tag_to_seat_translation_rack_axes_mm": [
+            0,
+            39.0,
+            31.5
+          ]
+        },
+        {
+          "slot": 3,
+          "tag_id": 7,
+          "vessel_bottom_mm": [
+            160.0,
+            45.0,
+            63.0
+          ],
+          "tag_center_mm": [
+            160.0,
+            6.0,
+            31.5
+          ],
+          "tag_to_seat_translation_rack_axes_mm": [
+            0,
+            39.0,
+            31.5
+          ]
+        },
+        {
+          "slot": 4,
+          "tag_id": 8,
+          "vessel_bottom_mm": [
+            220.0,
+            45.0,
+            63.0
+          ],
+          "tag_center_mm": [
+            220.0,
+            6.0,
+            31.5
+          ],
+          "tag_to_seat_translation_rack_axes_mm": [
+            0,
+            39.0,
+            31.5
+          ]
+        },
+        {
+          "slot": 5,
+          "tag_id": 9,
+          "vessel_bottom_mm": [
+            280.0,
+            45.0,
+            63.0
+          ],
+          "tag_center_mm": [
+            280.0,
+            6.0,
+            31.5
+          ],
+          "tag_to_seat_translation_rack_axes_mm": [
+            0,
+            39.0,
+            31.5
+          ]
+        }
+      ]
+    }
+  },
+  "digital_tag_checks": [
+    {
+      "id": 0,
+      "decoded_id": 0,
+      "condition": "synthetic frontal 600 px, white background; no MDF/camera test"
+    },
+    {
+      "id": 1,
+      "decoded_id": 1,
+      "condition": "synthetic frontal 600 px, white background; no MDF/camera test"
+    },
+    {
+      "id": 2,
+      "decoded_id": 2,
+      "condition": "synthetic frontal 600 px, white background; no MDF/camera test"
+    },
+    {
+      "id": 3,
+      "decoded_id": 3,
+      "condition": "synthetic frontal 600 px, white background; no MDF/camera test"
+    },
+    {
+      "id": 4,
+      "decoded_id": 4,
+      "condition": "synthetic frontal 600 px, white background; no MDF/camera test"
+    },
+    {
+      "id": 5,
+      "decoded_id": 5,
+      "condition": "synthetic frontal 600 px, white background; no MDF/camera test"
+    },
+    {
+      "id": 6,
+      "decoded_id": 6,
+      "condition": "synthetic frontal 600 px, white background; no MDF/camera test"
+    },
+    {
+      "id": 7,
+      "decoded_id": 7,
+      "condition": "synthetic frontal 600 px, white background; no MDF/camera test"
+    },
+    {
+      "id": 8,
+      "decoded_id": 8,
+      "condition": "synthetic frontal 600 px, white background; no MDF/camera test"
+    },
+    {
+      "id": 9,
+      "decoded_id": 9,
+      "condition": "synthetic frontal 600 px, white background; no MDF/camera test"
+    },
+    {
+      "id": 10,
+      "decoded_id": 10,
+      "condition": "synthetic frontal 600 px, white background; no MDF/camera test"
+    }
+  ],
+  "coupon": {
+    "dxf_closed_cut_paths": 10,
+    "dxf_audit_errors": 0,
+    "sheet_mm": [
+      230,
+      145
+    ],
+    "finished_slot_widths_mm": [
+      2.8,
+      2.85,
+      2.9,
+      2.95,
+      3.0,
+      3.05,
+      3.1
+    ]
+  },
+  "opencv_version": "4.13.0",
+  "validation_scope": "Digital geometry/export and synthetic ID decoding only; zero physical fit/load/camera samples.",
+  "source_sha256": "5884d4d323c0e9d5fc2348e6277556cc5bdd7572d9ac54c8f60752f6fdebd315"
+}

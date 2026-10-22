@@ -1,11 +1,32 @@
 # Known Issues
 
+## 2026-10-22 — First mobile integration supersedes the source-only review
+
+The new `atom_base` and `atom_mobile_description` now build with the existing
+gripper packages under Jazzy. Final velocity ownership, software-stop state,
+input expiry and the inherited fine-adjust action are integrated and tested
+with synthetic sensors/kinematics and fake serial. Earlier handover findings
+remain historical for the unchanged ZIPs; the new runtime disables the String
+ALIGN/SDK arm-search path and does not require the missing `combine_nav` or
+`my_lab_world` packages. The base source pin and CMake/watchdog patches compile;
+real CAN/controller/Livox/Tinkerforge compatibility is not established.
+
+Physical arm control, a calibrated optical/TCP chain, measured finger-state
+mapping, loaded footprint, mobile MoveIt planning/execution, hardware stop
+supervision and whole-robot Harmonic dynamics remain unverified. No full
+production-image rebuild or original arm Gazebo regression was performed in
+this targeted integration check. Base top height, mounting yaw, support
+dimensions/mass/CoM and real wheel geometry still need confirmation. Default
+entry is model review with motion stopped; do not present the fake fixture as
+an autonomous lab or measured docking result. Details and passing evidence:
+[MOBILE_BASE_INTEGRATION](MOBILE_BASE_INTEGRATION.md).
+
 ## 2026-10-07 — v2 tool description is exported, deployment still pending
 
 P-007 now has a CAD-based v2 flange/bracket composition and explicit tool SRDF,
 with full inherited body/finger collision envelopes. The existing arm-only/G1
 launcher does not consume it. No runtime or physical self-collision result has
-been established; camera/PCB/cables/carried-object envelopes and measured flange
+been established; calibrated camera TF, PCB/cables/carried-object envelopes and measured flange
 clocking/TCP/inertials/finger-state mapping remain missing. The print manifest's
 source_cad/backplate/v2 and bracket STEP paths are absent locally, so original
 source verification of those revisions remains open. Details:
@@ -162,3 +183,34 @@ User-uploaded continuous firmware was confirmed by live continuous_position=1 an
 ### 2026-10-03 — User confirms local gripper frontend integration
 
 After Arduino IDE firmware upload and gateway startup recovery, user explicitly reports no issue and successful frontend integration. This closes local UI connection/deployment acceptance on user confirmation; exact exercised command sequence, repetition count and quantitative stop/force measurements were not supplied. Force calibration, independent grasp verification and combined physical arm supervision remain open.
+
+
+## 2026-10-08 — Current CAD and description review boundaries
+
+Hardware is consolidated under hardware/end effector: flange V2, ESP32 V1,
+camera V3 and the inherited assembly. The old 2-wall/15%-infill sliced 3MF was
+removed from the active files; the printing recommendation is in that folder's
+README. Current Xacro includes V3 and a nominal D435i body envelope; runtime
+launcher migration, calibrated optical TF, measured inertials, PCB/cables and
+physical fit/load validation remain open. Tool-internal blanket box exclusions
+still prevent SRDF from validating internal mechanics. Default fake hardware
+supports review, not a tested Gazebo/hardware deployment. See
+GRIPPER_MOUNT_V2_INTEGRATION.md.
+
+## 2026-10-22 — Mobile-base handover received, integration unverified
+
+P-005's earlier absence of a base interface is now qualified: two ZIP archives
+under `basement/` provide Humble navigation, JSON mission, visual fine-adjust and
+direct xArm SDK control sources, but none is integrated into the ATOM runtime.
+The handover's environment differs from D-007; no migration or cross-version
+interoperation has been accepted or verified. `my_lab_world` lacks a package
+definition, and the visual Gazebo demo lacks the complete `combine_nav` package.
+Nav2, fine-adjust and the software stop guard share `/cmd_vel` without a common
+output gate; fine-adjust and SDK arm motion do not consume the navigation stop
+state. The visual launcher searches/moves the arm by default even without
+`--go`. Fine-adjust scan checking is disabled in the supplied real configuration,
+and scan/TF age gates are absent. Multiple fine-adjust entry points can share
+mutable goals without complete exclusion/cancellation. Current mount and camera
+calibration applicability, loaded footprint and docking/stop performance remain
+unverified. See [handover review](BASE_HANDOVER_REVIEW_20261022.md) for source
+locations, interface differences, reproduction limits and proposed next steps.

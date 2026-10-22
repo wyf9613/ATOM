@@ -1,0 +1,219 @@
+{
+  "hardware_manifest": "hardware/end effector/cad_manifest.json",
+  "hardware_manifest_sha256": "e62c836f9857b706f4510f873b74da432b223897e8fed1ab2695c46aa8fc185a",
+  "cad_to_gripper_R": [
+    [
+      0,
+      1,
+      0
+    ],
+    [
+      0,
+      0,
+      -1
+    ],
+    [
+      -1,
+      0,
+      0
+    ]
+  ],
+  "cad_flange_centre_mm": [
+    80.8,
+    43.494,
+    -22.225
+  ],
+  "gripper_mount_z_m": 0.051963999999999996,
+  "parts": [
+    {
+      "name": "flange_adapter",
+      "revision": "flange_adapter_v2",
+      "source_print_stl": "hardware/end effector/flange_adapter_v2_print_mm.stl",
+      "source_sha256": "83b213f46e48c40f3d2cf68131b8a365ca789b2d0b89455d6bec8d2bcef2cf30",
+      "print_to_cad_transform_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          28.8
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          1.4939999999999998
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          -78.225
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "restored_cad_bounds_mm": [
+        [
+          28.8,
+          1.494,
+          -78.225
+        ],
+        [
+          82.8,
+          85.494,
+          33.775000000000006
+        ]
+      ],
+      "link_bounds_m": [
+        [
+          -0.042,
+          -0.05600000000000001,
+          -0.002
+        ],
+        [
+          0.042,
+          0.055999999999999994,
+          0.052
+        ]
+      ],
+      "collision_padding_per_side_m": 0.0005
+    },
+    {
+      "name": "esp32_bracket",
+      "revision": "esp32_bracket_v1",
+      "source_print_stl": "hardware/end effector/esp32_bracket_v1_print_mm.stl",
+      "source_sha256": "afb48959ddca033ba5cb11c09dd324b81fdd5099c25669d7957e67d7a300e00a",
+      "print_to_cad_transform_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -78.2
+        ],
+        [
+          0.0,
+          1.0,
+          0.0,
+          22.494
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          -79.725
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "restored_cad_bounds_mm": [
+        [
+          -78.2,
+          22.494,
+          -79.725
+        ],
+        [
+          -11.200000000000003,
+          64.494,
+          -61.82500038146972
+        ]
+      ],
+      "link_bounds_m": [
+        [
+          -0.021,
+          0.03960000038146972,
+          0.040036
+        ],
+        [
+          0.021,
+          0.057499999999999996,
+          0.107036
+        ]
+      ],
+      "collision_padding_per_side_m": 0.0005
+    },
+    {
+      "name": "camera_bracket",
+      "revision": "camera_bracket_v3",
+      "source_print_stl": "hardware/end effector/camera_bracket_v3_print_mm.stl",
+      "source_sha256": "5e18540d5635c0b1f858e531a53ce221cfb22c378c0c73acf4de5acf46d4380f",
+      "print_to_cad_transform_mm": [
+        [
+          1.0,
+          0.0,
+          0.0,
+          -56.2
+        ],
+        [
+          0.0,
+          0.0,
+          1.0,
+          10.994000000000003
+        ],
+        [
+          0.0,
+          -1.0,
+          0.0,
+          66.275
+        ],
+        [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ]
+      ],
+      "restored_cad_bounds_mm": [
+        [
+          -56.2,
+          10.994000000000003,
+          17.3749984741211
+        ],
+        [
+          -11.200000000000003,
+          75.994,
+          66.275
+        ]
+      ],
+      "link_bounds_m": [
+        [
+          -0.0325,
+          -0.0885,
+          0.040036
+        ],
+        [
+          0.0325,
+          -0.0395999984741211,
+          0.085036
+        ]
+      ],
+      "collision_padding_per_side_m": 0.0005
+    }
+  ],
+  "d435i_body": {
+    "centre_in_gripper_m": [
+      0.0,
+      -0.073,
+      0.097561
+    ],
+    "size_m": [
+      0.09,
+      0.025,
+      0.025049999999999996
+    ],
+    "collision_padding_per_side_m": 0.0005,
+    "calibrated": false
+  },
+  "notes": [
+    "Active revisions: flange V2, ESP32 V1, camera V3.",
+    "CAD frame and nominal camera envelope only; physical fit, mass/CoM, TCP and optical TF unmeasured.",
+    "No PCB, cables, fasteners or carried-object envelopes."
+  ]
+}

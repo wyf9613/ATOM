@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297">
+<desc>AprilTag 36h11 ID0; original small rack SVG artwork scaled exactly 2x without rotation; black border 80 mm; white margin 10 mm.</desc>
+<rect width="210" height="297" fill="white"/>
+<text x="20" y="24" font-family="Helvetica,Arial,sans-serif" font-size="5" fill="black">ATOM | AprilTag 36h11 | ID 0</text>
+<text x="20" y="35" font-family="Helvetica,Arial,sans-serif" font-size="3.8" fill="black">A4 | Print at ACTUAL SIZE / 100% | Disable Fit / Shrink</text>
+<text x="20" y="44" font-family="Helvetica,Arial,sans-serif" font-size="3.8" fill="black">Black square: 80 x 80 mm | White margin: 10 mm per side</text>
+<text x="20" y="53" font-family="Helvetica,Arial,sans-serif" font-size="3.8" fill="black">Cut size including white margin: 100 x 100 mm</text>
+<polygon fill="black" points="145,95 145,85 65,85 65,95"/>
+<polygon fill="black" points="75,105 75,95 65,95 65,105"/>
+<polygon fill="black" points="105,105 105,95 95,95 95,105"/>
+<polygon fill="black" points="125,105 125,95 115,95 115,105"/>
+<polygon fill="black" points="145,105 145,95 135,95 135,105"/>
+<polygon fill="black" points="85,115 85,105 65,105 65,115"/>
+<polygon fill="black" points="125,115 125,105 115,105 115,115"/>
+<polygon fill="black" points="145,115 145,105 135,105 135,115"/>
+<polygon fill="black" points="85,125 85,115 65,115 65,125"/>
+<polygon fill="black" points="145,125 145,115 105,115 105,125"/>
+<polygon fill="black" points="75,135 75,125 65,125 65,135"/>
+<polygon fill="black" points="95,135 95,125 85,125 85,135"/>
+<polygon fill="black" points="145,135 145,125 105,125 105,135"/>
+<polygon fill="black" points="85,145 85,135 65,135 65,145"/>
+<polygon fill="black" points="105,145 105,135 95,135 95,145"/>
+<polygon fill="black" points="145,145 145,135 125,135 125,145"/>
+<polygon fill="black" points="105,155 105,145 65,145 65,155"/>
+<polygon fill="black" points="145,155 145,145 115,145 115,155"/>
+<polygon fill="black" points="145,165 145,155 65,155 65,165"/>
+<path d="M54,75 L51,75" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M55,74 L55,71" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M54,175 L51,175" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M55,176 L55,179" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M156,75 L159,75" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M155,74 L155,71" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M156,175 L159,175" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M155,176 L155,179" fill="none" stroke="black" stroke-width="0.15"/>
+<text x="99" y="187" font-family="Helvetica,Arial,sans-serif" font-size="4.5" fill="black">ID 0</text>
+<text x="25" y="216" font-family="Helvetica,Arial,sans-serif" font-size="3.8" fill="black">Scale check: end ticks must be 100 mm apart.</text>
+<path d="M55,228 L155,228" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M55,226 L55,230" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M65,227 L65,230" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M75,227 L75,230" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M85,227 L85,230" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M95,227 L95,230" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M105,227 L105,230" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M115,227 L115,230" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M125,227 L125,230" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M135,227 L135,230" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M145,227 L145,230" fill="none" stroke="black" stroke-width="0.15"/>
+<path d="M155,226 L155,230" fill="none" stroke="black" stroke-width="0.15"/>
+<text x="55" y="238" font-family="Helvetica,Arial,sans-serif" font-size="3.8" fill="black">0</text>
+<text x="142" y="238" font-family="Helvetica,Arial,sans-serif" font-size="3.8" fill="black">100 mm</text>
+<text x="20" y="260" font-family="Helvetica,Arial,sans-serif" font-size="3.8" fill="black">After printing, measure black square width and height: 80 mm.</text>
+</svg>

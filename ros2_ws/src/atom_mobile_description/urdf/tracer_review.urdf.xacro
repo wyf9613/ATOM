@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- Nominal handover simulation envelope, NOT a vendor TRACER 2.0 CAD model.
+       base_link is the ground projection of chassis centre, +X forward, +Y left.
+       Dimensions/wheel spacing/inertials remain unmeasured. No hardware plugin. -->
+  <xacro:macro name="atom_tracer_review" params="top_height:=0.15">
+    <link name="base_link"/>
+    <joint name="base_body_joint" type="fixed">
+      <parent link="base_link"/><child link="base_body"/>
+      <origin xyz="0 0 ${top_height - 0.05}"/>
+    </joint>
+    <link name="base_body">
+      <visual><geometry><box size="0.70 0.59 0.10"/></geometry>
+        <material name="tracer_dark"><color rgba="0.15 0.17 0.19 1"/></material></visual>
+      <collision><geometry><box size="0.72 0.59 0.10"/></geometry></collision>
+    </link>
+    <joint name="base_top_joint" type="fixed">
+      <parent link="base_link"/><child link="base_top"/><origin xyz="0 0 ${top_height}"/>
+    </joint>
+    <link name="base_top"/>
+    <xacro:macro name="review_wheel" params="side y">
+      <joint name="${side}_wheel_joint" type="continuous">
+        <parent link="base_link"/><child link="${side}_wheel"/>
+        <origin xyz="0 ${y} 0.0825" rpy="${pi/2} 0 0"/>
+        <axis xyz="0 0 -1"/><limit effort="200" velocity="2"/>
+      </joint>
+      <link name="${side}_wheel">
+        <visual><geometry><cylinder radius="0.0825" length="0.06"/></geometry>
+          <material name="wheel_black"><color rgba="0.04 0.04 0.04 1"/></material></visual>
+        <collision><geometry><cylinder radius="0.0825" length="0.06"/></geometry></collision>
+      </link>
+    </xacro:macro>
+    <xacro:review_wheel side="left" y="0.17"/>
+    <xacro:review_wheel side="right" y="-0.17"/>
+    <joint name="livox_mount_joint" type="fixed">
+      <parent link="base_link"/><child link="livox_frame"/>
+      <origin xyz="0.25 0 0.25" rpy="0 0.0548 0"/>
+    </joint>
+    <link name="livox_frame"/>
+    <joint name="imu_mount_joint" type="fixed">
+      <parent link="base_link"/><child link="imu_link"/><origin xyz="0 0 0.2"/>
+    </joint>
+    <link name="imu_link"/>
+  </xacro:macro>
+</robot>

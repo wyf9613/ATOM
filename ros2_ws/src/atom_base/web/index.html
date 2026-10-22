@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AMR 任务台</title>
+<style>
+  :root { --bg:#f4f5f7; --panel:#fff; --line:#d9dce1; --text:#1c1f24; --muted:#6b7280;
+          --accent:#2563eb; --ok:#16a34a; --warn:#d97706; --bad:#dc2626; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--text);
+         font:15px/1.4 system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif; }
+  header { display:flex; align-items:center; gap:14px; padding:10px 16px; background:var(--panel);
+           border-bottom:1px solid var(--line); flex-wrap:wrap; }
+  header h1 { font-size:18px; margin:0; }
+  #state { padding:4px 10px; border-radius:999px; font-weight:600; background:#e5e7eb; }
+  #state.navigating,#state.waiting,#state.relocalizing,#state.relocalized { background:#dbeafe; color:#1d4ed8; }
+  #state.arrived { background:#dcfce7; color:#15803d; }
+  #state.failed { background:#fee2e2; color:#b91c1c; }
+  #state.cancelled { background:#fef3c7; color:#b45309; }
+  #detail { color:var(--muted); flex:1; min-width:200px; }
+  #conn { font-size:13px; color:var(--muted); }
+  main { display:grid; grid-template-columns:1fr 280px; gap:12px; padding:12px 16px; }
+  @media (max-width:800px){ main { grid-template-columns:1fr; } }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:12px; }
+  #wrap { position:relative; width:100%; }
+  canvas { width:100%; display:block; border-radius:6px; background:#bbb; cursor:crosshair;
+           touch-action:none; image-rendering:pixelated; }
+  .hint { color:var(--muted); font-size:13px; margin:8px 0 0; }
+  h2 { font-size:14px; margin:0 0 8px; color:var(--muted); font-weight:600; }
+  .btns { display:flex; flex-direction:column; gap:8px; }
+  button { font:inherit; padding:10px 12px; border-radius:8px; border:1px solid var(--line);
+           background:#fff; cursor:pointer; text-align:left; }
+  button:hover { border-color:var(--accent); }
+  button.primary { background:var(--accent); color:#fff; border-color:var(--accent); }
+  button.danger { background:var(--bad); color:#fff; border-color:var(--bad); font-weight:600; }
+  button.estop { background:#7f1d1d; color:#fff; border:3px solid #fca5a5; font-size:20px; font-weight:800; padding:18px; letter-spacing:2px; }
+  button.estop.on { background:#fca5a5; color:#7f1d1d; animation:blink 0.6s infinite; }
+  @keyframes blink { 50% { opacity:0.5; } }
+  #state.estop { background:#7f1d1d; color:#fff; }
+  button.small { padding:6px 10px; font-size:13px; }
+  .row { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .mode { display:flex; gap:0; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+  .mode button { border:0; border-radius:0; flex:1; text-align:center; }
+  .mode button.on { background:var(--accent); color:#fff; }
+  #queue { list-style:none; margin:6px 0; padding:0; font-size:14px; }
+  #queue li { display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px dashed var(--line); }
+  #queue li span.x { cursor:pointer; color:var(--bad); }
+  #pose { font-family:ui-monospace,Menlo,monospace; font-size:13px; color:var(--muted); }
+  .sect { margin-top:14px; }
+  #languageToggle { white-space:nowrap; text-align:center; min-width:80px; }
+  button.estop { letter-spacing:normal; overflow-wrap:anywhere; }
+</style>
+</head>
+<body>
+<header>
+  <h1 data-i18n="title">AMR 任务台</h1>
+  <span id="state" data-i18n="connecting">连接中</span>
+  <span id="detail"></span>
+  <span id="conn"></span>
+  <button id="languageToggle" type="button" class="small" aria-label="Switch to English">English</button>
+</header>
+<main>
+  <section class="card">
+    <div class="row" style="margin-bottom:8px">
+      <div class="mode">
+        <button id="modeGoal" class="on" data-i18n="goal">导航目标</button>
+        <button id="modeInit" data-i18n="initial">设定初始位置</button>
+      </div>
+      <label class="row" style="font-size:14px"><input type="checkbox" id="queueMode"> <span data-i18n="queueMode">点击加入路线而不是立刻出发</span></label>
+    </div>
+    <div id="wrap"><canvas id="cv"></canvas></div>
+    <p class="hint" data-i18n="legend"></p>
+    <p class="hint" data-i18n="hint">点一下地图：机器人去那里。按住拖动：拖的方向就是到达后的朝向。灰色是未知区域，黑色是障碍物。</p>
+    <p id="pose" class="hint"></p>
+  </section>
+  <aside class="card">
+    <h2 data-i18n="points">固定地点</h2>
+    <div id="points" class="btns"></div>
+    <div class="sect">
+      <h2 data-i18n="queue">路线队列</h2>
+      <ul id="queue"></ul>
+      <div class="row">
+        <button id="sendRoute" class="primary small" data-i18n="sendRoute">按顺序出发</button>
+        <button id="clearRoute" class="small" data-i18n="clearRoute">清空</button>
+      </div>
+    </div>
+    <div class="sect">
+      <button id="cancel" class="danger" style="width:100%" data-i18n="cancel">停止 / 取消任务</button>
+    </div>
+    <div class="sect">
+      <button id="estop" class="estop" style="width:100%" data-i18n="estopButton">急 停</button>
+      <button id="estopReset" class="small" style="width:100%;margin-top:6px;display:none" data-i18n="reset">解除急停</button>
+    </div>
+  </aside>
+</main>
+<script>
+(() => {
+  const cv = document.getElementById('cv');
+  const ctx = cv.getContext('2d');
+  const stateEl = document.getElementById('state');
+  const detailEl = document.getElementById('detail');
+  const connEl = document.getElementById('conn');
+  const poseEl = document.getElementById('pose');
+  const queueEl = document.getElementById('queue');
+  const queueMode = document.getElementById('queueMode');
+
+  let meta = null, img = new Image(), points = [];
+  let status = { robot:{ok:false}, mission:{state:'unknown'} };
+  let mode = 'goal';               // 'goal' | 'init'
+  let drag = null;                 // {sx, sy, cx, cy} in pixel coords
+  let lastTarget = null;           // {x,y,yaw}
+  let queue = [];
+  let lastOk = 0, mapVersion = 0;
+  const translations = {
+  "title": [
+    "AMR 任务台",
+    "AMR Task Station"
+  ],
+  "connecting": [
+    "连接中",
+    "Connecting"
+  ],
+  "goal": [
+    "导航目标",
+    "Navigation goal"
+  ],
+  "initial": [
+    "设定初始位置",
+    "Set initial pose"
+  ],
+  "queueMode": [
+    "点击加入路线而不是立刻出发",
+    "Add clicks to route instead of moving immediately"
+  ],
+  "hint": [
+    "点一下地图：机器人去那里。按住拖动：拖的方向就是到达后的朝向。灰色是未知区域，黑色是障碍物。",
+    "Click the map to send a goal. Drag to set the arrival heading. Gray: unknown area. Black: obstacles."
+  ],
+  "points": [
+    "固定地点",
+    "Saved locations"
+  ],
+  "queue": [
+    "路线队列",
+    "Route queue"
+  ],
+  "sendRoute": [
+    "按顺序出发",
+    "Start route"
+  ],
+  "clearRoute": [
+    "清空",
+    "Clear"
+  ],
+  "cancel": [
+    "停止 / 取消任务",
+    "Stop / cancel task"
+  ],
+  "estopButton": [
+    "急 停",
+    "EMERGENCY STOP"
+  ],
+  "reset": [
+    "解除急停",
+    "Reset emergency stop"
+  ],
+  "resetConfirm": [
+    "确认周围安全，解除急停？",
+    "Is the surrounding area safe? Reset the emergency stop?"
+  ],
+  "failedSend": [
+    "发送失败",
+    "Command failed"
+  ],
+  "localized": [
+    "机器人定位正常",
+    "Robot pose available"
+  ],
+  "localizing": [
+    "等待机器人定位 (map→base TF)",
+    "Waiting for robot pose (map→base TF)"
+  ],
+  "disconnected": [
+    "与机器人失去连接",
+    "Connection lost"
+  ],
+  "cursor": [
+    "鼠标位置",
+    "Cursor"
+  ],
+  "remaining": [
+    "剩余",
+    "Remaining"
+  ],
+  "point": [
+    "点",
+    "Point"
+  ],
+  "route": [
+    "路线",
+    "Route"
+  ],
+  "remove": [
+    "移除此点",
+    "Remove this point"
+  ],
+  "idle": [
+    "待命",
+    "Idle"
+  ],
+  "navigating": [
+    "导航中",
+    "Navigating"
+  ],
+  "waiting": [
+    "到点等待",
+    "Waiting at waypoint"
+  ],
+  "arrived": [
+    "已到达",
+    "Arrived"
+  ],
+  "relocalizing": [
+    "原地转圈重定位",
+    "Relocalising (spinning)"
+  ],
+  "relocalized": [
+    "重定位完成",
+    "Relocalised"
+  ],
+  "match": [
+    "匹配度",
+    "match"
+  ],
+  "leg": [
+    "直线段",
+    "leg"
+  ],
+  "legend": [
+    "图例：青色编号点 = 规划出的直线段路点（当前段高亮）；虚线 = 规划器路径；绿线 = RPP 正在跟踪的路径；橙点 = RPP 前瞻点（下一步要去的点）。",
+    "Legend: teal numbered dots = planned straight-leg waypoints (current leg highlighted); dashed = planner path; green = path RPP is following; orange dot = RPP lookahead point (where it heads next)."
+  ],
+  "cancelled": [
+    "已取消",
+    "Cancelled"
+  ],
+  "failed": [
+    "失败",
+    "Failed"
+  ],
+  "estop": [
+    "急停中",
+    "Emergency stopped"
+  ],
+  "unknown": [
+    "未知",
+    "Unknown"
+  ]
+};
+  let language = 'zh', connection = 'connecting', cursorPosition = null;
+  try { if (localStorage.getItem('amr.language') === 'en') language = 'en'; } catch (_) {}
+  const t = key => translations[key]?.[language === 'en' ? 1 : 0] || key;
+  const knownNames = {
+    '出发点 Home':['出发点 Home','Start / Home'], '充电点 Home':['充电点 Home','Charging / Home'],
+    '取样点 A':['取样点 A','Pickup A'], '放样点 B':['放样点 B','Drop-off B']
+  };
+  function pointName(p) {
+    const name = p.name || p.label || '';
+    return knownNames[name]?.[language === 'en' ? 1 : 0] || displayLabel(name);
+  }
+  function displayLabel(label) {
+    if (label === '路线') return t('route');
+    const numbered = /^点(\d+)$/.exec(label || '');
+    if (numbered) return t('point') + ' ' + numbered[1];
+    const p = points.find(p => p.label === label && p.name);
+    return p ? (knownNames[p.name]?.[language === 'en' ? 1 : 0] || p.name) : (label || '');
+  }
+  function renderCursor() {
+    if (cursorPosition) poseEl.textContent = t('cursor') + ' x=' + cursorPosition.x.toFixed(2) + ' y=' + cursorPosition.y.toFixed(2);
+  }
+  function applyLanguage() {
+    document.documentElement.lang = language;
+    document.title = t('title');
+    document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = t(el.dataset.i18n); });
+    const toggle = document.getElementById('languageToggle');
+    toggle.textContent = language === 'zh' ? 'English' : '中文';
+    toggle.setAttribute('aria-label', language === 'zh' ? 'Switch to English' : '切换为中文');
+    connEl.textContent = t(connection);
+    renderPoints(); renderQueue(); renderState(); renderCursor(); draw();
+  }
+  document.getElementById('languageToggle').onclick = () => {
+    language = language === 'zh' ? 'en' : 'zh';
+    try { localStorage.setItem('amr.language', language); } catch (_) {}
+    applyLanguage();
+  };
+
+  // ---------- coordinate transforms (pixel origin top-left) ----------
+  const toMap = (px, py) => ({
+    x: meta.origin[0] + px * meta.resolution,
+    y: meta.origin[1] + (meta.height - py) * meta.resolution });
+  const toPix = (x, y) => ({
+    px: (x - meta.origin[0]) / meta.resolution,
+    py: meta.height - (y - meta.origin[1]) / meta.resolution });
+
+  function canvasPoint(ev) {
+    const r = cv.getBoundingClientRect();
+    return { px: (ev.clientX - r.left) * cv.width / r.width,
+             py: (ev.clientY - r.top) * cv.height / r.height };
+  }
+
+  // ---------- drawing ----------
+  function arrow(px, py, yaw, size, color) {
+    // yaw in map frame; canvas y is flipped
+    const a = -yaw;
+    ctx.save(); ctx.translate(px, py); ctx.rotate(a);
+    ctx.beginPath();
+    ctx.moveTo(size, 0); ctx.lineTo(-size*0.6, size*0.6); ctx.lineTo(-size*0.3, 0);
+    ctx.lineTo(-size*0.6, -size*0.6); ctx.closePath();
+    ctx.fillStyle = color; ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.restore();
+  }
+  function dot(px, py, r, color, label) {
+    ctx.beginPath(); ctx.arc(px, py, r, 0, Math.PI*2);
+    ctx.fillStyle = color; ctx.fill(); ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.stroke();
+    if (label) { ctx.font = 'bold 11px system-ui'; ctx.fillStyle = '#111';
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 3;
+      ctx.strokeText(label, px + r + 3, py + 4); ctx.fillText(label, px + r + 3, py + 4); }
+  }
+  function draw() {
+    if (!meta) return;
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(img, 0, 0, cv.width, cv.height);
+    const s = cv.width / meta.width;   // canvas px per image px
+    const P = (x, y) => { const p = toPix(x, y); return [p.px * s, p.py * s]; };
+
+    // navigation internals: planner path, path RPP follows, RPP lookahead point, straight-leg waypoints
+    const nav = status.nav || {};
+    const polyline = (pts, color, width, dash) => {
+      if (!pts || pts.length < 2) return;
+      ctx.save(); ctx.beginPath(); ctx.setLineDash(dash || []);
+      pts.forEach((q, i) => { const [a, b] = P(q[0], q[1]); if (i === 0) ctx.moveTo(a, b); else ctx.lineTo(a, b); });
+      ctx.strokeStyle = color; ctx.lineWidth = width; ctx.lineJoin = 'round'; ctx.stroke(); ctx.restore();
+    };
+    const m0 = status.mission || {};
+    const navigating = m0.state === 'navigating';
+    if (navigating) {
+      polyline(nav.plan, 'rgba(37,99,235,0.55)', 2, [6, 4]);
+      polyline(nav.rpp_path, '#16a34a', 3);
+      if (Array.isArray(m0.waypoints)) {
+        const robotPt = status.robot && status.robot.ok ? [status.robot.x, status.robot.y] : null;
+        m0.waypoints.forEach((w, i) => {
+          const cur = (i + 1) === m0.leg;
+          const prev = i === 0 ? robotPt : [m0.waypoints[i - 1].x, m0.waypoints[i - 1].y];
+          if (cur && prev) polyline([prev, [w.x, w.y]], 'rgba(13,148,136,0.35)', 8);
+          const [a, b] = P(w.x, w.y);
+          arrow(a, b, w.yaw, cur ? 10 : 7, cur ? '#0d9488' : '#5eead4');
+          dot(a, b, cur ? 6 : 4, cur ? '#0d9488' : '#5eead4', String(i + 1));
+        });
+      }
+      if (nav.lookahead) { const [a, b] = P(nav.lookahead[0], nav.lookahead[1]); dot(a, b, 5, '#f97316'); }
+    }
+
+    points.forEach(p => { const [a, b] = P(p.x, p.y); dot(a, b, 5, '#7c3aed', pointName(p)); });
+    queue.forEach((p, i) => { const [a, b] = P(p.x, p.y); dot(a, b, 6, '#f59e0b', String(i + 1)); });
+
+    const m = status.mission;
+    if (m && m.state === 'navigating' && m.target) {
+      const [a, b] = P(m.target.x, m.target.y); arrow(a, b, m.target.yaw, 11, '#16a34a');
+    } else if (lastTarget) {
+      const [a, b] = P(lastTarget.x, lastTarget.y); arrow(a, b, lastTarget.yaw, 9, '#9ca3af');
+    }
+    if (status.robot && status.robot.ok) {
+      const [a, b] = P(status.robot.x, status.robot.y); arrow(a, b, status.robot.yaw, 13, '#2563eb');
+    }
+    if (drag) {
+      ctx.beginPath(); ctx.moveTo(drag.sx, drag.sy); ctx.lineTo(drag.cx, drag.cy);
+      ctx.strokeStyle = mode === 'init' ? '#d97706' : '#16a34a'; ctx.lineWidth = 2; ctx.stroke();
+      const yaw = Math.atan2(-(drag.cy - drag.sy), drag.cx - drag.sx);
+      arrow(drag.sx, drag.sy, yaw, 10, mode === 'init' ? '#d97706' : '#16a34a');
+    }
+  }
+  function resize() {
+    if (!meta) return;
+    const w = document.getElementById('wrap').clientWidth;
+    const scale = Math.max(1, Math.floor(w / meta.width * devicePixelRatio));
+    cv.width = meta.width * scale; cv.height = meta.height * scale;
+    draw();
+  }
+  window.addEventListener('resize', resize);
+
+  // ---------- interaction ----------
+  cv.addEventListener('pointerdown', ev => {
+    if (!meta) return; cv.setPointerCapture(ev.pointerId);
+    const p = canvasPoint(ev); drag = { sx:p.px, sy:p.py, cx:p.px, cy:p.py }; draw();
+  });
+  cv.addEventListener('pointermove', ev => {
+    const p = canvasPoint(ev);
+    if (drag) { drag.cx = p.px; drag.cy = p.py; draw(); }
+    if (meta) { const s = cv.width / meta.width; const m = toMap(p.px / s, p.py / s);
+      cursorPosition = m; renderCursor(); }
+  });
+  cv.addEventListener('pointerup', ev => {
+    if (!drag) return;
+    const s = cv.width / meta.width;
+    const dx = drag.cx - drag.sx, dy = drag.cy - drag.sy;
+    const yaw = Math.hypot(dx, dy) > 8 ? Math.atan2(-dy, dx) : 0;
+    const m = toMap(drag.sx / s, drag.sy / s);
+    drag = null;
+    const pt = { x:+m.x.toFixed(3), y:+m.y.toFixed(3), yaw:+yaw.toFixed(3) };
+    if (mode === 'init') { post('/initialpose', pt); return; }
+    if (queueMode.checked) { addToQueue({ ...pt, label:`点${queue.length + 1}` }); return; }
+    goto(pt);
+  });
+  cv.addEventListener('pointercancel', () => { drag = null; draw(); });
+
+  function setMode(m) {
+    mode = m;
+    document.getElementById('modeGoal').classList.toggle('on', m === 'goal');
+    document.getElementById('modeInit').classList.toggle('on', m === 'init');
+  }
+  document.getElementById('modeGoal').onclick = () => setMode('goal');
+  document.getElementById('modeInit').onclick = () => setMode('init');
+
+  // ---------- queue ----------
+  function addToQueue(p) { queue.push(p); renderQueue(); draw(); }
+  function renderQueue() {
+    queueEl.innerHTML = '';
+    queue.forEach((p, i) => {
+      const li = document.createElement('li');
+      const label = document.createElement('span');
+      label.textContent = (i + 1) + '. ' + pointName(p) + ' (' + p.x.toFixed(2) + ', ' + p.y.toFixed(2) + ')';
+      const remove = document.createElement('button');
+      remove.className = 'small'; remove.textContent = '✕';
+      remove.setAttribute('aria-label', t('remove'));
+      remove.onclick = () => { queue.splice(i, 1); renderQueue(); draw(); };
+      li.append(label, remove);
+      queueEl.appendChild(li);
+    });
+  }
+  document.getElementById('sendRoute').onclick = () => {
+    if (!queue.length) return;
+    post('/cmd', { cmd:'route', label:'路线', points:queue.map(p => ({ ...p, wait:0 })) })
+      .then(() => { lastTarget = queue[queue.length - 1]; queue = []; renderQueue(); draw(); });
+  };
+  document.getElementById('clearRoute').onclick = () => { queue = []; renderQueue(); draw(); };
+  document.getElementById('cancel').onclick = () => post('/cmd', { cmd:'cancel' });
+  document.getElementById('estop').onclick = () => post('/estop', { stop:true });
+  document.getElementById('estopReset').onclick = () => { if (confirm(t('resetConfirm'))) post('/estop', { stop:false }); };
+
+  // ---------- network ----------
+  async function post(url, body) {
+    const r = await fetch(url, { method:'POST', headers:{ 'Content-Type':'application/json' },
+                                 body:JSON.stringify(body) });
+    const j = await r.json();
+    if (!j.ok) { alert(t('failedSend') + ': ' + (j.error || r.status)); throw new Error(j.error); }
+    return j;
+  }
+  function goto(p) { lastTarget = p; draw(); return post('/cmd', { cmd:'goto', ...p }); }
+
+  async function poll() {
+    try {
+      const r = await fetch('/status', { cache:'no-store' });
+      status = await r.json(); lastOk = Date.now();
+      if (status.map_version !== undefined && status.map_version !== mapVersion) { mapVersion = status.map_version; reloadMap(); }
+      connection = status.robot.ok ? 'localized' : 'localizing';
+    } catch (e) { if (Date.now() - lastOk > 3000) connection = 'disconnected'; }
+    connEl.textContent = t(connection);
+    renderState(); draw();
+  }
+
+  function renderState() {
+    const m = status.mission || {};
+    const es = !!status.estop;
+    document.getElementById('estop').classList.toggle('on', es);
+    document.getElementById('estopReset').style.display = es ? '' : 'none';
+    stateEl.className = m.state || 'unknown';
+    stateEl.textContent = !lastOk ? t('connecting') : t(m.state || 'unknown');
+    let d = displayLabel(m.label);
+    if (m.state === 'navigating' && m.total > 1) d += ` (${m.index + 1}/${m.total})`;
+    if (m.state === 'navigating' && m.legs > 1) d += ` ${t('leg')} ${m.leg}/${m.legs}`;
+    if (m.distance_remaining !== undefined) d += ` ${t('remaining')} ${m.distance_remaining.toFixed(1)} m`;
+    if (m.state === 'waiting') d += ` ${m.seconds}s`;
+    if (m.match !== undefined) d += ` ${t('match')} ${Math.round(m.match * 100)}%`;
+    if (m.reason) d += ` — ${m.reason}`;
+    detailEl.textContent = d;
+  }
+
+  async function reloadMap() {
+    meta = await (await fetch('/map.json')).json();
+    const im = new Image();
+    im.onload = () => { img = im; resize(); };
+    im.src = '/map.png?' + Date.now();
+  }
+
+  async function init() {
+    meta = await (await fetch('/map.json')).json();
+    points = (await (await fetch('/points.json')).json()).points || [];
+    renderPoints();
+    img.onload = () => { resize(); setInterval(poll, 500); poll(); };
+    img.src = '/map.png?' + Date.now();
+  }
+  function renderPoints() {
+    const box = document.getElementById('points');
+    box.innerHTML = '';
+    points.forEach(p => {
+      const b = document.createElement('button');
+      b.textContent = `${pointName(p)}  (${p.x}, ${p.y})`;
+      b.onclick = () => queueMode.checked ? addToQueue({ ...p }) : goto({ x:p.x, y:p.y, yaw:p.yaw || 0, label:p.label });
+      box.appendChild(b);
+    });
+  }
+  applyLanguage();
+  init();
+})();
+</script>
+</body>
+</html>
